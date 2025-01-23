@@ -1,12 +1,71 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.DataAccess\\Migrations\\20250123194714_SportConnectMigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SportConnect.DataAccess\\Migrations\\20250123194714_SportConnectMigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DF6FAB0-6F09-45DD-A561-869407ECB24F}|SportConnect.DataAccess\\SportConnect.DataAccess.csproj|c:\\users\\lenovo\\source\\repos\\sportconnect\\sportconnect.dataaccess\\sportconnectdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DF6FAB0-6F09-45DD-A561-869407ECB24F}|SportConnect.DataAccess\\SportConnect.DataAccess.csproj|solutionrelative:sportconnect.dataaccess\\sportconnectdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\lenovo\\source\\repos\\sportconnect\\sportconnect.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20250123194714_SportConnectMigration.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.DataAccess\\Migrations\\20250123194714_SportConnectMigration.cs",
+              "RelativeDocumentMoniker": "SportConnect.DataAccess\\Migrations\\20250123194714_SportConnectMigration.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.DataAccess\\Migrations\\20250123194714_SportConnectMigration.cs",
+              "RelativeToolTip": "SportConnect.DataAccess\\Migrations\\20250123194714_SportConnectMigration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-23T19:47:14.905Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SportConnectDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.DataAccess\\SportConnectDbContext.cs",
+              "RelativeDocumentMoniker": "SportConnect.DataAccess\\SportConnectDbContext.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.DataAccess\\SportConnectDbContext.cs",
+              "RelativeToolTip": "SportConnect.DataAccess\\SportConnectDbContext.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAA/wBQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-23T09:20:46.427Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Program.cs",
+              "RelativeDocumentMoniker": "SportConnect.Web\\Program.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Program.cs",
+              "RelativeToolTip": "SportConnect.Web\\Program.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-23T09:20:23.143Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

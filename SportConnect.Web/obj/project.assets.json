@@ -5210,6 +5210,7 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.1",
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.1",
       "SportConnect.Core >= 1.0.0",
+      "SportConnect.DataAccess >= 1.0.0",
       "SportConnect.Models >= 1.0.0"
     ]
   },
@@ -5248,6 +5249,9 @@
           "projectReferences": {
             "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Core\\SportConnect.Core.csproj": {
               "projectPath": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Core\\SportConnect.Core.csproj"
+            },
+            "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.DataAccess\\SportConnect.DataAccess.csproj": {
+              "projectPath": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.DataAccess\\SportConnect.DataAccess.csproj"
             },
             "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Models\\SportConnect.Models.csproj": {
               "projectPath": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Models\\SportConnect.Models.csproj"

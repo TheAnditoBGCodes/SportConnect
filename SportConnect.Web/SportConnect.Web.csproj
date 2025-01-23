@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SportConnect.Core\SportConnect.Core.csproj" />
+    <ProjectReference Include="..\SportConnect.DataAccess\SportConnect.DataAccess.csproj" />
     <ProjectReference Include="..\SportConnect.Models\SportConnect.Models.csproj" />
   </ItemGroup>
 

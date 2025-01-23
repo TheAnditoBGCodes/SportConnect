@@ -1,0 +1,29 @@
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using SportConnect.Models;
+
+namespace SportConnect.DataAccess
+{
+    public class SportConnectDbContext : IdentityDbContext<IdentityUser>
+    {
+        public SportConnectDbContext(DbContextOptions options) : base(options)
+        {
+        }
+        public DbSet<Tournament> Tournaments { get; set; }
+
+        public DbSet<Sport> Sports { get; set; }
+
+        public DbSet<Participation> Participations { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Participation>()
+                .HasOne(p => p.Tournament)
+                .WithMany(t => t.Participations)
+                .HasForeignKey(p => p.TournamentId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+    }
+}
