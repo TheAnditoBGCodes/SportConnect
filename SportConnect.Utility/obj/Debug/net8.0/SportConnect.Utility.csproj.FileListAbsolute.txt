@@ -1,0 +1,13 @@
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\bin\Debug\net8.0\SportConnect.Utility.deps.json
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\bin\Debug\net8.0\SportConnect.Utility.dll
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\bin\Debug\net8.0\SportConnect.Utility.pdb
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.csproj.AssemblyReference.cache
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.AssemblyInfoInputs.cache
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.AssemblyInfo.cs
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.csproj.CoreCompileInputs.cache
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.sourcelink.json
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.dll
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\refint\SportConnect.Utility.dll
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.pdb
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\ref\SportConnect.Utility.dll

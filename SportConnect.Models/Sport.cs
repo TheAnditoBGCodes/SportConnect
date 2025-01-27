@@ -13,6 +13,6 @@ namespace SportConnect.Models
         [Required]
         public string Description { get; set; }
 
-        public ICollection<Tournament> Tournaments { get; set; }
+        public IEnumerable<Tournament> Tournaments { get; set; } = new List<Tournament>();
     }
 }

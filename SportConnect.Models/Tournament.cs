@@ -40,6 +40,6 @@ namespace SportConnect.Models
         public int SportId { get; set; }
         public Sport Sport { get; set; }
 
-        public ICollection<Participation> Participations { get; set; }
+        public IEnumerable<Participation> Participations { get; set; } = new List<Participation>();
     }
 }

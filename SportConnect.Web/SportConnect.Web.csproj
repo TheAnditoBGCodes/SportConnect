@@ -14,17 +14,20 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SportConnect.Core\SportConnect.Core.csproj" />
     <ProjectReference Include="..\SportConnect.DataAccess\SportConnect.DataAccess.csproj" />
     <ProjectReference Include="..\SportConnect.Models\SportConnect.Models.csproj" />
+    <ProjectReference Include="..\SportConnect.Utility\SportConnect.Utility.csproj" />
   </ItemGroup>
 
 </Project>
