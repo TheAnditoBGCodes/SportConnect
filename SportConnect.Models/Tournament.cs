@@ -22,7 +22,7 @@ namespace SportConnect.Models
 
         [ForeignKey(nameof(Organizer))]
         public string OrganizerId { get; set; }
-        public IdentityUser Organizer { get; set; }
+        public SportConnectUser Organizer { get; set; }
 
         [Required]
         public DateTime Date { get; set; }

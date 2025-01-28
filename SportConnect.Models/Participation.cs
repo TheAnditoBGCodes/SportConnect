@@ -16,7 +16,7 @@ namespace SportConnect.Models
 
         [ForeignKey(nameof(Participant))]
         public string ParticipantId { get; set; }
-        public IdentityUser Participant { get; set; }
+        public SportConnectUser Participant { get; set; }
 
         [ForeignKey(nameof(Tournament))]
         public int TournamentId { get; set; }

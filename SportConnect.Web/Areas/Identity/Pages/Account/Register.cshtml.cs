@@ -28,24 +28,24 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<SportConnectUser> _signInManager;
+        private readonly UserManager<SportConnectUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IUserStore<IdentityUser> _userStore;
-        private readonly IUserEmailStore<IdentityUser> _emailStore;
+        private readonly IUserStore<SportConnectUser> _userStore;
+        private readonly IUserEmailStore<SportConnectUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            IUserStore<IdentityUser> userStore,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<SportConnectUser> userManager,
+            IUserStore<SportConnectUser> userStore,
+            SignInManager<SportConnectUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
-            _emailStore = GetEmailStore();
+            _emailStore = (IUserEmailStore<SportConnectUser>)GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
@@ -91,7 +91,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(int.MaxValue, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -108,6 +108,31 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             public string? Role { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; } = new List<SelectListItem>();
+
+            [Required(ErrorMessage = "Моля, въведете първото си име.")]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            [Display(Name = "Първо име")]
+            public string FirstName { get; set; }
+
+            [Required(ErrorMessage = "Моля, въведете фамилното си име.")]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            [Display(Name = "Фамилия")]
+            public string LastName { get; set; }
+
+            [Required(ErrorMessage = "Моля, въведете възраст.")]
+            [Range(13, 120, ErrorMessage = "Възрастта трябва да бъде между 13 и 120 години.")]
+            [Display(Name = "Възраст")]
+            public int Age { get; set; }
+
+            [Required(ErrorMessage = "Моля, въведете местоположение.")]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
+            [Display(Name = "Местоположение")]
+            public string Location { get; set; }
+
+            [Required(ErrorMessage = "Моля, въведете телефонен номер.")]
+            [Phone(ErrorMessage = "Невалиден телефонен номер.")]
+            [Display(Name = "Телефонен номер")]
+            public string PhoneNumber { get; set; }
         }
 
 
@@ -140,7 +165,13 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                var user = new SportConnectUser
+                {
+                    FullName = $"{Input.FirstName} {Input.LastName}",
+                    Age = Input.Age,
+                    PhoneNumber = Input.PhoneNumber,
+                    Location = Input.Location
+                };
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -204,13 +235,13 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             }
         }
 
-        private IUserEmailStore<IdentityUser> GetEmailStore()
+        private IUserEmailStore<SportConnectUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<IdentityUser>)_userStore;
+            return (IUserEmailStore<SportConnectUser>)_userStore;
         }
     }
 }

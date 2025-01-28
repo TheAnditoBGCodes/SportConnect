@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using SportConnect.Models
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<SportConnectUser> SignInManager
+@inject UserManager<SportConnectUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportConnect.Models", "Spor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportConnect.DataAccess", "SportConnect.DataAccess\SportConnect.DataAccess.csproj", "{8DF6FAB0-6F09-45DD-A561-869407ECB24F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportConnect.Core", "SportConnect.Core\SportConnect.Core.csproj", "{8F227F54-7080-4497-B2D7-5D5E5DCF3397}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportConnect.Utility", "SportConnect.Utility\SportConnect.Utility.csproj", "{88020C52-B9F0-4633-9692-E97668452AAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportConnect.Utility", "SportConnect.Utility\SportConnect.Utility.csproj", "{88020C52-B9F0-4633-9692-E97668452AAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +29,6 @@ Global
 		{8DF6FAB0-6F09-45DD-A561-869407ECB24F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DF6FAB0-6F09-45DD-A561-869407ECB24F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DF6FAB0-6F09-45DD-A561-869407ECB24F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8F227F54-7080-4497-B2D7-5D5E5DCF3397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F227F54-7080-4497-B2D7-5D5E5DCF3397}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F227F54-7080-4497-B2D7-5D5E5DCF3397}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F227F54-7080-4497-B2D7-5D5E5DCF3397}.Release|Any CPU.Build.0 = Release|Any CPU
 		{88020C52-B9F0-4633-9692-E97668452AAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88020C52-B9F0-4633-9692-E97668452AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88020C52-B9F0-4633-9692-E97668452AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU

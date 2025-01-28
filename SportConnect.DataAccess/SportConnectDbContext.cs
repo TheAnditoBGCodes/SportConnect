@@ -5,16 +5,18 @@ using SportConnect.Models;
 
 namespace SportConnect.DataAccess
 {
-    public class SportConnectDbContext : IdentityDbContext<IdentityUser>
+    public class SportConnectDbContext : IdentityDbContext<SportConnectUser>
     {
         public SportConnectDbContext(DbContextOptions options) : base(options)
         {
         }
+
         public DbSet<Tournament> Tournaments { get; set; }
 
         public DbSet<Sport> Sports { get; set; }
 
         public DbSet<Participation> Participations { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
