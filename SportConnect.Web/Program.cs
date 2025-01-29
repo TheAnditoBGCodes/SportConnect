@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using SportConnect.DataAccess;
+using SportConnect.DataAccess.Repository;
+using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Utility;
 
@@ -21,6 +23,7 @@ builder.Services.AddIdentity<SportConnectUser, IdentityRole>(options =>
 .AddDefaultTokenProviders();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {

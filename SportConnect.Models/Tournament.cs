@@ -12,7 +12,7 @@ namespace SportConnect.Models
     public class Tournament
     {
         [Key]
-        public int TournamentId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }

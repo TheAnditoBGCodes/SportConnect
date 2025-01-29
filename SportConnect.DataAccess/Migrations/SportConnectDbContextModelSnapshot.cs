@@ -184,11 +184,11 @@ namespace SportConnect.DataAccess.Migrations
 
             modelBuilder.Entity("SportConnect.Models.Sport", b =>
                 {
-                    b.Property<int>("SportId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SportId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -198,7 +198,7 @@ namespace SportConnect.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("SportId");
+                    b.HasKey("Id");
 
                     b.ToTable("Sports");
                 });
@@ -281,11 +281,11 @@ namespace SportConnect.DataAccess.Migrations
 
             modelBuilder.Entity("SportConnect.Models.Tournament", b =>
                 {
-                    b.Property<int>("TournamentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TournamentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -315,7 +315,7 @@ namespace SportConnect.DataAccess.Migrations
                     b.Property<int>("SportId")
                         .HasColumnType("int");
 
-                    b.HasKey("TournamentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("OrganizerId");
 

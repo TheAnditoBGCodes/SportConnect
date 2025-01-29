@@ -1,0 +1,40 @@
+﻿@using SportConnect.Models
+@model List<Sport>
+@{
+    <h1>All sports</h1>
+
+    @if (Model.Count == 0)
+    {
+        <h2>No sports in the system</h2>
+    }
+    else
+    {
+        foreach (var item in @Model)
+        {
+            <table class="table" style="table-layout: fixed; width: 100%;">
+                <colgroup>
+                    <col style="width: 10%;"> <!-- Fixed width for ID -->
+                    <col style="width: 20%;"> <!-- Name column -->
+                    <col style="width: 50%;"> <!-- Price column -->
+                    <col style="width: 20%;"> <!-- Button column -->
+                </colgroup>
+                <tbody>
+
+                    <tr>
+                        <td style="text-align: center; vertical-align: middle;">@item.Id</td>
+                        <td style="text-align: left; vertical-align: middle;">@item.Name</td>
+                        <td style="text-align: right; vertical-align: middle;">@item.Description</td>
+                        <td style="text-align: center; vertical-align: middle; white-space: nowrap;">
+                            <div class="btn-group" role="group">
+                                <a asp-controller="Sport" asp-action="EditSport" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                                <a asp-controller="Sport" asp-action="DeleteSport" asp-route-id="@item.Id" class="btn btn-primary">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        }
+    }
+    <a asp-controller="Sport" asp-action="AddSport" class="btn btn-primary">Add</a>
+}

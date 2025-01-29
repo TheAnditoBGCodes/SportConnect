@@ -5,7 +5,7 @@ namespace SportConnect.Models
     public class Sport
     {
         [Key]
-        public int SportId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
