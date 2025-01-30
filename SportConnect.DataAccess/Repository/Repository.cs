@@ -59,6 +59,11 @@ namespace SportConnect.DataAccess.Repository
             return _dbSet.Find(id);
         }
 
+        public T GetUserById(string id)
+        {
+            return _dbSet.Find(id);
+        }
+
         public void Update(T entity)
         {
             _dbSet.Update(entity);

@@ -34,18 +34,21 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
         private readonly IUserStore<SportConnectUser> _userStore;
         private readonly IUserEmailStore<SportConnectUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
+        private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<SportConnectUser> userManager,
             IUserStore<SportConnectUser> userStore,
             SignInManager<SportConnectUser> signInManager,
             ILogger<RegisterModel> logger,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = (IUserEmailStore<SportConnectUser>)GetEmailStore();
             _signInManager = signInManager;
+            _emailSender = emailSender;
             _logger = logger;
             _roleManager = roleManager;
         }

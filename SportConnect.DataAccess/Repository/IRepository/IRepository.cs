@@ -6,6 +6,8 @@ namespace SportConnect.DataAccess.Repository.IRepository
     {
         void DeleteRange(IEnumerable<T> range);
 
+        T GetUserById(string id);
+        
         T GetById(int id);
 
         void Add(T entity);

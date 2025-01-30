@@ -38,6 +38,7 @@
                             <div class="btn-group" role="group">
                                 <a asp-controller="Tournament" asp-action="EditTournament" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
                                 <a asp-controller="Tournament" asp-action="DeleteTournament" asp-route-id="@item.Id" class="btn btn-primary">Delete</a>
+                                <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@item.Id" class="btn btn-primary">Participate</a>
                             </div>
                         </td>
                     </tr>

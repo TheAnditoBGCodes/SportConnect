@@ -1,0 +1,49 @@
+﻿@using SportConnect.Models
+@model List<SportConnectUser>
+@{
+    <h1>All users</h1>
+
+    @if (Model.Count == 0)
+    {
+        <h2>No users in the system, Register button is on the top right</h2>
+    }
+    else
+    {
+        <h2>Register a user to add them, button is on the top right</h2>
+        foreach (var item in @Model)
+        {
+            <table class="table" style="table-layout: fixed; width: 100%;">
+                <colgroup>
+                    <col style="width: 10%;"> <!-- Fixed width for ID -->
+                    <col style="width: 10%;"> <!-- Name column -->
+                    <col style="width: 10%;"> <!-- Price column -->
+                    <col style="width: 10%;"> <!-- Button column -->
+                    <col style="width: 10%;"> <!-- Fixed width for ID -->
+                    <col style="width: 20%;"> <!-- Name column -->
+                    <col style="width: 10%;"> <!-- Price column -->
+                    <col style="width: 10%;"> <!-- Button column -->
+                    <col style="width: 10%;"> <!-- Fixed width for ID -->
+                </colgroup>
+                <tbody>
+
+                    <tr>
+                        <td style="text-align: center; vertical-align: middle;">@item.Id</td>
+                        <td style="text-align: left; vertical-align: middle;">@item.UserName</td>
+                        <td style="text-align: right; vertical-align: middle;">@item.FullName</td>
+                        <td style="text-align: left; vertical-align: middle;">@item.Age</td>
+                        <td style="text-align: right; vertical-align: middle;">@item.Location</td>
+                        <td style="text-align: right; vertical-align: middle;">@item.PasswordHash</td>
+                        <td style="text-align: left; vertical-align: middle;">@item.PhoneNumber</td>
+                        <td style="text-align: right; vertical-align: middle;">@item.Email</td>
+                        <td style="text-align: center; vertical-align: middle; white-space: nowrap;">
+                            <div class="btn-group" role="group">
+                                <a asp-controller="User" asp-action="EditUser" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                                <a asp-controller="User" asp-action="DeleteUser" asp-route-id="@item.Id" class="btn btn-primary">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+    }
+}

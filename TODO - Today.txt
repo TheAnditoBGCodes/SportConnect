@@ -1,3 +1,9 @@
-1 - User -> CRUD / View / Controller
-2 - Participations -> CRUD / View / Controller
 3 - App -> Minimum Required Filterings
+
+AllSports view -> Each Sport has button to all Tournaments of this Sport
+
+PersonalData view
+- User info 
+- forgotten password
+- Edit
+- Delete  
