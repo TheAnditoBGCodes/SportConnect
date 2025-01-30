@@ -16,7 +16,6 @@
           "Microsoft.EntityFrameworkCore.Sqlite": "8.0.11",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "8.0.7",
-          "SportConnect.Core": "1.0.0",
           "SportConnect.DataAccess": "1.0.0",
           "SportConnect.Models": "1.0.0",
           "SportConnect.Utility": "1.0.0"

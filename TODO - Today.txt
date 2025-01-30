@@ -1,3 +1,0 @@
-sporttournaments shitstuff
-
-repo logic transferred to core
