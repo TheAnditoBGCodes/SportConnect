@@ -1,0 +1,52 @@
+﻿@using SportConnect.Models
+@model TournamentViewModel
+@{
+    <h1>Add category</h1>
+    <form method="post">
+
+        <div class="form-floating mb-3">
+            <input asp-for="@Model.Name" class="form-control" aria-required="true" placeholder="име" />
+            <label asp-for="@Model.Name">Име</label>
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="@Model.Description" class="form-control" aria-required="true" placeholder="description" />
+            <label asp-for="@Model.Description">description</label>
+            <span asp-validation-for="@Model.Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="datetime-local" asp-for="@Model.Date" class="form-control" aria-required="true" placeholder="дата провеждане" />
+            <label asp-for="@Model.Date">дата провеждане</label>
+            <span asp-validation-for="@Model.Date" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="datetime-local" asp-for="@Model.Deadline" class="form-control" aria-required="true" placeholder="срок регистрация" />
+            <label asp-for="@Model.Deadline">срок регистрация</label>
+            <span asp-validation-for="@Model.Deadline" class="text-danger"></span>
+        </div>
+        
+
+        <div class="form-floating mb-3">
+            <input type="text" asp-for="@Model.Location" class="form-control" aria-required="true" placeholder="локация" />
+            <label asp-for="@Model.Location">локация</label>
+            <span asp-validation-for="@Model.Location" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <select asp-for="SportId" class="form-select" asp-items="@Model.Sports">
+                <option disabled selected>-Изберете sport-</option>
+            </select>
+        </div>
+
+        <div class="form-floating mb-3" style="display: none;">
+            <input type="text" asp-for="@Model.OrganizerId" class="form-control" aria-required="true" placeholder="OrganizerId" />
+            <label asp-for="@Model.OrganizerId">@Model.OrganizerId</label>
+            <span asp-validation-for="@Model.OrganizerId" class="text-danger"></span>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="add" />
+    </form>
+}

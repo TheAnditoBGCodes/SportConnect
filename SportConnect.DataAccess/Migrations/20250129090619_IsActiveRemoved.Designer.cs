@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportConnect.DataAccess;
 
@@ -11,9 +12,11 @@ using SportConnect.DataAccess;
 namespace SportConnect.DataAccess.Migrations
 {
     [DbContext(typeof(SportConnectDbContext))]
-    partial class SportConnectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250129090619_IsActiveRemoved")]
+    partial class IsActiveRemoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -394,7 +397,7 @@ namespace SportConnect.DataAccess.Migrations
             modelBuilder.Entity("SportConnect.Models.Tournament", b =>
                 {
                     b.HasOne("SportConnect.Models.SportConnectUser", "Organizer")
-                        .WithMany("OrganizedTournaments")
+                        .WithMany()
                         .HasForeignKey("OrganizerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -417,8 +420,6 @@ namespace SportConnect.DataAccess.Migrations
 
             modelBuilder.Entity("SportConnect.Models.SportConnectUser", b =>
                 {
-                    b.Navigation("OrganizedTournaments");
-
                     b.Navigation("Participations");
                 });
 

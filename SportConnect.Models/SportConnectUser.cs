@@ -21,5 +21,6 @@ namespace SportConnect.Models
         public string Location { get; set; }
 
         public ICollection<Participation> Participations { get; set; } = new List<Participation>();
+        public ICollection<Tournament> OrganizedTournaments { get; set; } = new List<Tournament>();
     }
 }

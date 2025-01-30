@@ -2,27 +2,19 @@
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using SportConnect.DataAccess;
 using SportConnect.DataAccess.Repository;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
-using SportConnect.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<SportConnectDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("SportConnect.DataAccess")));
-builder.Services.AddIdentity<SportConnectUser, IdentityRole>(options =>
-{
-    options.SignIn.RequireConfirmedAccount = true;
-})
-.AddEntityFrameworkStores<SportConnectDbContext>()
-.AddDefaultTokenProviders();
+builder.Services.AddIdentity<SportConnectUser, IdentityRole>().AddEntityFrameworkStores<SportConnectDbContext>().AddDefaultTokenProviders();
 builder.Services.AddRazorPages();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>

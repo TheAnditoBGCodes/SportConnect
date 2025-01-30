@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Web.Models;
@@ -20,26 +21,28 @@ namespace SportConnect.Web.Controllers
 
         public IActionResult AddSport()
         {
+            ViewBag.Sports = new SelectList(_repository.GetAll(), "Id", "Name");
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddSport(Sport category)
+        public IActionResult AddSport(Sport sport)
         {
-            _repository.Add(category);
+            _repository.Add(sport);
             return RedirectToAction("AllSports");
         }
 
         public IActionResult EditSport(int id)
         {
+            ViewBag.Sports = new SelectList(_repository.GetAll(), "Id", "Name");
             var entity = _repository.GetById(id);
             return View(entity);
         }
 
         [HttpPost]
-        public IActionResult EditSport(Sport category)
+        public IActionResult EditSport(Sport sport)
         {
-            _repository.Update(category);
+            _repository.Update(sport);
             return RedirectToAction("AllSports");
         }
 

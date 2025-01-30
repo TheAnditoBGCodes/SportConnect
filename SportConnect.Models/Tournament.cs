@@ -33,9 +33,6 @@ namespace SportConnect.Models
         [Required]
         public string Location { get; set; }
 
-        [Required]
-        public bool IsActive { get; set; }
-
         [ForeignKey(nameof(Sport))]
         public int SportId { get; set; }
         public Sport Sport { get; set; }

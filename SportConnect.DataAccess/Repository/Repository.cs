@@ -37,6 +37,12 @@ namespace SportConnect.DataAccess.Repository
             _context.SaveChanges();
         }
 
+        public void DeleteRange(IEnumerable<T> range)
+        {
+            _dbSet.RemoveRange(range);
+            _context.SaveChanges();
+        }
+
         public IEnumerable<T> GetAll()
         {
             return _dbSet;

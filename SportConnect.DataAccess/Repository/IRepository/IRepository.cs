@@ -4,6 +4,8 @@ namespace SportConnect.DataAccess.Repository.IRepository
 {
     public interface IRepository<T> where T : class
     {
+        void DeleteRange(IEnumerable<T> range);
+
         T GetById(int id);
 
         void Add(T entity);
