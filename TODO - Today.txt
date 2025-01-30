@@ -1,1 +1,3 @@
-Entire App -> Minimum Required Filterings
+sporttournaments shitstuff
+
+repo logic transferred to core

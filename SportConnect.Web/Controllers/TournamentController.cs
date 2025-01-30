@@ -31,19 +31,12 @@ namespace SportConnect.Web.Controllers
 
         public IActionResult AddTournament()
         {
-            var tournament = new TournamentViewModel
-            {
-                Sports = _sportRepository.GetAll().Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList()
-            };
-            return View(tournament);
+            ViewBag.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
+            return View();
         }
 
         [HttpPost]
-        public IActionResult AddTournament(TournamentViewModel tournament)
+        public IActionResult AddTournament(Tournament tournament)
         {
             if (!ModelState.IsValid)
             {
@@ -51,107 +44,63 @@ namespace SportConnect.Web.Controllers
                 var currentUser = _userManager.GetUserAsync(user).Result;
                 if (currentUser != null)
                 {
-                    var tour = tournament.ToTournament();
-                    tour.Organizer = currentUser;
-                    tour.OrganizerId = currentUser.Id;
-                    _repository.Add(tour);
+                    tournament.Organizer = currentUser;
+                    tournament.OrganizerId = currentUser.Id;
+                    _repository.Add(tournament);
                     return RedirectToAction("AllTournaments");
                 }
                 ModelState.AddModelError("", "Could not determine the current user.");
             }
             else
             {
-                tournament = new TournamentViewModel
-                {
-                    Sports = _sportRepository.GetAll().Select(x => new SelectListItem
-                    {
-                        Text = x.Name,
-                        Value = x.Id.ToString()
-                    }).ToList()
-                };
+                ViewBag.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
             }
             return View(tournament);
-        }
-
-        public IActionResult SportTournaments(int id)
-        {
-            var model = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport)
-                .Select(x => new TournamentViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Description = x.Description,
-                    Date = x.Date,
-                    Deadline = x.Deadline,
-                    OrganizerName = x.Organizer.FullName,
-                    Location = x.Location,
-                    SportName = x.Sport.Name,
-                    SportId = id
-                });
-            var tournaments = model.Where(x => x.SportId == id);
-            return View(tournaments.ToList());
         }
 
         public IActionResult EditTournament(int id)
         {
-            var entity = _repository.GetById(id);
-            var entitymodel = new TournamentViewModel
-            {
-                Name = entity.Name,
-                Description = entity.Description,
-                Date = entity.Date,
-                Deadline = entity.Deadline,
-                Location = entity.Location,
-                Sports = _sportRepository.GetAll().Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList(),
-                SportName = entity.Sport.Name,
-                OrganizerId = entity.OrganizerId,
-            };
-            return View(entitymodel);
+            ViewBag.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
+            return View(_repository.GetById(id));
         }
 
         [HttpPost]
-        public IActionResult EditTournament(int id, TournamentViewModel tournament)
+        public IActionResult EditTournament(Tournament tournament)
         {
             if (!ModelState.IsValid)
             {
-                //organizer shit id stuff
-                Tournament tour = tournament.ToTournament(id);
-                _repository.Update(tour);
+                _repository.Update(tournament);
                 return RedirectToAction("AllTournaments");
             }
             else
             {
-                tournament = new TournamentViewModel
-                {
-                    Sports = _sportRepository.GetAll().Select(x => new SelectListItem
-                    {
-                        Text = x.Name,
-                        Value = x.Id.ToString()
-                    }).ToList()
-                };
+                ViewBag.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
             }
             return View(tournament);
         }
 
-        public IActionResult AllTournaments()
+        public IActionResult AllTournaments(TournamentFilterViewModel filter)
         {
-            var model = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport)
-                .Select(x => new TournamentViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Description = x.Description,
-                    Date = x.Date,
-                    Deadline = x.Deadline,
-                    OrganizerName = x.Organizer.FullName,
-                    Location = x.Location,
-                    SportName = x.Sport.Name
-                });
-            return View(model.ToList());
+            var query = _repository.GetAll().AsQueryable();
+
+            if (filter.Date != null)
+            {
+                query = query.Where(x => x.Date == filter.Date.Value);
+            }
+            if (filter.SportId != null)
+            {
+                query = query.Where(x => x.SportId >= filter.SportId.Value);
+            }
+
+            var model = new TournamentFilterViewModel
+            {
+                Date = filter.Date,
+                SportId = filter.SportId,
+                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name"),
+                Tournaments = query.Include(x => x.Organizer).Include(x => x.Sport).ToList()
+            };
+
+            return View(model);
         }
 
         public IActionResult DeleteTournament(int id)

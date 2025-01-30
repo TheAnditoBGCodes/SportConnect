@@ -30,11 +30,4 @@
     <ProjectReference Include="..\SportConnect.Utility\SportConnect.Utility.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="Views\Tournament\SportTournaments.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
 </Project>
