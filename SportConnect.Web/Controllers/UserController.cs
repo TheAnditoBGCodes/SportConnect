@@ -69,7 +69,21 @@ namespace SportConnect.Web.Controllers
 
         public IActionResult PersonalData()
         {
-            return View();
+            var user = _userManager.GetUserAsync(this.User).Result;
+            var names = user.FullName.Split(' ').ToList();
+            var model = new SportConnectUserViewModel()
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                FirstName = names[0],
+                LastName = names[1],
+                Age = user.Age,
+                Location = user.Location,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                PasswordHash = user.PasswordHash
+            };
+            return View(model);
         }
 
         public IActionResult EditUserAdmin(string id)

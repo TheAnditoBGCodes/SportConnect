@@ -73,6 +73,25 @@ namespace SportConnect.Web.Controllers
             return View(tournament);
         }
 
+        public IActionResult SportTournaments(int id)
+        {
+            var model = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport)
+                .Select(x => new TournamentViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Description = x.Description,
+                    Date = x.Date,
+                    Deadline = x.Deadline,
+                    OrganizerName = x.Organizer.FullName,
+                    Location = x.Location,
+                    SportName = x.Sport.Name,
+                    SportId = id
+                });
+            var tournaments = model.Where(x => x.SportId == id);
+            return View(tournaments.ToList());
+        }
+
         public IActionResult EditTournament(int id)
         {
             var entity = _repository.GetById(id);
