@@ -57,8 +57,22 @@ namespace SportConnect.Web.Controllers
 
         public IActionResult DeleteSport(int id)
         {
+            var tournaments = _tournamentRepository.GetAllBy(t => t.SportId == id).ToList();
+
+            foreach (var tournament in tournaments)
+            {
+                var participations = _participationsRepository.GetAllBy(p => p.TournamentId == tournament.Id).ToList();
+                _participationsRepository.DeleteRange(participations);
+            }
+
+            _tournamentRepository.DeleteRange(tournaments);
+
             var sport = _repository.GetById(id);
-            _repository.Delete(sport);
+            if (sport != null)
+            {
+                _repository.Delete(sport);
+            }
+
             return RedirectToAction("AllSports");
         }
 

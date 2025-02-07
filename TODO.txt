@@ -2,4 +2,3 @@
 - Participations BG
 
 - Participate Once in Tournament
-- Sport Deletion Fix when Tournament has Participations
