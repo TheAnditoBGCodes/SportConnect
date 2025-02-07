@@ -131,7 +131,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Utility\\SportConnect.Utility.csproj": {
+                "projectPath": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Utility\\SportConnect.Utility.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

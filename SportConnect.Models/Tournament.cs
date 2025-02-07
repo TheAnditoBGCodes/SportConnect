@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SportConnect.Utility;
 
 namespace SportConnect.Models
 {
@@ -14,25 +15,31 @@ namespace SportConnect.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Името е задължително")]
+        [StringLength(100, MinimumLength = 5, ErrorMessage = "Името трябва да е между 5 и 100 символа")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Описанието е задължително")]
+        [StringLength(100, MinimumLength = 5, ErrorMessage = "Описанието трябва да е между 5 и 100 символа")]
         public string Description { get; set; }
 
+        [Required]
         [ForeignKey(nameof(Organizer))]
         public string OrganizerId { get; set; }
         public SportConnectUser Organizer { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Датата на прожеждане е задължителна")]
         public DateTime Date { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Крайният срок е задължителен")]
+        [DeadlineBeforeTournament("Date")]
         public DateTime Deadline { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Локацията е задължителна")]
+        [StringLength(100, MinimumLength = 5, ErrorMessage = "Локацията трябва да е между 5 и 100 символа")]
         public string Location { get; set; }
 
+        [Required]
         [ForeignKey(nameof(Sport))]
         public int SportId { get; set; }
         public Sport Sport { get; set; }

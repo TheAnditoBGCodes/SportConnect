@@ -3160,7 +3160,8 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.12",
           "Microsoft.AspNetCore.Identity.UI": "8.0.12",
           "Microsoft.EntityFrameworkCore": "9.0.1",
-          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.1"
+          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.1",
+          "SportConnect.Utility": "1.0.0"
         },
         "compile": {
           "bin/placeholder/SportConnect.Models.dll": {}

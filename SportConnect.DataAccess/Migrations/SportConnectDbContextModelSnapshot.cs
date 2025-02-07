@@ -295,21 +295,23 @@ namespace SportConnect.DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Location")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("OrganizerId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("SportId")
+                    b.Property<int?>("SportId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -395,15 +397,11 @@ namespace SportConnect.DataAccess.Migrations
                 {
                     b.HasOne("SportConnect.Models.SportConnectUser", "Organizer")
                         .WithMany("OrganizedTournaments")
-                        .HasForeignKey("OrganizerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrganizerId");
 
                     b.HasOne("SportConnect.Models.Sport", "Sport")
                         .WithMany("Tournaments")
-                        .HasForeignKey("SportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SportId");
 
                     b.Navigation("Organizer");
 

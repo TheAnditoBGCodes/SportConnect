@@ -1,52 +1,40 @@
 ﻿@using SportConnect.Models
-@model Tournament
-@{
-    <h1>Add category</h1>
-    <form method="post">
+@model TournamentViewModel
+<h1>Промени турнир</h1>
+<form method="post">
+    <div class="form-floating mb-3">
+        <input asp-for="Name" class="form-control" aria-required="true" placeholder="Име..." />
+        <label asp-for="Name">Име</label>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
 
-        <div class="form-floating mb-3">
-            <input asp-for="Name" class="form-control" aria-required="true" placeholder="име" />
-            <label asp-for="Name">Име</label>
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Description" class="form-control" aria-required="true" placeholder="Описание..." />
+        <label asp-for="Description">Описание</label>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
 
-        <div class="form-floating mb-3">
-            <input asp-for="Description" class="form-control" aria-required="true" placeholder="description" />
-            <label asp-for="Description">description</label>
-            <span asp-validation-for="Description" class="text-danger"></span>
-        </div>
+    <div class="form-floating mb-3">
+        <input type="datetime-local" asp-for="Date" class="form-control" aria-required="true" />
+        <label asp-for="Date">Дата на провеждане</label>
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
 
-        <div class="form-floating mb-3">
-            <input type="datetime-local" asp-for="Date" class="form-control" aria-required="true" placeholder="дата провеждане" />
-            <label asp-for="Date">дата провеждане</label>
-            <span asp-validation-for="Date" class="text-danger"></span>
-        </div>
+    <div class="form-floating mb-3">
+        <input type="datetime-local" date-time-validation="" asp-for="Deadline" class="form-control" aria-required="true" />
+        <label asp-for="Deadline">Краен срок</label>
+        <span asp-validation-for="Deadline" class="text-danger"></span>
+    </div>
 
-        <div class="form-floating mb-3">
-            <input type="datetime-local" asp-for="Deadline" class="form-control" aria-required="true" placeholder="срок регистрация" />
-            <label asp-for="Deadline">срок регистрация</label>
-            <span asp-validation-for="Deadline" class="text-danger"></span>
-        </div>
+    <div class="form-floating mb-3">
+        <input type="text" asp-for="Location" class="form-control" aria-required="true" placeholder="Локация..." />
+        <label asp-for="Location">Локация</label>
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
 
+    <div class="form-floating mb-3">
+        <select asp-for="SportId" class="form-select" asp-items="Model.Sports"></select>
+    </div>
 
-        <div class="form-floating mb-3">
-            <input type="text" asp-for="Location" class="form-control" aria-required="true" placeholder="локация" />
-            <label asp-for="Location">локация</label>
-            <span asp-validation-for="Location" class="text-danger"></span>
-        </div>
-
-        <div class="form-floating mb-3">
-            <select asp-for="SportId" class="form-select" asp-items="@ViewBag.Sports">
-                <option disabled selected>-Изберете sport-</option>
-            </select>
-        </div>
-
-        <div class="form-floating mb-3" style="display: none;">
-            <input type="text" asp-for="@Model.OrganizerId" class="form-control" aria-required="true" placeholder="OrganizerId" />
-            <label asp-for="@Model.OrganizerId">@Model.OrganizerId</label>
-            <span asp-validation-for="@Model.OrganizerId" class="text-danger"></span>
-        </div>
-
-        <input type="submit" class="btn btn-primary" value="add" />
-    </form>
-}
+    <input type="submit" class="btn btn-primary" value="Промени" />
+</form>

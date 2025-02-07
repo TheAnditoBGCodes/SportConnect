@@ -8,6 +8,7 @@ using SportConnect.Models;
 using SportConnect.Web.Models;
 using System.Composition;
 using System.Diagnostics;
+using System.Security.Claims;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SportConnect.Web.Controllers
@@ -31,54 +32,67 @@ namespace SportConnect.Web.Controllers
 
         public IActionResult AddTournament()
         {
-            ViewBag.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
-            return View();
+            var model = new TournamentViewModel()
+            {
+                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name")
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult AddTournament(Tournament tournament)
+        public IActionResult AddTournament(TournamentViewModel tournament)
         {
+            tournament.OrganizerId = _userManager.GetUserAsync(this.User).Result.Id;
+
             if (!ModelState.IsValid)
             {
-                var user = this.User;
-                var currentUser = _userManager.GetUserAsync(user).Result;
-                if (currentUser != null)
-                {
-                    tournament.Organizer = currentUser;
-                    tournament.OrganizerId = currentUser.Id;
-                    _repository.Add(tournament);
-                    return RedirectToAction("AllTournaments");
-                }
-                ModelState.AddModelError("", "Could not determine the current user.");
+                tournament.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
+                return View(tournament);
             }
-            else
-            {
-                ViewBag.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
-            }
-            return View(tournament);
+
+            _repository.Add(tournament.ToTournament());
+            return RedirectToAction("AllTournaments", "Tournament");
         }
+
 
         public IActionResult EditTournament(int id)
         {
-            ViewBag.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
-            return View(_repository.GetById(id));
+            var tournament = _repository.GetById(id);
+            var model = new TournamentViewModel()
+            {
+                Id = tournament.Id,
+                OrganizerId = tournament.OrganizerId,
+                Date = tournament.Date,
+                Deadline = tournament.Deadline,
+                Description = tournament.Description,
+                Location = tournament.Location,
+                Name = tournament.Name,
+                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name")
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult EditTournament(Tournament tournament)
+        public IActionResult EditTournament(TournamentViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                _repository.Update(tournament);
-                return RedirectToAction("AllTournaments");
+                viewModel.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", viewModel.SportId);
+                return View(viewModel);
             }
-            else
-            {
-                ViewBag.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
-            }
-            return View(tournament);
+
+            var tournament = _repository.GetById(viewModel.Id ?? 0);
+            tournament.Name = viewModel.Name;
+            tournament.Description = viewModel.Description;
+            tournament.Date = viewModel.Date ?? tournament.Date;
+            tournament.Deadline = viewModel.Deadline ?? tournament.Deadline;
+            tournament.Location = viewModel.Location;
+            tournament.SportId = viewModel.SportId ?? tournament.SportId;
+
+            _repository.Update(tournament);
+            return RedirectToAction("AllTournaments", "Tournament");
         }
-        
+
         public IActionResult SportTournaments(int id)
         {
             var model = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport)
@@ -104,11 +118,11 @@ namespace SportConnect.Web.Controllers
 
             if (filter.Date != null)
             {
-                query = query.Where(x => x.Date == filter.Date.Value);
+                query = query.Where(x => x.Date.Date == filter.Date.Value.Date);
             }
             if (filter.SportId != null)
             {
-                query = query.Where(x => x.SportId >= filter.SportId.Value);
+                query = query.Where(x => x.SportId == filter.SportId.Value);
             }
 
             var model = new TournamentFilterViewModel

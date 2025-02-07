@@ -3,7 +3,9 @@ C:\Users\Lenovo\source\repos\SportConnect\SportConnect.DataAccess\bin\Debug\net8
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.DataAccess\bin\Debug\net8.0\SportConnect.DataAccess.dll
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.DataAccess\bin\Debug\net8.0\SportConnect.DataAccess.pdb
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.DataAccess\bin\Debug\net8.0\SportConnect.Models.dll
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.DataAccess\bin\Debug\net8.0\SportConnect.Utility.dll
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.DataAccess\bin\Debug\net8.0\SportConnect.Models.pdb
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.DataAccess\bin\Debug\net8.0\SportConnect.Utility.pdb
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.DataAccess\obj\Debug\net8.0\SportConnect.DataAccess.csproj.AssemblyReference.cache
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.DataAccess\obj\Debug\net8.0\SportConnect.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.DataAccess\obj\Debug\net8.0\SportConnect.DataAccess.AssemblyInfoInputs.cache

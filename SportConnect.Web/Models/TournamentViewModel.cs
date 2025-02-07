@@ -1,59 +1,55 @@
-﻿using SportConnect.Models;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using SportConnect.Models;
+using SportConnect.Utility;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Drawing;
 
-namespace SportConnect.Web.Models
+public class TournamentViewModel
 {
-    public class TournamentViewModel
+    public int? Id { get; set; }
+
+    [Required(ErrorMessage = "Името е задължително")]
+    [StringLength(100, MinimumLength = 5, ErrorMessage = "Името трябва да е между 5 и 100 символа")]
+    public string Name { get; set; }
+
+    [Required(ErrorMessage = "Описанието е задължително")]
+    [StringLength(100, MinimumLength = 5, ErrorMessage = "Описанието трябва да е между 5 и 100 символа")]
+    public string Description { get; set; }
+
+    public string? OrganizerId { get; set; }
+    public SportConnectUser? Organizer { get; set; }
+    public string? OrganizerName { get; set; }
+
+    [Required(ErrorMessage = "Датата на провеждане е задължителна")]
+    [DataType(DataType.DateTime)]
+    public DateTime? Date { get; set; }
+
+    [Required(ErrorMessage = "Крайният срок е задължителен")]
+    [DeadlineBeforeTournament("Date", ErrorMessage = "Крайният срок трябва да е преди датата на турнира.")]
+    [DataType(DataType.DateTime)]
+    public DateTime? Deadline { get; set; }
+
+    [Required(ErrorMessage = "Локацията е задължителна")]
+    [StringLength(100, MinimumLength = 5, ErrorMessage = "Локацията трябва да е между 5 и 100 символа")]
+    public string Location { get; set; }
+
+    [Required(ErrorMessage = "Спортът е задължителен")]
+    public int? SportId { get; set; }
+
+    public SelectList? Sports { get; set; }
+    public string? SportName { get; set; }
+    public Sport? Sport { get; set; }
+    public Tournament ToTournament()
     {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
-        public string OrganizerId { get; set; }
-        public string OrganizerName { get; set; }
-
-        public DateTime Date { get; set; }
-
-        public DateTime Deadline { get; set; }
-
-        public string Location { get; set; }
-
-        [Required]
-        public int SportId { get; set; }
-        public ICollection<SelectListItem> Sports { get; set; }
-        public string SportName { get; set; }
-
-        public Tournament ToTournament(int id)
+        return new Tournament
         {
-            return new Tournament
-            {
-                Id = id,
-                Name = Name,
-                Description = Description,
-                Deadline = Deadline,
-                Date = Date,
-                Location = Location,
-                SportId = SportId,
-                OrganizerId = OrganizerId
-            };
-        }
-        public Tournament ToTournament()
-        {
-            return new Tournament
-            {
-                Name = Name,
-                Description = Description,
-                Deadline = Deadline,
-                Date = Date,
-                Location = Location,
-                SportId = SportId,
-                OrganizerId = OrganizerId
-            };
-        }
+            Id = Id ?? 0,
+            Name = Name,
+            Description = Description,
+            Deadline = Deadline ?? DateTime.MinValue,
+            Date = Date ?? DateTime.MinValue,
+            Location = Location,
+            SportId = SportId.GetValueOrDefault(),
+            OrganizerId = OrganizerId
+        };
     }
 }

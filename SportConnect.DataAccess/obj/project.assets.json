@@ -1766,13 +1766,27 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.12",
           "Microsoft.AspNetCore.Identity.UI": "8.0.12",
           "Microsoft.EntityFrameworkCore": "9.0.1",
-          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.1"
+          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.1",
+          "SportConnect.Utility": "1.0.0"
         },
         "compile": {
           "bin/placeholder/SportConnect.Models.dll": {}
         },
         "runtime": {
           "bin/placeholder/SportConnect.Models.dll": {}
+        }
+      },
+      "SportConnect.Utility/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.UI": "8.0.12"
+        },
+        "compile": {
+          "bin/placeholder/SportConnect.Utility.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SportConnect.Utility.dll": {}
         }
       }
     }
@@ -5155,6 +5169,11 @@
       "type": "project",
       "path": "../SportConnect.Models/SportConnect.Models.csproj",
       "msbuildProject": "../SportConnect.Models/SportConnect.Models.csproj"
+    },
+    "SportConnect.Utility/1.0.0": {
+      "type": "project",
+      "path": "../SportConnect.Utility/SportConnect.Utility.csproj",
+      "msbuildProject": "../SportConnect.Utility/SportConnect.Utility.csproj"
     }
   },
   "projectFileDependencyGroups": {
