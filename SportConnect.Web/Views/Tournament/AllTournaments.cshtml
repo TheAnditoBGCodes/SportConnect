@@ -17,61 +17,62 @@
         <button type="submit" class="btn btn-primary">Търси</button>
     </form>
 
-    <h1>All tournaments</h1>
+    <h1>Всички турнири</h1>
 
     @if (Model.Tournaments.Count == 0)
     {
-        <h2>No tournaments in the system</h2>
+        <h2>Няма турнири в системата</h2>
     }
     else
     {
-            <table class="table" style="table-layout: fixed; width: 100%;">
-                <colgroup>
-                    <col style="width: 10%;"> <!-- Fixed width for ID -->
-                    <col style="width: 15%;"> <!-- Name column -->
-                    <col style="width: 10%;"> <!-- Name column -->
-                    <col style="width: 15%;"> <!-- Price column -->
-                    <col style="width: 10%;"> <!-- Button column -->
-                    <col style="width: 10%;"> <!-- Fixed width for ID -->
-                    <col style="width: 10%;"> <!-- Name column -->
-                    <col style="width: 10%;"> <!-- Price column -->
-                    <col style="width: 10%;"> <!-- Button column -->
-                </colgroup>
-                <thead>
+        <table class="table" style="table-layout: fixed; width: 100%;">
+            <colgroup>
+                <col style="width: 10%;"> <!-- Fixed width for ID -->
+                <col style="width: 15%;"> <!-- Name column -->
+                <col style="width: 10%;"> <!-- Name column -->
+                <col style="width: 15%;"> <!-- Price column -->
+                <col style="width: 10%;"> <!-- Button column -->
+                <col style="width: 10%;"> <!-- Fixed width for ID -->
+                <col style="width: 10%;"> <!-- Name column -->
+                <col style="width: 10%;"> <!-- Price column -->
+                <col style="width: 10%;"> <!-- Button column -->
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Име</th>
+                    <th scope="col">Описание</th>
+                    <th scope="col">Дата на провеждане</th>
+                    <th scope="col">Краен срок</th>
+                    <th scope="col">Организатор</th>
+                    <th scope="col">Локация</th>
+                    <th scope="col">Спорт</th>
+                    <th scope="col">Бутони</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Tournaments)
+                {
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Име</th>
-                        <th scope="col">Описание</th>
-                        <th scope="col">Дата на провеждане</th>
-                        <th scope="col">Краен срок</th>
-                        <th scope="col">Организатор</th>
-                        <th scope="col">Локация</th>
-                        <th scope="col">Спорт</th>
+                        <td style="text-align: center; vertical-align: middle;">@item.Id</td>
+                        <td style="text-align: left; vertical-align: middle;">@item.Name</td>
+                        <td style="text-align: right; vertical-align: middle;">@item.Description</td>
+                        <td style="text-align: center; vertical-align: middle;">@item.Date</td>
+                        <td style="text-align: left; vertical-align: middle;">@item.Deadline</td>
+                        <td style="text-align: right; vertical-align: middle;">@item.Organizer.FullName</td>
+                        <td style="text-align: center; vertical-align: middle;">@item.Location</td>
+                        <td style="text-align: center; vertical-align: middle;">@item.Sport.Name</td>
+                        <td style="text-align: center; vertical-align: middle; white-space: nowrap;">
+                            <div class="btn-group" role="group">
+                                <a asp-controller="Tournament" asp-action="EditTournament" asp-route-id="@item.Id" class="btn btn-primary">Редактирай</a>
+                                <a asp-controller="Tournament" asp-action="DeleteTournament" asp-route-id="@item.Id" class="btn btn-primary">Изтрий</a>
+                                <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@item.Id" class="btn btn-primary">Участвай</a>
+                            </div>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Tournaments)
-                    {
-                        <tr>
-                            <td style="text-align: center; vertical-align: middle;">@item.Id</td>
-                            <td style="text-align: left; vertical-align: middle;">@item.Name</td>
-                            <td style="text-align: right; vertical-align: middle;">@item.Description</td>
-                            <td style="text-align: center; vertical-align: middle;">@item.Date</td>
-                            <td style="text-align: left; vertical-align: middle;">@item.Deadline</td>
-                            <td style="text-align: right; vertical-align: middle;">@item.Organizer.FullName</td>
-                            <td style="text-align: center; vertical-align: middle;">@item.Location</td>
-                            <td style="text-align: center; vertical-align: middle;">@item.Sport.Name</td>
-                            <td style="text-align: center; vertical-align: middle; white-space: nowrap;">
-                                <div class="btn-group" role="group">
-                                    <a asp-controller="Tournament" asp-action="EditTournament" asp-route-id="@item.Id" class="btn btn-primary">Редактирай</a>
-                                    <a asp-controller="Tournament" asp-action="DeleteTournament" asp-route-id="@item.Id" class="btn btn-primary">Изтрий</a>
-                                    <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@item.Id" class="btn btn-primary">Участвай</a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                }
+            </tbody>
+        </table>
     }
     <a asp-controller="Tournament" asp-action="AddTournament" class="btn btn-primary">Добави</a>
 }

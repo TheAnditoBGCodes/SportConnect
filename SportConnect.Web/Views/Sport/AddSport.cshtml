@@ -1,21 +1,22 @@
 ﻿@using SportConnect.Models
 @model Sport
 @{
-    <h1>Add category</h1>
+    <h1>Добави спорт</h1>
     <form method="post">
 
         <div class="form-floating mb-3">
-            <input asp-for="@Model.Name" class="form-control" aria-required="true" placeholder="име" />
+            <input asp-for="@Model.Name" class="form-control" aria-required="true" placeholder="Име" />
             <label asp-for="@Model.Name">Име</label>
             <span asp-validation-for="@Model.Name" class="text-danger"></span>
         </div>
 
         <div class="form-floating mb-3">
-            <input asp-for="@Model.Description" class="form-control" aria-required="true" placeholder="description" />
-            <label asp-for="@Model.Description">description</label>
+            <input asp-for="@Model.Description" class="form-control" aria-required="true" placeholder="Описание" />
+            <label asp-for="@Model.Description">Описание</label>
             <span asp-validation-for="@Model.Description" class="text-danger"></span>
         </div>
 
-        <input type="submit" class="btn btn-primary" value="add" />
+        <input type="submit" class="btn btn-primary" value="Добави" />
     </form>
+    <a asp-action="AllSports" class="btn btn-primary" asp-asp-controller="Sport">Назад</a>
 }

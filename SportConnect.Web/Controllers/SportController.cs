@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Web.Models;
 using System.Diagnostics;
+using System.Linq;
 
 namespace SportConnect.Web.Controllers
 {
@@ -12,16 +14,19 @@ namespace SportConnect.Web.Controllers
     {
         private readonly ILogger<SportController> _logger;
         public IRepository<Sport> _repository { get; set; }
+        public IRepository<Tournament> _tournamentRepository { get; set; }
+        public IRepository<Participation> _participationsRepository { get; set; }
 
-        public SportController(ILogger<SportController> logger, IRepository<Sport> repository)
+        public SportController(ILogger<SportController> logger, IRepository<Sport> repository, IRepository<Tournament> tournamentRepository, IRepository<Participation> participationsRepository)
         {
             _logger = logger;
-            this._repository = repository;
+            _repository = repository;
+            _tournamentRepository = tournamentRepository;
+            _participationsRepository = participationsRepository;
         }
 
         public IActionResult AddSport()
         {
-            ViewBag.Sports = new SelectList(_repository.GetAll(), "Id", "Name");
             return View();
         }
 
@@ -34,7 +39,6 @@ namespace SportConnect.Web.Controllers
 
         public IActionResult EditSport(int id)
         {
-            ViewBag.Sports = new SelectList(_repository.GetAll(), "Id", "Name");
             var entity = _repository.GetById(id);
             return View(entity);
         }
@@ -53,8 +57,8 @@ namespace SportConnect.Web.Controllers
 
         public IActionResult DeleteSport(int id)
         {
-            var entity = _repository.GetById(id);
-            _repository.Delete(entity);
+            var sport = _repository.GetById(id);
+            _repository.Delete(sport);
             return RedirectToAction("AllSports");
         }
 

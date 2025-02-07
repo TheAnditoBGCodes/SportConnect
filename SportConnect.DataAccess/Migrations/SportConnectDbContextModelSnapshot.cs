@@ -309,9 +309,10 @@ namespace SportConnect.DataAccess.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("OrganizerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("SportId")
+                    b.Property<int>("SportId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -397,11 +398,15 @@ namespace SportConnect.DataAccess.Migrations
                 {
                     b.HasOne("SportConnect.Models.SportConnectUser", "Organizer")
                         .WithMany("OrganizedTournaments")
-                        .HasForeignKey("OrganizerId");
+                        .HasForeignKey("OrganizerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SportConnect.Models.Sport", "Sport")
                         .WithMany("Tournaments")
-                        .HasForeignKey("SportId");
+                        .HasForeignKey("SportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Organizer");
 

@@ -12,8 +12,8 @@ using SportConnect.DataAccess;
 namespace SportConnect.DataAccess.Migrations
 {
     [DbContext(typeof(SportConnectDbContext))]
-    [Migration("20250129185243_UsersOrganizedTournaments")]
-    partial class UsersOrganizedTournaments
+    [Migration("20250207092445_SportConnectDatabaseInitial")]
+    partial class SportConnectDatabaseInitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -298,15 +298,18 @@ namespace SportConnect.DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Location")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("OrganizerId")
                         .IsRequired()

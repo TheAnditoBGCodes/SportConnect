@@ -42,7 +42,14 @@ namespace SportConnect.Web.Controllers
         [HttpPost]
         public IActionResult AddTournament(TournamentViewModel tournament)
         {
-            tournament.OrganizerId = _userManager.GetUserAsync(this.User).Result.Id;
+            var user = _userManager.GetUserAsync(this.User).Result;
+
+            if (user == null)
+            {
+                return RedirectToAction("AllTournaments", "Tournament");
+            }
+
+            tournament.OrganizerId = user.Id;
 
             if (!ModelState.IsValid)
             {

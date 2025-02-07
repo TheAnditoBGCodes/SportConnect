@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SportConnect.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class SportConnectMigration : Migration
+    public partial class SportConnectDatabaseInitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,9 @@ namespace SportConnect.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -54,14 +57,14 @@ namespace SportConnect.DataAccess.Migrations
                 name: "Sports",
                 columns: table => new
                 {
-                    SportId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sports", x => x.SportId);
+                    table.PrimaryKey("PK_Sports", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -174,20 +177,19 @@ namespace SportConnect.DataAccess.Migrations
                 name: "Tournaments",
                 columns: table => new
                 {
-                    TournamentId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     OrganizerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Deadline = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     SportId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tournaments", x => x.TournamentId);
+                    table.PrimaryKey("PK_Tournaments", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Tournaments_AspNetUsers_OrganizerId",
                         column: x => x.OrganizerId,
@@ -198,7 +200,7 @@ namespace SportConnect.DataAccess.Migrations
                         name: "FK_Tournaments_Sports_SportId",
                         column: x => x.SportId,
                         principalTable: "Sports",
-                        principalColumn: "SportId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -225,7 +227,7 @@ namespace SportConnect.DataAccess.Migrations
                         name: "FK_Participations_Tournaments_TournamentId",
                         column: x => x.TournamentId,
                         principalTable: "Tournaments",
-                        principalColumn: "TournamentId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
