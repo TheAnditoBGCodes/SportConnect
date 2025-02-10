@@ -132,12 +132,15 @@ namespace SportConnect.Web.Controllers
                 query = query.Where(x => x.SportId == filter.SportId.Value);
             }
 
+            var currentUser = _userManager.GetUserAsync(this.User).Result;
             var model = new TournamentFilterViewModel
             {
                 Date = filter.Date,
                 SportId = filter.SportId,
                 Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name"),
-                Tournaments = query.Include(x => x.Organizer).Include(x => x.Sport).ToList()
+                Tournaments = query.Include(x => x.Organizer).Include(x => x.Sport).ToList(),
+                UserParticipations = _participationsRepository.GetAllBy(p => p.ParticipantId == currentUser.Id).ToList(),
+                UserId = currentUser.Id
             };
 
             return View(model);

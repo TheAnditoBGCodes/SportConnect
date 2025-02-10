@@ -42,7 +42,6 @@ namespace SportConnect.Web.Controllers
                 Location = user.Location,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                PasswordHash = user.PasswordHash
             };
             return View(model);
         }
@@ -60,7 +59,6 @@ namespace SportConnect.Web.Controllers
                 useless.Location = user.Location;
                 useless.Email = user.Email;
                 useless.PhoneNumber = user.PhoneNumber;
-                useless.PasswordHash = user.PasswordHash;
                 _repository.Update(useless);
                 return RedirectToAction("PersonalData", "User");
             }
@@ -81,7 +79,6 @@ namespace SportConnect.Web.Controllers
                 Location = user.Location,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                PasswordHash = user.PasswordHash
             };
             return View(model);
         }
@@ -100,7 +97,6 @@ namespace SportConnect.Web.Controllers
                 Location = user.Location,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                PasswordHash = user.PasswordHash
             };
             return View(model);
         }
@@ -118,7 +114,6 @@ namespace SportConnect.Web.Controllers
                 useless.Location = user.Location;
                 useless.Email = user.Email;
                 useless.PhoneNumber = user.PhoneNumber;
-                useless.PasswordHash = user.PasswordHash;
                 _repository.Update(useless);
                 return RedirectToAction("AllUsers", "User");
             }
@@ -131,15 +126,41 @@ namespace SportConnect.Web.Controllers
             return View(model.ToList());
         }
 
-        public IActionResult DeleteUser(string id)
+        public IActionResult DeleteThisUser()
         {
             var user = _userManager.GetUserAsync(this.User).Result;
             var result = _userManager.DeleteAsync(user).Result;
             if (result.Succeeded)
             {
                 _signInManager.SignOutAsync();
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> DeleteIdUser(string id)
+        {
+            var user = _repository.GetUserById(id);
+
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (user.Id == currentUser.Id)
+            {
+                var result = await _userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignOutAsync();
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            var result1 = await _userManager.DeleteAsync(user);
+            if (result1.Succeeded)
+            {
+                return RedirectToAction("AllUsers");
+            }
+
             return RedirectToAction("AllUsers");
         }
 

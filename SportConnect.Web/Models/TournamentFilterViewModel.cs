@@ -12,5 +12,7 @@ namespace SportConnect.Web.Models
         public int? SportId { get; set; }
         public SelectList Sports { get; set; }
         public List<Tournament> Tournaments { get; set; }
+        public List<Participation> UserParticipations { get; set; }
+        public string? UserId { get; set; }
     }
 }

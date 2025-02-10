@@ -20,7 +20,10 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
+using SportConnect.DataAccess;
 using SportConnect.Models;
 using SportConnect.Utility;
 
@@ -28,6 +31,8 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
+
+        private SportConnectDbContext _context;
         private readonly SignInManager<SportConnectUser> _signInManager;
         private readonly UserManager<SportConnectUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -36,7 +41,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
-        public RegisterModel(
+        public RegisterModel(SportConnectDbContext context,
             UserManager<SportConnectUser> userManager,
             IUserStore<SportConnectUser> userStore,
             SignInManager<SportConnectUser> signInManager,
@@ -45,6 +50,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             IEmailSender emailSender)
         {
             _userManager = userManager;
+            _context = context;
             _userStore = userStore;
             _emailStore = (IUserEmailStore<SportConnectUser>)GetEmailStore();
             _signInManager = signInManager;
@@ -84,7 +90,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "Имейл")]
             public string Email { get; set; }
 
             /// <summary>
@@ -92,9 +98,9 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(int.MaxValue, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
+            [StringLength(int.MaxValue, ErrorMessage = "Паролата трябва да е поне {2} символа", MinimumLength = 8)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Парола")]
             public string Password { get; set; }
 
             /// <summary>
@@ -102,21 +108,26 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Потвърди паролата")]
+            [Compare("Password", ErrorMessage = "Това поле не съответства с въведената парола")]
             public string ConfirmPassword { get; set; }
 
             public string? Role { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; } = new List<SelectListItem>();
 
+            [Required(ErrorMessage = "Моля, въведете потребителско име.")]
+            [StringLength(100, ErrorMessage = "Потребителското име трябва да е от {2} до {1} символа", MinimumLength = 5)]
+            [Display(Name = "Потребителско име")]
+            public string Username { get; set; }
+
             [Required(ErrorMessage = "Моля, въведете първото си име.")]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            [StringLength(100, ErrorMessage = "Името трябва да е от {2} до {1} символа", MinimumLength = 2)]
             [Display(Name = "Първо име")]
             public string FirstName { get; set; }
 
             [Required(ErrorMessage = "Моля, въведете фамилното си име.")]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            [StringLength(100, ErrorMessage = "Фамилията трябва да е от {2} до {1} символа", MinimumLength = 2)]
             [Display(Name = "Фамилия")]
             public string LastName { get; set; }
 
@@ -126,7 +137,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             public int Age { get; set; }
 
             [Required(ErrorMessage = "Моля, въведете местоположение.")]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
+            [StringLength(100, ErrorMessage = "Местоположението трябва да е от {2} до {1} символа", MinimumLength = 4)]
             [Display(Name = "Местоположение")]
             public string Location { get; set; }
 
@@ -173,7 +184,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                     PhoneNumber = Input.PhoneNumber,
                     Location = Input.Location
                 };
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -214,7 +225,14 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 }
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    if (error.Code == "DuplicateUserName")
+                    {
+                        ModelState.AddModelError(string.Empty, "Потребителското име вече е заето.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
 

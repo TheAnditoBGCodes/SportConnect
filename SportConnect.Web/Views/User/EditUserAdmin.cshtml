@@ -1,12 +1,12 @@
 ﻿@using SportConnect.Models
 @model SportConnectUserViewModel
 @{
-    <h1>update sport</h1>
+    <h1>Промени профил</h1>
     <form method="post">
 
         <div class="form-floating mb-3">
             <input asp-for="@Model.UserName" class="form-control" aria-required="true" placeholder="user име" />
-            <label asp-for="@Model.UserName">Име</label>
+            <label asp-for="@Model.UserName">Потребителско име</label>
             <span asp-validation-for="@Model.UserName" class="text-danger"></span>
         </div>
 
@@ -24,13 +24,13 @@
 
         <div class="form-floating mb-3">
             <input type="number" asp-for="@Model.Age" class="form-control" aria-required="true" placeholder="Age" />
-            <label asp-for="@Model.Age">Age</label>
+            <label asp-for="@Model.Age">Възраст</label>
             <span asp-validation-for="@Model.Age" class="text-danger"></span>
         </div>
 
         <div class="form-floating mb-3">
             <input asp-for="@Model.Location" class="form-control" aria-required="true" placeholder="Location" />
-            <label asp-for="@Model.Location">Location</label>
+            <label asp-for="@Model.Location">Локация</label>
             <span asp-validation-for="@Model.Location" class="text-danger"></span>
         </div>
 
@@ -45,13 +45,7 @@
             <label asp-for="@Model.PhoneNumber">Телефонен номер</label>
             <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
         </div>
-
-        <div class="form-floating mb-3" style="display: none;">
-            <input readonly type="text" asp-for="@Model.PasswordHash" class="form-control" aria-required="true" placeholder="OrganizerId" />
-            <label asp-for="@Model.PasswordHash">@Model.PasswordHash</label>
-            <span asp-validation-for="@Model.PasswordHash" class="text-danger"></span>
-        </div>
-
-        <input type="submit" class="btn btn-primary" value="update" />
+        <input type="submit" class="btn btn-primary" value="Промени" />
     </form>
+    <a asp-action="AllUsers" class="btn btn-primary" asp-controller="User">Назад</a>
 }

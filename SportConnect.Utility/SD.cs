@@ -2,7 +2,7 @@
 {
     public static class SD
     {
-        public const string AdminRole = "Admin";
-        public const string UserRole = "User";
+        public const string AdminRole = "Администратор";
+        public const string UserRole = "Потребител";
     }
 }

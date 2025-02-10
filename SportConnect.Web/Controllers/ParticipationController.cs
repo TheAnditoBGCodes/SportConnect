@@ -29,15 +29,34 @@ namespace SportConnect.Web.Controllers
 
         public IActionResult AddParticipation(int id)
         {
-            var tournament = _tournamentsRepository.GetAll().FirstOrDefault(x  => x.Id == id);
-            var user = this.User;
-            var currentUser = _userManager.GetUserAsync(user).Result;
-            var participation = new Participation();
-            participation.Participant = currentUser;
-            participation.ParticipantId = currentUser.Id;
-            participation.RegistrationDate = DateTime.Now;
-            participation.Tournament = tournament;
-            participation.TournamentId = id;
+            var currentTournament = _tournamentsRepository.GetAll().FirstOrDefault(x => x.Id == id);
+            var currentUser = _userManager.GetUserAsync(this.User).Result;
+
+            if (currentTournament == null || currentUser == null)
+            {
+                return NotFound("Invalid tournament or user.");
+            }
+
+            var currentUserId = currentUser.Id;
+
+            var existingParticipation = _participationsRepository
+                .GetAllBy(p => p.TournamentId == id && p.ParticipantId == currentUserId)
+                .FirstOrDefault();
+
+            if (existingParticipation != null)
+            {
+                return RedirectToAction("AllTournaments", "Tournament");
+            }
+
+            var participation = new Participation
+            {
+                Participant = currentUser,
+                ParticipantId = currentUser.Id,
+                RegistrationDate = DateTime.Now,
+                Tournament = currentTournament,
+                TournamentId = id
+            };
+
             _participationsRepository.Add(participation);
             return RedirectToAction("AllTournaments", "Tournament");
         }
@@ -58,9 +77,16 @@ namespace SportConnect.Web.Controllers
 
         public IActionResult DeleteParticipation(int id)
         {
-            var participation = _participationsRepository.GetAll().FirstOrDefault(x => x.Id == id);
+            var participation = _participationsRepository.GetAll().FirstOrDefault(x => x.TournamentId == id);
             _participationsRepository.Delete(participation);
             return RedirectToAction("AllParticipations");
+        }
+
+        public IActionResult DeleteParticipationTournament(int id)
+        {
+            var participation = _participationsRepository.GetAll().FirstOrDefault(x => x.TournamentId == id);
+            _participationsRepository.Delete(participation);
+            return RedirectToAction("AllTournaments", "Tournament");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

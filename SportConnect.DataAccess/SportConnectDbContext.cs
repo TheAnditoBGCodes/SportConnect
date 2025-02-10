@@ -21,7 +21,6 @@ namespace SportConnect.DataAccess
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
             builder.Entity<Participation>()
                 .HasOne(p => p.Tournament)
                 .WithMany(t => t.Participations)

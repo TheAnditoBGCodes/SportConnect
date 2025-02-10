@@ -1,7 +1,7 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Регистрирай се";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -12,6 +12,12 @@
             <h2>Създайте нов акаунт</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Username" class="form-control" aria-required="true" placeholder="Вашето потребителско име" />
+                <label asp-for="Input.Username">Потребителско име</label>
+                <span asp-validation-for="Input.Username" class="text-danger"></span>
+            </div>
 
             <div class="form-floating mb-3">
                 <input asp-for="Input.FirstName" class="form-control" aria-required="true" placeholder="Вашето име" />
@@ -63,7 +69,7 @@
 
             <div class="form-floating mb-3">
                 <select asp-for="Input.Role" class="form-select" asp-items="@Model.Input.RoleList">
-                    <option disabled selected>-Изберете роля-</option>
+                    <option disabled selected>Изберете роля</option>
                 </select>
             </div>
 
@@ -72,15 +78,15 @@
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h3>Use another service to register.</h3>
+            <h3>Използвайте друга услуга за регистрация.</h3>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
                     <div>
                         <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
+                            Няма конфигурирани външни услуги за удостоверяване. Вижте тази <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                статия относно настройването на това ASP.NET приложение за поддръжка на влизане чрез външни услуги</a>.
                         </p>
                     </div>
                 }
