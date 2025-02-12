@@ -1,0 +1,75 @@
+﻿@using SportConnect.Web.Models
+@model TournamentDeletionViewModel
+    <h1>Изтрий турнир</h1>
+    <form method="post">
+        <div class="form-floating mb-3">
+            <input readonly asp-for="Name" class="form-control" aria-required="true" placeholder="Име..." />
+            <label asp-for="Name">Име</label>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input readonly asp-for="Description" class="form-control" aria-required="true" placeholder="Описание..." />
+            <label asp-for="Description">Описание</label>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input readonly type="datetime-local" asp-for="Date" class="form-control" aria-required="true" />
+            <label asp-for="Date">Дата на провеждане</label>
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input readonly type="datetime-local" date-time-validation="" asp-for="Deadline" class="form-control" aria-required="true" />
+            <label asp-for="Deadline">Краен срок</label>
+            <span asp-validation-for="Deadline" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input readonly type="text" asp-for="Location" class="form-control" aria-required="true" placeholder="Локация..." />
+            <label asp-for="Location">Локация</label>
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <select readonly asp-for="SportId" class="form-select" asp-items="Model.Sports">
+            </select>
+            <span asp-validation-for="SportId" class="text-danger"></span>
+        </div>
+
+        <h2>Участия</h2>
+        <table class="table" style="table-layout: fixed; width: 100%;">
+            <colgroup>
+                <col style="width: 20%;"> <!-- Fixed width for ID -->
+                <col style="width: 20%;"> <!-- Name column -->
+                <col style="width: 20%;"> <!-- Name column -->
+                <col style="width: 20%;"> <!-- Price column -->
+                <col style="width: 20%;"> <!-- Button column -->
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Участник</th>
+                    <th scope="col">Дата на регистрация</th>
+                    <th scope="col">Турнир</th>
+                    <th scope="col">Дата на провеждане</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Participations)
+                {
+                    <tr>
+                        <td style="text-align: center; vertical-align: middle;">@item.Id</td>
+                        <td style="text-align: left; vertical-align: middle;">@item.Participant.FullName</td>
+                        <td style="text-align: right; vertical-align: middle;">@item.RegistrationDate</td>
+                        <td style="text-align: right; vertical-align: middle;">@item.Tournament.Name</td>
+                        <td style="text-align: right; vertical-align: middle;">@item.Tournament.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <input type="submit" class="btn btn-primary" value="Изтрий" />
+    </form>
+<a asp-action="AllTournaments" class="btn btn-primary" asp-asp-controller="Tournament">Назад</a>

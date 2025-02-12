@@ -148,6 +148,26 @@ namespace SportConnect.Web.Controllers
 
         public IActionResult DeleteTournament(int id)
         {
+            var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant);
+            var tournament = _repository.GetById(id);
+            var model = new TournamentDeletionViewModel()
+            {
+                Id = tournament.Id,
+                OrganizerId = tournament.OrganizerId,
+                Date = tournament.Date,
+                Deadline = tournament.Deadline,
+                Description = tournament.Description,
+                Location = tournament.Location,
+                Name = tournament.Name,
+                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name"),
+                Participations = range
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteTournament(int id, TournamentDeletionViewModel model)
+        {
             var range = _participationsRepository.GetAllBy(x => x.TournamentId == id);
             _participationsRepository.DeleteRange(range);
             var entity = _repository.GetById(id);

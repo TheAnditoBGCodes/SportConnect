@@ -1,1 +1,2 @@
-- Deletions Confirmation Screens
+- Participation Deletion Confirmation Screen
+- User (from PersonalData) Deletion Confirmation Screen

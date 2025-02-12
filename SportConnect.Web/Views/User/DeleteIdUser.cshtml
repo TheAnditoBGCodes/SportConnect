@@ -1,0 +1,82 @@
+﻿
+@using SportConnect.Models
+@model SportConnectUserDeletionViewModel
+@{
+    <h1>Изтрий профил</h1>
+    <form method="post">
+
+        <div class="form-floating mb-3">
+            <input readonly asp-for="@Model.UserName" class="form-control" aria-required="true" placeholder="user име" />
+            <label asp-for="@Model.UserName">Потребителско име</label>
+            <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input readonly asp-for="@Model.FirstName" class="form-control" aria-required="true" placeholder="Вашето име" />
+            <label asp-for="@Model.FirstName">Име</label>
+            <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input readonly asp-for="@Model.LastName" class="form-control" aria-required="true" placeholder="Вашата фамилия" />
+            <label asp-for="@Model.LastName">Фамилия</label>
+            <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input readonly type="number" asp-for="@Model.Age" class="form-control" aria-required="true" placeholder="Age" />
+            <label asp-for="@Model.Age">Възраст</label>
+            <span asp-validation-for="@Model.Age" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input readonly asp-for="@Model.Location" class="form-control" aria-required="true" placeholder="Location" />
+            <label asp-for="@Model.Location">Локация</label>
+            <span asp-validation-for="@Model.Location" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input readonly asp-for="@Model.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+            <label asp-for="@Model.Email">Имейл</label>
+            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input readonly type="tel" asp-for="@Model.PhoneNumber" class="form-control" aria-required="true" placeholder="0888 123 456" />
+            <label asp-for="@Model.PhoneNumber">Телефонен номер</label>
+            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <h2>Участия</h2>
+        <table class="table" style="table-layout: fixed; width: 100%;">
+            <colgroup>
+                <col style="width: 25%;"> <!-- Fixed width for ID -->
+                <col style="width: 25%;"> <!-- Name column -->
+                <col style="width: 25%;"> <!-- Name column -->
+                <col style="width: 25%;"> <!-- Price column -->
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Дата на регистрация</th>
+                    <th scope="col">Турнир</th>
+                    <th scope="col">Дата на провеждане</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Participations)
+                {
+                    <tr>
+                        <td style="text-align: center; vertical-align: middle;">@item.Id</td>
+                        <td style="text-align: right; vertical-align: middle;">@item.RegistrationDate</td>
+                        <td style="text-align: right; vertical-align: middle;">@item.Tournament.Name</td>
+                        <td style="text-align: right; vertical-align: middle;">@item.Tournament.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <input type="submit" class="btn btn-primary" value="Изтрий" />
+    </form>
+    <a asp-action="AllUsers" class="btn btn-primary" asp-controller="User">Назад</a>
+}

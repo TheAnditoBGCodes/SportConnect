@@ -17,13 +17,15 @@ namespace SportConnect.Web.Controllers
     {
         private readonly ILogger<UserController> _logger;
         private readonly UserManager<SportConnectUser> _userManager;
+        public IRepository<Participation> _participationRepository;
         private readonly SignInManager<SportConnectUser> _signInManager;
         public IRepository<SportConnectUser> _repository { get; set; }
 
-        public UserController(ILogger<UserController> logger, UserManager<SportConnectUser> userManager, SignInManager<SportConnectUser> signInManager, IRepository<SportConnectUser> repository)
+        public UserController(ILogger<UserController> logger, UserManager<SportConnectUser> userManager, IRepository<Participation> participationRepository, SignInManager<SportConnectUser> signInManager, IRepository<SportConnectUser> repository)
         {
             _logger = logger;
             _userManager = userManager;
+            _participationRepository = participationRepository;
             _signInManager = signInManager;
             _repository = repository;
         }
@@ -139,6 +141,27 @@ namespace SportConnect.Web.Controllers
         }
 
         public async Task<IActionResult> DeleteIdUser(string id)
+        {
+            var range = _participationRepository.AllWithIncludes(x => x.Tournament).Where(x => x.ParticipantId == id);
+            var user = _repository.GetUserById(id);
+            var names = user.FullName.Split(' ').ToList();
+            var model = new SportConnectUserDeletionViewModel()
+            {
+                Id = id,
+                UserName = user.UserName,
+                FirstName = names[0],
+                LastName = names[1],
+                Age = user.Age,
+                Location = user.Location,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Participations = range
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteIdUser(string id, SportConnectUserDeletionViewModel model)
         {
             var user = _repository.GetUserById(id);
 
