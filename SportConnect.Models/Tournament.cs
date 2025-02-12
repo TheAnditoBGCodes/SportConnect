@@ -39,7 +39,7 @@ namespace SportConnect.Models
         [StringLength(100, MinimumLength = 5, ErrorMessage = "Локацията трябва да е между 5 и 100 символа")]
         public string Location { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Спортът е задължителен")]
         [ForeignKey(nameof(Sport))]
         public int SportId { get; set; }
         public Sport Sport { get; set; }

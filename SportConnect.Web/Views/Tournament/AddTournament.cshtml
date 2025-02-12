@@ -33,7 +33,10 @@
         </div>
 
         <div class="form-floating mb-3">
-            <select asp-for="SportId" class="form-select" asp-items="Model.Sports"></select>
+            <select asp-for="SportId" class="form-select" asp-items="Model.Sports">
+                <option disabled selected>Избери спорт</option>
+            </select>
+            <span asp-validation-for="SportId" class="text-danger"></span>
         </div>
 
         <input type="submit" class="btn btn-primary" value="Добави" />

@@ -1,4 +1,1 @@
-- Log In Invalid Attempt Fix
-- Log In is Possible to Use Email or Username in Same Box 
-- Tournament Add & Edit Views -> Sport Selection Validation if not Selected and Default Selection
 - Deletions Confirmation Screens

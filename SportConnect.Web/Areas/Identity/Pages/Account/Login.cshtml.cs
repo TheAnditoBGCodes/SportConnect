@@ -15,18 +15,47 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SportConnect.Models;
+using SportConnect.DataAccess;
 
 namespace SportConnect.Web.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<SportConnectUser> _signInManager;
-        private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<SportConnectUser> signInManager, ILogger<LoginModel> logger)
+        private SportConnectDbContext _context;
+        private readonly SignInManager<SportConnectUser> _signInManager;
+        private readonly UserManager<SportConnectUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUserStore<SportConnectUser> _userStore;
+        private readonly IUserEmailStore<SportConnectUser> _emailStore;
+        private readonly ILogger<RegisterModel> _logger;
+        private readonly IEmailSender _emailSender;
+
+        public LoginModel(SportConnectDbContext context,
+            UserManager<SportConnectUser> userManager,
+            IUserStore<SportConnectUser> userStore,
+            SignInManager<SportConnectUser> signInManager,
+            ILogger<RegisterModel> logger,
+            RoleManager<IdentityRole> roleManager,
+            IEmailSender emailSender)
         {
+            _userManager = userManager;
+            _context = context;
+            _userStore = userStore;
+            _emailStore = (IUserEmailStore<SportConnectUser>)GetEmailStore();
             _signInManager = signInManager;
+            _emailSender = emailSender;
             _logger = logger;
+            _roleManager = roleManager;
+        }
+
+        private IUserEmailStore<SportConnectUser> GetEmailStore()
+        {
+            if (!_userManager.SupportsUserEmail)
+            {
+                throw new NotSupportedException("The default UI requires a user store with email support.");
+            }
+            return (IUserEmailStore<SportConnectUser>)_userStore;
         }
 
         /// <summary>
@@ -65,9 +94,8 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+            [Required(ErrorMessage = "Моля, въведете потребителско име или имейл.")]
+            public string UserNameOrEmail { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -102,39 +130,39 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
-
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                return Page();
+            }
+
+            var user = await _userManager.FindByEmailAsync(Input.UserNameOrEmail);
+            if (user == null)
+            {
+                user = await _userManager.FindByNameAsync(Input.UserNameOrEmail);
+            }
+
+            if (user != null)
+            {
+                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
+                    return LocalRedirect(returnUrl ?? "~/");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
+                    ModelState.AddModelError(string.Empty, "Грешно потребителско име/имейл или парола.");
                 }
             }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Потребителят не е намерен.");
+            }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
     }
