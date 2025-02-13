@@ -1,11 +1,11 @@
 ﻿@using SportConnect.Models
 @model List<ParticipationViewModel>
 @{
-    <h1>Всички участия</h1>
+    <h1>Вашите участия</h1>
 
     @if (Model.Count == 0)
     {
-        <h2>Няма участия в системата</h2>
+        <h2>Нямате участия</h2>
     }
     else
     {
@@ -17,13 +17,11 @@
                 <col style="width: 20%;"> <!-- Price column -->
                 <col style="width: 10%;"> <!-- Button column -->
                 <col style="width: 10%;"> <!-- Fixed width for ID -->
-                <col style="width: 10%;"> <!-- Fixed width for ID -->
-                <col style="width: 10%;"> <!-- Fixed width for ID -->
+                <col style="width: 20%;"> <!-- Fixed width for ID -->
             </colgroup>
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Участник</th>
                     <th scope="col">Дата на регистрация</th>
                     <th scope="col">Турнир</th>
                     <th scope="col">Спорт</th>
@@ -37,7 +35,6 @@
                 {
                     <tr>
                         <td style="text-align: center; vertical-align: middle;">@item.Id</td>
-                        <td style="text-align: left; vertical-align: middle;">@item.ParticipantName</td>
                         <td style="text-align: right; vertical-align: middle;">@item.RegistrationDate</td>
                         <td style="text-align: right; vertical-align: middle;">@item.TournamentName</td>
                         <td style="text-align: right; vertical-align: middle;">@item.TournamentSport</td>
@@ -45,7 +42,7 @@
                         <td style="text-align: right; vertical-align: middle;">@item.TournamentDeadLine</td>
                         <td style="text-align: center; vertical-align: middle; white-space: nowrap;">
                             <div class="btn-group" role="group">
-                                <a asp-controller="Participation" asp-action="DeleteParticipationAll" asp-route-id="@item.Id" class="btn btn-primary">Изтрий</a>
+                                <a asp-controller="Participation" asp-action="DeleteParticipationUser" asp-route-id="@item.Id" class="btn btn-primary">Изтрий</a>
                             </div>
                         </td>
                     </tr>

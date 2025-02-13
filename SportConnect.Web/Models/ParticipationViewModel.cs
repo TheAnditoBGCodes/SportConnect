@@ -16,9 +16,11 @@ namespace SportConnect.Web.Models
         public DateTime RegistrationDate { get; set; }
 
         public DateTime TournamentDate { get; set; }
+        public DateTime TournamentDeadLine { get; set; }
 
         public int TournamentId { get; set; }
         public string TournamentName { get; set; }
+        public string TournamentSport { get; set; }
 
     }
 }

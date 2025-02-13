@@ -1,9 +1,22 @@
 ﻿@using SportConnect.Models
-@model List<TournamentViewModel>
+@model SportDeletionViewModel
 @{
-    <h1>Всички турнири</h1>
+    <h1>Информация за този спорт</h1>
+        <div class="form-floating mb-3">
+            <input readonly asp-for="@Model.Name" class="form-control" aria-required="true" placeholder="Име" />
+            <label asp-for="@Model.Name">Име</label>
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        </div>
 
-    @if (Model.Count == 0)
+        <div class="form-floating mb-3">
+            <input readonly asp-for="@Model.Description" class="form-control" aria-required="true" placeholder="Описание" />
+            <label asp-for="@Model.Description">Описание</label>
+            <span asp-validation-for="@Model.Description" class="text-danger"></span>
+        </div>
+
+    <h1>Tурнири</h1>
+
+    @if (Model.Tournaments.ToList().Count == 0)
     {
         <h2>Няма турнири от този спорт</h2>
     }
@@ -31,7 +44,7 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach (var item in @Model)
+            @foreach (var item in @Model.Tournaments)
             {
                 <tr>
                     <td style="text-align: center; vertical-align: middle;">@item.Id</td>
@@ -39,12 +52,12 @@
                     <td style="text-align: right; vertical-align: middle;">@item.Description</td>
                     <td style="text-align: center; vertical-align: middle;">@item.Date</td>
                     <td style="text-align: left; vertical-align: middle;">@item.Deadline</td>
-                    <td style="text-align: right; vertical-align: middle;">@item.OrganizerName</td>
+                    <td style="text-align: right; vertical-align: middle;">@item.Organizer.FullName</td>
                     <td style="text-align: center; vertical-align: middle;">@item.Location</td>
                 </tr>
             }
             </tbody>
         </table>
     }
-    <a asp-controller="Sport" asp-action="AllSports" class="btn btn-primary">Спортове</a>
+    <a asp-controller="Sport" asp-action="AllSports" class="btn btn-primary">Назад</a>
 }

@@ -198,6 +198,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGljaXBhdGlvblxBbGxQYXJ0aWNpcGF0aW9ucy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Participation/ThisUserParticipations.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGljaXBhdGlvblxUaGlzVXNlclBhcnRpY2lwYXRpb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -246,6 +250,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxTcG9ydFRvdXJuYW1lbnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Tournament/TournamentDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxUb3VybmFtZW50RGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/AllUsers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxBbGxVc2Vycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -264,6 +272,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/PersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxQZXJzb25hbERhdGEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/UserDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/_ViewImports.cshtml]

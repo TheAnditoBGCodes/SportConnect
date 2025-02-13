@@ -1,105 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\lenovo\\source\\repos\\sportconnect\\sportconnect.web\\views\\user\\deleteiduser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\views\\user\\deleteiduser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\lenovo\\source\\repos\\sportconnect\\sportconnect.web\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\lenovo\\source\\repos\\sportconnect\\sportconnect.web\\views\\user\\allusers.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\views\\user\\allusers.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\lenovo\\source\\repos\\sportconnect\\sportconnect.web\\models\\sportconnectuserdeletionviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\models\\sportconnectuserdeletionviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\lenovo\\source\\repos\\sportconnect\\sportconnect.web\\controllers\\tournamentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\controllers\\tournamentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 4,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AllUsers.cshtml",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\User\\AllUsers.cshtml",
-              "RelativeDocumentMoniker": "SportConnect.Web\\Views\\User\\AllUsers.cshtml",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\User\\AllUsers.cshtml",
-              "RelativeToolTip": "SportConnect.Web\\Views\\User\\AllUsers.cshtml",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAADAAAABRAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-12T09:13:40.471Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TournamentController.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Controllers\\TournamentController.cs",
-              "RelativeDocumentMoniker": "SportConnect.Web\\Controllers\\TournamentController.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Controllers\\TournamentController.cs",
-              "RelativeToolTip": "SportConnect.Web\\Controllers\\TournamentController.cs",
-              "ViewState": "AgIAAIwAAAAAAAAAAAAUwKQAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-12T09:09:30.67Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SportConnectUserDeletionViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Models\\SportConnectUserDeletionViewModel.cs",
-              "RelativeDocumentMoniker": "SportConnect.Web\\Models\\SportConnectUserDeletionViewModel.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Models\\SportConnectUserDeletionViewModel.cs",
-              "RelativeToolTip": "SportConnect.Web\\Models\\SportConnectUserDeletionViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABSAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-12T09:05:08.174Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "SportConnect.Web\\Controllers\\UserController.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Controllers\\UserController.cs",
-              "RelativeToolTip": "SportConnect.Web\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAHEAAAAAAAAAAAAlwH0AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-12T09:00:21.538Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DeleteIdUser.cshtml",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\User\\DeleteIdUser.cshtml",
-              "RelativeDocumentMoniker": "SportConnect.Web\\Views\\User\\DeleteIdUser.cshtml",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\User\\DeleteIdUser.cshtml",
-              "RelativeToolTip": "SportConnect.Web\\Views\\User\\DeleteIdUser.cshtml",
-              "ViewState": "AgIAADwAAAAAAAAAAAAAAE8AAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-12T08:59:37.781Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

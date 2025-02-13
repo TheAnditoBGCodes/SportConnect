@@ -62,6 +62,25 @@ namespace SportConnect.Web.Controllers
         }
 
 
+        public IActionResult TournamentDetails(int id)
+        {
+            var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
+            var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
+            var model = new TournamentDeletionViewModel()
+            {
+                Id = tournament.Id,
+                OrganizerName = tournament.Organizer.FullName,
+                Date = tournament.Date,
+                Deadline = tournament.Deadline,
+                Description = tournament.Description,
+                Location = tournament.Location,
+                Name = tournament.Name,
+                SportName = tournament.Sport.Name,
+                Participations = range
+            };
+            return View(model);
+        }
+
         public IActionResult EditTournament(int id)
         {
             var tournament = _repository.GetById(id);
@@ -102,21 +121,15 @@ namespace SportConnect.Web.Controllers
 
         public IActionResult SportTournaments(int id)
         {
-            var model = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport)
-                .Select(x => new TournamentViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Description = x.Description,
-                    Date = x.Date,
-                    Deadline = x.Deadline,
-                    OrganizerName = x.Organizer.FullName,
-                    Location = x.Location,
-                    SportName = x.Sport.Name,
-                    SportId = x.SportId
-                });
-            var tournaments = model.Where(x => x.SportId == id);
-            return View(tournaments.ToList());
+            var tournaments = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).Where(x => x.SportId == id);
+            var sport = _sportRepository.GetById(id);
+            var model = new SportDeletionViewModel()
+            {
+                Name = sport.Name,
+                Description = sport.Description,
+                Tournaments = tournaments
+            };
+            return View(model);
         }
 
         public IActionResult AllTournaments(TournamentFilterViewModel filter)
@@ -148,18 +161,18 @@ namespace SportConnect.Web.Controllers
 
         public IActionResult DeleteTournament(int id)
         {
-            var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant);
-            var tournament = _repository.GetById(id);
+            var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
+            var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
             var model = new TournamentDeletionViewModel()
             {
                 Id = tournament.Id,
-                OrganizerId = tournament.OrganizerId,
+                OrganizerName = tournament.Organizer.FullName,
                 Date = tournament.Date,
                 Deadline = tournament.Deadline,
                 Description = tournament.Description,
                 Location = tournament.Location,
                 Name = tournament.Name,
-                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name"),
+                SportName = tournament.Sport.Name,
                 Participations = range
             };
             return View(model);

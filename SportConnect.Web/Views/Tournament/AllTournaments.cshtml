@@ -66,6 +66,7 @@
                             <div class="btn-group" role="group">
                                 <a asp-controller="Tournament" asp-action="EditTournament" asp-route-id="@item.Id" class="btn btn-primary">Редактирай</a>
                                 <a asp-controller="Tournament" asp-action="DeleteTournament" asp-route-id="@item.Id" class="btn btn-primary">Изтрий</a>
+                                <a asp-controller="Tournament" asp-action="TournamentDetails" asp-route-id="@item.Id" class="btn btn-primary">Информация</a>
                                 @if (Model.UserParticipations.Any(p => p.TournamentId == item.Id && p.ParticipantId == Model.UserId))
                                 {
                                     <a asp-controller="Participation" asp-action="DeleteParticipationTournament" asp-route-id="@item.Id" class="btn btn-danger">Откажи се</a>

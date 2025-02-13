@@ -85,6 +85,30 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
+        public IActionResult UserDetails(string id)
+        {
+            var user = _repository.GetUserById(id);
+            var participations = _participationRepository.AllWithIncludes(p => p.Tournament, p => p.Tournament.Sport).Where(p => p.ParticipantId == id).ToList();
+
+            var names = user.FullName.Split(' ').ToList();
+
+            var model = new SportConnectUserViewModel()
+            {
+                Id = id,
+                UserName = user.UserName,
+                FirstName = names[0],
+                LastName = names[1],
+                Age = user.Age,
+                Location = user.Location,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+            };
+
+            model.Participations = participations;
+
+            return View(model);
+        }
+
         public IActionResult EditUserAdmin(string id)
         {
             var user = _repository.GetUserById(id);
@@ -140,12 +164,14 @@ namespace SportConnect.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> DeleteIdUser(string id)
+        public IActionResult DeleteIdUser(string id)
         {
-            var range = _participationRepository.AllWithIncludes(x => x.Tournament).Where(x => x.ParticipantId == id);
             var user = _repository.GetUserById(id);
+            var participations = _participationRepository.AllWithIncludes(p => p.Tournament, p => p.Tournament.Sport).Where(p => p.ParticipantId == id).ToList();
+
             var names = user.FullName.Split(' ').ToList();
-            var model = new SportConnectUserDeletionViewModel()
+
+            var model = new SportConnectUserViewModel()
             {
                 Id = id,
                 UserName = user.UserName,
@@ -155,8 +181,10 @@ namespace SportConnect.Web.Controllers
                 Location = user.Location,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                Participations = range
             };
+
+            model.Participations = participations;
+
             return View(model);
         }
 

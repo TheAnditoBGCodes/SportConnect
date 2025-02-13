@@ -1,2 +1,3 @@
-- Participation Deletion Confirmation Screen
-- User (from PersonalData) Deletion Confirmation Screen
+- Participation Deletion Confirmation Screen -> Pop-Up Box to Confirm
+- User (from PersonalData) Deletion Confirmation Screen -> Pop-Up Box to Confirm
+- Participation (from AllTournaments) Deletion Confirmation Screen -> Pop-Up Box to Confirm

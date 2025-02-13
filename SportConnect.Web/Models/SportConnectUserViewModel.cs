@@ -17,6 +17,7 @@ namespace SportConnect.Web.Models
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string? PasswordHash { get; set; }
+        public IEnumerable<Participation> Participations { get; set; } = new List<Participation>();
 
         public SportConnectUser ToUser(string id)
         {
