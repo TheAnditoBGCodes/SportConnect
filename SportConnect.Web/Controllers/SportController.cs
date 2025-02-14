@@ -33,8 +33,22 @@ namespace SportConnect.Web.Controllers
         [HttpPost]
         public IActionResult AddSport(Sport sport)
         {
-            _repository.Add(sport);
-            return RedirectToAction("AllSports");
+            if (_repository.GetAll().Any(s => s.Name == sport.Name))
+            {
+                ModelState.AddModelError("Name", "Има такъв спорт.");
+            }
+            if (_repository.GetAll().Any(s => s.Description == sport.Description))
+            {
+                ModelState.AddModelError("Description", "Това описание е за друг спорт.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _repository.Add(sport);
+                return RedirectToAction("AllSports");
+            }
+
+            return View(sport);
         }
 
         public IActionResult EditSport(int id)

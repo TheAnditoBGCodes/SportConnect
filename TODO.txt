@@ -1,3 +1,4 @@
+- Edit Sport Unique Values Validation
 - Tournaments UI Improvements
 - Participations UI Improvements
 - Users UI Improvements
