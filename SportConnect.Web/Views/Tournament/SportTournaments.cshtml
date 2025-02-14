@@ -2,12 +2,11 @@
 @model SportDeletionViewModel
 
 @if (Model.Tournaments != null && Model.Tournaments.Any())
-
 {
     <!-- Centering Container (full page height) -->
     <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 1.2rem;">
         <!-- Adjusted container that will always be centered -->
-        <div class="container p-3 border rounded shadow-lg" style="max-width: 80%; overflow: auto; padding: 1rem;">
+        <div class="container p-3 border rounded" style="max-width: 80%; overflow: auto; padding: 1rem;">
             <!-- Centered Heading -->
             <h1 class="text-center" style="font-size: 2rem;">Данни за този спорт</h1>
 
@@ -45,9 +44,6 @@
                         </thead>
                         <tbody>
                             @foreach (var item in Model.Tournaments)
-
-
-
                             {
                                 <tr>
                                     <td>@item.Id</td>
@@ -68,27 +64,21 @@
                     <!-- Smaller button font size -->
                     <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
                 </div>
-
             </form>
         </div>
     </div>
-
 }
-
 else
-
 {
     <!-- Centering Parent Container (Full screen) -->
-    <div class="d-flex justify-content-center align-items-center" style="height: 78vh;">
+    <div class="d-flex justify-content-center align-items-center" style="height: 76vh;">
         <!-- Centering Container -->
         <div class="container d-flex justify-content-center align-items-center" style="font-size: 1.2rem; max-width: 70%; height: 50%; text-align: center;">
             <!-- Adjusted height and width -->
-            <!-- Smaller font size for the whole container -->
             <!-- Container Box -->
-            <div class="container p-3 border rounded shadow-lg" style="max-width: 80%; overflow: auto; padding: 1rem;">
-                <!-- Smaller padding -->
+            <div class="container p-3 border rounded" style="max-width: 80%; overflow: auto; padding: 1rem;">
                 <!-- Centered Heading -->
-                <h1 class="text-center" style="font-size: 2rem;">Данни за този спорт</h1> <!-- Adjusted heading font size -->
+                <h1 class="text-center" style="font-size: 2rem;">Данни за този спорт</h1>
 
                 <form method="post">
                     <!-- Sport Name -->
@@ -112,7 +102,6 @@ else
                         <!-- Smaller button font size -->
                         <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
                     </div>
-
                 </form>
             </div>
         </div>

@@ -1,26 +1,23 @@
 ﻿@using SportConnect.Models
 @model Sport
 
-<div class="container d-flex justify-content-center" style="height: 70vh; align-items: center;">
-    <div class="col-8 col-md-6 col-lg-4 p-4 shadow-lg rounded bg-white">
-        <h1 class="text-center mb-4">Добави спорт</h1>
+<div class="container-fluid d-flex justify-content-center align-items-center" style="height: 76vh; font-size: 1.2rem;">
+    <div class="container p-3 border rounded" style="max-width: 55%; overflow: auto; padding: 1rem;">
+        <h1 class="text-center mb-4" style="font-size: 2rem;">Добави спорт</h1>
         <form method="post">
             <div class="form-floating mb-3">
-                <input asp-for="Name" class="form-control" aria-required="true" placeholder="Име" />
-                <label asp-for="Name">Име</label>
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <input asp-for="Name" class="form-control" aria-required="true" placeholder="Име" style="font-size: 1rem;" />
+                <label asp-for="Name" style="font-size: 1rem;">Име</label>
+                <span asp-validation-for="Name" class="text-danger" style="font-size: 1rem;"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Description" class="form-control" aria-required="true" placeholder="Описание" />
-                <label asp-for="Description">Описание</label>
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <input asp-for="Description" class="form-control" aria-required="true" placeholder="Описание" style="font-size: 1rem;" />
+                <label asp-for="Description" style="font-size: 1rem;">Описание</label>
+                <span asp-validation-for="Description" class="text-danger" style="font-size: 1rem;"></span>
             </div>
-            <div class="d-flex justify-content-between mb-3">
-                <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary">Назад</a>
-                <button type="submit" class="btn btn-success d-flex justify-content-center align-items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                    </svg>
+            <div class="d-flex justify-content-between mt-3" style="font-size: 1rem;">
+                <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
+                <button type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="font-size: 1rem;">
                     Добави
                 </button>
             </div>

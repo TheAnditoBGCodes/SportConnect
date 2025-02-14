@@ -3,13 +3,11 @@
 
 @if (Model.Tournaments != null && Model.Tournaments.Any())
 
-
-
 {
     <!-- Centering Container (full page height) -->
     <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 1.2rem;">
         <!-- Adjusted container that will always be centered -->
-        <div class="container p-3 border rounded shadow-lg" style="max-width: 80%; overflow: auto; padding: 1rem;">
+        <div class="container p-3 border rounded" style="max-width: 80%; overflow: auto; padding: 1rem;">
             <!-- Centered Heading -->
             <h1 class="text-center" style="font-size: 2rem;">Изтрий спорт</h1>
 
@@ -48,12 +46,6 @@
                         <tbody>
                             @foreach (var item in Model.Tournaments)
 
-
-
-
-
-
-
                             {
                                 <tr>
                                     <td>@item.Id</td>
@@ -72,34 +64,24 @@
                 <!-- Buttons Row -->
                 <div class="d-flex justify-content-between mt-3" style="font-size: 1rem;">
                     <a asp-action="AllSports" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
-                    <button type="submit" class="btn btn-danger" style="font-size: 1rem;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-trash-fill">
-                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
-                        </svg>
-                        Изтрий
-                    </button>
+                    <button type="submit" class="btn btn-danger" style="font-size: 1rem;">Изтрий</button>
                 </div>
             </form>
         </div>
     </div>
-
 }
-
-
 
 else
 
-
-
 {
     <!-- Centering Parent Container (Full screen) -->
-    <div class="d-flex justify-content-center align-items-center" style="height: 78vh;">
+    <div class="d-flex justify-content-center align-items-center" style="height: 76vh;">
         <!-- Centering Container -->
         <div class="container d-flex justify-content-center align-items-center" style="font-size: 1.2rem; max-width: 70%; height: 50%; text-align: center;">
             <!-- Adjusted height and width -->
             <!-- Smaller font size for the whole container -->
             <!-- Container Box -->
-            <div class="container p-3 border rounded shadow-lg" style="max-width: 80%; overflow: auto; padding: 1rem;">
+            <div class="container p-3 border rounded" style="max-width: 80%; overflow: auto; padding: 1rem;">
                 <!-- Smaller padding -->
                 <!-- Centered Heading -->
                 <h1 class="text-center" style="font-size: 2rem;">Изтрий спорт</h1> <!-- Adjusted heading font size -->
@@ -123,14 +105,8 @@ else
 
                     <!-- Buttons Row -->
                     <div class="d-flex justify-content-between mt-3" style="font-size: 1rem;">
-                        <!-- Smaller button font size -->
                         <a asp-action="AllSports" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
-                        <button type="submit" class="btn btn-danger" style="font-size: 1rem;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-trash-fill">
-                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
-                            </svg>
-                            Изтрий
-                        </button>
+                        <button type="submit" class="btn btn-danger" style="font-size: 1rem;">Изтрий</button>
                     </div>
                 </form>
             </div>
