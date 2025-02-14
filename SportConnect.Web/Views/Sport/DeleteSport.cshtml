@@ -1,60 +1,139 @@
 ﻿@using SportConnect.Web.Models
 @model SportDeletionViewModel
-@{
-    <h1>Изтрий спорт</h1>
-    <form method="post">
 
-        <div class="form-floating mb-3">
-            <input readonly asp-for="@Model.Name" class="form-control" aria-required="true" placeholder="Име" />
-            <label asp-for="@Model.Name">Име</label>
-            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+@if (Model.Tournaments != null && Model.Tournaments.Any())
+
+
+
+{
+    <!-- Centering Container (full page height) -->
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 1.2rem;">
+        <!-- Adjusted container that will always be centered -->
+        <div class="container p-3 border rounded shadow-lg" style="max-width: 80%; overflow: auto; padding: 1rem;">
+            <!-- Centered Heading -->
+            <h1 class="text-center" style="font-size: 2rem;">Изтрий спорт</h1>
+
+            <form method="post">
+                <!-- Sport Name -->
+                <div class="form-floating mb-3">
+                    <input readonly asp-for="@Model.Name" class="form-control" placeholder="Име" style="font-size: 1rem;" />
+                    <label asp-for="@Model.Name" style="font-size: 1rem;">Име</label>
+                    <span asp-validation-for="@Model.Name" class="text-danger" style="font-size: 1rem;"></span>
+                </div>
+
+                <!-- Sport Description -->
+                <div class="form-floating mb-3">
+                    <input readonly asp-for="@Model.Description" class="form-control" placeholder="Описание" style="font-size: 1rem;" />
+                    <label asp-for="@Model.Description" style="font-size: 1rem;">Описание</label>
+                    <span asp-validation-for="@Model.Description" class="text-danger" style="font-size: 1rem;"></span>
+                </div>
+
+                <h2 class="text-center" style="font-size: 1.5rem;">Турнири</h2>
+
+                <!-- Tournament Table with Scrollable Container -->
+                <div class="table-container" style="max-height: 240px; overflow-y: auto;">
+                    <!-- Table with a max height and scroll if more than 5 entries -->
+                    <table class="table table-striped table-hover text-center align-middle" style="font-size: 1rem;">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Име</th>
+                                <th>Описание</th>
+                                <th>Дата</th>
+                                <th>Краен срок</th>
+                                <th>Организатор</th>
+                                <th>Локация</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Tournaments)
+
+
+
+
+
+
+
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Name</td>
+                                    <td class="text-truncate" style="max-width: 200px;">@item.Description</td>
+                                    <td>@item.Date</td>
+                                    <td>@item.Deadline</td>
+                                    <td>@item.Organizer.FullName</td>
+                                    <td>@item.Location</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Buttons Row -->
+                <div class="d-flex justify-content-between mt-3" style="font-size: 1rem;">
+                    <a asp-action="AllSports" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
+                    <button type="submit" class="btn btn-danger" style="font-size: 1rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-trash-fill">
+                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                        </svg>
+                        Изтрий
+                    </button>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <div class="form-floating mb-3">
-            <input readonly asp-for="@Model.Description" class="form-control" aria-required="true" placeholder="Описание" />
-            <label asp-for="@Model.Description">Описание</label>
-            <span asp-validation-for="@Model.Description" class="text-danger"></span>
+}
+
+
+
+else
+
+
+
+{
+    <!-- Centering Parent Container (Full screen) -->
+    <div class="d-flex justify-content-center align-items-center" style="height: 78vh;">
+        <!-- Centering Container -->
+        <div class="container d-flex justify-content-center align-items-center" style="font-size: 1.2rem; max-width: 70%; height: 50%; text-align: center;">
+            <!-- Adjusted height and width -->
+            <!-- Smaller font size for the whole container -->
+            <!-- Container Box -->
+            <div class="container p-3 border rounded shadow-lg" style="max-width: 80%; overflow: auto; padding: 1rem;">
+                <!-- Smaller padding -->
+                <!-- Centered Heading -->
+                <h1 class="text-center" style="font-size: 2rem;">Изтрий спорт</h1> <!-- Adjusted heading font size -->
+
+                <form method="post">
+                    <!-- Sport Name -->
+                    <div class="form-floating mb-3">
+                        <input readonly asp-for="@Model.Name" class="form-control" placeholder="Име" style="font-size: 1rem;" />
+                        <label asp-for="@Model.Name" style="font-size: 1rem;">Име</label>
+                        <span asp-validation-for="@Model.Name" class="text-danger" style="font-size: 1rem;"></span>
+                    </div>
+
+                    <!-- Sport Description -->
+                    <div class="form-floating mb-3">
+                        <input readonly asp-for="@Model.Description" class="form-control" placeholder="Описание" style="font-size: 1rem;" />
+                        <label asp-for="@Model.Description" style="font-size: 1rem;">Описание</label>
+                        <span asp-validation-for="@Model.Description" class="text-danger" style="font-size: 1rem;"></span>
+                    </div>
+
+                    <h2 class="text-center" style="font-size: 1.5rem;">Няма турнири от този спорт</h2>
+
+                    <!-- Buttons Row -->
+                    <div class="d-flex justify-content-between mt-3" style="font-size: 1rem;">
+                        <!-- Smaller button font size -->
+                        <a asp-action="AllSports" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
+                        <button type="submit" class="btn btn-danger" style="font-size: 1rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-trash-fill">
+                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                            Изтрий
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <h2>Турнири</h2>
-        <table class="table" style="table-layout: fixed; width: 100%;">
-            <colgroup>
-                <col style="width: 10%;"> <!-- Fixed width for ID -->
-                <col style="width: 15%;"> <!-- Name column -->
-                <col style="width: 10%;"> <!-- Name column -->
-                <col style="width: 15%;"> <!-- Price column -->
-                <col style="width: 10%;"> <!-- Button column -->
-                <col style="width: 10%;"> <!-- Fixed width for ID -->
-                <col style="width: 20%;"> <!-- Name column -->
-            </colgroup>
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Име</th>
-                    <th scope="col">Описание</th>
-                    <th scope="col">Дата на провеждане</th>
-                    <th scope="col">Краен срок</th>
-                    <th scope="col">Организатор</th>
-                    <th scope="col">Локация</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in @Model.Tournaments)
-                {
-                    <tr>
-                        <td style="text-align: center; vertical-align: middle;">@item.Id</td>
-                        <td style="text-align: left; vertical-align: middle;">@item.Name</td>
-                        <td style="text-align: right; vertical-align: middle;">@item.Description</td>
-                        <td style="text-align: center; vertical-align: middle;">@item.Date</td>
-                        <td style="text-align: left; vertical-align: middle;">@item.Deadline</td>
-                        <td style="text-align: right; vertical-align: middle;">@item.Organizer.FullName</td>
-                        <td style="text-align: center; vertical-align: middle;">@item.Location</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-        <input type="submit" class="btn btn-primary" value="Изтрий" />
-    </form>
-    <a asp-action="AllSports" class="btn btn-primary" asp-asp-controller="Sport">Назад</a>
+    </div>
 }

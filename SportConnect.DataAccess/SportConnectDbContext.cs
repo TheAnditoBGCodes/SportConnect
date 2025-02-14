@@ -26,6 +26,8 @@ namespace SportConnect.DataAccess
                 .WithMany(t => t.Participations)
                 .HasForeignKey(p => p.TournamentId)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Sport>().HasIndex(x => x.Description).IsUnique();
+            builder.Entity<Sport>().HasIndex(x => x.Name).IsUnique();
         }
     }
 }

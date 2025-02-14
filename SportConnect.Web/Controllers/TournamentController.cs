@@ -131,29 +131,44 @@ namespace SportConnect.Web.Controllers
             };
             return View(model);
         }
-
-        public IActionResult AllTournaments(TournamentFilterViewModel filter)
+        public async Task<IActionResult> AllTournaments(TournamentFilterViewModel? filter)
         {
+            if (filter == null)
+            {
+                // Handle null filter case, return empty model or other fallback
+                return View(new TournamentFilterViewModel());
+            }
+
             var query = _repository.GetAll().AsQueryable();
 
-            if (filter.Date != null)
-            {
-                query = query.Where(x => x.Date.Date == filter.Date.Value.Date);
-            }
             if (filter.SportId != null)
             {
-                query = query.Where(x => x.SportId == filter.SportId.Value);
+                query = query.Where(p => p.SportId == filter.SportId.Value);
+            }
+            if (filter.Date != null)
+            {
+                query = query.Where(p => p.Date == filter.Date.Value);
             }
 
-            var currentUser = _userManager.GetUserAsync(this.User).Result;
+            var currentUser = await _userManager.GetUserAsync(this.User);
+            if (currentUser == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
+            var sportsList = _sportRepository.GetAll();
+            var defaultSportName = sportsList.Select(x => x.Name).FirstOrDefault() ?? "Default Sport Name";
+
+            var userParticipations = _participationsRepository.GetAllBy(x => x.ParticipantId == currentUser.Id) ?? new List<Participation>();
+
             var model = new TournamentFilterViewModel
             {
-                Date = filter.Date,
                 SportId = filter.SportId,
-                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name"),
+                Date = filter.Date,
+                Sports = new SelectList(sportsList, "Id", "Name", defaultSportName),
                 Tournaments = query.Include(x => x.Organizer).Include(x => x.Sport).ToList(),
-                UserParticipations = _participationsRepository.GetAllBy(p => p.ParticipantId == currentUser.Id).ToList(),
-                UserId = currentUser.Id
+                UserId = currentUser.Id,
+                UserParticipations = userParticipations.ToList()
             };
 
             return View(model);

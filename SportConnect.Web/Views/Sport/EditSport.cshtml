@@ -1,22 +1,29 @@
 ﻿@using SportConnect.Models
 @model Sport
-@{
-    <h1>Промени спорт</h1>
-    <form method="post">
 
-        <div class="form-floating mb-3">
-            <input asp-for="@Model.Name" class="form-control" aria-required="true" placeholder="Име" />
-            <label asp-for="@Model.Name">Име</label>
-            <span asp-validation-for="@Model.Name" class="text-danger"></span>
-        </div>
-
-        <div class="form-floating mb-3">
-            <input asp-for="@Model.Description" class="form-control" aria-required="true" placeholder="Описание" />
-            <label asp-for="@Model.Description">Описание</label>
-            <span asp-validation-for="@Model.Description" class="text-danger"></span>
-        </div>
-
-        <input type="submit" class="btn btn-primary" value="Промени" />
-    </form>
-    <a asp-action="AllSports" class="btn btn-primary" asp-asp-controller="Sport">Назад</a>
-}
+<div class="container d-flex justify-content-center" style="height: 70vh; align-items: center;">
+    <div class="col-8 col-md-6 col-lg-4 p-4 shadow-lg rounded bg-white">
+        <h1 class="text-center mb-4">Промени спорт</h1>
+        <form method="post">
+            <div class="form-floating mb-3">
+                <input asp-for="Name" class="form-control" aria-required="true" placeholder="Име" />
+                <label asp-for="Name">Име</label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Description" class="form-control" aria-required="true" placeholder="Описание" />
+                <label asp-for="Description">Описание</label>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary">Назад</a>
+                <button type="submit" class="btn btn-warning btn-sm d-flex justify-content-center align-items-center text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001" />
+                    </svg>
+                    Промени
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
