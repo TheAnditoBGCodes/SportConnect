@@ -4,6 +4,7 @@ namespace SportConnect.DataAccess.Repository.IRepository
 {
     public interface IRepository<T> where T : class
     {
+        bool IsPropertyUnique(Expression<Func<T, bool>> predicate);
         void DeleteRange(IEnumerable<T> range);
 
         T GetUserById(string id);

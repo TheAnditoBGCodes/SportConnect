@@ -30,6 +30,10 @@ namespace SportConnect.DataAccess.Repository
             }
             return query;
         }
+        public bool IsPropertyUnique(Expression<Func<T, bool>> predicate)
+        {
+            return !_dbSet.Any(predicate);
+        }
 
         public void Delete(T entity)
         {

@@ -60,8 +60,23 @@ namespace SportConnect.Web.Controllers
         [HttpPost]
         public IActionResult EditSport(Sport sport)
         {
-            _repository.Update(sport);
-            return RedirectToAction("AllSports");
+            if (!_repository.IsPropertyUnique(s => s.Name == sport.Name && s.Id != sport.Id))
+            {
+                ModelState.AddModelError("Name", "Има такъв спорт.");
+            }
+
+            if (!_repository.IsPropertyUnique(s => s.Description == sport.Description && s.Id != sport.Id))
+            {
+                ModelState.AddModelError("Description", "Това описание е за друг спорт.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _repository.Update(sport);
+                return RedirectToAction("AllSports");
+            }
+
+            return View(sport);
         }
 
         public IActionResult AllSports()
