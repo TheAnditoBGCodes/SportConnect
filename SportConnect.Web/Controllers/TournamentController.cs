@@ -93,7 +93,7 @@ namespace SportConnect.Web.Controllers
                 Description = tournament.Description,
                 Location = tournament.Location,
                 Name = tournament.Name,
-                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name")
+                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", tournament.SportId)
             };
             return View(model);
         }

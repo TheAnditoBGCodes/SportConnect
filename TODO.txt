@@ -1,7 +1,9 @@
-- Tournaments UI Improvements
+- Tournaments UI -> DeleteTournament & TournamentDetails
+
 - Participations UI Improvements
 - Users UI Improvements
 - My Participations UI Improvements
 - Others UI Improvements
 
 - Where Needed Confirmations for Deletons
+
