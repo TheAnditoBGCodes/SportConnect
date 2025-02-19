@@ -1,23 +1,30 @@
 ﻿@using SportConnect.Models
 @model Sport
 
-<div class="container-fluid d-flex justify-content-center align-items-center" style="height: 76vh; font-size: 1.2rem;">
-    <div class="container p-3 border rounded" style="max-width: 55%; overflow: auto; padding: 1rem;">
-        <h1 class="text-center mb-4" style="font-size: 2rem;">Добави спорт</h1>
+<div class="container-fluid d-flex justify-content-center align-items-center" style="height: 76vh; font-size: 0.8rem;">
+    <div class="container p-2 border rounded" style="max-width: 55%; padding: 0.5rem;">
+        <h1 class="text-center mb-3" style="font-size: 1.3rem;">Добави спорт</h1>
         <form method="post">
-            <div class="form-floating mb-3">
-                <input asp-for="Name" class="form-control" aria-required="true" placeholder="Име" style="font-size: 1rem;" />
-                <label asp-for="Name" style="font-size: 1rem;">Име</label>
-                <span asp-validation-for="Name" class="text-danger" style="font-size: 1rem;"></span>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input asp-for="Name" class="form-control" aria-required="true" placeholder="Име" style="font-size: 0.8rem;" />
+                        <label asp-for="Name" style="font-size: 0.8rem;">Име</label>
+                        <span asp-validation-for="Name" class="text-danger" style="font-size: 0.8rem;"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input asp-for="Description" class="form-control" aria-required="true" placeholder="Описание" style="font-size: 0.8rem;" />
+                        <label asp-for="Description" style="font-size: 0.8rem;">Описание</label>
+                        <span asp-validation-for="Description" class="text-danger" style="font-size: 0.8rem;"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Description" class="form-control" aria-required="true" placeholder="Описание" style="font-size: 1rem;" />
-                <label asp-for="Description" style="font-size: 1rem;">Описание</label>
-                <span asp-validation-for="Description" class="text-danger" style="font-size: 1rem;"></span>
-            </div>
-            <div class="d-flex justify-content-between mt-3" style="font-size: 1rem;">
-                <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
-                <button type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="font-size: 1rem;">
+
+            <div class="d-flex justify-content-between mt-3" style="font-size: 0.8rem;">
+                <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
+                <button type="submit" class="btn btn-success text-white d-flex justify-content-center align-items-center" style="font-size: 0.8rem;">
                     Добави
                 </button>
             </div>

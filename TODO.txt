@@ -1,9 +1,9 @@
-- Tournaments UI -> DeleteTournament & TournamentDetails
+- Edge Table Items Fix Same Distances
 
+- My Tournaments View
 - Participations UI Improvements
 - Users UI Improvements
 - My Participations UI Improvements
-- Others UI Improvements
+- My Tournaments UI Improvements
 
 - Where Needed Confirmations for Deletons
-
