@@ -1,9 +1,7 @@
 - Edge Table Items Fix Same Distances
 
-- My Tournaments View
-- Participations UI Improvements
 - Users UI Improvements
-- My Participations UI Improvements
-- My Tournaments UI Improvements
+
+- Functionality Fixes Everywhere
 
 - Where Needed Confirmations for Deletons

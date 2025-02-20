@@ -39,7 +39,7 @@ public class TournamentDeletionViewModel
     public string? SportName { get; set; }
     public Sport? Sport { get; set; }
 
-    public IEnumerable<Participation> Participations { get; set; } = new List<Participation>();
+    public IEnumerable<Participation>? Participations { get; set; } = new List<Participation>();
 
     public Tournament ToTournament()
     {

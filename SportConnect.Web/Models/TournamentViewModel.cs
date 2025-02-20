@@ -38,8 +38,10 @@ public class TournamentViewModel
     public SelectList? Sports { get; set; }
     public string? SportName { get; set; }
     public Sport? Sport { get; set; }
-    public IEnumerable<Participation> Participations { get; set; } = new List<Participation>();
-
+    public IEnumerable<Participation>? Participations { get; set; } = new List<Participation>();
+    public IEnumerable<Participation>? UserParticipations { get; set; } = new List<Participation>();
+    public List<Tournament>? Tournaments { get; set; }
+    public string? UserId { get; set; }
     public Tournament ToTournament()
     {
         return new Tournament
