@@ -12,6 +12,7 @@ namespace SportConnect.Web.Models
         public string UserName { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
+        public string BothNames { get; set; }
         public int Age { get; set; }
         public string Location { get; set; }
         public string Email { get; set; }

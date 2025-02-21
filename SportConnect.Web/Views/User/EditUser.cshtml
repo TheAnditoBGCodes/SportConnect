@@ -1,51 +1,83 @@
 ﻿@using SportConnect.Models
 @model SportConnectUserViewModel
 @{
-    <h1>Промени профил</h1>
-    <form method="post">
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
+        <div class="container p-2 border rounded" style="max-width: 55%; padding: 0.5rem;">
+            <h1 class="text-center" style="font-size: 1.3rem;">Промени профил</h1>
+            <form method="post">
+                <!-- Row 1: UserName + Email -->
+                <div class="row mb-1">
+                    <div class="col">
+                        <div class="form-floating mb-2">
+                            <input asp-for="@Model.UserName" class="form-control" aria-required="true" placeholder="user име" style="font-size: 0.8rem;" />
+                            <label asp-for="@Model.UserName" style="font-size: 0.8rem;">Потребителско име</label>
+                            <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-2">
+                            <input asp-for="@Model.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" style="font-size: 0.8rem;" />
+                            <label asp-for="@Model.Email" style="font-size: 0.8rem;">Имейл</label>
+                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="form-floating mb-3">
-            <input asp-for="@Model.UserName" class="form-control" aria-required="true" placeholder="user име" />
-            <label asp-for="@Model.UserName">Потребителско име</label>
-            <span asp-validation-for="@Model.UserName" class="text-danger"></span>
-        </div>
+                <!-- Row 2: FirstName + LastName -->
+                <div class="row mb-1">
+                    <div class="col">
+                        <div class="form-floating mb-2">
+                            <input asp-for="@Model.FirstName" class="form-control" aria-required="true" placeholder="Вашето име" style="font-size: 0.8rem;" />
+                            <label asp-for="@Model.FirstName" style="font-size: 0.8rem;">Име</label>
+                            <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-2">
+                            <input asp-for="@Model.LastName" class="form-control" aria-required="true" placeholder="Вашата фамилия" style="font-size: 0.8rem;" />
+                            <label asp-for="@Model.LastName" style="font-size: 0.8rem;">Фамилия</label>
+                            <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="form-floating mb-3">
-            <input asp-for="@Model.FirstName" class="form-control" aria-required="true" placeholder="Вашето име" />
-            <label asp-for="@Model.FirstName">Име</label>
-            <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
-        </div>
+                <!-- Row 3: Age + Location -->
+                <div class="row mb-1">
+                    <div class="col">
+                        <div class="form-floating mb-2">
+                            <input type="number" asp-for="@Model.Age" class="form-control" aria-required="true" placeholder="Age" style="font-size: 0.8rem;" />
+                            <label asp-for="@Model.Age" style="font-size: 0.8rem;">Възраст</label>
+                            <span asp-validation-for="@Model.Age" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-2">
+                            <input type="tel" asp-for="@Model.PhoneNumber" class="form-control" aria-required="true" placeholder="0888 123 456" style="font-size: 0.8rem;" />
+                            <label asp-for="@Model.PhoneNumber" style="font-size: 0.8rem;">Телефонен номер</label>
+                            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
 
-        <div class="form-floating mb-3">
-            <input asp-for="@Model.LastName" class="form-control" aria-required="true" placeholder="Вашата фамилия" />
-            <label asp-for="@Model.LastName">Фамилия</label>
-            <span asp-validation-for="@Model.LastName" class="text-danger"></span>
-        </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="form-floating mb-3">
-            <input type="number" asp-for="@Model.Age" class="form-control" aria-required="true" placeholder="Age" />
-            <label asp-for="@Model.Age">Възраст</label>
-            <span asp-validation-for="@Model.Age" class="text-danger"></span>
-        </div>
+                <!-- Row 4: Phone Number -->
+                <div class="row mb-1">
+                    <div class="col">
+                        <div class="form-floating mb-2">
+                            <input asp-for="@Model.Location" class="form-control" aria-required="true" placeholder="Location" style="font-size: 0.8rem;" />
+                            <label asp-for="@Model.Location" style="font-size: 0.8rem;">Локация</label>
+                            <span asp-validation-for="@Model.Location" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="form-floating mb-3">
-            <input asp-for="@Model.Location" class="form-control" aria-required="true" placeholder="Location" />
-            <label asp-for="@Model.Location">Локация</label>
-            <span asp-validation-for="@Model.Location" class="text-danger"></span>
+                <div class="d-flex justify-content-between mt-2">
+                    <a asp-action="PersonalData" class="btn btn-primary" asp-controller="User">Назад</a>
+                    <button type="submit" class="btn btn-warning text-white d-flex justify-content-center align-items-center" style="font-size: 0.8rem;">
+                        Промени
+                    </button>
+                </div>
+            </form>
         </div>
-
-        <div class="form-floating mb-3">
-            <input asp-for="@Model.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-            <label asp-for="@Model.Email">Имейл</label>
-            <span asp-validation-for="@Model.Email" class="text-danger"></span>
-        </div>
-
-        <div class="form-floating mb-3">
-            <input type="tel" asp-for="@Model.PhoneNumber" class="form-control" aria-required="true" placeholder="0888 123 456" />
-            <label asp-for="@Model.PhoneNumber">Телефонен номер</label>
-            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
-        </div>
-        <input type="submit" class="btn btn-primary" value="Промени" />
-    </form>
-    <a asp-action="PersonalData" class="btn btn-primary" asp-controller="User">Назад</a>
+    </div>
 }

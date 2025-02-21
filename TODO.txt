@@ -1,7 +1,4 @@
-- Edge Table Items Fix Same Distances
-
-- Users UI Improvements
-
 - Functionality Fixes Everywhere
-
-- Where Needed Confirmations for Deletons
+- Other Users Cannot Remove My Participation
+- Admin Can Remove Other User Participation
+- Where Needed Confirmations for Deleton

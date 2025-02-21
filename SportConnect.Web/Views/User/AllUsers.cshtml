@@ -1,58 +1,80 @@
 ﻿@using SportConnect.Models
 @model List<SportConnectUser>
-@{
-    <h1>Всички потребители</h1>
 
-    @if (Model.Count == 0)
-    {
-        <h2>Няма потребители в системата</h2>
-    }
-    else
-    {
-            <table class="table" style="table-layout: fixed; width: 100%;">
-                <colgroup>
-                    <col style="width: 10%;"> <!-- Fixed width for ID -->
-                    <col style="width: 10%;"> <!-- Name column -->
-                    <col style="width: 10%;"> <!-- Price column -->
-                    <col style="width: 10%;"> <!-- Button column -->
-                    <col style="width: 15%;"> <!-- Fixed width for ID -->
-                    <col style="width: 15%;"> <!-- Name column -->
-                    <col style="width: 15%;"> <!-- Price column -->
-                    <col style="width: 15%;"> <!-- Button column -->
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Потребителско име</th>
-                        <th scope="col">Пълно име</th>
-                        <th scope="col">Възраст</th>
-                        <th scope="col">Локация</th>
-                        <th scope="col">Телефонен номер</th>
-                        <th scope="col">Имейл</th>
-                        <th scope="col">Бутони</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach (var item in @Model)
-                {
-                    <tr>
-                        <td style="text-align: center; vertical-align: middle;">@item.Id</td>
-                        <td style="text-align: left; vertical-align: middle;">@item.UserName</td>
-                        <td style="text-align: right; vertical-align: middle;">@item.FullName</td>
-                        <td style="text-align: left; vertical-align: middle;">@item.Age</td>
-                        <td style="text-align: right; vertical-align: middle;">@item.Location</td>
-                        <td style="text-align: left; vertical-align: middle;">@item.PhoneNumber</td>
-                        <td style="text-align: right; vertical-align: middle;">@item.Email</td>
-                        <td style="text-align: center; vertical-align: middle; white-space: nowrap;">
-                            <div class="btn-group" role="group">
-                                <a asp-controller="User" asp-action="EditUserAdmin" asp-route-id="@item.Id" class="btn btn-primary">Редактирай</a>
-                                <a asp-controller="User" asp-action="DeleteIdUser" asp-route-id="@item.Id" class="btn btn-primary">Изтрий</a>
-                                <a asp-controller="User" asp-action="UserDetails" asp-route-id="@item.Id" class="btn btn-primary">Информация</a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-    }
+@if (!Model.Any())
+{
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
+        <div class="container p-2 border rounded" style="max-width: 17%; padding: 0.5rem;">
+            <h1 class="text-center mb-3" style="font-size: 1.3rem;">Няма потребители</h1>
+            <div class="d-flex justify-content-center align-items-center mt-3">
+                <a asp-action="Index" asp-controller="Home" class="btn btn-secondary" style="font-size: 1rem; margin-right: 0px;">Назад</a>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
+        <div class="container p-2 border rounded" style="max-width: 90%; padding: 0.5rem;">
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <h1 class="m-0" style="font-size: 1.3rem;">Всички потребители</h1>
+            </div>
+
+            <div class="table-container flex-grow-1" style="overflow-y: auto; max-height: 430px;">
+                <table class="table table-striped table-hover text-center align-middle" style="font-size: 0.8rem;">
+                    <thead class="table-dark" style="position: sticky; top: 0; z-index: 2;">
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Потребителско име</th>
+                            <th class="text-center">Пълно име</th>
+                            <th class="text-center">Възраст</th>
+                            <th class="text-center">Локация</th>
+                            <th class="text-center">Телефонен номер</th>
+                            <th class="text-center">Имейл</th>
+                            <th class="text-center">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="align-middle">@item.Id</td>
+                                <td class="align-middle">@item.UserName</td>
+                                <td class="align-middle">@item.FullName</td>
+                                <td class="align-middle">@item.Age</td>
+                                <td class="align-middle">@item.Location</td>
+                                <td class="align-middle">@item.PhoneNumber</td>
+                                <td class="align-middle">@item.Email</td>
+                                <td class="align-middle text-nowrap">
+                                    <div class="btn-group">
+                                        <a asp-controller="User" asp-action="EditUserAdmin" asp-route-id="@item.Id" class="btn btn-warning btn-sm">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-pen-fill">
+                                                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001" />
+                                            </svg>
+                                        </a>
+                                        <a asp-controller="User" asp-action="DeleteIdUser" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-trash-fill">
+                                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                                            </svg>
+                                        </a>
+                                        <a asp-controller="User" asp-action="UserDetails" asp-route-id="@item.Id" class="btn btn-info btn-sm font-weight-bold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-info-circle">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0=" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-center mt-3">
+                <a asp-action="Index" asp-controller="Home" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
+            </div>
+        </div>
+    </div>
 }

@@ -75,8 +75,7 @@ namespace SportConnect.Web.Controllers
             {
                 Id = user.Id,
                 UserName = user.UserName,
-                FirstName = names[0],
-                LastName = names[1],
+                BothNames = $"{names[0]} {names[1]}",
                 Age = user.Age,
                 Location = user.Location,
                 Email = user.Email,
@@ -96,8 +95,7 @@ namespace SportConnect.Web.Controllers
             {
                 Id = id,
                 UserName = user.UserName,
-                FirstName = names[0],
-                LastName = names[1],
+                BothNames = $"{names[0]} {names[1]}",
                 Age = user.Age,
                 Location = user.Location,
                 Email = user.Email,
@@ -161,7 +159,7 @@ namespace SportConnect.Web.Controllers
                 _signInManager.SignOutAsync();
                 return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("PersonalData", "User");
         }
 
         public IActionResult DeleteIdUser(string id)
