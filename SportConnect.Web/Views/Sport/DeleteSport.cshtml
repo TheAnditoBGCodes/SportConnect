@@ -21,46 +21,46 @@
                         </div>
                     </div>
                 </div>
-            </form>
 
-            <h2 class="text-center" style="font-size: 1.1rem;">Турнири</h2>
-            <div class="table-container flex-grow-1" style="overflow-y: auto; max-height: 370px;">
-                <table class="table table-striped table-hover text-center align-middle" style="font-size: 0.8rem;">
-                    <thead class="table-dark" style="position: sticky; top: 0; z-index: 2;">
-                        <tr class="align-middle">
-                            <th class="text-center">#</th>
-                            <th class="text-center">Име</th>
-                            <th class="text-center">Описание</th>
-                            <th class="text-center">Дата</th>
-                            <th class="text-center">Краен срок</th>
-                            <th class="text-center">Организатор</th>
-                            <th class="text-center">Локация</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Tournaments)
-
-
-
-                        {
+                <h2 class="text-center" style="font-size: 1.1rem;">Турнири</h2>
+                <div class="table-container flex-grow-1" style="overflow-y: auto; max-height: 370px;">
+                    <table class="table table-striped table-hover text-center align-middle" style="font-size: 0.8rem;">
+                        <thead class="table-dark" style="position: sticky; top: 0; z-index: 2;">
                             <tr class="align-middle">
-                                <td class="text-center">@item.Id</td>
-                                <td class="text-center">@item.Name</td>
-                                <td class="text-truncate text-center" style="max-width: 150px;">@item.Description</td>
-                                <td class="text-center">@item.Date</td>
-                                <td class="text-center">@item.Deadline</td>
-                                <td class="text-center">@item.Organizer.FullName</td>
-                                <td class="text-center">@item.Location</td>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Име</th>
+                                <th class="text-center">Описание</th>
+                                <th class="text-center">Дата</th>
+                                <th class="text-center">Краен срок</th>
+                                <th class="text-center">Организатор</th>
+                                <th class="text-center">Локация</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Tournaments)
 
-            <div class="d-flex justify-content-between mt-2">
-                <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
-                <button type="submit" class="btn btn-danger" style="font-size: 0.8rem;">Изтрий</button>
-            </div>
+
+
+                            {
+                                <tr class="align-middle">
+                                    <td class="text-center">@item.Id</td>
+                                    <td class="text-center">@item.Name</td>
+                                    <td class="text-truncate text-center" style="max-width: 150px;">@item.Description</td>
+                                    <td class="text-center">@item.Date</td>
+                                    <td class="text-center">@item.Deadline</td>
+                                    <td class="text-center">@item.Organizer.FullName</td>
+                                    <td class="text-center">@item.Location</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-between mt-2">
+                    <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
+                    <button type="submit" class="btn btn-danger" style="font-size: 0.8rem;">Изтрий</button>
+                </div>
+            </form>
         </div>
     </div>
 }
@@ -84,14 +84,14 @@ else
                         </div>
                     </div>
                 </div>
+
+                <h2 class="text-center" style="font-size: 1.1rem;">Няма турнири</h2>
+
+                <div class="d-flex justify-content-between mt-2">
+                    <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
+                    <button type="submit" class="btn btn-danger" style="font-size: 0.8rem;">Изтрий</button>
+                </div>
             </form>
-
-            <h2 class="text-center" style="font-size: 1.1rem;">Няма турнири</h2>
-
-            <div class="d-flex justify-content-between mt-2">
-                <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
-                <button type="submit" class="btn btn-danger" style="font-size: 0.8rem;">Изтрий</button>
-            </div>
         </div>
     </div>
 }

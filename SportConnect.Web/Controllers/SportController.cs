@@ -39,7 +39,7 @@ namespace SportConnect.Web.Controllers
             }
             if (_repository.GetAll().Any(s => s.Description == sport.Description))
             {
-                ModelState.AddModelError("Description", "Това описание е за друг спорт.");
+                ModelState.AddModelError("Description", "Това описание е използвано за друг спорт.");
             }
 
             if (ModelState.IsValid)
@@ -67,7 +67,7 @@ namespace SportConnect.Web.Controllers
 
             if (!_repository.IsPropertyUnique(s => s.Description == sport.Description && s.Id != sport.Id))
             {
-                ModelState.AddModelError("Description", "Това описание е за друг спорт.");
+                ModelState.AddModelError("Description", "Това описание е използвано за друг спорт.");
             }
 
             if (ModelState.IsValid)
@@ -98,7 +98,7 @@ namespace SportConnect.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteSport(int id, SportDeletionViewModel model)
+        public IActionResult DeleteSport(int id, SportDeletionViewModel? model)
         {
             var tournaments = _tournamentRepository.GetAllBy(t => t.SportId == id).ToList();
 
@@ -115,7 +115,7 @@ namespace SportConnect.Web.Controllers
             {
                 _repository.Delete(sport);
             }
-
+            
             return RedirectToAction("AllSports");
         }
 

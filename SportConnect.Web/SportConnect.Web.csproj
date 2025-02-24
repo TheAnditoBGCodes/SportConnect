@@ -30,15 +30,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Participation\ThisUserParticipations.cshtml">
+    <Content Update="Views\Participation\ParticipationsMy.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\Tournament\AllUserTournaments.cshtml">
+    <Content Update="Views\Tournament\AllTournamentsMy.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\Tournament\DeleteTournament.cshtml">
+    <Content Update="Views\Tournament\DeleteTournamentAdmin.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

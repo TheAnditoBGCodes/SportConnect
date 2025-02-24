@@ -22,12 +22,6 @@
                     </div>
                 </div>
 
-                <!-- Organizer Name Field -->
-                <div class="form-floating mb-2">
-                    <input readonly asp-for="OrganizerName" class="form-control" aria-required="true" placeholder="Организатор..." style="font-size: 0.8rem;" />
-                    <label asp-for="OrganizerName" style="font-size: 0.8rem;">Организатор</label>
-                </div>
-
                 <div class="row mb-2">
                     <div class="col">
                         <div class="form-floating">
@@ -86,7 +80,7 @@
 
 
                 <div class="d-flex justify-content-between mt-2">
-                    <a asp-action="AllUserTournaments" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
+                    <a asp-action="AllTournamentsMy" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
                     <button type="submit" class="btn btn-danger" style="font-size: 0.8rem;">Изтрий</button>
                 </div>
             </form>
@@ -108,12 +102,6 @@
                                 <label asp-for="Description" style="font-size: 0.8rem;">Описание</label>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Organizer Name Field -->
-                    <div class="form-floating mb-2">
-                        <input readonly asp-for="OrganizerName" class="form-control" aria-required="true" placeholder="Организатор..." style="font-size: 0.8rem;" />
-                        <label asp-for="OrganizerName" style="font-size: 0.8rem;">Организатор</label>
                     </div>
 
                     <div class="row mb-2">
@@ -149,7 +137,7 @@
                 <h2 class="text-center" style="font-size: 1.1rem;">Няма участници</h2>
 
                 <div class="d-flex justify-content-between mt-2">
-                    <a asp-action="AllUserTournaments" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
+                    <a asp-action="AllTournamentsMy" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
                     <button type="submit" class="btn btn-danger" style="font-size: 0.8rem;">Изтрий</button>
                 </div>
             </form>

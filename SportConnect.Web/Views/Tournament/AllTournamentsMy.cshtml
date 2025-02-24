@@ -3,46 +3,39 @@
 
 @if (!Model.Tournaments.Any())
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {
     <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
-        <div class="container p-2 border rounded" style="max-width: 18%; padding: 0.5rem;">
-            <h1 class="text-center mb-3" style="font-size: 1.3rem;">Няма Ваши турнири</h1>
+        <div class="container p-2 border rounded" style="max-width: 90%; padding: 0.5rem;">
+            <form method="post" class="p-3 border rounded bg-light">
+                <h1 class="text-center mb-3" style="font-size: 1.3rem;">Търсене</h1>
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-6">
+                        <label for="SportId" class="form-label" style="font-size: 0.8rem;">Спорт</label>
+                        <select asp-for="SportId" asp-items="Model.Sports" class="form-control" style="font-size: 0.8rem;">
+                            <option value="">Избери спорт</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Date" class="form-label" style="font-size: 0.8rem;">Дата на провеждане</label>
+                        <input type="date" asp-for="Date" class="form-control" style="font-size: 0.8rem;">
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary px-4" style="font-size: 0.8rem;">Търси</button>
+                </div>
+            </form>
+            <h1 class="text-center mb-3" style="font-size: 1.3rem;">Няма турнири</h1>
 
             <div class="d-flex justify-content-center mt-3">
                 <a asp-action="Index" asp-controller="Home" class="btn btn-secondary" style="font-size: 1rem; margin-right: 10px;">Назад</a>
-                <a asp-action="AddTournamentUser" asp-controller="Tournament" class="btn btn-success" style="font-size: 1rem;">Добави</a>
+                <a asp-action="AddTournamentMy" asp-controller="Tournament" class="btn btn-success" style="font-size: 1rem;">Добави</a>
             </div>
         </div>
     </div>
 }
 
-
-
-
-
-
-
 else
-
-
-
-
-
-
 
 {
     <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
@@ -69,8 +62,8 @@ else
                 </form>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="m-0" style="font-size: 1.3rem;">Всички Ваши турнири</h1>
-                <a asp-controller="Tournament" asp-action="AddTournamentUser" class="btn btn-success" style="font-size: 1rem; padding: 0.75rem 1.5rem;">
+                <h1 class="m-0" style="font-size: 1.3rem;">Всички турнири</h1>
+                <a asp-controller="Tournament" asp-action="AddTournamentMy" class="btn btn-success" style="font-size: 1rem; padding: 0.75rem 1.5rem;">
                     Добави
                 </a>
             </div>
@@ -91,12 +84,6 @@ else
                     </thead>
                     <tbody>
                         @foreach (var item in Model.Tournaments)
-
-
-
-
-
-
 
                         {
                             <tr>
@@ -127,22 +114,15 @@ else
                                         </a>
                                         @if (Model.UserParticipations.Any(p => p.TournamentId == item.Id && p.ParticipantId == Model.UserId))
 
-
-
                                         {
-                                            <a asp-controller="Participation" asp-action="DeleteParticipationTournament" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                                            <a asp-controller="Participation" asp-action="DeleteParticipationTournamentUser" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
                                                 Откажи се
                                             </a>
                                         }
-
-
-
                                         else
 
-
-
                                         {
-                                            <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@item.Id" class="btn btn-success btn-sm">
+                                            <a asp-controller="Participation" asp-action="AddParticipationUser" asp-route-id="@item.Id" class="btn btn-success btn-sm">
                                                 Участвай
                                             </a>
                                         }
@@ -153,8 +133,6 @@ else
                     </tbody>
                 </table>
             </div>
-
-
 
             <div class="d-flex justify-content-center mt-3">
                 <a asp-action="Index" asp-controller="Home" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>

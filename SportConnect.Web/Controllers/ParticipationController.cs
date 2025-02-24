@@ -45,7 +45,7 @@ namespace SportConnect.Web.Controllers
 
             if (existingParticipation != null)
             {
-                return RedirectToAction("AllTournaments", "Tournament");
+                return RedirectToAction("AllTournamentsAdmin", "Tournament");
             }
 
             var participation = new Participation
@@ -58,26 +58,45 @@ namespace SportConnect.Web.Controllers
             };
 
             _participationsRepository.Add(participation);
-            return RedirectToAction("AllTournaments", "Tournament");
+            return RedirectToAction("AllTournamentsAdmin", "Tournament");
         }
 
-        public IActionResult AllParticipations()
+        public IActionResult AddParticipationUser(int id)
         {
-            var model = _participationsRepository.AllWithIncludes(x => x.Participant, x => x.Tournament, p => p.Tournament.Sport)
-                .Select(x => new ParticipationViewModel
-                {
-                    Id = x.Id,
-                    TournamentName = x.Tournament.Name,
-                    RegistrationDate = x.RegistrationDate,
-                    ParticipantName = x.Participant.FullName,
-                    TournamentDate = x.Tournament.Date,
-                    TournamentSport = x.Tournament.Sport.Name,
-                    TournamentDeadLine = x.Tournament.Deadline
-                });
-            return View(model.ToList());
+            var currentTournament = _tournamentsRepository.GetAll().FirstOrDefault(x => x.Id == id);
+            var currentUser = _userManager.GetUserAsync(this.User).Result;
+
+            if (currentTournament == null || currentUser == null)
+            {
+                return NotFound("Invalid tournament or user.");
+            }
+
+            var currentUserId = currentUser.Id;
+
+            var existingParticipation = _participationsRepository
+                .GetAllBy(p => p.TournamentId == id && p.ParticipantId == currentUserId)
+                .FirstOrDefault();
+
+            if (existingParticipation != null)
+            {
+                return RedirectToAction("AllTournamentsMy", "Tournament");
+            }
+
+            var participation = new Participation
+            {
+                Participant = currentUser,
+                ParticipantId = currentUser.Id,
+                RegistrationDate = DateTime.Now,
+                Tournament = currentTournament,
+                TournamentId = id
+            };
+
+            _participationsRepository.Add(participation);
+            return RedirectToAction("AllTournamentsMy", "Tournament");
         }
 
-        public IActionResult ThisUserParticipations()
+
+        public IActionResult ParticipationsMy()
         {
             string userId = _userManager.GetUserAsync(this.User).Result.Id;
             var participations = _participationsRepository.AllWithIncludes(p => p.Tournament, p => p.Tournament.Sport).Where(p => p.ParticipantId == userId).ToList();
@@ -98,7 +117,7 @@ namespace SportConnect.Web.Controllers
         {
             var participation = _participationsRepository.GetById(id);
             _participationsRepository.Delete(participation);
-            return RedirectToAction("ThisUserParticipations");
+            return RedirectToAction("ParticipationsMy");
         }
         public IActionResult DeleteParticipationTournamentDetails(int id)
         {
@@ -110,21 +129,21 @@ namespace SportConnect.Web.Controllers
 
             _participationsRepository.Delete(participation);
 
-            return RedirectToAction("TournamentDetails", "Tournament", new { id = participation.TournamentId });
-        }
-
-        public IActionResult DeleteParticipationAll(int id)
-        {
-            var participation = _participationsRepository.GetById(id);
-            _participationsRepository.Delete(participation);
-            return RedirectToAction("AllParticipations");
+            return RedirectToAction("TournamentDetailsAdmin", "Tournament", new { id = participation.TournamentId });
         }
 
         public IActionResult DeleteParticipationTournament(int id)
         {
             var participation = _participationsRepository.GetAll().FirstOrDefault(x => x.TournamentId == id);
             _participationsRepository.Delete(participation);
-            return RedirectToAction("AllTournaments", "Tournament");
+            return RedirectToAction("AllTournamentsAdmin", "Tournament");
+        }
+
+        public IActionResult DeleteParticipationTournamentUser(int id)
+        {
+            var participation = _participationsRepository.GetAll().FirstOrDefault(x => x.TournamentId == id);
+            _participationsRepository.Delete(participation);
+            return RedirectToAction("AllTournamentsMy", "Tournament");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

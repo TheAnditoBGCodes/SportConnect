@@ -7,10 +7,10 @@ namespace SportConnect.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Името е задължително")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Описанието е задължително")]
         public string Description { get; set; }
 
         public IEnumerable<Tournament> Tournaments { get; set; } = new List<Tournament>();

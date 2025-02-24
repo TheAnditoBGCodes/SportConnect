@@ -22,12 +22,6 @@
                     </div>
                 </div>
 
-                <!-- Organizer Name Field -->
-                <div class="form-floating mb-2">
-                    <input readonly asp-for="OrganizerName" class="form-control" aria-required="true" placeholder="Организатор..." style="font-size: 0.8rem;" />
-                    <label asp-for="OrganizerName" style="font-size: 0.8rem;">Организатор</label>
-                </div>
-
                 <div class="row mb-2">
                     <div class="col">
                         <div class="form-floating">
@@ -69,7 +63,6 @@
                             <th class="text-center">Участник</th>
                             <th class="text-center">Дата на регистрация</th>
                             <th class="text-center">Краен срок</th>
-                            <th class="text-center">Действия</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,9 +73,6 @@
                                 <td class="text-center">@item.p.Participant.FullName</td>
                                 <td class="text-center">@item.p.RegistrationDate</td>
                                 <td class="text-center">@item.p.Tournament.Deadline</td>
-                                <td class="text-center">
-                                    <a asp-controller="Participation" asp-action="DeleteParticipationTournamentDetails" asp-route-id="@item.p.Id" class="btn btn-danger btn-sm">Откажи се</a>
-                                </td>
                             </tr>
                         }
                     </tbody>
@@ -90,7 +80,7 @@
             </div>
 
             <div class="d-flex justify-content-center mt-2">
-                <a asp-action="AllTournaments" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
+                <a asp-action="AllTournamentsMy" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
             </div>
         }
         else
@@ -110,12 +100,6 @@
                             <label asp-for="Description" style="font-size: 0.8rem;">Описание</label>
                         </div>
                     </div>
-                </div>
-
-                <!-- Organizer Name Field -->
-                <div class="form-floating mb-2">
-                    <input readonly asp-for="OrganizerName" class="form-control" aria-required="true" placeholder="Организатор..." style="font-size: 0.8rem;" />
-                    <label asp-for="OrganizerName" style="font-size: 0.8rem;">Организатор</label>
                 </div>
 
                 <div class="row mb-2">
@@ -152,7 +136,7 @@
             <h2 class="text-center" style="font-size: 1.1rem;">Няма участници</h2>
 
             <div class="d-flex justify-content-center mt-2">
-                <a asp-action="AllTournaments" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
+                <a asp-action="AllTournamentsMy" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
             </div>
         }
     </div>

@@ -4,12 +4,11 @@
 @if (!Model.Any())
 {
     <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
-        <div class="container p-2 border rounded text-center" style="max-width: 15%;">
-            <h1 class="mb-3" style="font-size: 1.3rem;">Няма участия</h1>
-
+        <div class="container p-2 border rounded text-center" style="max-width: 18%;">
+            <h1 class="mb-3" style="font-size: 1.3rem;">Няма Ваши участия</h1>
             <div class="d-flex justify-content-center mt-3">
                 <a asp-action="Index" asp-controller="Home" class="btn btn-secondary mx-2" style="font-size: 1rem;">Назад</a>
-                <a asp-action="AllTournaments" asp-controller="Tournament" class="btn btn-success" style="font-size: 1rem;">Турнири</a>
+                <a asp-action="AllTournamentsAdmin" asp-controller="Tournament" class="btn btn-success" style="font-size: 1rem;">Турнири</a>
             </div>
         </div>
     </div>
@@ -19,8 +18,8 @@ else
     <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
         <div class="container p-2 border rounded" style="max-width: 90%;">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="m-0" style="font-size: 1.3rem;">Всички участия</h1>
-                <a asp-action="AllTournaments" asp-controller="Tournament" class="btn btn-success" style="font-size: 1rem; padding: 0.75rem 1.5rem;">Турнири</a>
+                <h1 class="m-0" style="font-size: 1.3rem;">Всички Ваши участия</h1>
+                <a asp-action="AllTournamentsAdmin" asp-controller="Tournament" class="btn btn-success" style="font-size: 1rem; padding: 0.75rem 1.5rem;">Турнири</a>
             </div>
             <div class="table-container" style="overflow-y: auto; max-height: 400px;">
                 <table class="table table-striped table-hover text-center align-middle" style="font-size: 0.8rem;">
@@ -28,11 +27,11 @@ else
                         <tr>
                             <th>#</th>
                             <th>Дата на регистрация</th>
-                            <th>Участник</th>
                             <th>Турнир</th>
                             <th>Спорт</th>
                             <th>Дата на провеждане</th>
                             <th>Краен срок</th>
+                            <th>Действия</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,11 +40,15 @@ else
                             <tr>
                                 <td>@item.Id</td>
                                 <td>@item.RegistrationDate</td>
-                                <td>@item.ParticipantName</td>
                                 <td>@item.TournamentName</td>
                                 <td>@item.TournamentSport</td>
                                 <td>@item.TournamentDate</td>
                                 <td>@item.TournamentDeadLine</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a asp-controller="Participation" asp-action="DeleteParticipationUser" asp-route-id="@item.Id" class="btn btn-danger">Откажи се</a>
+                                    </div>
+                                </td>
                             </tr>
                         }
                     </tbody>

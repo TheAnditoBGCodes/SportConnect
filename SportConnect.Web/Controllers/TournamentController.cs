@@ -46,7 +46,7 @@ namespace SportConnect.Web.Controllers
 
             if (user == null)
             {
-                return RedirectToAction("AllTournaments", "Tournament");
+                return RedirectToAction("AllTournamentsAdmin", "Tournament");
             }
 
             tournament.OrganizerId = user.Id;
@@ -58,10 +58,10 @@ namespace SportConnect.Web.Controllers
             }
 
             _repository.Add(tournament.ToTournament());
-            return RedirectToAction("AllTournaments", "Tournament");
+            return RedirectToAction("AllTournamentsAdmin", "Tournament");
         }
 
-        public IActionResult AddTournamentUser()
+        public IActionResult AddTournamentMy()
         {
             var model = new TournamentViewModel()
             {
@@ -71,7 +71,7 @@ namespace SportConnect.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddTournamentUser(TournamentViewModel tournament)
+        public IActionResult AddTournamentMy(TournamentViewModel tournament)
         {
             var user = _userManager.GetUserAsync(this.User).Result;
             tournament.OrganizerId = user.Id;
@@ -83,11 +83,11 @@ namespace SportConnect.Web.Controllers
             }
 
             _repository.Add(tournament.ToTournament());
-            return RedirectToAction("AllUserTournaments", "Tournament");
+            return RedirectToAction("AllTournamentsMy", "Tournament");
         }
 
 
-        public IActionResult TournamentDetails(int id)
+        public IActionResult TournamentDetailsAdmin(int id)
         {
             var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
             var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
@@ -106,7 +106,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        public IActionResult TournamentDetailsUser(int id)
+        public IActionResult TournamentDetailsMy(int id)
         {
             var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
             var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
@@ -125,7 +125,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        public IActionResult EditTournament(int id)
+        public IActionResult EditTournamentAdmin(int id)
         {
             var tournament = _repository.GetById(id);
             var model = new TournamentViewModel()
@@ -143,7 +143,7 @@ namespace SportConnect.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditTournament(TournamentViewModel viewModel)
+        public IActionResult EditTournamentAdmin(TournamentViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -160,10 +160,10 @@ namespace SportConnect.Web.Controllers
             tournament.SportId = viewModel.SportId ?? tournament.SportId;
 
             _repository.Update(tournament);
-            return RedirectToAction("AllTournaments", "Tournament");
+            return RedirectToAction("AllTournamentsAdmin", "Tournament");
         }
 
-        public IActionResult EditTournamentUser(int id)
+        public IActionResult EditTournamentMy(int id)
         {
             var tournament = _repository.GetById(id);
             var model = new TournamentViewModel()
@@ -181,7 +181,7 @@ namespace SportConnect.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditTournamentUser(TournamentViewModel viewModel)
+        public IActionResult EditTournamentMy(TournamentViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -198,7 +198,7 @@ namespace SportConnect.Web.Controllers
             tournament.SportId = viewModel.SportId ?? tournament.SportId;
 
             _repository.Update(tournament);
-            return RedirectToAction("AllUserTournaments", "Tournament");
+            return RedirectToAction("AllTournamentsMy", "Tournament");
         }
 
         public IActionResult SportTournaments(int id)
@@ -229,7 +229,7 @@ namespace SportConnect.Web.Controllers
             }
             if (filter.Date != null)
             {
-                query = query.Where(p => p.Date == filter.Date.Value);
+                query = query.Where(p => p.Date.Date == filter.Date.Value.Date);
             }
 
             var currentUser = await _userManager.GetUserAsync(this.User);
@@ -272,7 +272,7 @@ namespace SportConnect.Web.Controllers
             }
             if (filter.Date != null)
             {
-                query = query.Where(p => p.Date == filter.Date.Value);
+                query = query.Where(p => p.Date.Date == filter.Date.Value.Date);
             }
 
             var currentUser = await _userManager.GetUserAsync(this.User);
@@ -298,7 +298,7 @@ namespace SportConnect.Web.Controllers
 
             return View(model);
         }
-        public IActionResult DeleteTournament(int id)
+        public IActionResult DeleteTournamentAdmin(int id)
         {
             var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
             var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
@@ -318,16 +318,16 @@ namespace SportConnect.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteTournament(int id, TournamentDeletionViewModel model)
+        public IActionResult DeleteTournamentAdmin(int id, TournamentDeletionViewModel model)
         {
             var range = _participationsRepository.GetAllBy(x => x.TournamentId == id);
             _participationsRepository.DeleteRange(range);
             var entity = _repository.GetById(id);
             _repository.Delete(entity);
-            return RedirectToAction("AllTournaments");
+            return RedirectToAction("AllTournamentsAdmin");
         }
 
-        public IActionResult DeleteTournamentUser(int id)
+        public IActionResult DeleteTournamentMy(int id)
         {
             var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
             var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
@@ -347,13 +347,13 @@ namespace SportConnect.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteTournamentUser(int id, TournamentDeletionViewModel model)
+        public IActionResult DeleteTournamentMy(int id, TournamentDeletionViewModel model)
         {
             var range = _participationsRepository.GetAllBy(x => x.TournamentId == id);
             _participationsRepository.DeleteRange(range);
             var entity = _repository.GetById(id);
             _repository.Delete(entity);
-            return RedirectToAction("AllUserTournaments", "Tournament");
+            return RedirectToAction("AllTournamentsMy", "Tournament");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

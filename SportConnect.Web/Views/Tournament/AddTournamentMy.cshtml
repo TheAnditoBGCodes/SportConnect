@@ -43,6 +43,7 @@
                     <div class="form-floating">
                         <input type="text" asp-for="Location" class="form-control" aria-required="true" placeholder="Локация..." style="font-size: 0.8rem;" />
                         <label asp-for="Location" style="font-size: 0.8rem;">Локация</label>
+                        <span asp-validation-for="Location" class="text-danger" style="font-size: 0.8rem;"></span>
                     </div>
                 </div>
                 <div class="col">
@@ -56,7 +57,7 @@
             </div>
 
             <div class="d-flex justify-content-between mt-2">
-                <a asp-action="AllTournaments" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
+                <a asp-action="AllTournamentsMy" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
                 <button type="submit" class="btn btn-success text-white d-flex justify-content-center align-items-center" style="font-size: 0.8rem;">
                     Добави
                 </button>

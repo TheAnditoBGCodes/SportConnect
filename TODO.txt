@@ -1,4 +1,3 @@
-- Functionality Fixes Everywhere
-- Other Users Cannot Remove My Participation
-- Admin Can Remove Other User Participation
+- User Functionality Fixings
+- More Validations Regarding Uniqueness of Data
 - Where Needed Confirmations for Deleton
