@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using SportConnect.Utility
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <style>
@@ -27,24 +28,39 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSports">Спортове</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournaments">Турнири</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllUserTournaments">Мои турнири</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="AllParticipations">Участия</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="ThisUserParticipations">Мои участия</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AllUsers">Потребители</a>
-                        </li>
+                        @if (User.IsInRole(SD.AdminRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSportsAdmin">Панел Спортове</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsAdmin">Панел Турнири</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AllUsers">Панел Потребители</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsMy">Мои турнири</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="ParticipationsMy">Мои участия</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSportsUser">Спортове</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsAdmin">Турнири</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsMy">Мои турнири</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="ParticipationsMy">Мои участия</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial"/>
                 </div>

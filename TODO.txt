@@ -1,3 +1,8 @@
-- User Functionality Fixings
+ADMIN STUFF:
+- AllTournamentsMy (Admin Version) + Other Related (Admin Version)
+- Admin Other Locations Make Sure Everything is Fixed And Works
+
+OTHER STUFF:
+- Dates Validation Cant Submit Date Before Current
 - More Validations Regarding Uniqueness of Data
-- Where Needed Confirmations for Deleton
+- Where Necessary Confirmations for Deletons

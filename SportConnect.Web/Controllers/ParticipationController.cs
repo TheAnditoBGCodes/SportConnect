@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
+using SportConnect.Utility;
 using SportConnect.Web.Models;
 using System.Composition;
 using System.Diagnostics;
@@ -27,7 +28,8 @@ namespace SportConnect.Web.Controllers
             _tournamentsRepository = tournamentsRepository;
         }
 
-        public IActionResult AddParticipation(int id)
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult AddParticipationAdmin(int id)
         {
             var currentTournament = _tournamentsRepository.GetAll().FirstOrDefault(x => x.Id == id);
             var currentUser = _userManager.GetUserAsync(this.User).Result;
@@ -61,6 +63,7 @@ namespace SportConnect.Web.Controllers
             return RedirectToAction("AllTournamentsAdmin", "Tournament");
         }
 
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public IActionResult AddParticipationUser(int id)
         {
             var currentTournament = _tournamentsRepository.GetAll().FirstOrDefault(x => x.Id == id);
@@ -95,7 +98,7 @@ namespace SportConnect.Web.Controllers
             return RedirectToAction("AllTournamentsMy", "Tournament");
         }
 
-
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public IActionResult ParticipationsMy()
         {
             string userId = _userManager.GetUserAsync(this.User).Result.Id;
@@ -113,12 +116,15 @@ namespace SportConnect.Web.Controllers
             return View(model.ToList());
         }
 
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public IActionResult DeleteParticipationUser(int id)
         {
             var participation = _participationsRepository.GetById(id);
             _participationsRepository.Delete(participation);
             return RedirectToAction("ParticipationsMy");
         }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult DeleteParticipationTournamentDetails(int id)
         {
             var participation = _participationsRepository.GetById(id);
@@ -132,13 +138,15 @@ namespace SportConnect.Web.Controllers
             return RedirectToAction("TournamentDetailsAdmin", "Tournament", new { id = participation.TournamentId });
         }
 
-        public IActionResult DeleteParticipationTournament(int id)
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult DeleteParticipationTournamentAdmin(int id)
         {
             var participation = _participationsRepository.GetAll().FirstOrDefault(x => x.TournamentId == id);
             _participationsRepository.Delete(participation);
             return RedirectToAction("AllTournamentsAdmin", "Tournament");
         }
 
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public IActionResult DeleteParticipationTournamentUser(int id)
         {
             var participation = _participationsRepository.GetAll().FirstOrDefault(x => x.TournamentId == id);

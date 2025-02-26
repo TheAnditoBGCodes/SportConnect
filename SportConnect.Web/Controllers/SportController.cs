@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
+using SportConnect.Utility;
 using SportConnect.Web.Models;
 using System.Diagnostics;
 using System.Linq;
@@ -25,11 +26,13 @@ namespace SportConnect.Web.Controllers
             _participationsRepository = participationsRepository;
         }
 
+        [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult AddSport()
         {
             return View();
         }
 
+        [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
         public IActionResult AddSport(Sport sport)
         {
@@ -45,18 +48,20 @@ namespace SportConnect.Web.Controllers
             if (ModelState.IsValid)
             {
                 _repository.Add(sport);
-                return RedirectToAction("AllSports");
+                return RedirectToAction("AllSportsAdmin");
             }
 
             return View(sport);
         }
 
+        [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult EditSport(int id)
         {
             var entity = _repository.GetById(id);
             return View(entity);
         }
 
+        [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
         public IActionResult EditSport(Sport sport)
         {
@@ -73,17 +78,25 @@ namespace SportConnect.Web.Controllers
             if (ModelState.IsValid)
             {
                 _repository.Update(sport);
-                return RedirectToAction("AllSports");
+                return RedirectToAction("AllSportsAdmin");
             }
 
             return View(sport);
         }
 
-        public IActionResult AllSports()
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult AllSportsAdmin()
         {
             return View(_repository.GetAll().ToList());
         }
 
+        [Authorize(Roles = $"{SD.UserRole}")]
+        public IActionResult AllSportsUser()
+        {
+            return View(_repository.GetAll().ToList());
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult DeleteSport(int id)
         {
             var sport = _repository.GetById(id);
@@ -97,7 +110,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult DeleteSport(int id, SportDeletionViewModel? model)
         {
             var tournaments = _tournamentRepository.GetAllBy(t => t.SportId == id).ToList();
@@ -116,7 +129,7 @@ namespace SportConnect.Web.Controllers
                 _repository.Delete(sport);
             }
             
-            return RedirectToAction("AllSports");
+            return RedirectToAction("AllSportsAdmin");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

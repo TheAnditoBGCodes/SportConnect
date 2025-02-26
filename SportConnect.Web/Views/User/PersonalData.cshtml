@@ -73,14 +73,14 @@
 
                     <!-- Center Buttons (Change, My Tournaments, My Participations) -->
                     <div class="d-flex">
-                        <a asp-action="EditUser" asp-controller="User" class="btn btn-warning text-white mx-2" style="font-size: 0.8rem;">Промени</a>
-                        <a asp-action="ThisUserParticipations" asp-controller="Participation" class="btn btn-success text-white mx-2" style="font-size: 0.8rem;">Мои участия</a>
-                        <a asp-action="AllUserTournaments" asp-controller="Tournament" class="btn btn-primary text-white mx-2" style="font-size: 0.8rem;">Мои турнири</a>
+                        <a asp-action="EditUserMy" asp-controller="User" class="btn btn-warning text-white mx-2" style="font-size: 0.8rem;">Промени</a>
+                        <a asp-action="ParticipationsMy" asp-controller="Participation" class="btn btn-success text-white mx-2" style="font-size: 0.8rem;">Мои участия</a>
+                        <a asp-action="AllTournamentsMy" asp-controller="Tournament" class="btn btn-primary text-white mx-2" style="font-size: 0.8rem;">Мои турнири</a>
 
                     </div>
 
                     <!-- Delete Button (right) -->
-                    <a asp-action="DeleteThisUser" asp-controller="User" class="btn btn-danger" style="font-size: 0.8rem;">Изтрий</a>
+                    <a asp-action="DeleteUserMy" asp-controller="User" class="btn btn-danger" style="font-size: 0.8rem;">Изтрий</a>
                 </div>
 
             </form>

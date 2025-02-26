@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
+using SportConnect.Utility;
 using SportConnect.Web.Models;
 using System.Composition;
 using System.Diagnostics;
@@ -30,6 +31,7 @@ namespace SportConnect.Web.Controllers
             _participationsRepository = participationsRepository;
         }
 
+        [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult AddTournament()
         {
             var model = new TournamentViewModel()
@@ -39,6 +41,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
         public IActionResult AddTournament(TournamentViewModel tournament)
         {
@@ -61,6 +64,7 @@ namespace SportConnect.Web.Controllers
             return RedirectToAction("AllTournamentsAdmin", "Tournament");
         }
 
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public IActionResult AddTournamentMy()
         {
             var model = new TournamentViewModel()
@@ -70,6 +74,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         [HttpPost]
         public IActionResult AddTournamentMy(TournamentViewModel tournament)
         {
@@ -86,7 +91,7 @@ namespace SportConnect.Web.Controllers
             return RedirectToAction("AllTournamentsMy", "Tournament");
         }
 
-
+        [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult TournamentDetailsAdmin(int id)
         {
             var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
@@ -106,6 +111,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public IActionResult TournamentDetailsMy(int id)
         {
             var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
@@ -125,6 +131,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult EditTournamentAdmin(int id)
         {
             var tournament = _repository.GetById(id);
@@ -142,6 +149,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
         public IActionResult EditTournamentAdmin(TournamentViewModel viewModel)
         {
@@ -163,6 +171,7 @@ namespace SportConnect.Web.Controllers
             return RedirectToAction("AllTournamentsAdmin", "Tournament");
         }
 
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public IActionResult EditTournamentMy(int id)
         {
             var tournament = _repository.GetById(id);
@@ -180,6 +189,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         [HttpPost]
         public IActionResult EditTournamentMy(TournamentViewModel viewModel)
         {
@@ -201,6 +211,7 @@ namespace SportConnect.Web.Controllers
             return RedirectToAction("AllTournamentsMy", "Tournament");
         }
 
+        [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult SportTournaments(int id)
         {
             var tournaments = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).Where(x => x.SportId == id);
@@ -213,7 +224,9 @@ namespace SportConnect.Web.Controllers
             };
             return View(model);
         }
-        public async Task<IActionResult> AllTournaments(TournamentFilterViewModel? filter)
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public async Task<IActionResult> AllTournamentsAdmin(TournamentFilterViewModel? filter)
         {
             if (filter == null)
             {
@@ -256,7 +269,8 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> AllUserTournaments(TournamentFilterViewModel? filter)
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        public async Task<IActionResult> AllTournamentsMy(TournamentFilterViewModel? filter)
         {
             if (filter == null)
             {
@@ -298,6 +312,8 @@ namespace SportConnect.Web.Controllers
 
             return View(model);
         }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult DeleteTournamentAdmin(int id)
         {
             var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
@@ -317,6 +333,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
         public IActionResult DeleteTournamentAdmin(int id, TournamentDeletionViewModel model)
         {
@@ -327,6 +344,7 @@ namespace SportConnect.Web.Controllers
             return RedirectToAction("AllTournamentsAdmin");
         }
 
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public IActionResult DeleteTournamentMy(int id)
         {
             var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
@@ -346,6 +364,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         [HttpPost]
         public IActionResult DeleteTournamentMy(int id, TournamentDeletionViewModel model)
         {
