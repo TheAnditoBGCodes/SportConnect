@@ -32,7 +32,7 @@ namespace SportConnect.Web.Controllers
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult AddTournament()
+        public IActionResult AddTournamentAdmin()
         {
             var model = new TournamentViewModel()
             {
@@ -43,7 +43,7 @@ namespace SportConnect.Web.Controllers
 
         [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
-        public IActionResult AddTournament(TournamentViewModel tournament)
+        public IActionResult AddTournamentAdmin(TournamentViewModel tournament)
         {
             var user = _userManager.GetUserAsync(this.User).Result;
 
@@ -62,6 +62,39 @@ namespace SportConnect.Web.Controllers
 
             _repository.Add(tournament.ToTournament());
             return RedirectToAction("AllTournamentsAdmin", "Tournament");
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult AddTournamentMyAdmin()
+        {
+            var model = new TournamentViewModel()
+            {
+                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name")
+            };
+            return View(model);
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        [HttpPost]
+        public IActionResult AddTournamentMyAdmin(TournamentViewModel tournament)
+        {
+            var user = _userManager.GetUserAsync(this.User).Result;
+
+            if (user == null)
+            {
+                return RedirectToAction("AllTournamentsMyAdmin", "Tournament");
+            }
+
+            tournament.OrganizerId = user.Id;
+
+            if (!ModelState.IsValid)
+            {
+                tournament.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
+                return View(tournament);
+            }
+
+            _repository.Add(tournament.ToTournament());
+            return RedirectToAction("AllTournamentsMyAdmin", "Tournament");
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
@@ -93,6 +126,26 @@ namespace SportConnect.Web.Controllers
 
         [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult TournamentDetailsAdmin(int id)
+        {
+            var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
+            var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
+            var model = new TournamentDeletionViewModel()
+            {
+                Id = tournament.Id,
+                OrganizerName = tournament.Organizer.FullName,
+                Date = tournament.Date,
+                Deadline = tournament.Deadline,
+                Description = tournament.Description,
+                Location = tournament.Location,
+                Name = tournament.Name,
+                SportName = tournament.Sport.Name,
+                Participations = range
+            };
+            return View(model);
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult TournamentDetailsMyAdmin(int id)
         {
             var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
             var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
@@ -169,6 +222,46 @@ namespace SportConnect.Web.Controllers
 
             _repository.Update(tournament);
             return RedirectToAction("AllTournamentsAdmin", "Tournament");
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult EditTournamentMyAdmin(int id)
+        {
+            var tournament = _repository.GetById(id);
+            var model = new TournamentViewModel()
+            {
+                Id = tournament.Id,
+                OrganizerId = tournament.OrganizerId,
+                Date = tournament.Date,
+                Deadline = tournament.Deadline,
+                Description = tournament.Description,
+                Location = tournament.Location,
+                Name = tournament.Name,
+                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", tournament.SportId)
+            };
+            return View(model);
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        [HttpPost]
+        public IActionResult EditTournamentMyAdmin(TournamentViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                viewModel.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", viewModel.SportId);
+                return View(viewModel);
+            }
+
+            var tournament = _repository.GetById(viewModel.Id ?? 0);
+            tournament.Name = viewModel.Name;
+            tournament.Description = viewModel.Description;
+            tournament.Date = viewModel.Date ?? tournament.Date;
+            tournament.Deadline = viewModel.Deadline ?? tournament.Deadline;
+            tournament.Location = viewModel.Location;
+            tournament.SportId = viewModel.SportId ?? tournament.SportId;
+
+            _repository.Update(tournament);
+            return RedirectToAction("AllTournamentsMyAdmin", "Tournament");
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
@@ -269,7 +362,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole}")]
         public async Task<IActionResult> AllTournamentsMy(TournamentFilterViewModel? filter)
         {
             if (filter == null)
@@ -305,7 +398,52 @@ namespace SportConnect.Web.Controllers
                 SportId = filter.SportId,
                 Date = filter.Date,
                 Sports = new SelectList(sportsList, "Id", "Name", defaultSportName),
-                Tournaments = query.Include(x => x.Organizer).Include(x => x.Sport).ToList(),
+                Tournaments = query.Include(x => x.Organizer).Include(x => x.Sport).Where(x => x.OrganizerId == currentUser.Id).ToList(),
+                UserId = currentUser.Id,
+                UserParticipations = userParticipations.ToList()
+            };
+
+            return View(model);
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public async Task<IActionResult> AllTournamentsMyAdmin(TournamentFilterViewModel? filter)
+        {
+
+            if (filter == null)
+            {
+                // Handle null filter case, return empty model or other fallback
+                return View(new TournamentFilterViewModel());
+            }
+
+            var query = _repository.GetAll().AsQueryable();
+
+            if (filter.SportId != null)
+            {
+                query = query.Where(p => p.SportId == filter.SportId.Value);
+            }
+            if (filter.Date != null)
+            {
+                query = query.Where(p => p.Date.Date == filter.Date.Value.Date);
+            }
+
+            var currentUser = await _userManager.GetUserAsync(this.User);
+            if (currentUser == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
+            var sportsList = _sportRepository.GetAll();
+            var defaultSportName = sportsList.Select(x => x.Name).FirstOrDefault() ?? "Default Sport Name";
+
+            var userParticipations = _participationsRepository.GetAllBy(x => x.ParticipantId == currentUser.Id) ?? new List<Participation>();
+
+            var model = new TournamentFilterViewModel
+            {
+                SportId = filter.SportId,
+                Date = filter.Date,
+                Sports = new SelectList(sportsList, "Id", "Name", defaultSportName),
+                Tournaments = query.Include(x => x.Organizer).Include(x => x.Sport).Where(x => x.OrganizerId == currentUser.Id).ToList(),
                 UserId = currentUser.Id,
                 UserParticipations = userParticipations.ToList()
             };
@@ -342,6 +480,38 @@ namespace SportConnect.Web.Controllers
             var entity = _repository.GetById(id);
             _repository.Delete(entity);
             return RedirectToAction("AllTournamentsAdmin");
+        }
+
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult DeleteTournamentMyAdmin(int id)
+        {
+            var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
+            var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
+            var model = new TournamentDeletionViewModel()
+            {
+                Id = tournament.Id,
+                OrganizerName = tournament.Organizer.FullName,
+                Date = tournament.Date,
+                Deadline = tournament.Deadline,
+                Description = tournament.Description,
+                Location = tournament.Location,
+                Name = tournament.Name,
+                SportName = tournament.Sport.Name,
+                Participations = range
+            };
+            return View(model);
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        [HttpPost]
+        public IActionResult DeleteTournamentMyAdmin(int id, TournamentDeletionViewModel model)
+        {
+            var range = _participationsRepository.GetAllBy(x => x.TournamentId == id);
+            _participationsRepository.DeleteRange(range);
+            var entity = _repository.GetById(id);
+            _repository.Delete(entity);
+            return RedirectToAction("AllTournamentsMyAdmin");
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]

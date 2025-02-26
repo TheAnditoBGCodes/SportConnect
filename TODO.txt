@@ -1,8 +1,7 @@
-ADMIN STUFF:
-- AllTournamentsMy (Admin Version) + Other Related (Admin Version)
-- Admin Other Locations Make Sure Everything is Fixed And Works
+Functionalities (Admin, This Week Done):
+- Double Click for Confirm Quitting Participation 
+- View to Require to Type Confirm to Delete Self
+- Dates Validation Cant Submit Date Before This
+- More Validation Regarding Uniqueness of Data
 
-OTHER STUFF:
-- Dates Validation Cant Submit Date Before Current
-- More Validations Regarding Uniqueness of Data
-- Where Necessary Confirmations for Deletons
+Functionalities (User, Next Week Start):

@@ -110,6 +110,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
+        [HttpPost]
         [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult DeleteSport(int id, SportDeletionViewModel? model)
         {

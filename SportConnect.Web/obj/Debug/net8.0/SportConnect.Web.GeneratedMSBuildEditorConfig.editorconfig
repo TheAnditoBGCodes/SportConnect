@@ -238,12 +238,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxBZGRUb3VybmFtZW50TXkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Tournament/AddTournamentMyAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxBZGRUb3VybmFtZW50TXlBZG1pbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Tournament/AllTournamentsAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxBbGxUb3VybmFtZW50c0FkbWluLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Tournament/AllTournamentsMy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxBbGxUb3VybmFtZW50c015LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Tournament/AllTournamentsMyAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxBbGxUb3VybmFtZW50c015QWRtaW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Tournament/DeleteTournamentAdmin.cshtml]
@@ -254,12 +262,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxEZWxldGVUb3VybmFtZW50TXkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Tournament/DeleteTournamentMyAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxEZWxldGVUb3VybmFtZW50TXlBZG1pbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Tournament/EditTournamentAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxFZGl0VG91cm5hbWVudEFkbWluLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Tournament/EditTournamentMy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxFZGl0VG91cm5hbWVudE15LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Tournament/EditTournamentMyAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxFZGl0VG91cm5hbWVudE15QWRtaW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Tournament/SportTournaments.cshtml]
@@ -272,6 +288,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Tournament/TournamentDetailsMy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxUb3VybmFtZW50RGV0YWlsc015LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/Tournament/TournamentDetailsMyAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxUb3VybmFtZW50RGV0YWlsc015QWRtaW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/AllUsers.cshtml]
