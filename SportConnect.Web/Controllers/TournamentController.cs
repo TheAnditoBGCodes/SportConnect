@@ -54,6 +54,22 @@ namespace SportConnect.Web.Controllers
 
             tournament.OrganizerId = user.Id;
 
+            // Combine Date and Time
+            if (tournament.Date.HasValue && tournament.DateTimer.HasValue)
+            {
+                // Combine the Date part with the DateTimer (time) part
+                var combinedDate = tournament.Date.Value.Date + tournament.DateTimer.Value.TimeOfDay;
+                tournament.Date = combinedDate;
+            }
+
+            // Combine Deadline and DeadlineTime
+            if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
+            {
+                // Combine the Deadline part with the DeadlineTime (time) part
+                var combinedDeadline = tournament.Deadline.Value.Date + tournament.DeadlineTime.Value.TimeOfDay;
+                tournament.Deadline = combinedDeadline;
+            }
+
             if (!ModelState.IsValid)
             {
                 tournament.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
@@ -87,6 +103,22 @@ namespace SportConnect.Web.Controllers
 
             tournament.OrganizerId = user.Id;
 
+            // Combine Date and Time
+            if (tournament.Date.HasValue && tournament.DateTimer.HasValue)
+            {
+                // Combine the Date part with the DateTimer (time) part
+                var combinedDate = tournament.Date.Value.Date + tournament.DateTimer.Value.TimeOfDay;
+                tournament.Date = combinedDate;
+            }
+
+            // Combine Deadline and DeadlineTime
+            if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
+            {
+                // Combine the Deadline part with the DeadlineTime (time) part
+                var combinedDeadline = tournament.Deadline.Value.Date + tournament.DeadlineTime.Value.TimeOfDay;
+                tournament.Deadline = combinedDeadline;
+            }
+
             if (!ModelState.IsValid)
             {
                 tournament.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
@@ -95,16 +127,6 @@ namespace SportConnect.Web.Controllers
 
             _repository.Add(tournament.ToTournament());
             return RedirectToAction("AllTournamentsMyAdmin", "Tournament");
-        }
-
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        public IActionResult AddTournamentMy()
-        {
-            var model = new TournamentViewModel()
-            {
-                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name")
-            };
-            return View(model);
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
@@ -197,6 +219,7 @@ namespace SportConnect.Web.Controllers
                 Description = tournament.Description,
                 Location = tournament.Location,
                 Name = tournament.Name,
+                SportId = tournament.SportId,
                 Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", tournament.SportId)
             };
             return View(model);
@@ -213,10 +236,21 @@ namespace SportConnect.Web.Controllers
             }
 
             var tournament = _repository.GetById(viewModel.Id ?? 0);
+
+            // Combine Date and Time for Date property
+            if (viewModel.Date.HasValue && viewModel.DateTimer.HasValue)
+            {
+                tournament.Date = viewModel.Date.Value.Date + viewModel.DateTimer.Value.TimeOfDay;
+            }
+
+            // Combine Deadline Date and Time for Deadline property
+            if (viewModel.Deadline.HasValue && viewModel.DeadlineTime.HasValue)
+            {
+                tournament.Deadline = viewModel.Deadline.Value.Date + viewModel.DeadlineTime.Value.TimeOfDay;
+            }
+
             tournament.Name = viewModel.Name;
             tournament.Description = viewModel.Description;
-            tournament.Date = viewModel.Date ?? tournament.Date;
-            tournament.Deadline = viewModel.Deadline ?? tournament.Deadline;
             tournament.Location = viewModel.Location;
             tournament.SportId = viewModel.SportId ?? tournament.SportId;
 
@@ -237,6 +271,7 @@ namespace SportConnect.Web.Controllers
                 Description = tournament.Description,
                 Location = tournament.Location,
                 Name = tournament.Name,
+                SportId = tournament.SportId,
                 Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", tournament.SportId)
             };
             return View(model);
@@ -253,10 +288,21 @@ namespace SportConnect.Web.Controllers
             }
 
             var tournament = _repository.GetById(viewModel.Id ?? 0);
+
+            // Combine Date and Time for Date property
+            if (viewModel.Date.HasValue && viewModel.DateTimer.HasValue)
+            {
+                tournament.Date = viewModel.Date.Value.Date + viewModel.DateTimer.Value.TimeOfDay;
+            }
+
+            // Combine Deadline Date and Time for Deadline property
+            if (viewModel.Deadline.HasValue && viewModel.DeadlineTime.HasValue)
+            {
+                tournament.Deadline = viewModel.Deadline.Value.Date + viewModel.DeadlineTime.Value.TimeOfDay;
+            }
+
             tournament.Name = viewModel.Name;
             tournament.Description = viewModel.Description;
-            tournament.Date = viewModel.Date ?? tournament.Date;
-            tournament.Deadline = viewModel.Deadline ?? tournament.Deadline;
             tournament.Location = viewModel.Location;
             tournament.SportId = viewModel.SportId ?? tournament.SportId;
 
@@ -473,13 +519,17 @@ namespace SportConnect.Web.Controllers
 
         [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
-        public IActionResult DeleteTournamentAdmin(int id, TournamentDeletionViewModel model)
+        public IActionResult DeleteTournamentAdmin(int id, string ConfirmText, TournamentDeletionViewModel model)
         {
-            var range = _participationsRepository.GetAllBy(x => x.TournamentId == id);
-            _participationsRepository.DeleteRange(range);
-            var entity = _repository.GetById(id);
-            _repository.Delete(entity);
-            return RedirectToAction("AllTournamentsAdmin");
+            if (ConfirmText == "ÏÎÒÂÚÐÄÈ")
+            {
+                var range = _participationsRepository.GetAllBy(x => x.TournamentId == id);
+                _participationsRepository.DeleteRange(range);
+                var entity = _repository.GetById(id);
+                _repository.Delete(entity);
+                return RedirectToAction("AllTournamentsAdmin");
+            }
+            return View(model);
         }
 
 
@@ -505,13 +555,17 @@ namespace SportConnect.Web.Controllers
 
         [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
-        public IActionResult DeleteTournamentMyAdmin(int id, TournamentDeletionViewModel model)
+        public IActionResult DeleteTournamentMyAdmin(int id, string ConfirmText, TournamentDeletionViewModel model)
         {
-            var range = _participationsRepository.GetAllBy(x => x.TournamentId == id);
-            _participationsRepository.DeleteRange(range);
-            var entity = _repository.GetById(id);
-            _repository.Delete(entity);
-            return RedirectToAction("AllTournamentsMyAdmin");
+            if (ConfirmText == "ÏÎÒÂÚÐÄÈ")
+            {
+                var range = _participationsRepository.GetAllBy(x => x.TournamentId == id);
+                _participationsRepository.DeleteRange(range);
+                var entity = _repository.GetById(id);
+                _repository.Delete(entity);
+                return RedirectToAction("AllTournamentsMyAdmin");
+            }
+            return View(model);
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]

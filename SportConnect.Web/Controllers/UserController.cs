@@ -217,30 +217,34 @@ namespace SportConnect.Web.Controllers
 
         [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
-        public async Task<IActionResult> DeleteUserAdmin(string id, SportConnectUserDeletionViewModel model)
+        public async Task<IActionResult> DeleteUserAdmin(string id, string ConfirmText, SportConnectUserDeletionViewModel model)
         {
-            var user = _repository.GetUserById(id);
-
-            var currentUser = await _userManager.GetUserAsync(User);
-
-            if (user.Id == currentUser.Id)
+            if (ConfirmText == "ПОТВЪРДИ")
             {
-                var result = await _userManager.DeleteAsync(user);
+                var user = _repository.GetUserById(id);
 
-                if (result.Succeeded)
+                var currentUser = await _userManager.GetUserAsync(User);
+
+                if (user.Id == currentUser.Id)
                 {
-                    await _signInManager.SignOutAsync();
-                    return RedirectToAction("Index", "Home");
-                }
-            }
+                    var result = await _userManager.DeleteAsync(user);
 
-            var result1 = await _userManager.DeleteAsync(user);
-            if (result1.Succeeded)
-            {
+                    if (result.Succeeded)
+                    {
+                        await _signInManager.SignOutAsync();
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+
+                var result1 = await _userManager.DeleteAsync(user);
+                if (result1.Succeeded)
+                {
+                    return RedirectToAction("AllUsers");
+                }
+
                 return RedirectToAction("AllUsers");
             }
-
-            return RedirectToAction("AllUsers");
+            return View(model);
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
@@ -270,28 +274,32 @@ namespace SportConnect.Web.Controllers
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         [HttpPost]
-        public async Task<IActionResult> DeleteUserMy(string id, SportConnectUserDeletionViewModel model)
+        public async Task<IActionResult> DeleteUserMy(string id, string ConfirmText,SportConnectUserDeletionViewModel model)
         {
-            var user = _repository.GetUserById(id);
-            var currentUser = await _userManager.GetUserAsync(User);
-
-            if (user.Id == currentUser.Id)
+            if (ConfirmText == "ПОТВЪРДИ")
             {
-                var result = await _userManager.DeleteAsync(user);
+                var user = _repository.GetUserById(id);
+                var currentUser = await _userManager.GetUserAsync(User);
 
-                if (result.Succeeded)
+                if (user.Id == currentUser.Id)
                 {
-                    await _signInManager.SignOutAsync();
-                    return RedirectToAction("Index", "Home");
+                    var result = await _userManager.DeleteAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        await _signInManager.SignOutAsync();
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        // Optionally, add an error message
+                        ModelState.AddModelError(string.Empty, "Неуспешно изтриване на акаунта.");
+                    }
                 }
-                else
-                {
-                    // Optionally, add an error message
-                    ModelState.AddModelError(string.Empty, "Неуспешно изтриване на акаунта.");
-                }
+
+                return RedirectToAction("PersonalData");
             }
-
-            return RedirectToAction("PersonalData");
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

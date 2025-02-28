@@ -19,11 +19,11 @@ public class TournamentViewModel
     public SportConnectUser? Organizer { get; set; }
     public string? OrganizerName { get; set; }
 
-    [Required(ErrorMessage = "Датата на провеждане е задължителна")]
+    [Required(ErrorMessage = "Датата е задължителна")]
     [DataType(DataType.DateTime)]
     public DateTime? Date { get; set; }
 
-    [Required(ErrorMessage = "Крайният срок е задължителен")]
+    [Required(ErrorMessage = "Датата е задължителна")]
     [DeadlineBeforeTournament("Date", ErrorMessage = "Крайният срок трябва да е преди датата на турнира.")]
     [DataType(DataType.DateTime)]
     public DateTime? Deadline { get; set; }
@@ -42,6 +42,15 @@ public class TournamentViewModel
     public IEnumerable<Participation>? UserParticipations { get; set; } = new List<Participation>();
     public List<Tournament>? Tournaments { get; set; }
     public string? UserId { get; set; }
+
+    [Required(ErrorMessage = "Часът е задължителен")]
+    [DataType(DataType.DateTime)]
+    public DateTime? DateTimer { get; set; }
+
+    [Required(ErrorMessage = "Часът е задължителен")]
+    [DataType(DataType.DateTime)]
+    public DateTime? DeadlineTime { get; set; }
+
     public Tournament ToTournament()
     {
         return new Tournament

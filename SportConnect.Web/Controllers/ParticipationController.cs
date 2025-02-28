@@ -63,6 +63,41 @@ namespace SportConnect.Web.Controllers
             return RedirectToAction("AllTournamentsAdmin", "Tournament");
         }
 
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult AddParticipationMyAdmin(int id)
+        {
+            var currentTournament = _tournamentsRepository.GetAll().FirstOrDefault(x => x.Id == id);
+            var currentUser = _userManager.GetUserAsync(this.User).Result;
+
+            if (currentTournament == null || currentUser == null)
+            {
+                return NotFound("Invalid tournament or user.");
+            }
+
+            var currentUserId = currentUser.Id;
+
+            var existingParticipation = _participationsRepository
+                .GetAllBy(p => p.TournamentId == id && p.ParticipantId == currentUserId)
+                .FirstOrDefault();
+
+            if (existingParticipation != null)
+            {
+                return RedirectToAction("AllTournamentsMyAdmin", "Tournament");
+            }
+
+            var participation = new Participation
+            {
+                Participant = currentUser,
+                ParticipantId = currentUser.Id,
+                RegistrationDate = DateTime.Now,
+                Tournament = currentTournament,
+                TournamentId = id
+            };
+
+            _participationsRepository.Add(participation);
+            return RedirectToAction("AllTournamentsMyAdmin", "Tournament");
+        }
+
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public IActionResult AddParticipationUser(int id)
         {
@@ -144,6 +179,14 @@ namespace SportConnect.Web.Controllers
             var participation = _participationsRepository.GetAll().FirstOrDefault(x => x.TournamentId == id);
             _participationsRepository.Delete(participation);
             return RedirectToAction("AllTournamentsAdmin", "Tournament");
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult DeleteParticipationTournamentMyAdmin(int id)
+        {
+            var participation = _participationsRepository.GetAll().FirstOrDefault(x => x.TournamentId == id);
+            _participationsRepository.Delete(participation);
+            return RedirectToAction("AllTournamentsMyAdmin", "Tournament");
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]

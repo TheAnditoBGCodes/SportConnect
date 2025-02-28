@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Scaffolding;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Utility;
@@ -112,25 +113,29 @@ namespace SportConnect.Web.Controllers
 
         [HttpPost]
         [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult DeleteSport(int id, SportDeletionViewModel? model)
+        public IActionResult DeleteSport(int id, string ConfirmText, SportDeletionViewModel? model)
         {
-            var tournaments = _tournamentRepository.GetAllBy(t => t.SportId == id).ToList();
-
-            foreach (var tournament in tournaments)
+            if (ConfirmText == "ÏÎÒÂÚÐÄÈ")
             {
-                var participations = _participationsRepository.GetAllBy(p => p.TournamentId == tournament.Id).ToList();
-                _participationsRepository.DeleteRange(participations);
-            }
+                var tournaments = _tournamentRepository.GetAllBy(t => t.SportId == id).ToList();
 
-            _tournamentRepository.DeleteRange(tournaments);
+                foreach (var tournament in tournaments)
+                {
+                    var participations = _participationsRepository.GetAllBy(p => p.TournamentId == tournament.Id).ToList();
+                    _participationsRepository.DeleteRange(participations);
+                }
 
-            var sport = _repository.GetById(id);
-            if (sport != null)
-            {
-                _repository.Delete(sport);
+                _tournamentRepository.DeleteRange(tournaments);
+
+                var sport = _repository.GetById(id);
+                if (sport != null)
+                {
+                    _repository.Delete(sport);
+                }
+
+                return RedirectToAction("AllSportsAdmin");
             }
-            
-            return RedirectToAction("AllSportsAdmin");
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

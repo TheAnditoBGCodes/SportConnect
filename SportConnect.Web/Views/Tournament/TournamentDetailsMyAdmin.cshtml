@@ -1,10 +1,63 @@
 ﻿@using SportConnect.Models
 @model TournamentDeletionViewModel
 
-<div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
-    <div class="container p-2 border rounded" style="max-width: 55%; padding: 0.5rem;">
-        @if (Model.Participations.Any())
-        {
+<script>
+    function showConfirmationButtons(id) {
+        // Hide the "Откажи се" button and show the "Не" and "Да" buttons within the same btn-group
+        document.getElementById('delete-' + id).style.display = 'none';
+        document.getElementById('confirm-' + id).style.display = 'inline-flex';
+    }
+
+    function hideConfirmationButtons(id) {
+        // Hide the "Не" and "Да" buttons and show the "Откажи се" button again within the same btn-group
+        document.getElementById('confirm-' + id).style.display = 'none';
+        document.getElementById('delete-' + id).style.display = 'inline-block';
+    }
+
+    function confirmDelete(id) {
+        // Call your delete action here
+        window.location.href = '/Tournament/TournamentDetailsMyAdmin/' + id;
+    }
+</script>
+
+<style>
+    .btn-group {
+        width: 100%; /* Set the width of the button group */
+        display: flex; /* Align buttons horizontally */
+        justify-content: center; /* Ensure the buttons are spaced evenly */
+    }
+
+    .confirmation-buttons {
+        display: none; /* Initially hide the confirmation buttons */
+        width: 100%; /* Set the width of the confirmation buttons group */
+        justify-content: center; /* Ensure the buttons are spaced evenly */
+        flex-grow: 1; /* Make sure it fills the button group */
+    }
+
+        .confirmation-buttons .btn {
+            width: 100%; /* Make each button slightly smaller to fit side by side */
+            margin: 0;
+        }
+
+    .btn-group .btn {
+        flex-grow: 1; /* Make buttons stretch to fill available space */
+        margin: 0;
+    }
+
+    /* Column Widths */
+    th, td {
+        text-align: center;
+    }
+
+    .column-my {
+        width: 20%; /* Set the last column (Actions) to 16% */
+    }
+</style>
+
+@if (Model.Participations.Any())
+{
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
+        <div class="container p-2 border rounded" style="max-width: 90%; padding: 0.5rem;">
             <h1 class="text-center mb-3" style="font-size: 1.3rem;">Данни за този турнир</h1>
             <form method="post">
                 <div class="row mb-2">
@@ -73,15 +126,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Participations.Select((p, index) => new { p, index }))
+                        @foreach (var item in Model.Participations)
                         {
-                            <tr class="align-middle">
-                                <td class="text-center">@item.p.Id</td>
-                                <td class="text-center">@item.p.Participant.FullName</td>
-                                <td class="text-center">@item.p.RegistrationDate</td>
-                                <td class="text-center">@item.p.Tournament.Deadline</td>
-                                <td class="text-center">
-                                    <a asp-controller="Participation" asp-action="DeleteParticipationTournamentDetails" asp-route-id="@item.p.Id" class="btn btn-danger btn-sm">Откажи</a>
+                            <tr>
+                                <td class="column-my">@item.Id</td>
+                                <td class="column-my">@item.Participant.FullName</td>
+                                <td class="column-my">@item.RegistrationDate</td>
+                                <td class="column-my">@item.Tournament.Deadline</td>
+                                <td class="column-my">
+                                    <div class="btn-group" role="group">
+                                        <!-- Confirmation buttons will appear when the "Откажи се" button is clicked -->
+                                        <div id="confirm-@item.Id" class="confirmation-buttons">
+                                            <a onclick="hideConfirmationButtons(@item.Id)" class="btn btn-success">Не</a>
+                                            <a onclick="confirmDelete(@item.Id)" class="btn btn-danger">Да</a>
+                                        </div>
+                                        <!-- The "Откажи се" button is initially visible -->
+                                        <a id="delete-@item.Id" onclick="showConfirmationButtons(@item.Id)" class="btn btn-danger" style="display: inline-block;">Откажи се</a>
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -90,11 +151,15 @@
             </div>
 
             <div class="d-flex justify-content-center mt-2">
-                <a asp-action="AllTournamentsAdmin" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
+                <a asp-action="AllTournamentsMyAdmin" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
             </div>
-        }
-        else
-        {
+        </div>
+    </div>
+}
+else
+{
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
+        <div class="container p-2 border rounded" style="max-width: 55%; padding: 0.5rem;">
             <h1 class="text-center mb-3" style="font-size: 1.3rem;">Данни за този турнир</h1>
             <form method="post">
                 <div class="row mb-2">
@@ -152,8 +217,8 @@
             <h2 class="text-center" style="font-size: 1.1rem;">Няма участници</h2>
 
             <div class="d-flex justify-content-center mt-2">
-                <a asp-action="AllTournamentsAdmin" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
+                <a asp-action="AllTournamentsMyAdmin" asp-controller="Tournament" class="btn btn-secondary" style="font-size: 0.8rem;">Назад</a>
             </div>
-        }
+        </div>
     </div>
-</div>
+}

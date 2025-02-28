@@ -1,9 +1,11 @@
 ﻿@using SportConnect.Models
 @model TournamentViewModel
+
 <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
     <div class="container p-2 border rounded" style="max-width: 55%; padding: 0.5rem;">
-        <h1 class="text-center mb-3" style="font-size: 1.3rem;">Промени турнир</h1>
+        <h1 class="text-center mb-3" style="font-size: 1.3rem;">Добави турнир</h1>
         <form method="post">
+            <!-- First row: Name and Description -->
             <div class="row mb-2">
                 <div class="col">
                     <div class="form-floating">
@@ -24,16 +26,33 @@
             <div class="row mb-2">
                 <div class="col">
                     <div class="form-floating">
-                        <input type="datetime-local" asp-for="Date" class="form-control" aria-required="true" style="font-size: 0.8rem;" />
+                        <input type="date" asp-for="Date" class="form-control" aria-required="true" id="dateField" style="font-size: 0.8rem;" />
                         <label asp-for="Date" style="font-size: 0.8rem;">Дата на провеждане</label>
                         <span asp-validation-for="Date" class="text-danger" style="font-size: 0.8rem;"></span>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="datetime-local" asp-for="Deadline" class="form-control" aria-required="true" style="font-size: 0.8rem;" />
+                        <input type="time" asp-for="DateTimer" class="form-control" aria-required="true" id="timeField" style="font-size: 0.8rem;" />
+                        <label asp-for="DateTimer" style="font-size: 0.8rem;">Час</label>
+                        <span asp-validation-for="DateTimer" class="text-danger" style="font-size: 0.8rem;"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2" id="deadlineRow" style="display: none;">
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="date" asp-for="Deadline" class="form-control" aria-required="true" id="deadlineField" style="font-size: 0.8rem;" />
                         <label asp-for="Deadline" style="font-size: 0.8rem;">Краен срок</label>
                         <span asp-validation-for="Deadline" class="text-danger" style="font-size: 0.8rem;"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="time" asp-for="DeadlineTime" class="form-control" aria-required="true" id="timeDeadlineField" style="font-size: 0.8rem;" />
+                        <label asp-for="DeadlineTime" style="font-size: 0.8rem;">Час</label>
+                        <span asp-validation-for="DeadlineTime" class="text-danger" style="font-size: 0.8rem;"></span>
                     </div>
                 </div>
             </div>
@@ -65,3 +84,40 @@
         </form>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dateField = document.getElementById("dateField");
+        const timeField = document.getElementById("timeField");
+        const deadlineField = document.getElementById("deadlineField");
+        const deadlineTimeField = document.getElementById("timeDeadlineField");
+        const deadlineRow = document.getElementById("deadlineRow");
+
+        // Set min date for DateField to today
+        let today = new Date().toISOString().split("T")[0];
+        dateField.setAttribute("min", today);
+        deadlineField.setAttribute("min", today); // Ensure deadline is not before today
+
+        function toggleDeadlineVisibility() {
+            if (dateField.value && timeField.value) {
+                deadlineRow.style.display = "flex";
+                deadlineField.setAttribute("max", dateField.value);
+                if (deadlineField.value < today) {
+                    deadlineField.value = "";
+                }
+            } else {
+                deadlineRow.style.display = "none";
+                deadlineField.value = "";
+                deadlineTimeField.value = "";
+            }
+        }
+
+        dateField.addEventListener("change", toggleDeadlineVisibility);
+        timeField.addEventListener("change", toggleDeadlineVisibility);
+        deadlineField.addEventListener("change", function () {
+            if (deadlineField.value < today) {
+                deadlineField.value = today;
+            }
+        });
+    });
+</script>
