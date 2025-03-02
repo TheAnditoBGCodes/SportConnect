@@ -82,7 +82,6 @@ else
                 <table class="table table-striped table-hover text-center align-middle" style="font-size: 0.8rem;">
                     <thead class="table-dark" style="position: sticky; top: 0; z-index: 2;">
                         <tr>
-                            <th class="column-id">#</th>
                             <th class="column-registration">Дата на регистрация</th>
                             <th class="column-tournament">Турнир</th>
                             <th class="column-sport">Спорт</th>
@@ -95,7 +94,6 @@ else
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td class="column-id">@item.Id</td>
                                 <td class="column-registration">@item.RegistrationDate</td>
                                 <td class="column-tournament">@item.TournamentName</td>
                                 <td class="column-sport">@item.TournamentSport</td>
