@@ -94,13 +94,13 @@ namespace SportConnect.Web.Controllers
 
                 await _signInManager.RefreshSignInAsync(currentUser); // Ensure navbar updates
 
-                return RedirectToAction("PersonalData", "User");
+                return RedirectToAction("PersonalDataAdmin", "User");
             }
             return View(user);
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        public IActionResult PersonalData()
+        public IActionResult PersonalDataAdmin()
         {
             var user = _userManager.GetUserAsync(this.User).Result;
             var names = user.FullName.Split(' ').ToList();
@@ -176,6 +176,7 @@ namespace SportConnect.Web.Controllers
                 existingUser.FullName = $"{user.FirstName} {user.LastName}";
 
                 var updateResult = await _userManager.UpdateAsync(existingUser);
+
                 if (!updateResult.Succeeded)
                 {
                     foreach (var error in updateResult.Errors)
@@ -259,14 +260,15 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public IActionResult DeleteUserMy(string id)
         {
-            var user = _repository.GetUserById(id);
-            var participations = _participationRepository.AllWithIncludes(p => p.Tournament, p => p.Tournament.Sport).Where(p => p.ParticipantId == id).ToList();
+            var user = _userManager.GetUserAsync(this.User).Result;
+            string userId = user.Id;
+            var participations = _participationRepository.AllWithIncludes(p => p.Tournament, p => p.Tournament.Sport).Where(p => p.ParticipantId == userId).ToList();
 
             var names = user.FullName.Split(' ').ToList();
 
             var model = new SportConnectUserViewModel()
             {
-                Id = id,
+                Id = userId,
                 UserName = user.UserName,
                 FirstName = names[0],
                 LastName = names[1],
@@ -283,11 +285,11 @@ namespace SportConnect.Web.Controllers
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         [HttpPost]
-        public async Task<IActionResult> DeleteUserMy(string id, string ConfirmText,SportConnectUserDeletionViewModel model)
+        public async Task<IActionResult> DeleteUserMy(string id, string ConfirmText, SportConnectUserDeletionViewModel model)
         {
             if (ConfirmText == "ÏÎÒÂÚÐÄÈ")
             {
-                var user = _repository.GetUserById(id);
+                var user = _userManager.GetUserAsync(this.User).Result;
                 var currentUser = await _userManager.GetUserAsync(User);
 
                 if (user.Id == currentUser.Id)
@@ -306,7 +308,7 @@ namespace SportConnect.Web.Controllers
                     }
                 }
 
-                return RedirectToAction("PersonalData");
+                return RedirectToAction("PersonalDataAdmin");
             }
             return View(model);
         }

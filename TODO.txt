@@ -1,9 +1,21 @@
-Functionalities (Admin, Now):
-- Fixing Issues in Pathings and Loadings
+Admin Texts Visibility:
+If Text is TOO BIG for Container then Button to See All Text
 
-Functionalities (Admin, Tomorrow):
-- Cloudinary Images for User Account
-- Cloudinary Images for Sport
-- Cloudinary Images for Tournament
+Admin Cloudinary:
+- Images for Tournamts
+- Images for Sportes
+- Images for Users 
 
-Functionalities (Users, Next Week):
+
+
+
+
+
+NO LOGGED IN USER FUNCTIONALITY
+
+
+
+
+
+
+USER STUFF AFTER CLOUDINARY STUFF

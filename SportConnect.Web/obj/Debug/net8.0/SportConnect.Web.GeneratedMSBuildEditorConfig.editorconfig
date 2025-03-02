@@ -314,8 +314,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxFZGl0VXNlck15LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/PersonalData.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxQZXJzb25hbERhdGEuY3NodG1s
+[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/PersonalDataAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxQZXJzb25hbERhdGFBZG1pbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/PersonalDataUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxQZXJzb25hbERhdGFVc2VyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/UserDetails.cshtml]

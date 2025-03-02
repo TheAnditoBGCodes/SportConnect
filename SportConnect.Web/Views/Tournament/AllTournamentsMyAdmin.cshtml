@@ -108,7 +108,7 @@
             <h1 class="text-center mb-3" style="font-size: 1.3rem;">Няма турнири</h1>
 
             <div class="d-flex justify-content-center mt-3">
-                <a asp-action="Index" asp-controller="Home" class="btn btn-secondary" style="font-size: 1rem; margin-right: 10px;">Назад</a>
+                <a id="backButton" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
                 <a asp-action="AddTournamentMyAdmin" asp-controller="Tournament" class="btn btn-success" style="font-size: 1rem;">Добави</a>
             </div>
         </div>
@@ -217,12 +217,23 @@ else
             </div>
 
             <div class="d-flex justify-content-center mt-3">
-                <a asp-action="Index" asp-controller="Home" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
+                <a id="backButton" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
             </div>
         </div>
     </div>
 }
 <script>
+    document.getElementById("backButton").addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent default link behavior
+
+        var referrer = document.referrer;
+
+            if (referrer.includes("/User/PersonalDataAdmin")) {
+                window.location.href = "/User/PersonalDataAdmin";
+            } else {
+                window.location.href = "/Home/Index";
+            }
+        });
     document.addEventListener("DOMContentLoaded", function () {
         var today = new Date().toISOString().split('T')[0];
         document.getElementById("datePicker").setAttribute("min", today);

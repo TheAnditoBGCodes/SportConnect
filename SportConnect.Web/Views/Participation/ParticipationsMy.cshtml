@@ -34,10 +34,10 @@
         flex-grow: 1; /* Make sure it fills the button group */
     }
 
-    .confirmation-buttons .btn {
-        width: 100%; /* Make each button slightly smaller to fit side by side */
-        margin: 0;
-    }
+        .confirmation-buttons .btn {
+            width: 100%; /* Make each button slightly smaller to fit side by side */
+            margin: 0;
+        }
 
     .btn-group .btn {
         flex-grow: 1; /* Make buttons stretch to fill available space */
@@ -48,9 +48,11 @@
     th, td {
         text-align: center;
     }
+
     .column-id, .column-registration, .column-tournament, .column-sport, .column-date, .column-deadline {
         width: 14%; /* Set each column width to 14% */
     }
+
     .column-actions {
         width: 16%; /* Set the last column (Actions) to 16% */
     }
@@ -116,8 +118,19 @@ else
                 </table>
             </div>
             <div class="d-flex justify-content-center mt-3">
-                <a asp-action="Index" asp-controller="Home" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
+                <a id="backButton" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
             </div>
         </div>
     </div>
-}
+}<script>
+     document.getElementById("backButton").addEventListener("click", function (event) {
+         event.preventDefault(); // Prevent default anchor behavior
+
+         // Check if the previous page was "User/PersonalDataAdmin"
+         if (document.referrer.includes("/User/PersonalDataAdmin")) {
+             window.location.href = "/User/PersonalDataAdmin";
+         } else {
+             window.location.href = "/Home/Index";
+         }
+     });
+</script>

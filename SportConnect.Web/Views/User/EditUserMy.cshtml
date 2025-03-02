@@ -1,4 +1,5 @@
 ﻿@using SportConnect.Models
+@using SportConnect.Utility
 @model SportConnectUserEditViewModel
 @{
     <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
@@ -65,7 +66,14 @@
                 </div>
 
                 <div class="d-flex justify-content-between mt-2">
-                    <a asp-action="PersonalData" class="btn btn-secondary" asp-controller="User">Назад</a>
+                    @if (User.IsInRole(SD.AdminRole))
+                    {
+                        <a asp-action="PersonalDataAdmin" class="btn btn-secondary" asp-controller="User">Назад</a>
+                    }
+                    else
+                    {
+                        <a asp-action="PersonalDataUser" class="btn btn-secondary" asp-controller="User">Назад</a>
+                    }
                     <button type="submit" class="btn btn-warning text-white d-flex justify-content-center align-items-center" style="font-size: 0.8rem;">
                         Промени
                     </button>

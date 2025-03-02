@@ -174,6 +174,34 @@ namespace SportConnect.Web.Controllers
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult DeleteParticipationUserDetails(int id)
+        {
+            var participation = _participationsRepository.GetById(id);
+            if (participation == null)
+            {
+                return NotFound();
+            }
+
+            _participationsRepository.Delete(participation);
+
+            return RedirectToAction("UserDetails", "User", new { id = participation.ParticipantId });
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult DeleteParticipationTournamentMyDetails(int id)
+        {
+            var participation = _participationsRepository.GetById(id);
+            if (participation == null)
+            {
+                return NotFound();
+            }
+
+            _participationsRepository.Delete(participation);
+
+            return RedirectToAction("TournamentDetailsMyAdmin", "Tournament", new { id = participation.TournamentId });
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult DeleteParticipationTournamentAdmin(int id)
         {
             var participation = _participationsRepository.GetAll().FirstOrDefault(x => x.TournamentId == id);
