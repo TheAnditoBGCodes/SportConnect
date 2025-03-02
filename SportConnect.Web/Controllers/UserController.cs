@@ -31,7 +31,6 @@ namespace SportConnect.Web.Controllers
             _repository = repository;
         }
 
-
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public IActionResult EditUserMy()
         {
@@ -54,17 +53,33 @@ namespace SportConnect.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUserMy(SportConnectUserEditViewModel user)
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null)
+            {
+                return NotFound(); // Handle case where user is not found
+            }
+
+            // Skip the uniqueness check if the username has not changed
+            if (currentUser.UserName != user.UserName && _repository.GetAll().Any(s => s.UserName == user.UserName))
+            {
+                ModelState.AddModelError("UserName", "Потребителското име е заето.");
+            }// Skip the uniqueness check if the email has not changed
+            if (currentUser.Email != user.Email && _repository.GetAll().Any(s => s.Email == user.Email))
+            {
+                ModelState.AddModelError("Email", "Този имейл вече е регистриран.");
+            }
+
+            // Skip the uniqueness check if the phone number has not changed
+            if (currentUser.PhoneNumber != user.PhoneNumber && _repository.GetAll().Any(s => s.PhoneNumber == user.PhoneNumber))
+            {
+                ModelState.AddModelError("PhoneNumber", "Този телефонен номер вече е свързан с друг акаунт.");
+            }
+
             if (ModelState.IsValid)
             {
-                var currentUser = await _userManager.GetUserAsync(User);
-                if (currentUser == null)
-                {
-                    return NotFound(); // Handle case where user is not found
-                }
-
                 currentUser.UserName = user.UserName;
                 currentUser.FullName = $"{user.FirstName} {user.LastName}";
-                currentUser.Age = user.Age;
+                currentUser.Age = user.Age ?? 0;
                 currentUser.Location = user.Location;
                 currentUser.Email = user.Email;
                 currentUser.PhoneNumber = user.PhoneNumber;
@@ -133,24 +148,24 @@ namespace SportConnect.Web.Controllers
         {
             var user = _repository.GetUserById(id);
             var names = user.FullName.Split(' ').ToList();
-            var model = new SportConnectUserEditViewModel()
+            var model = new SportConnectUserEditAdminViewModel()
             {
                 Id = id,
                 UserName = user.UserName,
                 FirstName = names[0],
                 LastName = names[1],
-                Age = user.Age,
-                Location = user.Location,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
             };
             return View(model);
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
-        public async Task<IActionResult> EditUserAdmin(string id, SportConnectUserEditViewModel user)
+        public async Task<IActionResult> EditUserAdmin(string id, SportConnectUserEditAdminViewModel user)
         {
+            if (!_repository.IsPropertyUnique(s => s.UserName == user.UserName && s.Id != user.Id))
+            {
+                ModelState.AddModelError("UserName", "Потребителското име е заето.");
+            }
             if (ModelState.IsValid)
             {
                 var existingUser = _repository.GetUserById(id);
@@ -161,10 +176,6 @@ namespace SportConnect.Web.Controllers
 
                 existingUser.UserName = user.UserName;
                 existingUser.FullName = $"{user.FirstName} {user.LastName}";
-                existingUser.Age = user.Age;
-                existingUser.Location = user.Location;
-                existingUser.Email = user.Email;
-                existingUser.PhoneNumber = user.PhoneNumber;
 
                 var updateResult = await _userManager.UpdateAsync(existingUser);
                 if (!updateResult.Succeeded)

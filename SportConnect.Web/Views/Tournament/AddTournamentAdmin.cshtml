@@ -26,37 +26,37 @@
             <div class="row mb-2">
                 <div class="col">
                     <div class="form-floating">
-                        <input type="date" asp-for="Date" class="form-control" aria-required="true" id="dateField" style="font-size: 0.8rem;" />
+                        <input type="date" asp-for="Date" class="form-control" aria-required="true" id="dateField" style="font-size: 0.8rem;" onkeydown="return false;" onmousedown="return false;" />
                         <label asp-for="Date" style="font-size: 0.8rem;">Дата на провеждане</label>
                         <span asp-validation-for="Date" class="text-danger" style="font-size: 0.8rem;"></span>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="time" asp-for="DateTimer" class="form-control" aria-required="true" id="timeField" style="font-size: 0.8rem;" />
+                        <input type="time" asp-for="DateTimer" class="form-control" aria-required="true" id="timeField" style="font-size: 0.8rem;" value="@Model.DateTimer?.ToString("HH:mm")" />
                         <label asp-for="DateTimer" style="font-size: 0.8rem;">Час</label>
                         <span asp-validation-for="DateTimer" class="text-danger" style="font-size: 0.8rem;"></span>
                     </div>
                 </div>
             </div>
 
-            <div class="row mb-2" id="deadlineRow" style="display: none;">
+            <div class="row mb-2" id="deadlineRow">
                 <div class="col">
                     <div class="form-floating">
-                        <input type="date" asp-for="Deadline" class="form-control" aria-required="true" id="deadlineField" style="font-size: 0.8rem;" />
+                        <input type="date" asp-for="Deadline" class="form-control" aria-required="true" id="deadlineField" style="font-size: 0.8rem;" onkeydown="return false;" onmousedown="return false;" />
                         <label asp-for="Deadline" style="font-size: 0.8rem;">Краен срок</label>
                         <span asp-validation-for="Deadline" class="text-danger" style="font-size: 0.8rem;"></span>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="time" asp-for="DeadlineTime" class="form-control" aria-required="true" id="timeDeadlineField" style="font-size: 0.8rem;" />
+                        <input type="time" asp-for="DeadlineTime" class="form-control" aria-required="true" id="timeDeadlineField" style="font-size: 0.8rem;" value="@Model.DeadlineTime?.ToString("HH:mm")" />
                         <label asp-for="DeadlineTime" style="font-size: 0.8rem;">Час</label>
                         <span asp-validation-for="DeadlineTime" class="text-danger" style="font-size: 0.8rem;"></span>
                     </div>
                 </div>
+                <span asp-validation-for="DateOrder" class="text-danger" style="font-size: 0.8rem; display: block; text-align: center;"></span>
             </div>
-
             <div class="row mb-2">
                 <div class="col">
                     <div class="form-floating">
@@ -88,36 +88,60 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const dateField = document.getElementById("dateField");
-        const timeField = document.getElementById("timeField");
         const deadlineField = document.getElementById("deadlineField");
-        const deadlineTimeField = document.getElementById("timeDeadlineField");
-        const deadlineRow = document.getElementById("deadlineRow");
 
-        // Set min date for DateField to today
         let today = new Date().toISOString().split("T")[0];
         dateField.setAttribute("min", today);
-        deadlineField.setAttribute("min", today); // Ensure deadline is not before today
+        deadlineField.setAttribute("min", today);
 
-        function toggleDeadlineVisibility() {
-            if (dateField.value && timeField.value) {
-                deadlineRow.style.display = "flex";
+        // Update max date for deadline when the date is selected
+        dateField.addEventListener("change", function () {
+            if (dateField.value) {
                 deadlineField.setAttribute("max", dateField.value);
-                if (deadlineField.value < today) {
-                    deadlineField.value = "";
+
+                // If the selected deadline is after the date, set it to the same as dateField
+                if (deadlineField.value > dateField.value) {
+                    deadlineField.value = dateField.value;
                 }
             } else {
-                deadlineRow.style.display = "none";
-                deadlineField.value = "";
-                deadlineTimeField.value = "";
-            }
-        }
-
-        dateField.addEventListener("change", toggleDeadlineVisibility);
-        timeField.addEventListener("change", toggleDeadlineVisibility);
-        deadlineField.addEventListener("change", function () {
-            if (deadlineField.value < today) {
-                deadlineField.value = today;
+                // If dateField is cleared, reset deadline max to current date
+                deadlineField.removeAttribute("max");
+                deadlineField.setAttribute("min", today);
             }
         });
+
+        // Update min date for dateField when the deadline is set
+        deadlineField.addEventListener("change", function () {
+            if (deadlineField.value) {
+                dateField.setAttribute("min", deadlineField.value);
+
+                // If the selected date is before the deadline, set it to the same as deadlineField
+                if (dateField.value < deadlineField.value) {
+                    dateField.value = deadlineField.value;
+                }
+            } else {
+                // If deadlineField is cleared, reset date min to today
+                dateField.removeAttribute("min");
+                dateField.setAttribute("min", today);
+            }
+        });
+
+        // If there's a value in dateField or deadlineField on load, update the min/max accordingly
+        if (dateField.value) {
+            deadlineField.setAttribute("max", dateField.value);
+            if (deadlineField.value > dateField.value) {
+                deadlineField.value = dateField.value;
+            }
+        } else {
+            deadlineField.removeAttribute("max");
+            deadlineField.setAttribute("min", today);
+        }
+
+        if (deadlineField.value) {
+            dateField.setAttribute("min", deadlineField.value);
+            if (dateField.value < deadlineField.value) {
+                dateField.value = deadlineField.value;
+            }
+        }
     });
 </script>

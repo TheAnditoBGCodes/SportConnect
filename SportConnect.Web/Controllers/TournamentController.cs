@@ -41,6 +41,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
+
         [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
         public IActionResult AddTournamentAdmin(TournamentViewModel tournament)
@@ -57,7 +58,6 @@ namespace SportConnect.Web.Controllers
             // Combine Date and Time
             if (tournament.Date.HasValue && tournament.DateTimer.HasValue)
             {
-                // Combine the Date part with the DateTimer (time) part
                 var combinedDate = tournament.Date.Value.Date + tournament.DateTimer.Value.TimeOfDay;
                 tournament.Date = combinedDate;
             }
@@ -65,9 +65,23 @@ namespace SportConnect.Web.Controllers
             // Combine Deadline and DeadlineTime
             if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
             {
-                // Combine the Deadline part with the DeadlineTime (time) part
                 var combinedDeadline = tournament.Deadline.Value.Date + tournament.DeadlineTime.Value.TimeOfDay;
                 tournament.Deadline = combinedDeadline;
+            }
+
+            // Check if Deadline is before Date
+            if (tournament.Deadline.HasValue && tournament.Date.HasValue && tournament.Deadline > tournament.Date)
+            {
+                ModelState.AddModelError("DateOrder", "Крайният срок на турнира не може да бъде след датата на провеждане.");
+            }
+
+            if (_repository.GetAll().Any(s => s.Name == tournament.Name))
+            {
+                ModelState.AddModelError("Name", "Има такъв спорт.");
+            }
+            if (_repository.GetAll().Any(s => s.Description == tournament.Description))
+            {
+                ModelState.AddModelError("Description", "Това описание е използвано за друг спорт.");
             }
 
             if (!ModelState.IsValid)
@@ -79,6 +93,7 @@ namespace SportConnect.Web.Controllers
             _repository.Add(tournament.ToTournament());
             return RedirectToAction("AllTournamentsAdmin", "Tournament");
         }
+
 
         [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult AddTournamentMyAdmin()
@@ -106,7 +121,6 @@ namespace SportConnect.Web.Controllers
             // Combine Date and Time
             if (tournament.Date.HasValue && tournament.DateTimer.HasValue)
             {
-                // Combine the Date part with the DateTimer (time) part
                 var combinedDate = tournament.Date.Value.Date + tournament.DateTimer.Value.TimeOfDay;
                 tournament.Date = combinedDate;
             }
@@ -114,9 +128,23 @@ namespace SportConnect.Web.Controllers
             // Combine Deadline and DeadlineTime
             if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
             {
-                // Combine the Deadline part with the DeadlineTime (time) part
                 var combinedDeadline = tournament.Deadline.Value.Date + tournament.DeadlineTime.Value.TimeOfDay;
                 tournament.Deadline = combinedDeadline;
+            }
+
+            // Check if Deadline is before Date
+            if (tournament.Deadline.HasValue && tournament.Date.HasValue && tournament.Deadline > tournament.Date)
+            {
+                ModelState.AddModelError("DateOrder", "Крайният срок на турнира не може да бъде след датата на провеждане.");
+            }
+
+            if (_repository.GetAll().Any(s => s.Name == tournament.Name))
+            {
+                ModelState.AddModelError("Name", "Има такъв спорт.");
+            }
+            if (_repository.GetAll().Any(s => s.Description == tournament.Description))
+            {
+                ModelState.AddModelError("Description", "Това описание е използвано за друг спорт.");
             }
 
             if (!ModelState.IsValid)
@@ -205,56 +233,83 @@ namespace SportConnect.Web.Controllers
             };
             return View(model);
         }
-
         [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult EditTournamentAdmin(int id)
         {
             var tournament = _repository.GetById(id);
+
+            if (tournament == null)
+            {
+                return NotFound();
+            }
+
             var model = new TournamentViewModel()
             {
                 Id = tournament.Id,
                 OrganizerId = tournament.OrganizerId,
-                Date = tournament.Date,
-                Deadline = tournament.Deadline,
+                Date = tournament.Date.Date, // Extract only the date part
+                DateTimer = tournament.Date, // Full DateTime, used for time extraction
+                Deadline = tournament.Deadline.Date, // Extract only the date part
+                DeadlineTime = tournament.Deadline, // Full DateTime, used for time extraction
                 Description = tournament.Description,
                 Location = tournament.Location,
                 Name = tournament.Name,
                 SportId = tournament.SportId,
                 Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", tournament.SportId)
             };
+
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
-        public IActionResult EditTournamentAdmin(TournamentViewModel viewModel)
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult EditTournamentAdmin(TournamentViewModel model)
         {
+            var user = _userManager.GetUserAsync(this.User).Result;
+
+            if (user == null)
+            {
+                return RedirectToAction("AllTournamentsAdmin", "Tournament");
+            }
+
+            model.OrganizerId = user.Id;
+
+            // Combine Date and Time
+            if (model.Date.HasValue && model.DateTimer.HasValue)
+            {
+                var combinedDate = model.Date.Value.Date + model.DateTimer.Value.TimeOfDay;
+                model.Date = combinedDate;
+            }
+
+            // Combine Deadline and DeadlineTime
+            if (model.Deadline.HasValue && model.DeadlineTime.HasValue)
+            {
+                var combinedDeadline = model.Deadline.Value.Date + model.DeadlineTime.Value.TimeOfDay;
+                model.Deadline = combinedDeadline;
+            }
+
+            // Check if Deadline is before Date
+            if (model.Deadline.HasValue && model.Date.HasValue && model.Deadline > model.Date)
+            {
+                ModelState.AddModelError("DateOrder", "Крайният срок на турнира не може да бъде след датата на провеждане.");
+            }
+
+            if (!_repository.IsPropertyUnique(s => s.Name == model.Name && s.Id != model.Id))
+            {
+                ModelState.AddModelError("Name", "Има такъв спорт.");
+            }
+            if (!_repository.IsPropertyUnique(s => s.Description == model.Description && s.Id != model.Id))
+            {
+                ModelState.AddModelError("Description", "Това описание е използвано за друг спорт.");
+            }
+
             if (!ModelState.IsValid)
             {
-                viewModel.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", viewModel.SportId);
-                return View(viewModel);
+                model.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
+                return View(model);
             }
 
-            var tournament = _repository.GetById(viewModel.Id ?? 0);
-
-            // Combine Date and Time for Date property
-            if (viewModel.Date.HasValue && viewModel.DateTimer.HasValue)
-            {
-                tournament.Date = viewModel.Date.Value.Date + viewModel.DateTimer.Value.TimeOfDay;
-            }
-
-            // Combine Deadline Date and Time for Deadline property
-            if (viewModel.Deadline.HasValue && viewModel.DeadlineTime.HasValue)
-            {
-                tournament.Deadline = viewModel.Deadline.Value.Date + viewModel.DeadlineTime.Value.TimeOfDay;
-            }
-
-            tournament.Name = viewModel.Name;
-            tournament.Description = viewModel.Description;
-            tournament.Location = viewModel.Location;
-            tournament.SportId = viewModel.SportId ?? tournament.SportId;
-
-            _repository.Update(tournament);
+            _repository.Update(model.ToTournament());
             return RedirectToAction("AllTournamentsAdmin", "Tournament");
         }
 
@@ -262,51 +317,79 @@ namespace SportConnect.Web.Controllers
         public IActionResult EditTournamentMyAdmin(int id)
         {
             var tournament = _repository.GetById(id);
+
+            if (tournament == null)
+            {
+                return NotFound();
+            }
+
             var model = new TournamentViewModel()
             {
                 Id = tournament.Id,
                 OrganizerId = tournament.OrganizerId,
-                Date = tournament.Date,
-                Deadline = tournament.Deadline,
+                Date = tournament.Date.Date, // Extract only the date part
+                DateTimer = tournament.Date, // Full DateTime, used for time extraction
+                Deadline = tournament.Deadline.Date, // Extract only the date part
+                DeadlineTime = tournament.Deadline, // Full DateTime, used for time extraction
                 Description = tournament.Description,
                 Location = tournament.Location,
                 Name = tournament.Name,
                 SportId = tournament.SportId,
                 Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", tournament.SportId)
             };
+
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
-        public IActionResult EditTournamentMyAdmin(TournamentViewModel viewModel)
+        [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult EditTournamentMyAdmin(TournamentViewModel model)
         {
+            var user = _userManager.GetUserAsync(this.User).Result;
+
+            if (user == null)
+            {
+                return RedirectToAction("AllTournamentsMyAdmin", "Tournament");
+            }
+
+            model.OrganizerId = user.Id;
+
+            // Combine Date and Time
+            if (model.Date.HasValue && model.DateTimer.HasValue)
+            {
+                var combinedDate = model.Date.Value.Date + model.DateTimer.Value.TimeOfDay;
+                model.Date = combinedDate;
+            }
+
+            // Combine Deadline and DeadlineTime
+            if (model.Deadline.HasValue && model.DeadlineTime.HasValue)
+            {
+                var combinedDeadline = model.Deadline.Value.Date + model.DeadlineTime.Value.TimeOfDay;
+                model.Deadline = combinedDeadline;
+            }
+
+            // Check if Deadline is before Date
+            if (model.Deadline.HasValue && model.Date.HasValue && model.Deadline > model.Date)
+            {
+                ModelState.AddModelError("DateOrder", "Крайният срок на турнира не може да бъде след датата на провеждане.");
+            }
+
+            if (!_repository.IsPropertyUnique(s => s.Name == model.Name && s.Id != model.Id))
+            {
+                ModelState.AddModelError("Name", "Има такъв спорт.");
+            }
+            if (!_repository.IsPropertyUnique(s => s.Description == model.Description && s.Id != model.Id))
+            {
+                ModelState.AddModelError("Description", "Това описание е използвано за друг спорт.");
+            }
+
             if (!ModelState.IsValid)
             {
-                viewModel.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", viewModel.SportId);
-                return View(viewModel);
+                model.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
+                return View(model);
             }
 
-            var tournament = _repository.GetById(viewModel.Id ?? 0);
-
-            // Combine Date and Time for Date property
-            if (viewModel.Date.HasValue && viewModel.DateTimer.HasValue)
-            {
-                tournament.Date = viewModel.Date.Value.Date + viewModel.DateTimer.Value.TimeOfDay;
-            }
-
-            // Combine Deadline Date and Time for Deadline property
-            if (viewModel.Deadline.HasValue && viewModel.DeadlineTime.HasValue)
-            {
-                tournament.Deadline = viewModel.Deadline.Value.Date + viewModel.DeadlineTime.Value.TimeOfDay;
-            }
-
-            tournament.Name = viewModel.Name;
-            tournament.Description = viewModel.Description;
-            tournament.Location = viewModel.Location;
-            tournament.SportId = viewModel.SportId ?? tournament.SportId;
-
-            _repository.Update(tournament);
+            _repository.Update(model.ToTournament());
             return RedirectToAction("AllTournamentsMyAdmin", "Tournament");
         }
 

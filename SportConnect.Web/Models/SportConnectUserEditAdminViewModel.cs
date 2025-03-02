@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace SportConnect.Web.Models
 {
-    public class SportConnectUserEditViewModel
+    public class SportConnectUserEditAdminViewModel
     {
         public string? Id { get; set; }
 
@@ -23,23 +23,6 @@ namespace SportConnect.Web.Models
         public string FirstName { get; set; }
 
         public string? BothNames { get; set; }
-
-        [Required(ErrorMessage = "Възрастта е задължителна")]
-        [Range(13, 120, ErrorMessage = "Възрастта трябва да бъде между 13 и 120 години.")]
-        public int? Age { get; set; }
-
-        [Required(ErrorMessage = "Локацията е задължителна")]
-        [StringLength(100, MinimumLength = 5, ErrorMessage = "Локацията трябва да е между 5 и 100 символа")]
-        public string Location { get; set; }
-
-        [Required(ErrorMessage = "Имейлът е задължителен")]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "Телефонният номер е задължителен")]
-        [DataType(DataType.PhoneNumber)]
-        public string PhoneNumber { get; set; }
-
         public string? PasswordHash { get; set; }
         public IEnumerable<Participation>? Participations { get; set; } = new List<Participation>();
 
@@ -50,10 +33,6 @@ namespace SportConnect.Web.Models
                 Id = id,
                 UserName = UserName,
                 FullName = $"{FirstName} {LastName}",
-                Age = Age ?? 0,
-                Location = Location,
-                Email = Email,
-                PhoneNumber = PhoneNumber,
                 PasswordHash = PasswordHash
             };
         }

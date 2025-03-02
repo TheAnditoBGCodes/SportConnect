@@ -19,6 +19,8 @@ public class TournamentViewModel
     public SportConnectUser? Organizer { get; set; }
     public string? OrganizerName { get; set; }
 
+    public string? DateOrder { get; set; }
+
     [Required(ErrorMessage = "Датата е задължителна")]
     [DataType(DataType.DateTime)]
     public DateTime? Date { get; set; }
