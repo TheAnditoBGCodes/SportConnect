@@ -88,8 +88,8 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Моля, въведете имейл.")]
+            [EmailAddress(ErrorMessage = "Невалиден имейл")]
             [Display(Name = "Имейл")]
             public string Email { get; set; }
 
@@ -97,7 +97,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "Моля, въведете парола.")]
             [StringLength(int.MaxValue, ErrorMessage = "Паролата трябва да е поне {2} символа", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Парола")]
@@ -131,10 +131,10 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             [Display(Name = "Фамилия")]
             public string LastName { get; set; }
 
-            [Required(ErrorMessage = "Моля, въведете възраст.")]
-            [Range(13, 120, ErrorMessage = "Възрастта трябва да бъде между 13 и 120 години.")]
-            [Display(Name = "Възраст")]
-            public int Age { get; set; }
+            [Required(ErrorMessage = "Моля, въведете своята дата на раждане.")]
+            [DataType(DataType.Date)]
+            [Display(Name = "Дата на раждане")]
+            public DateTime DateOfBirth { get; set; }
 
             [Required(ErrorMessage = "Моля, въведете местоположение.")]
             [StringLength(100, ErrorMessage = "Местоположението трябва да е от {2} до {1} символа", MinimumLength = 4)]
@@ -175,15 +175,39 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
+                // Calculate age based on DateOfBirth
+                int age = DateTime.Now.Year - Input.DateOfBirth.Year;
+
+                // Adjust age if birthday hasn't occurred yet this year
+                if (DateTime.Now.Month < Input.DateOfBirth.Month ||
+                    (DateTime.Now.Month == Input.DateOfBirth.Month && DateTime.Now.Day < Input.DateOfBirth.Day))
+                {
+                    age--;
+                }
+
+                // Check if the age is in the valid range
+                if (age < 13 || age > 120)
+                {
+                    ModelState.AddModelError("Input.DateOfBirth", "Възрастта трябва да бъде между 13 и 120 години.");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    // If age is invalid, redisplay the form with an error message
+                    return Page();
+                }
+
                 var user = new SportConnectUser
                 {
                     FullName = $"{Input.FirstName} {Input.LastName}",
-                    Age = Input.Age,
+                    DateOfBirth = Input.DateOfBirth,
                     PhoneNumber = Input.PhoneNumber,
-                    Location = Input.Location
+                    Location = Input.Location,
                 };
+
                 await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -223,6 +247,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     if (error.Code == "DuplicateUserName")
@@ -239,6 +264,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
 
         private IdentityUser CreateUser()
         {

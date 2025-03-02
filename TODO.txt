@@ -1,5 +1,7 @@
-Functionalities (Admin, This Week):
+Functionalities (Admin, Now):
 - Fixing Issues in Pathings and Loadings
+
+Functionalities (Admin, Tomorrow):
 - Cloudinary Images for User Account
 - Cloudinary Images for Sport
 - Cloudinary Images for Tournament

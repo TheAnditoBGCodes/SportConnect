@@ -41,7 +41,6 @@ namespace SportConnect.Web.Controllers
                 UserName = user.UserName,
                 FirstName = names[0],
                 LastName = names[1],
-                Age = user.Age,
                 Location = user.Location,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -79,7 +78,6 @@ namespace SportConnect.Web.Controllers
             {
                 currentUser.UserName = user.UserName;
                 currentUser.FullName = $"{user.FirstName} {user.LastName}";
-                currentUser.Age = user.Age ?? 0;
                 currentUser.Location = user.Location;
                 currentUser.Email = user.Email;
                 currentUser.PhoneNumber = user.PhoneNumber;
@@ -111,7 +109,7 @@ namespace SportConnect.Web.Controllers
                 Id = user.Id,
                 UserName = user.UserName,
                 BothNames = $"{names[0]} {names[1]}",
-                Age = user.Age,
+                DateOfBirth = user.DateOfBirth,
                 Location = user.Location,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -132,7 +130,7 @@ namespace SportConnect.Web.Controllers
                 Id = id,
                 UserName = user.UserName,
                 BothNames = $"{names[0]} {names[1]}",
-                Age = user.Age,
+                DateOfBirth = user.DateOfBirth,
                 Location = user.Location,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -215,7 +213,7 @@ namespace SportConnect.Web.Controllers
                 UserName = user.UserName,
                 FirstName = names[0],
                 LastName = names[1],
-                Age = user.Age,
+                DateOfBirth = user.DateOfBirth,
                 Location = user.Location,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -272,7 +270,7 @@ namespace SportConnect.Web.Controllers
                 UserName = user.UserName,
                 FirstName = names[0],
                 LastName = names[1],
-                Age = user.Age,
+                DateOfBirth = user.DateOfBirth,
                 Location = user.Location,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,

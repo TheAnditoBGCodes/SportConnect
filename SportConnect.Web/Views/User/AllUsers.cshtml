@@ -28,6 +28,7 @@ else
                             <th class="text-center">#</th>
                             <th class="text-center">Потребителско име</th>
                             <th class="text-center">Пълно име</th>
+                            <th class="text-center">Дата на раждане</th>
                             <th class="text-center">Възраст</th>
                             <th class="text-center">Локация</th>
                             <th class="text-center">Телефонен номер</th>
@@ -42,7 +43,20 @@ else
                                 <td class="align-middle">@item.Id</td>
                                 <td class="align-middle">@item.UserName</td>
                                 <td class="align-middle">@item.FullName</td>
-                                <td class="align-middle">@item.Age</td>
+                                <td class="align-middle">@item.DateOfBirth</td>
+                                @{
+
+                                    // Calculate age based on DateOfBirth
+                                    int age = DateTime.Now.Year - item.DateOfBirth.Year;
+
+                                    // Adjust age if birthday hasn't occurred yet this year
+                                    if (DateTime.Now.Month < item.DateOfBirth.Month ||
+                                    (DateTime.Now.Month == item.DateOfBirth.Month && DateTime.Now.Day < item.DateOfBirth.Day))
+                                    {
+                                        age--;
+                                    }
+                                }
+                                <td class="align-middle">@age</td>
                                 <td class="align-middle">@item.Location</td>
                                 <td class="align-middle">@item.PhoneNumber</td>
                                 <td class="align-middle">@item.Email</td>

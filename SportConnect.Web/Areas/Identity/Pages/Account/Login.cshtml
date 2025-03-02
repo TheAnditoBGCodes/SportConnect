@@ -1,6 +1,12 @@
 ﻿@page
 @model LoginModel
-
+<style>
+    .no-bullets ul, .no-bullets ol {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0;
+    }
+</style>
 @{
     ViewData["Title"] = "Влез";
 }
@@ -12,7 +18,8 @@
             <form id="account" method="post">
                 <h2>Влез с твоя акаунт</h2>
                 <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div asp-validation-summary="ModelOnly" class="text-danger no-bullets" role="alert"></div>
+                <br />
                 <div class="form-floating mb-3">
                     <input asp-for="Input.UserNameOrEmail" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com / MyUserName" />
                     <label asp-for="Input.UserNameOrEmail" class="form-label">Потребителско име или имейл</label>

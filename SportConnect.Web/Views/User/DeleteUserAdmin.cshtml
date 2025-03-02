@@ -27,23 +27,41 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Row 2: Names + Age -->
+
                     <div class="row mb-1">
-                        <!-- Reduced margin-bottom -->
-                        <div class="col">
+                        <!-- First half for BothNames -->
+                        <div class="col-6">
                             <div class="form-floating mb-2">
-                                <!-- Reduced margin-bottom -->
                                 <input readonly asp-for="@Model.BothNames" class="form-control" aria-required="true" placeholder="Вашата фамилия" style="font-size: 0.8rem;" />
                                 <label asp-for="@Model.BothNames" style="font-size: 0.8rem;">Име</label>
                                 <span asp-validation-for="@Model.BothNames" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col">
+
+                        <!-- Second half split between DateOfBirth and age -->
+                        <div class="col-3">
                             <div class="form-floating mb-2">
-                                <!-- Reduced margin-bottom -->
-                                <input readonly type="text" asp-for="@Model.Age" class="form-control" aria-required="true" placeholder="Age" style="font-size: 0.8rem;" />
-                                <label asp-for="@Model.Age" style="font-size: 0.8rem;">Възраст</label>
-                                <span asp-validation-for="@Model.Age" class="text-danger"></span>
+                                <input readonly type="date" asp-for="@Model.DateOfBirth" class="form-control" aria-required="true" placeholder="Age" style="font-size: 0.8rem;" />
+                                <label asp-for="@Model.DateOfBirth" style="font-size: 0.8rem;">Дата на раждане</label>
+                                <span asp-validation-for="@Model.DateOfBirth" class="text-danger"></span>
+                            </div>
+                        </div>
+                        @{
+                            //e based on DateOfBirth
+                            int age = DateTime.Now.Year - @Model.DateOfBirth.Year;
+
+                            // Adjust age if birthday hasn't occurred yet this year
+                            if (DateTime.Now.Month < @Model.DateOfBirth.Month ||
+                            (DateTime.Now.Month == @Model.DateOfBirth.Month && DateTime.Now.Day < @Model.DateOfBirth.Day))
+                            {
+                                age--;
+                            }
+                        }
+                        <div class="col-3">
+                            <div class="form-floating mb-2">
+                                <input readonly type="text" asp-for="@age" class="form-control" aria-required="true" placeholder="Age" style="font-size: 0.8rem;" />
+                                <label asp-for="@age" style="font-size: 0.8rem;">Възраст</label>
+                                <span asp-validation-for="@age" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -111,23 +129,41 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Row 2: Names + Age -->
+
                     <div class="row mb-1">
-                        <!-- Reduced margin-bottom -->
-                        <div class="col">
+                        <!-- First half for BothNames -->
+                        <div class="col-6">
                             <div class="form-floating mb-2">
-                                <!-- Reduced margin-bottom -->
                                 <input readonly asp-for="@Model.BothNames" class="form-control" aria-required="true" placeholder="Вашата фамилия" style="font-size: 0.8rem;" />
                                 <label asp-for="@Model.BothNames" style="font-size: 0.8rem;">Име</label>
                                 <span asp-validation-for="@Model.BothNames" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col">
+
+                        <!-- Second half split between DateOfBirth and age -->
+                        <div class="col-3">
                             <div class="form-floating mb-2">
-                                <!-- Reduced margin-bottom -->
-                                <input readonly type="text" asp-for="@Model.Age" class="form-control" aria-required="true" placeholder="Age" style="font-size: 0.8rem;" />
-                                <label asp-for="@Model.Age" style="font-size: 0.8rem;">Възраст</label>
-                                <span asp-validation-for="@Model.Age" class="text-danger"></span>
+                                <input readonly type="date" asp-for="@Model.DateOfBirth" class="form-control" aria-required="true" placeholder="Age" style="font-size: 0.8rem;" />
+                                <label asp-for="@Model.DateOfBirth" style="font-size: 0.8rem;">Дата на раждане</label>
+                                <span asp-validation-for="@Model.DateOfBirth" class="text-danger"></span>
+                            </div>
+                        </div>
+                        @{
+                            //e based on DateOfBirth
+                            int age = DateTime.Now.Year - @Model.DateOfBirth.Year;
+
+                            // Adjust age if birthday hasn't occurred yet this year
+                            if (DateTime.Now.Month < @Model.DateOfBirth.Month ||
+                            (DateTime.Now.Month == @Model.DateOfBirth.Month && DateTime.Now.Day < @Model.DateOfBirth.Day))
+                            {
+                                age--;
+                            }
+                        }
+                        <div class="col-3">
+                            <div class="form-floating mb-2">
+                                <input readonly type="text" asp-for="@age" class="form-control" aria-required="true" placeholder="Age" style="font-size: 0.8rem;" />
+                                <label asp-for="@age" style="font-size: 0.8rem;">Възраст</label>
+                                <span asp-validation-for="@age" class="text-danger"></span>
                             </div>
                         </div>
                     </div>

@@ -11,10 +11,10 @@ namespace SportConnect.Models
         [Display(Name = "Пълно име")]
         public string FullName { get; set; }
 
-        [Required(ErrorMessage = "Моля, въведете възрастта си.")]
-        [Range(13, 120, ErrorMessage = "Възрастта трябва да бъде между 13 и 120 години.")]
-        [Display(Name = "Възраст")]
-        public int Age { get; set; }
+        [Required(ErrorMessage = "Моля, въведете своята дата на раждане.")]
+        [DataType(DataType.Date)]
+        [Display(Name = "Дата на раждане")]
+        public DateTime DateOfBirth { get; set; }
 
         [Required(ErrorMessage = "Моля, въведете местоположението си.")]
         [Display(Name = "Местоположение")]

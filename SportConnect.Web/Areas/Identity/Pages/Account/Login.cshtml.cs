@@ -101,8 +101,9 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "Моля, въведете парола.")]
             [DataType(DataType.Password)]
+            [Display(Name = "Парола")]
             public string Password { get; set; }
 
             /// <summary>
@@ -160,7 +161,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Потребителят не е намерен.");
+                ModelState.AddModelError(string.Empty, "Потребителят не е намерен. Моля въведете имейла/потребителското име и/или паролата отново.");
             }
 
             return Page();
