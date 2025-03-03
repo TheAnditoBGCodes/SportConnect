@@ -25,6 +25,7 @@ else
                 <table class="table table-striped table-hover text-center align-middle" style="font-size: 0.8rem;">
                     <thead class="table-dark" style="position: sticky; top: 0; z-index: 2;">
                         <tr>
+                            <th class="text-center">#</th>
                             <th class="text-center">Потребителско име</th>
                             <th class="text-center">Пълно име</th>
                             <th class="text-center">Дата на раждане</th>
@@ -39,6 +40,7 @@ else
                         @foreach (var item in Model)
                         {
                             <tr>
+                                <td class="align-middle">@item.Id</td>
                                 <td class="align-middle">@item.UserName</td>
                                 <td class="align-middle">@item.FullName</td>
                                 <td class="align-middle">@item.DateOfBirth</td>

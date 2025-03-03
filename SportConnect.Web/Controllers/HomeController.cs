@@ -1,7 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using SportConnect.DataAccess;
 using SportConnect.Web.Models;
 using System.Diagnostics;
 
