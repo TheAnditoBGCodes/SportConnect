@@ -13,5 +13,7 @@ public class SportDeletionViewModel
     [StringLength(100, MinimumLength = 5, ErrorMessage = "Описанието трябва да е между 5 и 100 символа")]
     public string? Description { get; set; }
 
+    public string? ImageUrl { get; set; }
+
     public IEnumerable<Tournament>? Tournaments { get; set; } = new List<Tournament>();
 }

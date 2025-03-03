@@ -12,8 +12,8 @@ using SportConnect.DataAccess;
 namespace SportConnect.DataAccess.Migrations
 {
     [DbContext(typeof(SportConnectDbContext))]
-    [Migration("20250302120753_DateOfBirthUsers")]
-    partial class DateOfBirthUsers
+    [Migration("20250303123300_SportConnectWithImages")]
+    partial class SportConnectWithImages
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -198,6 +198,10 @@ namespace SportConnect.DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -237,6 +241,10 @@ namespace SportConnect.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -308,6 +316,10 @@ namespace SportConnect.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
                         .IsRequired()

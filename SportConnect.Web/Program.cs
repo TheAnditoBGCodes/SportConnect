@@ -21,10 +21,13 @@ builder.Services.AddIdentity<SportConnectUser, IdentityRole>().AddEntityFramewor
 builder.Services.AddRazorPages();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+
 builder.Services.AddScoped<CloudinaryService>();
-var cloudinarysettings = builder.Configuration.GetSection("Cloudinary").Get<CloudinarySettings>();
-var account = new Account(cloudinarysettings.CloudName, cloudinarysettings.ApiKey, cloudinarysettings.ApiSecret);
-var cloudinary = new Cloudinary(account); builder.Services.AddSingleton(cloudinary);
+
+var cloudinarySettings = builder.Configuration.GetSection("Cloudinary").Get<CloudinarySettings>();
+var account = new Account(cloudinarySettings.CloudName, cloudinarySettings.ApiKey, cloudinarySettings.ApiSecret);
+var cloudinary = new Cloudinary(account);
+builder.Services.AddSingleton(cloudinary);
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {

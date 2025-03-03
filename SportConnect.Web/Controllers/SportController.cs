@@ -1,3 +1,6 @@
+
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -5,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Scaffolding;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
+using SportConnect.Services;
 using SportConnect.Utility;
 using SportConnect.Web.Models;
 using System.Diagnostics;
@@ -18,24 +22,26 @@ namespace SportConnect.Web.Controllers
         public IRepository<Sport> _repository { get; set; }
         public IRepository<Tournament> _tournamentRepository { get; set; }
         public IRepository<Participation> _participationsRepository { get; set; }
+        private readonly CloudinaryService _cloudinaryService;
 
-        public SportController(ILogger<SportController> logger, IRepository<Sport> repository, IRepository<Tournament> tournamentRepository, IRepository<Participation> participationsRepository)
+        public SportController(ILogger<SportController> logger, IRepository<Sport> repository, IRepository<Tournament> tournamentRepository, IRepository<Participation> participationsRepository, CloudinaryService cloudinaryService)
         {
             _logger = logger;
             _repository = repository;
             _tournamentRepository = tournamentRepository;
             _participationsRepository = participationsRepository;
+            _cloudinaryService = cloudinaryService;
         }
 
+        [HttpGet]
         [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult AddSport()
         {
             return View();
         }
-
         [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
-        public IActionResult AddSport(Sport sport)
+        public async Task<IActionResult> AddSport(Sport sport, IFormFile file)
         {
             if (_repository.GetAll().Any(s => s.Name == sport.Name))
             {
@@ -46,10 +52,27 @@ namespace SportConnect.Web.Controllers
                 ModelState.AddModelError("Description", "Това описание е използвано за друг спорт.");
             }
 
+            if (file == null || file.Length == 0)
+            {
+                ModelState.AddModelError("ImageUrl", "Снимката е задължителна.");
+            }
+            else
+            {
+                var imageUrl = await _cloudinaryService.UploadImageAsync(file);
+
+                if (string.IsNullOrEmpty(imageUrl))
+                {
+                    ModelState.AddModelError("ImageUrl", "Грешка при качването.");
+                    return View(sport);
+                }
+
+                sport.ImageUrl = imageUrl;
+            }
+
             if (ModelState.IsValid)
             {
                 _repository.Add(sport);
-                return RedirectToAction("AllSportsAdmin");
+                return RedirectToAction("AllSports");
             }
 
             return View(sport);
@@ -59,13 +82,30 @@ namespace SportConnect.Web.Controllers
         public IActionResult EditSport(int id)
         {
             var entity = _repository.GetById(id);
-            return View(entity);
+            var model = new SportViewModel
+            {
+                Id = id,
+                Name = entity.Name,
+                Description = entity.Description,
+                ImageUrl = entity.ImageUrl,
+            };
+            return View(model);
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
-        public IActionResult EditSport(Sport sport)
+        public async Task<IActionResult> EditSport(SportViewModel sport, IFormFile? file)
         {
+            if (sport.Name == null)
+            {
+                ModelState.AddModelError("Name", "Името е задължително.");
+            }
+
+            if (sport.Description == null)
+            {
+                ModelState.AddModelError("Description", "Описанието  е задължително.");
+            }
+
             if (!_repository.IsPropertyUnique(s => s.Name == sport.Name && s.Id != sport.Id))
             {
                 ModelState.AddModelError("Name", "Има такъв спорт.");
@@ -76,23 +116,51 @@ namespace SportConnect.Web.Controllers
                 ModelState.AddModelError("Description", "Това описание е използвано за друг спорт.");
             }
 
-            if (ModelState.IsValid)
+            // Check if a new image is uploaded
+            if (file != null && file.Length > 0)
             {
-                _repository.Update(sport);
-                return RedirectToAction("AllSportsAdmin");
+                var imageUrl = await _cloudinaryService.UploadImageAsync(file);
+
+                if (string.IsNullOrEmpty(imageUrl))
+                {
+                    ModelState.AddModelError("ImageUrl", "Грешка при качването.");
+                    return View(sport);
+                }
+
+                sport.ImageUrl = imageUrl;  // Set the new image URL if a new image is uploaded
+            }
+            else
+            {
+                // If no new image is uploaded, keep the existing image URL
+                var existingSport = _repository.GetById(sport.Id);
+                if (existingSport != null)
+                {
+                    // Keep the existing image URL if available
+                    sport.ImageUrl = existingSport.ImageUrl;
+                }
             }
 
+            if (ModelState.IsValid)
+            {
+                // Reload the entity from the database to avoid tracking multiple instances
+                var dbSport = _repository.GetById(sport.Id);
+                if (dbSport != null)
+                {
+                    // Copy the values from the form submission (this avoids tracking conflicts)
+                    dbSport.Id = sport.Id;
+                    dbSport.Name = sport.Name;
+                    dbSport.Description = sport.Description;
+                    dbSport.ImageUrl = sport.ImageUrl;
+
+                    _repository.Update(dbSport);
+                    return RedirectToAction("AllSports");
+                }
+            }
             return View(sport);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult AllSportsAdmin()
-        {
-            return View(_repository.GetAll().ToList());
-        }
-
-        [Authorize(Roles = $"{SD.UserRole}")]
-        public IActionResult AllSportsUser()
+        [AllowAnonymous]
+        public IActionResult AllSports()
         {
             return View(_repository.GetAll().ToList());
         }
@@ -101,19 +169,18 @@ namespace SportConnect.Web.Controllers
         public IActionResult DeleteSport(int id)
         {
             var sport = _repository.GetById(id);
-            var tours = _tournamentRepository.AllWithIncludes(x => x.Organizer).Where(x => x.SportId == id);
             var model = new SportDeletionViewModel()
             {
                 Name = sport.Name,
                 Description = sport.Description,
-                Tournaments = tours
+                ImageUrl= sport.ImageUrl,
             };
             return View(model);
         }
 
         [HttpPost]
         [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult DeleteSport(int id, string ConfirmText, SportDeletionViewModel? model)
+        public IActionResult DeleteSport(int id, string ConfirmText, SportDeletionViewModel model)
         {
             if (ConfirmText == "ПОТВЪРДИ")
             {
@@ -133,9 +200,16 @@ namespace SportConnect.Web.Controllers
                     _repository.Delete(sport);
                 }
 
-                return RedirectToAction("AllSportsAdmin");
+                return RedirectToAction("AllSports");
             }
-            return View(model);
+            var sport1 = _repository.GetById(id);
+            var model1 = new SportDeletionViewModel()
+            {
+                Name = sport1.Name,
+                Description = sport1.Description,
+                ImageUrl = sport1.ImageUrl,
+            };
+            return View(model1);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

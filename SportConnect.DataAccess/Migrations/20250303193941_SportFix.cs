@@ -5,7 +5,7 @@
 namespace SportConnect.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class CloudinaryEnabling : Migration
+    public partial class SportFix : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

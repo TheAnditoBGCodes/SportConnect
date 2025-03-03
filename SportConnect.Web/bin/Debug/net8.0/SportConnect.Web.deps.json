@@ -633,6 +633,12 @@
           }
         }
       },
+      "Microsoft.AspNetCore.Http.Features/5.0.17": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "9.0.1",
+          "System.IO.Pipelines": "9.0.1"
+        }
+      },
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore/8.0.12": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Relational": "9.0.1",
@@ -2715,6 +2721,7 @@
       "SportConnect.Services/1.0.0": {
         "dependencies": {
           "CloudinaryDotNet": "1.27.4",
+          "Microsoft.AspNetCore.Http.Features": "5.0.17",
           "Microsoft.Extensions.Configuration.Abstractions": "9.0.1"
         },
         "runtime": {
@@ -3128,6 +3135,13 @@
       "sha512": "sha512-15IQ6pliUI5g7NgHdNB9BmLFGcxWQrv+j68Iv8YS9h9JqK0ZtKNjP0rJ5b2zpgV7ubblKWZvdz4OxgL02x6EIA==",
       "path": "microsoft.aspnetcore.cryptography.keyderivation/8.0.12",
       "hashPath": "microsoft.aspnetcore.cryptography.keyderivation.8.0.12.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Http.Features/5.0.17": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3jG2xS+dx8DDCGV/F+STdPTg89lX3ao3dF/VEPvJaz3wzBIjuadipTtYNEXDIVuOPZwb6jdmhrX9jkzOIBm5cw==",
+      "path": "microsoft.aspnetcore.http.features/5.0.17",
+      "hashPath": "microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore/8.0.12": {
       "type": "package",

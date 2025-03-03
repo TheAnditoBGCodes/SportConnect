@@ -1,0 +1,9 @@
+Responsiveness:
+login
+register
+_loginpartial
+_layout -> logo sportconnect
+addsport
+editsport
+deletesport
+allsports

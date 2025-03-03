@@ -4,125 +4,149 @@
     ViewData["Title"] = "Регистрирай се";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data" class="p-3">
+                <h2 class="text-center">@ViewData["Title"]</h2>
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Създайте нов акаунт</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <!-- Row 1: Username and Email -->
+                <div class="row mb-2">
+                    <div class="col-12 col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.Username" class="form-control form-control-sm" aria-required="true" placeholder="Вашето потребителско име" style="font-size: 1em;" />
+                            <label asp-for="Input.Username">Потребителско име</label>
+                            <span asp-validation-for="Input.Username" class="text-danger" style="font-size: 1em;"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.Email" class="form-control form-control-sm" autocomplete="username" aria-required="true" placeholder="name@example.com" style="font-size: 1em;" />
+                            <label asp-for="Input.Email">Имейл</label>
+                            <span asp-validation-for="Input.Email" class="text-danger" style="font-size: 1em;"></span>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Username" class="form-control" aria-required="true" placeholder="Вашето потребителско име" />
-                <label asp-for="Input.Username">Потребителско име</label>
-                <span asp-validation-for="Input.Username" class="text-danger"></span>
-            </div>
+                <!-- Row 2: Password and Confirm Password -->
+                <div class="row mb-2">
+                    <div class="col-12 col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.Password" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="Парола" style="font-size: 1em;" />
+                            <label asp-for="Input.Password">Парола</label>
+                            <span asp-validation-for="Input.Password" class="text-danger" style="font-size: 1em;"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.ConfirmPassword" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="Потвърдете паролата" style="font-size: 1em;" />
+                            <label asp-for="Input.ConfirmPassword">Потвърдете паролата</label>
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger" style="font-size: 1em;"></span>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="form-floating mb-3">
-                <input asp-for="Input.FirstName" class="form-control" aria-required="true" placeholder="Вашето име" />
-                <label asp-for="Input.FirstName">Име</label>
-                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-            </div>
+                <!-- Row 3: First Name and Last Name -->
+                <div class="row mb-2">
+                    <div class="col-12 col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.FirstName" class="form-control form-control-sm" aria-required="true" placeholder="Вашето име" style="font-size: 1em;" />
+                            <label asp-for="Input.FirstName">Име</label>
+                            <span asp-validation-for="Input.FirstName" class="text-danger" style="font-size: 1em;"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.LastName" class="form-control form-control-sm" aria-required="true" placeholder="Вашата фамилия"  style="font-size: 1em;" />
+                            <label asp-for="Input.LastName">Фамилия</label>
+                            <span asp-validation-for="Input.LastName" class="text-danger" style="font-size: 1em;"></span>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="form-floating mb-3">
-                <input asp-for="Input.LastName" class="form-control" aria-required="true" placeholder="Вашата фамилия" />
-                <label asp-for="Input.LastName">Фамилия</label>
-                <span asp-validation-for="Input.LastName" class="text-danger"></span>
-            </div>
+                <!-- Row 4: Location and Phone Number -->
+                <div class="row mb-2">
+                    <div class="col-12 col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.Location" class="form-control form-control-sm" aria-required="true" placeholder="Местоположение"  style="font-size: 1em;" />
+                            <label asp-for="Input.Location">Местоположение</label>
+                            <span asp-validation-for="Input.Location" class="text-danger" style="font-size: 1em;"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.PhoneNumber" class="form-control form-control-sm" aria-required="true" placeholder="0888 123 456" style="font-size: 1em;" />
+                            <label asp-for="Input.PhoneNumber">Телефонен номер</label>
+                            <span asp-validation-for="Input.PhoneNumber" class="text-danger" style="font-size: 1em;"></span>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Имейл</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
+                <!-- Row 5: Date of Birth -->
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <input asp-for="Input.DateOfBirth" class="form-control form-control-sm" aria-required="true" placeholder="Дата на раждане" onkeydown="return false;" onmousedown="return false;"/>
+                            <label asp-for="Input.DateOfBirth" style="font-size: 1em;">Дата на раждане</label>
+                            <span asp-validation-for="Input.DateOfBirth" class="text-danger" style="font-size: 1em;"></span>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" aria-required="true" placeholder="0888 123 456" />
-                <label asp-for="Input.PhoneNumber">Телефонен номер</label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
+                <!-- Row 6: Profile Image -->
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label asp-for="Input.ProfileImage" class="form-label" style="font-size: 1em;"></label>
+                            <input asp-for="Input.ProfileImage" type="file" class="form-control form-control-sm" accept="image/*" />
+                            <span asp-validation-for="Input.ProfileImage" class="text-danger" style="font-size: 1em;"></span>
+                        </div>
+                        <div id="imagePreview" class="mt-2">
+                            <!-- If image is selected, show it -->
+                            <img id="previewImage" src="#" alt="Preview" class="img-fluid" style="display:none;" />
+                        </div>
+                    </div>
+                </div>
 
-            <div class="form-floating mb-3">
-                <input asp-for="Input.DateOfBirth" class="form-control" aria-required="true" placeholder="Дата на раждане" onkeydown="return false;" onmousedown="return false;" />
-                <label asp-for="Input.DateOfBirth">Дата на раждане</label>
-                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Location" class="form-control" aria-required="true" placeholder="Местоположение" />
-                <label asp-for="Input.Location">Местоположение</label>
-                <span asp-validation-for="Input.Location" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Парола" />
-                <label asp-for="Input.Password">Парола</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Потвърдете паролата" />
-                <label asp-for="Input.ConfirmPassword">Потвърдете паролата</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-3">
-                <select asp-for="Input.Role" class="form-select" asp-items="@Model.Input.RoleList">
-                    <option disabled selected>Изберете роля</option>
-                </select>
-            </div>
-
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Регистрация</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Използвайте друга услуга за регистрация.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                            <div>
-                                <p>
-                                    Няма конфигурирани външни услуги за удостоверяване. Вижте тази <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
-                                        статия относно настройването на това ASP.NET приложение за поддръжка на влизане чрез външни услуги</a>.
-                                </p>
-                            </div>
-                }
-                else
-                {
-                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                                <div>
-                                    <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                                    </p>
-                                </div>
-                            </form>
-                }
-            }
-        </section>
+                <!-- Submit Button -->
+                <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary mt-3" style="font-size: 1em;">Регистрация</button>
+            </form>
+        </div>
     </div>
 </div>
 
 @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const dateOfBirthInput = document.getElementById('Input_DateOfBirth');
-                const today = new Date();
-                const minDate = new Date(today.getFullYear() - 120, today.getMonth(), today.getDate()).toISOString().split('T')[0]; // Max age 120 years
-                const maxDate = new Date(today.getFullYear() - 13, today.getMonth(), today.getDate()).toISOString().split('T')[0]; // Min age 13 years
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dateOfBirthInput = document.getElementById('Input_DateOfBirth');
+            const today = new Date();
+            const minDate = new Date(today.getFullYear() - 120, today.getMonth(), today.getDate()).toISOString().split('T')[0]; // Max age 120 years
+            const maxDate = new Date(today.getFullYear() - 13, today.getMonth(), today.getDate()).toISOString().split('T')[0]; // Min age 13 years
 
-                dateOfBirthInput.setAttribute('min', minDate);
-                dateOfBirthInput.setAttribute('max', maxDate);
+            dateOfBirthInput.setAttribute('min', minDate);
+            dateOfBirthInput.setAttribute('max', maxDate);
 
-                // Set today's date as the default selected date in mm/dd/yyyy format
-                const formattedToday = (today.getMonth() + 1).toString().padStart(2, '0') + '/' + today.getDate().toString().padStart(2, '0') + '/' + today.getFullYear();
-                dateOfBirthInput.value = formattedToday;
+            // Set today's date as the default selected date in mm/dd/yyyy format
+            const formattedToday = (today.getMonth() + 1).toString().padStart(2, '0') + '/' + today.getDate().toString().padStart(2, '0') + '/' + today.getFullYear();
+            dateOfBirthInput.value = formattedToday;
+
+            // Profile image preview
+            const profileImageInput = document.querySelector('input[name="Input.ProfileImage"]');
+            const previewImage = document.getElementById('previewImage');
+
+            profileImageInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
             });
-        </script>
+        });
+    </script>
 }

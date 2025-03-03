@@ -21,7 +21,7 @@
     <header id="main-header">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SportConnect</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 1em;" >SportConnect</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -31,34 +31,34 @@
                         @if (User.IsInRole(SD.AdminRole))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSportsAdmin">Панел Спортове</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSports" style="font-size: 1em;" >Панел Спортове</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsAdmin">Панел Турнири</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsAdmin" style="font-size: 1em;" >Панел Турнири</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AllUsers">Панел Потребители</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AllUsers" style="font-size: 1em;" >Панел Потребители</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsMyAdmin">Мои турнири</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsMyAdmin" style="font-size: 1em;" >Мои турнири</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="ParticipationsMy">Мои участия</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="ParticipationsMy" style="font-size: 1em;" >Мои участия</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSportsUser">Спортове</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSports" style="font-size: 1em;" >Спортове</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsAdmin">Турнири</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsAdmin" style="font-size: 1em;" >Турнири</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsMy">Мои турнири</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsMy" style="font-size: 1em;" >Мои турнири</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="ParticipationsMy">Мои участия</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="ParticipationsMy" style="font-size: 1em;" >Мои участия</a>
                             </li>
                         }
                     </ul>
@@ -75,7 +75,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - SportConnect - <a asp-area="" asp-controller="Home" asp-action="Privacy">Сигурност</a>
+            &copy; 2025 - SportConnect - <a asp-area="" asp-controller="Home" asp-action="Privacy" style="font-size: 1em;" >Сигурност</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

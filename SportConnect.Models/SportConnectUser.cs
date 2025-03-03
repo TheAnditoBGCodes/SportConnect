@@ -20,6 +20,8 @@ namespace SportConnect.Models
         [Display(Name = "Местоположение")]
         public string Location { get; set; }
 
+        public string? ImageUrl { get; set; }
+
         public ICollection<Participation> Participations { get; set; } = new List<Participation>();
         public ICollection<Tournament> OrganizedTournaments { get; set; } = new List<Tournament>();
     }

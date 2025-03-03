@@ -1,88 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{03212114-56B5-4902-9713-A49D36D8EBED}|SportConnect.Models\\SportConnect.Models.csproj|c:\\users\\lenovo\\source\\repos\\sportconnect\\sportconnect.models\\cloudinarysettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{03212114-56B5-4902-9713-A49D36D8EBED}|SportConnect.Models\\SportConnect.Models.csproj|solutionrelative:sportconnect.models\\cloudinarysettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\lenovo\\source\\repos\\sportconnect\\sportconnect.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1DD578D6-4685-49CA-90DE-2C98DCCB41C7}|SportConnect.Services\\SportConnect.Services.csproj|c:\\users\\lenovo\\source\\repos\\sportconnect\\sportconnect.services\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1DD578D6-4685-49CA-90DE-2C98DCCB41C7}|SportConnect.Services\\SportConnect.Services.csproj|solutionrelative:sportconnect.services\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\lenovo\\source\\repos\\sportconnect\\sportconnect.web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CloudinarySettings.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Models\\CloudinarySettings.cs",
-              "RelativeDocumentMoniker": "SportConnect.Models\\CloudinarySettings.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Models\\CloudinarySettings.cs",
-              "RelativeToolTip": "SportConnect.Models\\CloudinarySettings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-03T11:58:56.082Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Program.cs",
-              "RelativeDocumentMoniker": "SportConnect.Web\\Program.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\Program.cs",
-              "RelativeToolTip": "SportConnect.Web\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-03T11:56:48.926Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\appsettings.json",
-              "RelativeDocumentMoniker": "SportConnect.Web\\appsettings.json",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\appsettings.json",
-              "RelativeToolTip": "SportConnect.Web\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-03T11:56:14.434Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Class1.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Services\\Class1.cs",
-              "RelativeDocumentMoniker": "SportConnect.Services\\Class1.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Services\\Class1.cs",
-              "RelativeToolTip": "SportConnect.Services\\Class1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-03T11:55:20.153Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

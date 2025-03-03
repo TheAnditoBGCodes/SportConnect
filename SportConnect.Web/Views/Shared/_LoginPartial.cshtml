@@ -8,6 +8,7 @@
 @{
     var user = await UserManager.GetUserAsync(User);
     var userName = user?.UserName ?? "Потребител"; // Default if null
+    var profileImage = user?.ImageUrl ?? "/images/default-profile.png"; // Default image if no profile image is set
 }
 
 <ul class="navbar-nav">
@@ -16,28 +17,32 @@
         @if (User.IsInRole(SD.AdminRole))
         {
             <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-controller="User" asp-action="PersonalDataAdmin" title="Manage">@userName</a>
+                <a id="manage" class="nav-link text-dark" asp-controller="User" asp-action="PersonalDataAdmin" title="Manage">
+                    <img src="@profileImage" alt="Profile Image" width="30" height="30" style="font-size: 1em;" /> @userName
+                </a>
             </li>
         }
         else
         {
             <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-controller="User" asp-action="PersonalDataUser" title="Manage">@userName</a>
+                <a id="manage" class="nav-link text-dark" asp-controller="User" asp-action="PersonalDataUser" title="Manage">
+                    <img src="@profileImage" alt="Profile Image" width="30" height="30" style="font-size: 1em;" /> @userName
+                </a>
             </li>
         }
         <li class="nav-item">
             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Излез</button>
+                <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0" style="font-size: 1em;">Излез</button>
             </form>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Регистрирай се</a>
+            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register" style="font-size: 1em;">Регистрирай се</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Влез</a>
+            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login" style="font-size: 1em;">Влез</a>
         </li>
     }
 </ul>

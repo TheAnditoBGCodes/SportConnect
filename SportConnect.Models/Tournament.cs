@@ -35,6 +35,8 @@ namespace SportConnect.Models
         [DeadlineBeforeTournament("Date")]
         public DateTime Deadline { get; set; }
 
+        public string? ImageUrl { get; set; }
+
         [Required(ErrorMessage = "Локацията е задължителна")]
         [StringLength(100, MinimumLength = 5, ErrorMessage = "Локацията трябва да е между 5 и 100 символа")]
         public string Location { get; set; }

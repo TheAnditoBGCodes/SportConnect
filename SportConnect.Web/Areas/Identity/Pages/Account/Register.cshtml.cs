@@ -11,6 +11,8 @@ using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +28,7 @@ using Microsoft.Extensions.Logging;
 using SportConnect.DataAccess;
 using SportConnect.Models;
 using SportConnect.Utility;
+using SportConnect.Services;
 
 namespace SportConnect.Web.Areas.Identity.Pages.Account
 {
@@ -40,8 +43,9 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<SportConnectUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly Cloudinary _cloudinary;
 
-        public RegisterModel(SportConnectDbContext context,
+        public RegisterModel(Cloudinary cloudinary, SportConnectDbContext context,
             UserManager<SportConnectUser> userManager,
             IUserStore<SportConnectUser> userStore,
             SignInManager<SportConnectUser> signInManager,
@@ -49,6 +53,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             RoleManager<IdentityRole> roleManager,
             IEmailSender emailSender)
         {
+            _cloudinary = cloudinary;
             _userManager = userManager;
             _context = context;
             _userStore = userStore;
@@ -58,6 +63,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             _logger = logger;
             _roleManager = roleManager;
         }
+
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -145,6 +151,11 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             [Phone(ErrorMessage = "Невалиден телефонен номер.")]
             [Display(Name = "Телефонен номер")]
             public string PhoneNumber { get; set; }
+
+            [Required(ErrorMessage = "Моля, качете профилна снимка.")]
+            [Display(Name = "Профилна снимка")]
+            public IFormFile ProfileImage { get; set; }
+
         }
 
 
@@ -178,25 +189,17 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // Calculate age based on DateOfBirth
-                int age = DateTime.Now.Year - Input.DateOfBirth.Year;
-
-                // Adjust age if birthday hasn't occurred yet this year
-                if (DateTime.Now.Month < Input.DateOfBirth.Month ||
-                    (DateTime.Now.Month == Input.DateOfBirth.Month && DateTime.Now.Day < Input.DateOfBirth.Day))
+                // Upload image to Cloudinary
+                var uploadParams = new ImageUploadParams()
                 {
-                    age--;
-                }
+                    File = new FileDescription(Input.ProfileImage.FileName, Input.ProfileImage.OpenReadStream()),
+                    Transformation = new Transformation().Crop("fill").Gravity("face").Width(200).Height(200)
+                };
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
-                // Check if the age is in the valid range
-                if (age < 13 || age > 120)
+                if (uploadResult.Error != null)
                 {
-                    ModelState.AddModelError("Input.DateOfBirth", "Възрастта трябва да бъде между 13 и 120 години.");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    // If age is invalid, redisplay the form with an error message
+                    ModelState.AddModelError(string.Empty, "Грешка при качване на изображението.");
                     return Page();
                 }
 
@@ -206,6 +209,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                     DateOfBirth = Input.DateOfBirth,
                     PhoneNumber = Input.PhoneNumber,
                     Location = Input.Location,
+                    ImageUrl = uploadResult.SecureUrl.ToString() // Store URL from Cloudinary
                 };
 
                 await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
@@ -216,6 +220,9 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    // Automatically sign in the user after registration
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+
                     if (!string.IsNullOrEmpty(Input.Role))
                     {
                         await _userManager.AddToRoleAsync(user, Input.Role);
@@ -225,45 +232,18 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, SD.UserRole);
                     }
 
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+                    return LocalRedirect(returnUrl); // Redirect to the return URL
                 }
 
                 foreach (var error in result.Errors)
                 {
-                    if (error.Code == "DuplicateUserName")
-                    {
-                        ModelState.AddModelError(string.Empty, "Потребителското име вече е заето.");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
+
 
 
         private IdentityUser CreateUser()
