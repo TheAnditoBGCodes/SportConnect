@@ -322,3 +322,6 @@ C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Web\obj\Debug\net8.0\refi
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Web\obj\Debug\net8.0\SportConnect.Web.pdb
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Web\obj\Debug\net8.0\SportConnect.Web.genruntimeconfig.cache
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Web\obj\Debug\net8.0\ref\SportConnect.Web.dll
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Web\bin\Debug\net8.0\CloudinaryDotNet.dll
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Web\bin\Debug\net8.0\SportConnect.Services.dll
+C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Web\bin\Debug\net8.0\SportConnect.Services.pdb

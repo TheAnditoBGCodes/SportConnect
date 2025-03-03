@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportConnect.DataAccess", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportConnect.Utility", "SportConnect.Utility\SportConnect.Utility.csproj", "{88020C52-B9F0-4633-9692-E97668452AAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportConnect.Services", "SportConnect.Services\SportConnect.Services.csproj", "{1DD578D6-4685-49CA-90DE-2C98DCCB41C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{88020C52-B9F0-4633-9692-E97668452AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88020C52-B9F0-4633-9692-E97668452AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88020C52-B9F0-4633-9692-E97668452AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DD578D6-4685-49CA-90DE-2C98DCCB41C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DD578D6-4685-49CA-90DE-2C98DCCB41C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DD578D6-4685-49CA-90DE-2C98DCCB41C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DD578D6-4685-49CA-90DE-2C98DCCB41C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.27.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
@@ -26,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SportConnect.DataAccess\SportConnect.DataAccess.csproj" />
     <ProjectReference Include="..\SportConnect.Models\SportConnect.Models.csproj" />
+    <ProjectReference Include="..\SportConnect.Services\SportConnect.Services.csproj" />
     <ProjectReference Include="..\SportConnect.Utility\SportConnect.Utility.csproj" />
   </ItemGroup>
 

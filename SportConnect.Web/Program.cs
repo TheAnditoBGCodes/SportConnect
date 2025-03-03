@@ -1,5 +1,6 @@
 //GitHub repo: https://github.com/TheAnditoBGCodes/SportConnect
 
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -8,6 +9,7 @@ using SportConnect.DataAccess;
 using SportConnect.DataAccess.Repository;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
+using SportConnect.Services;
 using SportConnect.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,10 @@ builder.Services.AddIdentity<SportConnectUser, IdentityRole>().AddEntityFramewor
 builder.Services.AddRazorPages();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<CloudinaryService>();
+var cloudinarysettings = builder.Configuration.GetSection("Cloudinary").Get<CloudinarySettings>();
+var account = new Account(cloudinarysettings.CloudName, cloudinarysettings.ApiKey, cloudinarysettings.ApiSecret);
+var cloudinary = new Cloudinary(account); builder.Services.AddSingleton(cloudinary);
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
