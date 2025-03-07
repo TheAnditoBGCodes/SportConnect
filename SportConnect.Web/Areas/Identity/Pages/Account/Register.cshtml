@@ -4,46 +4,100 @@
     ViewData["Title"] = "Регистрирай се";
 }
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+<style>
+    /* Ensure modal content does not overflow */
+    .modal-body {
+        overflow: hidden; /* Hide any overflow */
+    }
+
+    /* Make sure the image scales to fit the container */
+    #cropImage {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures image will cover the container without leaving black bars */
+    }
+
+    /* Hide any overflow if the crop container goes out of bounds */
+    #cropContainer {
+        width: 100%;
+        height: 100%;
+        overflow: hidden; /* Prevents overflow of cropped image */
+    }
+
+    /* Modal footer for buttons */
+    .modal-footer {
+        display: flex;
+        justify-content: space-between; /* Align buttons to opposite sides */
+    }
+
+    .cropper-drag-box {
+        opacity: 50%;
+    }
+
+    #previewImage {
+        height: auto; /* Maintains aspect ratio */
+        display: block; /* Makes sure the image is block-level, so it doesn't cause any inline formatting issues */
+        margin: 0 auto; /* Centers the image horizontally */
+    }
+
+    .container main {
+        min-height: 83vh;
+        padding-bottom: 0px !important;
+    }
+
+        .container main.pb-3 {
+            align-content: center;
+            padding-bottom: 0px !important;
+        }
+</style>
+
+<!-- Include Cropper.js -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6">
             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data" class="p-3">
                 <h2 class="text-center">@ViewData["Title"]</h2>
-                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div asp-validation-summary="ModelOnly" class="text-danger text-center" role="alert"></div>
 
                 <!-- Row 1: Username and Email -->
                 <div class="row mb-2">
                     <div class="col-12 col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Input.Username" class="form-control form-control-sm" aria-required="true" placeholder="Вашето потребителско име" style="font-size: 1em;" />
-                            <label asp-for="Input.Username">Потребителско име</label>
-                            <span asp-validation-for="Input.Username" class="text-danger" style="font-size: 1em;"></span>
+                            <input asp-for="Input.Username" class="form-control form-control-sm" aria-required="true" placeholder="Вашето потребителско име" style="font-size: 1rem;" />
+                            <label asp-for="Input.Username" class="text-gray">Потребителско име</label>
+                            <span asp-validation-for="Input.Username" class="text-danger" style="font-size: 1rem;"></span>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Input.Email" class="form-control form-control-sm" autocomplete="username" aria-required="true" placeholder="name@example.com" style="font-size: 1em;" />
-                            <label asp-for="Input.Email">Имейл</label>
-                            <span asp-validation-for="Input.Email" class="text-danger" style="font-size: 1em;"></span>
+                            <input asp-for="Input.Email" class="form-control form-control-sm" autocomplete="username" aria-required="true" placeholder="name@example.com" style="font-size: 1rem;" />
+                            <label asp-for="Input.Email" class="text-gray">Имейл</label>
+                            <span asp-validation-for="Input.Email" class="text-danger" style="font-size: 1rem;"></span>
                         </div>
                     </div>
                 </div>
-
                 <!-- Row 2: Password and Confirm Password -->
                 <div class="row mb-2">
                     <div class="col-12 col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Input.Password" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="Парола" style="font-size: 1em;" />
-                            <label asp-for="Input.Password">Парола</label>
-                            <span asp-validation-for="Input.Password" class="text-danger" style="font-size: 1em;"></span>
+                            <input asp-for="Input.Password" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="Парола" style="font-size: 1rem;" />
+                            <label asp-for="Input.Password" class="text-gray">Парола</label>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Input.ConfirmPassword" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="Потвърдете паролата" style="font-size: 1em;" />
-                            <label asp-for="Input.ConfirmPassword">Потвърдете паролата</label>
-                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger" style="font-size: 1em;"></span>
+                            <input asp-for="Input.ConfirmPassword" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="Потвърдете паролата" style="font-size: 1rem;" />
+                            <label asp-for="Input.ConfirmPassword" class="text-gray">Потвърдете паролата</label>
                         </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <span asp-validation-for="Input.Password" class="text-danger" style="font-size: 1rem;"></span>
+                    </div>
+                    <div class="col-12 text-center">
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger" style="font-size: 1rem;"></span>
                     </div>
                 </div>
 
@@ -51,16 +105,16 @@
                 <div class="row mb-2">
                     <div class="col-12 col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Input.FirstName" class="form-control form-control-sm" aria-required="true" placeholder="Вашето име" style="font-size: 1em;" />
-                            <label asp-for="Input.FirstName">Име</label>
+                            <input asp-for="Input.FirstName" class="form-control form-control-sm" aria-required="true" placeholder="Вашето име" style="font-size: 1rem;" />
+                            <label asp-for="Input.FirstName" class="text-gray">Име</label>
                             <span asp-validation-for="Input.FirstName" class="text-danger" style="font-size: 1em;"></span>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Input.LastName" class="form-control form-control-sm" aria-required="true" placeholder="Вашата фамилия"  style="font-size: 1em;" />
-                            <label asp-for="Input.LastName">Фамилия</label>
-                            <span asp-validation-for="Input.LastName" class="text-danger" style="font-size: 1em;"></span>
+                            <input asp-for="Input.LastName" class="form-control form-control-sm" aria-required="true" placeholder="Вашата фамилия" style="font-size: 1rem;" />
+                            <label asp-for="Input.LastName" class="text-gray">Фамилия</label>
+                            <span asp-validation-for="Input.LastName" class="text-danger" style="font-size: 1rem;"></span>
                         </div>
                     </div>
                 </div>
@@ -69,16 +123,16 @@
                 <div class="row mb-2">
                     <div class="col-12 col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Input.Location" class="form-control form-control-sm" aria-required="true" placeholder="Местоположение"  style="font-size: 1em;" />
-                            <label asp-for="Input.Location">Местоположение</label>
-                            <span asp-validation-for="Input.Location" class="text-danger" style="font-size: 1em;"></span>
+                            <input asp-for="Input.Location" class="form-control form-control-sm" aria-required="true" placeholder="Местоположение" style="font-size: 1rem;" />
+                            <label asp-for="Input.Location" class="text-gray">Местоположение</label>
+                            <span asp-validation-for="Input.Location" class="text-danger" style="font-size: 1rem;"></span>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Input.PhoneNumber" class="form-control form-control-sm" aria-required="true" placeholder="0888 123 456" style="font-size: 1em;" />
-                            <label asp-for="Input.PhoneNumber">Телефонен номер</label>
-                            <span asp-validation-for="Input.PhoneNumber" class="text-danger" style="font-size: 1em;"></span>
+                            <input asp-for="Input.PhoneNumber" class="form-control form-control-sm" aria-required="true" placeholder="0888 123 456" style="font-size: 1rem;" />
+                            <label asp-for="Input.PhoneNumber" class="text-gray">Телефонен номер</label>
+                            <span asp-validation-for="Input.PhoneNumber" class="text-danger" style="font-size: 1rem;"></span>
                         </div>
                     </div>
                 </div>
@@ -87,66 +141,154 @@
                 <div class="row mb-2">
                     <div class="col-12">
                         <div class="form-floating">
-                            <input asp-for="Input.DateOfBirth" class="form-control form-control-sm" aria-required="true" placeholder="Дата на раждане" onkeydown="return false;" onmousedown="return false;"/>
-                            <label asp-for="Input.DateOfBirth" style="font-size: 1em;">Дата на раждане</label>
-                            <span asp-validation-for="Input.DateOfBirth" class="text-danger" style="font-size: 1em;"></span>
+                            <input asp-for="Input.DateOfBirth" class="form-control form-control-sm" aria-required="true" placeholder="Дата на раждане" onkeydown="return false;" onmousedown="return false;" style="font-size: 1rem;" />
+                            <label asp-for="Input.DateOfBirth" class="text-gray">Дата на раждане</label>
+                            <span asp-validation-for="Input.DateOfBirth" class="text-danger" style="font-size: 1rem;"></span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Row 6: Profile Image -->
-                <div class="row mb-2">
+                <!-- Profile Image -->
+                <div class="row mb-0">
                     <div class="col-12">
-                        <div class="form-group">
-                            <label asp-for="Input.ProfileImage" class="form-label" style="font-size: 1em;"></label>
-                            <input asp-for="Input.ProfileImage" type="file" class="form-control form-control-sm" accept="image/*" />
-                            <span asp-validation-for="Input.ProfileImage" class="text-danger" style="font-size: 1em;"></span>
+                        <div class="form-group d-flex align-items-center">
+                            <label asp-for="@Model.Input.ProfileImage" class=" text-center form-label me-2 d-flex align-items-center mb-0" style="font-size: 1em; width: 31%;">Профилна снимка</label>
+                            <input type="file" name="file" class="form-control form-control-sm" accept="image/*" id="imageInput" />
                         </div>
-                        <div id="imagePreview" class="mt-2">
-                            <!-- If image is selected, show it -->
+                        <span asp-validation-for="@Model.Input.ProfileImage" class="text-danger" style="font-size: 1em;"></span>
+                        <!-- Image Preview Container -->
+                        <div id="imagePreview" class="mt-2" style="width:62%">
                             <img id="previewImage" src="#" alt="Preview" class="img-fluid" style="display:none;" />
                         </div>
                     </div>
                 </div>
+                <input type="hidden" id="croppedImageDataUrl" asp-for="Input.ProfileImage" />
 
                 <!-- Submit Button -->
-                <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary mt-3" style="font-size: 1em;">Регистрация</button>
+                <button id="registerSubmit" type="submit" class="w-100 mb-2 btn btn-lg btn-primary" style="font-size: 1rem;">Регистрация</button>
             </form>
         </div>
     </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const dateOfBirthInput = document.getElementById('Input_DateOfBirth');
-            const today = new Date();
-            const minDate = new Date(today.getFullYear() - 120, today.getMonth(), today.getDate()).toISOString().split('T')[0]; // Max age 120 years
-            const maxDate = new Date(today.getFullYear() - 13, today.getMonth(), today.getDate()).toISOString().split('T')[0]; // Min age 13 years
+<!-- Modal Structure -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body text-center" style="width: 100%; height: 80vh; overflow: hidden;">
+                <!-- Set fixed height here -->
+                <div id="cropContainer" style="width: 100%; height: 100%; overflow: hidden;">
+                    <img id="cropImage" src="#" alt="Preview" style="max-width: 100%; height: 100%; display: block;"> <!-- Ensure image fits within container -->
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <!-- Buttons are spaced using flexbox -->
+                <button type="button" class="btn btn-secondary text-center" id="resetCropper">Начално състояние</button>
+                <button type="button" class="btn btn-success text-center" id="confirmUpload">Готово</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let cropper;
 
-            dateOfBirthInput.setAttribute('min', minDate);
-            dateOfBirthInput.setAttribute('max', maxDate);
+    document.getElementById('imageInput').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        const cropImage = document.getElementById('cropImage');
+        const modal = new bootstrap.Modal(document.getElementById('imageModal'));
 
-            // Set today's date as the default selected date in mm/dd/yyyy format
-            const formattedToday = (today.getMonth() + 1).toString().padStart(2, '0') + '/' + today.getDate().toString().padStart(2, '0') + '/' + today.getFullYear();
-            dateOfBirthInput.value = formattedToday;
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                cropImage.src = e.target.result;
+                modal.show();
 
-            // Profile image preview
-            const profileImageInput = document.querySelector('input[name="Input.ProfileImage"]');
-            const previewImage = document.getElementById('previewImage');
+                modal._element.addEventListener('shown.bs.modal', function () {
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+                    cropper = new Cropper(cropImage, {
+                        aspectRatio: 1 / 1,
+                        viewMode: 1,
+                        autoCropArea: 1,
+                        responsive: true,
+                        zoomable: false,
+                        background: true,
+                        minContainerHeight: 450, // Ensure the container height fits the defined height of modal-body
+                    });
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 
-            profileImageInput.addEventListener('change', function () {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        previewImage.src = e.target.result;
-                        previewImage.style.display = 'block';
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        });
-    </script>
-}
+    // Confirm Upload Button (right button)
+    document.getElementById('confirmUpload').addEventListener('click', function () {
+        const previewImage = document.getElementById('previewImage');
+        const previewImager = document.getElementById('imagePreview');
+
+        // Get cropped image as base64
+        const croppedCanvas = cropper.getCroppedCanvas();
+        const croppedDataUrl = croppedCanvas.toDataURL();
+
+        // Set the cropped image preview
+        previewImage.src = croppedDataUrl;
+        previewImage.style.display = 'block';
+        previewImager.classList.add('mb-2');
+        previewImager.classList.add('w-100');
+        previewImager.classList.add('justify-content-center');
+
+        // Set the hidden input value
+        document.getElementById('croppedImageDataUrl').value = croppedDataUrl;
+
+        // Close the modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('imageModal'));
+        modal.hide();
+    });
+
+    // Reset Cropper Button (left button)
+    document.getElementById('resetCropper').addEventListener('click', function () {
+        if (cropper) {
+            cropper.reset();  // Reset cropper to original size
+        }
+    });
+
+    // On form submit, set the ProfileImage input value to the cropped image URL
+    document.getElementById('registerForm').addEventListener('submit', function (event) {
+        const profileImageInput = document.querySelector('input[name="file"]');
+        const previewImage = document.getElementById('previewImage');
+
+        // If the preview image exists, set its src value to the ProfileImage input
+        if (previewImage.style.display === 'block') {
+            // Ensure the profile image input gets the cropped image URL as its value
+            profileImageInput.value = previewImage.src;
+        }
+    });
+
+    // Disable date selection for users under 13 or over 120 years old
+    function setDateRestrictions() {
+        const today = new Date();
+        const minAgeDate = new Date();
+        const maxAgeDate = new Date();
+
+        // Set the minimum date to 13 years ago
+        minAgeDate.setFullYear(today.getFullYear() - 13);
+        // Set the maximum date to 120 years ago
+        maxAgeDate.setFullYear(today.getFullYear() - 120);
+
+        // Format the date as YYYY-MM-DD
+        const minDateString = minAgeDate.toISOString().split('T')[0];
+        const maxDateString = maxAgeDate.toISOString().split('T')[0];
+
+        // Set the min and max attributes for the DateOfBirth input field
+        const dateOfBirthInput = document.getElementById('Input_DateOfBirth');
+        if (dateOfBirthInput) {
+            dateOfBirthInput.setAttribute('min', maxDateString);
+            dateOfBirthInput.setAttribute('max', minDateString);
+        }
+    }
+
+    // Run the function to set the date restrictions
+    setDateRestrictions();
+
+</script> 

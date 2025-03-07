@@ -15,5 +15,16 @@ namespace SportConnect.Web.Models
         public string? Description { get; set; }
 
         public string? ImageUrl { get; set; }
+
+        public Sport ToSport()
+        {
+            return new Sport
+            {
+                Id = Id,
+                Name = Name,
+                Description = Description,
+                ImageUrl = ImageUrl
+            };
+        }
     }
 }

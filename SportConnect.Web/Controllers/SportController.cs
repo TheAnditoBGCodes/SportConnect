@@ -13,6 +13,7 @@ using SportConnect.Utility;
 using SportConnect.Web.Models;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
 
 namespace SportConnect.Web.Controllers
 {
@@ -23,14 +24,16 @@ namespace SportConnect.Web.Controllers
         public IRepository<Tournament> _tournamentRepository { get; set; }
         public IRepository<Participation> _participationsRepository { get; set; }
         private readonly CloudinaryService _cloudinaryService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public SportController(ILogger<SportController> logger, IRepository<Sport> repository, IRepository<Tournament> tournamentRepository, IRepository<Participation> participationsRepository, CloudinaryService cloudinaryService)
+        public SportController(ILogger<SportController> logger, IRepository<Sport> repository, IRepository<Tournament> tournamentRepository, IRepository<Participation> participationsRepository, CloudinaryService cloudinaryService, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _repository = repository;
             _tournamentRepository = tournamentRepository;
             _participationsRepository = participationsRepository;
             _cloudinaryService = cloudinaryService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -41,41 +44,39 @@ namespace SportConnect.Web.Controllers
         }
         [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
-        public async Task<IActionResult> AddSport(Sport sport, IFormFile file)
+        public async Task<IActionResult> AddSport(Sport model)
         {
-            if (_repository.GetAll().Any(s => s.Name == sport.Name))
+            if (string.IsNullOrEmpty(model.Name))
+            {
+                ModelState.AddModelError("Name", "Името е задължително.");
+                ModelState.AddModelError("ImageUrl", "Моля, качете профилна снимка.");
+            }
+
+            if (string.IsNullOrEmpty(model.Description))
+            {
+                ModelState.AddModelError("Description", "Описанието е задължително.");
+                ModelState.AddModelError("ImageUrl", "Моля, качете профилна снимка.");
+            }
+
+            if (_repository.GetAll().Any(s => s.Name == model.Name))
             {
                 ModelState.AddModelError("Name", "Има такъв спорт.");
+                ModelState.AddModelError("ImageUrl", "Моля, качете профилна снимка.");
             }
-            if (_repository.GetAll().Any(s => s.Description == sport.Description))
+
+            if (_repository.GetAll().Any(s => s.Description == model.Description))
             {
                 ModelState.AddModelError("Description", "Това описание е използвано за друг спорт.");
-            }
-
-            if (file == null || file.Length == 0)
-            {
-                ModelState.AddModelError("ImageUrl", "Снимката е задължителна.");
-            }
-            else
-            {
-                var imageUrl = await _cloudinaryService.UploadImageAsync(file);
-
-                if (string.IsNullOrEmpty(imageUrl))
-                {
-                    ModelState.AddModelError("ImageUrl", "Грешка при качването.");
-                    return View(sport);
-                }
-
-                sport.ImageUrl = imageUrl;
+                ModelState.AddModelError("ImageUrl", "Моля, качете профилна снимка.");
             }
 
             if (ModelState.IsValid)
             {
-                _repository.Add(sport);
+                _repository.Add(model);
                 return RedirectToAction("AllSports");
             }
 
-            return View(sport);
+            return View(model);
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
@@ -96,48 +97,24 @@ namespace SportConnect.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditSport(SportViewModel sport, IFormFile? file)
         {
-            if (sport.Name == null)
+            if (string.IsNullOrEmpty(sport.Name))
             {
                 ModelState.AddModelError("Name", "Името е задължително.");
             }
 
-            if (sport.Description == null)
+            if (string.IsNullOrEmpty(sport.Description))
             {
-                ModelState.AddModelError("Description", "Описанието  е задължително.");
+                ModelState.AddModelError("Description", "Описанието е задължително.");
             }
 
-            if (!_repository.IsPropertyUnique(s => s.Name == sport.Name && s.Id != sport.Id))
+            if (_repository.GetAll().Any(s => s.Name == sport.Name && s.Id != sport.Id))
             {
                 ModelState.AddModelError("Name", "Има такъв спорт.");
             }
 
-            if (!_repository.IsPropertyUnique(s => s.Description == sport.Description && s.Id != sport.Id))
+            if (_repository.GetAll().Any(s => s.Description == sport.Description && s.Id != sport.Id))
             {
                 ModelState.AddModelError("Description", "Това описание е използвано за друг спорт.");
-            }
-
-            // Check if a new image is uploaded
-            if (file != null && file.Length > 0)
-            {
-                var imageUrl = await _cloudinaryService.UploadImageAsync(file);
-
-                if (string.IsNullOrEmpty(imageUrl))
-                {
-                    ModelState.AddModelError("ImageUrl", "Грешка при качването.");
-                    return View(sport);
-                }
-
-                sport.ImageUrl = imageUrl;  // Set the new image URL if a new image is uploaded
-            }
-            else
-            {
-                // If no new image is uploaded, keep the existing image URL
-                var existingSport = _repository.GetById(sport.Id);
-                if (existingSport != null)
-                {
-                    // Keep the existing image URL if available
-                    sport.ImageUrl = existingSport.ImageUrl;
-                }
             }
 
             if (ModelState.IsValid)
@@ -155,7 +132,9 @@ namespace SportConnect.Web.Controllers
                     _repository.Update(dbSport);
                     return RedirectToAction("AllSports");
                 }
+                return View(sport);
             }
+
             return View(sport);
         }
 

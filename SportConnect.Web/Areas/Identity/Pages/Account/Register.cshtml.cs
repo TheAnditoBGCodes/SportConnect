@@ -44,6 +44,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly Cloudinary _cloudinary;
+        private readonly CloudinaryService _cloudinaryService;
 
         public RegisterModel(Cloudinary cloudinary, SportConnectDbContext context,
             UserManager<SportConnectUser> userManager,
@@ -51,7 +52,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             SignInManager<SportConnectUser> signInManager,
             ILogger<RegisterModel> logger,
             RoleManager<IdentityRole> roleManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender, CloudinaryService cloudinaryService)
         {
             _cloudinary = cloudinary;
             _userManager = userManager;
@@ -62,6 +63,8 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _logger = logger;
             _roleManager = roleManager;
+            _emailSender = emailSender;
+            _cloudinaryService = cloudinaryService;
         }
 
 
@@ -115,7 +118,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Потвърди паролата")]
-            [Compare("Password", ErrorMessage = "Това поле не съответства с въведената парола")]
+            [Compare("Password", ErrorMessage = "Въведените данни в двете полета не съответстват")]
             public string ConfirmPassword { get; set; }
 
             public string? Role { get; set; }
@@ -140,7 +143,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "Моля, въведете своята дата на раждане.")]
             [DataType(DataType.Date)]
             [Display(Name = "Дата на раждане")]
-            public DateTime DateOfBirth { get; set; }
+            public DateTime? DateOfBirth { get; set; }
 
             [Required(ErrorMessage = "Моля, въведете местоположение.")]
             [StringLength(100, ErrorMessage = "Местоположението трябва да е от {2} до {1} символа", MinimumLength = 4)]
@@ -154,8 +157,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 
             [Required(ErrorMessage = "Моля, качете профилна снимка.")]
             [Display(Name = "Профилна снимка")]
-            public IFormFile ProfileImage { get; set; }
-
+            public string ProfileImage { get; set; }
         }
 
 
@@ -189,27 +191,13 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // Upload image to Cloudinary
-                var uploadParams = new ImageUploadParams()
-                {
-                    File = new FileDescription(Input.ProfileImage.FileName, Input.ProfileImage.OpenReadStream()),
-                    Transformation = new Transformation().Crop("fill").Gravity("face").Width(200).Height(200)
-                };
-                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-
-                if (uploadResult.Error != null)
-                {
-                    ModelState.AddModelError(string.Empty, "Грешка при качване на изображението.");
-                    return Page();
-                }
-
                 var user = new SportConnectUser
                 {
                     FullName = $"{Input.FirstName} {Input.LastName}",
-                    DateOfBirth = Input.DateOfBirth,
+                    DateOfBirth = (DateTime)Input.DateOfBirth,
                     PhoneNumber = Input.PhoneNumber,
                     Location = Input.Location,
-                    ImageUrl = uploadResult.SecureUrl.ToString() // Store URL from Cloudinary
+                    ImageUrl = Input.ProfileImage
                 };
 
                 await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
@@ -220,9 +208,6 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    // Automatically sign in the user after registration
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-
                     if (!string.IsNullOrEmpty(Input.Role))
                     {
                         await _userManager.AddToRoleAsync(user, Input.Role);
@@ -232,19 +217,45 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, SD.UserRole);
                     }
 
-                    return LocalRedirect(returnUrl); // Redirect to the return URL
-                }
+                    var userId = await _userManager.GetUserIdAsync(user);
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    var callbackUrl = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                        protocol: Request.Scheme);
 
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    {
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                    }
+                    else
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
+                    }
+                }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
 
+            // Refill RoleList before rendering the page again
+            var roles = _roleManager.Roles.Select(x => x.Name).ToList();
+            Input.RoleList = roles.Select(y => new SelectListItem()
+            {
+                Value = y,
+                Text = y
+            }).ToList();
+            // If we got this far, something failed, redisplay form
+            ModelState.AddModelError("Input.ProfileImage", "Моля, качете профилна снимка.");
             return Page();
         }
-
-
 
         private IdentityUser CreateUser()
         {

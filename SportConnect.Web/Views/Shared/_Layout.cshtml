@@ -4,7 +4,36 @@
 <head>
     <style>
         #main-header {
-            margin-top: -20px; /* Adjust this value as needed */
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: white;
+            border-bottom: 1px solid #ddd; /* Same border style as footer */
+        }
+
+        /* Ensure all text is 1rem */
+        body, .navbar-nav .nav-link, .navbar-brand, .footer a, .footer, h1, h2, h3, h4, h5, h6, p {
+            font-size: 1rem; /* Set text size to 1rem */
+        }
+
+        body {
+            padding-top: 60px; /* Adjusted to prevent content from being hidden under the fixed header */
+        }
+        
+        .navbar-nav .nav-link,
+        .footer a,
+        .footer {
+            font-size: 1rem !important; /* Ensure consistency across navbar and footer */
+        }
+
+        .navbar-brand {
+            font-size: 1.3rem !important; /* Ensure consistency across navbar and footer */
+            }
+        /* Footer border matching header border */
+        .footer {
+            background-color: white;
+            border-top: 1px solid #ddd; /* Same border style as header */
         }
     </style>
     <meta charset="utf-8" />
@@ -13,59 +42,68 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SportConnect.Web.styles.css" asp-append-version="true" />
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> ​
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">​</script> ​
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>​
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
     <header id="main-header">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 1em;" >SportConnect</a>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white">
+            <div class="container-fluid d-flex align-items-center">
+                <!-- SportConnect Brand -->
+                <a class="navbar-brand fw-bold align-content-center me-1" asp-area="" asp-controller="Home" asp-action="Index">SportConnect</a>
+
+                <!-- Navbar Toggle Button -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                <!-- Navigation Links -->
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.IsInRole(SD.AdminRole))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSports" style="font-size: 1em;" >Панел Спортове</a>
+                            <li class="nav-item d-flex align-content-center">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSports">Панел Спортове</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsAdmin" style="font-size: 1em;" >Панел Турнири</a>
+                            <li class="nav-item d-flex align-content-center">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsAdmin">Панел Турнири</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AllUsers" style="font-size: 1em;" >Панел Потребители</a>
+                            <li class="nav-item d-flex align-content-center">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AllUsers">Панел Потребители</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsMyAdmin" style="font-size: 1em;" >Мои турнири</a>
+                            <li class="nav-item d-flex align-content-center">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsMyAdmin">Мои турнири</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="ParticipationsMy" style="font-size: 1em;" >Мои участия</a>
+                            <li class="nav-item d-flex align-content-center">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="ParticipationsMy">Мои участия</a>
                             </li>
                         }
                         else
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSports" style="font-size: 1em;" >Спортове</a>
+                            <li class="nav-item d-flex align-content-center">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSports">Спортове</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsAdmin" style="font-size: 1em;" >Турнири</a>
+                            <li class="nav-item d-flex align-content-center">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsAdmin">Турнири</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsMy" style="font-size: 1em;" >Мои турнири</a>
+                            <li class="nav-item d-flex align-content-center">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsMy">Мои турнири</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="ParticipationsMy" style="font-size: 1em;" >Мои участия</a>
+                            <li class="nav-item d-flex align-content-center">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="ParticipationsMy">Мои участия</a>
                             </li>
                         }
                     </ul>
-                    <partial name="_LoginPartial"/>
+                    <!-- Profile and Logout Section -->
+                    <div class="d-flex align-content-center">
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
             </div>
         </nav>
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -75,7 +113,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - SportConnect - <a asp-area="" asp-controller="Home" asp-action="Privacy" style="font-size: 1em;" >Сигурност</a>
+            &copy; 2025 - SportConnect - <a asp-area="" asp-controller="Home" asp-action="Privacy">Сигурност</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
