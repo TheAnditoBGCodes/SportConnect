@@ -29,6 +29,10 @@ using SportConnect.DataAccess;
 using SportConnect.Models;
 using SportConnect.Utility;
 using SportConnect.Services;
+using Newtonsoft.Json;
+using System.Diagnostics.Metrics;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace SportConnect.Web.Areas.Identity.Pages.Account
 {
@@ -45,6 +49,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly Cloudinary _cloudinary;
         private readonly CloudinaryService _cloudinaryService;
+        private static readonly string RestCountriesApiUrl = "https://restcountries.com/v3.1/all";
 
         public RegisterModel(Cloudinary cloudinary, SportConnectDbContext context,
             UserManager<SportConnectUser> userManager,
@@ -106,11 +111,9 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required(ErrorMessage = "Моля, въведете парола.")]
-            [StringLength(int.MaxValue, ErrorMessage = "Паролата трябва да е поне {2} символа", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Парола")]
-            public string Password { get; set; }
+            public string? Password { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -118,8 +121,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Потвърди паролата")]
-            [Compare("Password", ErrorMessage = "Въведените данни в двете полета не съответстват")]
-            public string ConfirmPassword { get; set; }
+            public string? ConfirmPassword { get; set; }
 
             public string? Role { get; set; }
             [ValidateNever]
@@ -145,10 +147,11 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             [Display(Name = "Дата на раждане")]
             public DateTime? DateOfBirth { get; set; }
 
-            [Required(ErrorMessage = "Моля, въведете местоположение.")]
-            [StringLength(100, ErrorMessage = "Местоположението трябва да е от {2} до {1} символа", MinimumLength = 4)]
-            [Display(Name = "Местоположение")]
-            public string Location { get; set; }
+            [Required(ErrorMessage = "Моля, въведете държава.")]
+            [Display(Name = "Държава")]
+            public string Country { get; set; }
+            [ValidateNever]
+            public IEnumerable<SelectListItem> CountryList { get; set; } = new List<SelectListItem>();
 
             [Required(ErrorMessage = "Моля, въведете телефонен номер.")]
             [Phone(ErrorMessage = "Невалиден телефонен номер.")]
@@ -160,6 +163,18 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             public string ProfileImage { get; set; }
         }
 
+        private async Task<List<string>> GetCountriesAsync()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetStringAsync(RestCountriesApiUrl);
+                var countries = JsonConvert.DeserializeObject<List<Country>>(response);
+
+                return countries.OrderBy(c => c.Name.Common)
+                                .Select(c => c.Name.Common)
+                                .ToList();
+            }
+        }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -171,10 +186,10 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             {
                 await _roleManager.CreateAsync(new IdentityRole(SD.UserRole));
             }
-            var roles = _roleManager.Roles.Select(x => x.Name).ToList();
+            var countries = await GetCountriesAsync();
             Input = new()
             {
-                RoleList = roles.Select(y => new SelectListItem()
+                CountryList = countries.Select(y => new SelectListItem()
                 {
                     Value = y,
                     Text = y
@@ -189,6 +204,58 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
+            string password = Input.Password;
+            bool passwordHasErrors = false;  // Flag to check if any password-related errors were found
+
+            // Check password validity
+            if (string.IsNullOrEmpty(password) || password.Length < 8)
+            {
+                ModelState.AddModelError("", "");
+                ViewData["ShortPassword"] = "Паролата трябва да бъде поне 8 символа.";  // Send error to view via ViewData
+                passwordHasErrors = true;
+            }
+            else
+            {
+                if(!password.Any(char.IsUpper))
+                {
+                    ModelState.AddModelError("", "");
+                    ViewData["UpperPassword"] = "Паролата трябва да съдържа поне една главна буква.";  // Send error to view via ViewData
+                    passwordHasErrors = true;
+                }
+
+                if (!password.Any(char.IsDigit))
+                {
+                    ModelState.AddModelError("", "");
+                    ViewData["DigitPassword"] = "Паролата трябва да съдържа поне една цифра.";  // Send error to view via ViewData
+                    passwordHasErrors = true;
+                }
+
+                if (!password.Any(char.IsLower))
+                {
+                    ModelState.AddModelError("", "");
+                    ViewData["LowerPassword"] = "Паролата трябва да съдържа поне една малка буква.";  // Send error to view via ViewData
+                    passwordHasErrors = true;
+                }
+
+                if (!password.Any(c => !char.IsLetterOrDigit(c)))
+                {
+                    ModelState.AddModelError("", "");
+                    ViewData["SpecialPassword"] = "Паролата трябва да съдържа поне един специален символ.";  // Send error to view via ViewData
+                    passwordHasErrors = true;
+                }
+            }
+
+            // Only check for mismatch if both password and confirm password are filled and no previous errors for password
+            if (passwordHasErrors == false && !string.IsNullOrEmpty(Input.Password) && !string.IsNullOrEmpty(Input.ConfirmPassword) && Input.Password != Input.ConfirmPassword)
+            {
+                ModelState.AddModelError("", "");
+                ViewData["MissMatch"] = "Въведените данни в двете полета не съответстват.";
+            }
+            else if (passwordHasErrors == false && !string.IsNullOrEmpty(Input.Password) && string.IsNullOrEmpty(Input.ConfirmPassword))
+            {
+                ModelState.AddModelError("", "");
+                ViewData["PleaseConfirm"] = "Моля потвърдете паролата.";
+            }
             if (ModelState.IsValid)
             {
                 var user = new SportConnectUser
@@ -196,7 +263,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                     FullName = $"{Input.FirstName} {Input.LastName}",
                     DateOfBirth = (DateTime)Input.DateOfBirth,
                     PhoneNumber = Input.PhoneNumber,
-                    Location = Input.Location,
+                    Country = Input.Country,
                     ImageUrl = Input.ProfileImage
                 };
 
@@ -245,14 +312,12 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 }
             }
 
-            // Refill RoleList before rendering the page again
-            var roles = _roleManager.Roles.Select(x => x.Name).ToList();
-            Input.RoleList = roles.Select(y => new SelectListItem()
+            var countries = await GetCountriesAsync();
+            Input.CountryList = countries.Select(y => new SelectListItem()
             {
                 Value = y,
                 Text = y
             }).ToList();
-            // If we got this far, something failed, redisplay form
             ModelState.AddModelError("Input.ProfileImage", "Моля, качете профилна снимка.");
             return Page();
         }
@@ -280,4 +345,14 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             return (IUserEmailStore<SportConnectUser>)_userStore;
         }
     }
+}
+
+public class Country
+{
+    public CountryName Name { get; set; }
+}
+
+public class CountryName
+{
+    public string Common { get; set; }
 }

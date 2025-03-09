@@ -17,7 +17,7 @@
         @if (User.IsInRole(SD.AdminRole))
         {
             <li class="nav-item d-flex align-items-center">
-                <a id="manage" class="nav-link text-dark d-flex align-items-center" asp-controller="User" asp-action="PersonalDataAdmin" title="Manage">
+                <a id="manage" class="nav-link text-dark d-flex align-items-center" asp-controller="User" asp-action="PersonalData" title="Manage">
                     <img src="@profileImage" alt="Profile Image" width="30" height="30" class="me-1" />
                     <span class="d-inline-block">@userName</span>
                 </a>
@@ -32,7 +32,7 @@
         else
         {
             <li class="nav-item d-flex align-items-center">
-                <a id="manage" class="nav-link text-dark d-flex align-items-center" asp-controller="User" asp-action="PersonalDataUser" title="Manage">
+                <a id="manage" class="nav-link text-dark d-flex align-items-center" asp-controller="User" asp-action="PersonalData" title="Manage">
                     <img src="@profileImage" alt="Profile Image" width="30" height="30" class="me-1" />
                     <span class="d-inline-block">@userName</span>
                 </a>

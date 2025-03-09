@@ -1,29 +1,42 @@
-(1:1 Профилна снимка на потребител)
+Log In:
+Link to Register
 
-(Моят профил, Логин навигация) -> [Не може ако нерегистриран към Логин]
--> (Информация за профила)
--> (Изтриване на профил)
--> (Редактиране на профил)
+Register:
+Link to Log In
 
-(Мои участия, Навигация) -> [Не може ако нерегистриран към Логин]
--> (Търсачка за участия по критерии)
--> (Бутон към Турнири)
--> (Информация за участия)
-	-> (Отказване на участие)
+If Account Required:
+Sent To Log In
 
-(Админ потребители, Навигация) -> [Не може ако нерегистриран към Логин]
+DeleteUser Other User:
+- Design of the View
+- Force Sign Out When Deleted
+
+DeleteUsser:
+Design Improvements For DeleteUser Other User
+Force Sign Out The Other User If Deleted
+
+DeleteSprt:
+Design Improvements For DeleteSport
+
+Sport 4 / 3 Image:
+- Check Aspect Ratios Everywhere
+
+User 1 / 1 Image:
+- Check Aspect Ratios Everywhre
+
+Sport Image Upload:
+- EditSport Image Stuff To The Right
+- AddSport Image Stuff To The Right
+
+User Image Upload:
+- EditUsser Image Stuff On Right
+- Register Image Stuff On Right
+
+(AllUsers) -> [Не може ако нерегистриран към Логин]
 -> (Търсене на потребител по критерии)
 -> (Извежда всички потребители)
-	-> (Редактирай потребител)
+	-> (Основна информация)
 	-> (Изтрий потребител)
+	-> (Редактиране на профил)
 	-> (Информация за потребител)
-		-> (Основна информация)
-		-> (Участия)
-			-> (Отказване на участие)
 
-Views:
-AllUsers
-DeleteUser
-EditUser
-PersonalData
-UserDetails

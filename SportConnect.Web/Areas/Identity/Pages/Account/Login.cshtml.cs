@@ -94,18 +94,13 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required(ErrorMessage = "Моля, въведете потребителско име или имейл.")]
+
+            [Required(ErrorMessage = "Моля въведете потребителско име или имейл.")]
             public string UserNameOrEmail { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Required(ErrorMessage = "Моля, въведете парола.")]
             [DataType(DataType.Password)]
             [Display(Name = "Парола")]
             public string Password { get; set; }
-
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -130,10 +125,20 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 
             ReturnUrl = returnUrl;
         }
-
-
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            // Explicitly check both fields before adding errors.
+            if (string.IsNullOrEmpty(Input.UserNameOrEmail))
+            {
+                ModelState.AddModelError("Input.UserNameOrEmail", "Моля въведете потребителско име или имейл.");
+                ViewData["PasswordError"] = "Моля въведете парола.";
+            }
+            else if (string.IsNullOrEmpty(Input.Password))
+            {
+                ModelState.AddModelError("Input.Password", "Моля въведете парола.");
+            }
+
+            // If the model state is not valid, return the page with validation errors
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -166,5 +171,6 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 
             return Page();
         }
+
     }
 }

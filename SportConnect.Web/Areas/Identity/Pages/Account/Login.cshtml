@@ -6,6 +6,13 @@
 }
 
 <style>
+    /* Centering the validation summary */
+    .text-danger {
+        text-align: center;
+        list-style-type: none; /* Removes the bullet points */
+        padding-left: 0; /* Ensures there is no indentation */
+    }
+
     /* Ensure modal content does not overflow */
     .modal-body {
         overflow: hidden; /* Hide any overflow */
@@ -51,6 +58,18 @@
             align-content: center;
             padding-bottom: 0px !important;
         }
+    /* Centering the validation summary */
+    .validation-summary-errors {
+        text-align: center;
+        padding-left: 0; /* Remove indentation */
+        margin-bottom: 0.5rem;
+    }
+
+        .validation-summary-errors ul {
+            list-style: none; /* Removes bullet points */
+            padding: 0; /* Removes default padding */
+            margin: 0; /* Removes default margin */
+        }
 
     #imagePreview {
         max-height: 29vh; /* Adjust the max width to whatever suits your design */
@@ -84,6 +103,7 @@
                             <input asp-for="Input.Password" class="form-control form-control-sm" aria-required="true" placeholder="Парола" />
                             <label asp-for="Input.Password">Парола</label>
                             <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            <span class="text-danger">@ViewData["PasswordError"]</span>
                         </div>
                     </div>
                 </div>

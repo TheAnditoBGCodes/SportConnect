@@ -125,8 +125,7 @@
         <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh;">
             <div class="container p-2" style="max-width: 50%; padding: 0.5rem;">
                 <h1 class="text-center mb-3" style="font-size: 5rem;">Няма спортове</h1>
-                <div class="d-flex justify-content-between mt-3">
-                    <a asp-action="Index" asp-controller="Home" class="btn btn-secondary text-center" style="font-size: 1rem;">Назад</a>
+                <div class="d-flex justify-content-center mt-3">
                     <a asp-action="AddSport" asp-controller="Sport" class="btn btn-success text-center" style="font-size: 1rem;">Добави</a>
                 </div>
             </div>
@@ -145,24 +144,22 @@
 
                 <!-- Row with centered cards -->
                 <div class="row justify-content-center align-content-center" id="sportsList">
-                    @for (int i = 1; i < 5; i++)
-                    {@foreach (var item in Model)
-                        {
-                            <div id="sportItem" class="col-lg-4 col-md-6 col-12 mb-3 sport-item" style="transition: transform 0.3s ease;">
-                                <div class="card" style="width: 100%; height: 100%;">
-                                    <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" style="aspect-ratio: 4 / 3; object-fit: cover;">
-                                    <div class="card-body">
-                                        <h3 class="card-title text-center fw-bold">@item.Name</h3>
-                                        <p class="card-text text-center">@item.Description</p>
-                                        <div class="btn-group d-flex justify-content-between w-100">
-                                            <a asp-controller="Sport" asp-action="EditSport" asp-route-id="@item.Id" class="btn btn-warning btn-sm text-white text-center">Промени</a>
-                                            <a asp-controller="Sport" asp-action="DeleteSport" asp-route-id="@item.Id" class="btn btn-danger btn-sm text-center">Изтрий</a>
-                                            <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" class="btn btn-primary btn-sm text-center">Турнири</a>
-                                        </div>
+                    @foreach (var item in Model)
+                    {
+                        <div id="sportItem" class="col-lg-4 col-md-6 col-12 mb-3 sport-item" style="transition: transform 0.3s ease;">
+                            <div class="card" style="width: 100%; height: 100%;">
+                                <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" style="aspect-ratio: 4 / 3; object-fit: cover;">
+                                <div class="card-body">
+                                    <h3 class="card-title text-center fw-bold">@item.Name</h3>
+                                    <p class="card-text text-center">@item.Description</p>
+                                    <div class="btn-group d-flex justify-content-between w-100">
+                                        <a asp-controller="Sport" asp-action="EditSport" asp-route-id="@item.Id" class="btn btn-warning btn-sm text-white text-center">Промени</a>
+                                        <a asp-controller="Sport" asp-action="DeleteSport" asp-route-id="@item.Id" class="btn btn-danger btn-sm text-center">Изтрий</a>
+                                        <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" class="btn btn-primary btn-sm text-center">Турнири</a>
                                     </div>
                                 </div>
                             </div>
-                        }
+                        </div>
                     }
                     <!-- Add Sport Card -->
                     <div id="sportItem" class="col-lg-4 col-md-6 col-12 mb-3 sport-item add-sport-card" style="transition: transform 0.3s ease;">
@@ -183,16 +180,11 @@
 }
 else
 {
-
     @if (Model.Count < 1)
     {
         <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh;">
             <div class="container p-2" style="max-width: 50%; padding: 0.5rem;">
                 <h1 class="text-center mb-3" style="font-size: 5rem;">Няма спортове</h1>
-
-                <div class="d-flex justify-content-center mt-3">
-                    <a asp-action="Index" asp-controller="Home" class="btn btn-secondary text-center" style="font-size: 1rem;">Назад</a>
-                </div>
             </div>
         </div>
     }

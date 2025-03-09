@@ -294,28 +294,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxBbGxVc2Vycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/DeleteUserAdmin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZWxldGVVc2VyQWRtaW4uY3NodG1s
+[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/DeleteUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZWxldGVVc2VyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/DeleteUserMy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZWxldGVVc2VyTXkuY3NodG1s
+[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/EditUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxFZGl0VXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/EditUserAdmin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxFZGl0VXNlckFkbWluLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/EditUserMy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxFZGl0VXNlck15LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/PersonalDataAdmin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxQZXJzb25hbERhdGFBZG1pbi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/PersonalDataUser.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxQZXJzb25hbERhdGFVc2VyLmNzaHRtbA==
+[C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/PersonalData.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxQZXJzb25hbERhdGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Lenovo/source/repos/SportConnect/SportConnect.Web/Views/User/UserDetails.cshtml]

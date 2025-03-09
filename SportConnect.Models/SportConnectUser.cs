@@ -16,9 +16,9 @@ namespace SportConnect.Models
         [Display(Name = "Дата на раждане")]
         public DateTime DateOfBirth { get; set; }
 
-        [Required(ErrorMessage = "Моля, въведете местоположението си.")]
-        [Display(Name = "Местоположение")]
-        public string Location { get; set; }
+        [Required(ErrorMessage = "Моля, въведете своята държава.")]
+        [Display(Name = "Държава")]
+        public string? Country { get; set; }
 
         public string? ImageUrl { get; set; }
 

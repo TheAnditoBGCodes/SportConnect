@@ -26,10 +26,11 @@
         .footer {
             font-size: 1rem !important; /* Ensure consistency across navbar and footer */
         }
-
-        .navbar-brand {
-            font-size: 1.3rem !important; /* Ensure consistency across navbar and footer */
-            }
+        .navbar-brand{
+            align-content: center !important;
+            font-size: 1.4rem !important; /* Ensure consistency across navbar and footer */
+            font-weight: bolder;
+        }
         /* Footer border matching header border */
         .footer {
             background-color: white;
@@ -51,7 +52,7 @@
         <nav class="navbar navbar-expand-sm navbar-light bg-white">
             <div class="container-fluid d-flex align-items-center">
                 <!-- SportConnect Brand -->
-                <a class="navbar-brand fw-bold align-content-center me-1" asp-area="" asp-controller="Home" asp-action="Index">SportConnect</a>
+                <a class="navbar-brand me-2" asp-area="" asp-controller="Home" asp-action="Index">SportConnect</a>
 
                 <!-- Navbar Toggle Button -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"

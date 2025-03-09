@@ -14,7 +14,7 @@ namespace SportConnect.Web.Models
         public string FirstName { get; set; }
         public string BothNames { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string Location { get; set; }
+        public string Country { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string? PasswordHash { get; set; }
@@ -28,7 +28,7 @@ namespace SportConnect.Web.Models
                 UserName = UserName,
                 FullName = $"{FirstName} {LastName}",
                 DateOfBirth = DateOfBirth,
-                Location = Location,
+                Country = Country,
                 Email = Email,
                 PhoneNumber = PhoneNumber,
                 PasswordHash = PasswordHash

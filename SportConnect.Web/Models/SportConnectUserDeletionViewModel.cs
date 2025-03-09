@@ -13,7 +13,7 @@ namespace SportConnect.Web.Models
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public int Age { get; set; }
-        public string Location { get; set; }
+        public string Country { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public IEnumerable<Participation>? Participations { get; set; } = new List<Participation>();
