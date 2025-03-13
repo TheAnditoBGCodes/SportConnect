@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Services\\SportConnect.Services.csproj": {}
+    "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Services\\SportConnect.Services.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Services\\SportConnect.Services.csproj": {
+    "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Services\\SportConnect.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Services\\SportConnect.Services.csproj",
+        "projectUniqueName": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Services\\SportConnect.Services.csproj",
         "projectName": "SportConnect.Services",
-        "projectPath": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Services\\SportConnect.Services.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Services\\obj\\",
+        "projectPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Services\\SportConnect.Services.csproj",
+        "packagesPath": "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Services\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\iliev_7x3wtf6\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -53,6 +47,14 @@
             "CloudinaryDotNet": {
               "target": "Package",
               "version": "[1.27.4, )"
+            },
+            "Google.Cloud.Translation.V2": {
+              "target": "Package",
+              "version": "[3.4.0, )"
+            },
+            "IsoNames": {
+              "target": "Package",
+              "version": "[1.1.0, )"
             },
             "Microsoft.AspNetCore.Http.Features": {
               "target": "Package",

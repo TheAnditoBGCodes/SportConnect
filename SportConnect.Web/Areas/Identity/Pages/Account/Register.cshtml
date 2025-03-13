@@ -4,227 +4,243 @@
     ViewData["Title"] = "Регистрирай се";
 }
 
+@{
+    // Calculate the max and min dates
+    var today = DateTime.Today;
+    var maxDate = today.AddYears(-13).ToString("yyyy-MM-dd"); // 13 years ago
+    var minDate = today.AddYears(-120).ToString("yyyy-MM-dd"); // 120 years ago
+}
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
 <style>
     /* Ensure modal content does not overflow */
     .modal-body {
-        overflow: hidden; /* Hide any overflow */
+        overflow: hidden;
     }
 
     /* Make sure the image scales to fit the container */
     #cropImage {
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Ensures image will cover the container without leaving black bars */
+        object-fit: cover;
     }
 
     /* Hide any overflow if the crop container goes out of bounds */
     #cropContainer {
         width: 100%;
         height: 100%;
-        overflow: hidden; /* Prevents overflow of cropped image */
+        overflow: hidden;
+    }
+
+    main.pb-3 {
+        padding-bottom: 0px !important;
+        min-height: 81.5vh;
+        align-content: center;
     }
 
     /* Modal footer for buttons */
     .modal-footer {
         display: flex;
-        justify-content: space-between; /* Align buttons to opposite sides */
+        justify-content: space-between;
     }
 
     .cropper-drag-box {
         opacity: 50%;
     }
 
+    /* Image preview container with 4:3 aspect ratio */
+    #imagePreview {
+        width: 100%;
+        aspect-ratio: 1/ 1;
+        background-color: #f8f9fa; /* Light gray placeholder */
+        border: 1px solid #ddd;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        object-fit: cover;
+    }
+
+    /* Ensuring image fits within the preview */
     #previewImage {
-        height: auto; /* Maintains aspect ratio */
-        display: block; /* Makes sure the image is block-level, so it doesn't cause any inline formatting issues */
-        margin: 0 auto; /* Centers the image horizontally */
+        width: inherit;
+        height: inherit;
+        object-fit: cover;
     }
 
-    .container main {
-        min-height: 83vh;
-        padding-bottom: 0px !important;
+    .form-container {
+        max-width: 100%%; /* Slightly wider */
+        max-height: 85vh;
     }
-
-        .container main.pb-3 {
-            align-content: center;
-            padding-bottom: 0px !important;
-        }
 </style>
 
 <!-- Include Cropper.js -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6">
-            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data" class="p-3">
-                <h2 class="text-center">@ViewData["Title"]</h2>
-                <div asp-validation-summary="ModelOnly" class="text-danger text-center" role="alert"></div>
 
-                <!-- Row 1: Username and Email -->
-                <div class="row mb-2">
-                    <div class="col-12 col-md-6">
-                        <div class="form-floating">
-                            <input asp-for="Input.Username" class="form-control form-control-sm" aria-required="true" placeholder="Вашето потребителско име" style="font-size: 1rem;" />
-                            <label asp-for="Input.Username" class="text-gray">Потребителско име</label>
-                            <span asp-validation-for="Input.Username" class="text-danger" style="font-size: 1rem;"></span>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="form-floating">
-                            <input asp-for="Input.Email" class="form-control form-control-sm" autocomplete="username" aria-required="true" placeholder="name@example.com" style="font-size: 1rem;" />
-                            <label asp-for="Input.Email" class="text-gray">Имейл</label>
-                            <span asp-validation-for="Input.Email" class="text-danger" style="font-size: 1rem;"></span>
-                        </div>
-                    </div>
-                </div>
+<div class="container-fluid d-flex justify-content-center align-items-center">
+    <div class="row justify-content-center w-100">
+        <div class="col-12 col-md-8 col-lg-6 form-container" style="width: inherit;">
+            <form id="loginForm" class="form-container" method="post" enctype="multipart/form-data">
+                <h2 class="text-center" style="font-size: 2rem;">@ViewData["Title"]</h2>
+                <div asp-validation-summary="ModelOnly" class="text-danger mt-2 small" role="alert"></div>
 
-                <!-- Row 2: Password and Confirm Password -->
-                <div class="row mb-2">
-                    <div class="col-12 col-md-6">
-                        <div class="form-floating">
-                            <input asp-for="Input.Password" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="Парола" style="font-size: 1rem;" />
-                            <label asp-for="Input.Password" class="text-gray">Парола</label>
+                <div class="row mb-2 justify-content-between align-content-center" style="min-height: 403.3px;">
+                    <!-- Left Column: User Inputs -->
+                    <div class="col-md-8 align-content-center" style="min-height: 403.3px;">
+
+                        <!-- Row 3: First Name and Last Name -->
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="@Model.Input.Username" class="form-control form-control-sm" aria-required="true" placeholder="Вашето потребителско име" style="font-size:  1rem;" />
+                                    <label style="font-size: 1rem;" asp-for="@Model.Input.Username" class="text-gray">Потребителско име</label>
+                                    <span asp-validation-for="@Model.Input.Username" class="text-danger" style="font-size: 1rem;"></span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="@Model.Input.Email" class="form-control form-control-sm" aria-required="true" placeholder="Вашият имейл" style="font-size:  1rem;" />
+                                    <label style="font-size: 1rem;" asp-for="@Model.Input.Email" class="text-gray">Имейл</label>
+                                    <span asp-validation-for="@Model.Input.Email" class="text-danger" style="font-size:  1rem;"></span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="form-floating">
-                            <input asp-for="Input.ConfirmPassword" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="Потвърдете паролата" style="font-size: 1rem;" />
-                            <label asp-for="Input.ConfirmPassword" class="text-gray">Потвърдете паролата</label>
+
+                        <!-- Row 2: Password and Confirm Password -->
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="Input.Password" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="Парола" style="font-size:  1rem;" />
+                                    <label style="font-size: 1rem;" asp-for="Input.Password" class="text-gray">Парола</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="Input.ConfirmPassword" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="Потвърдете паролата" style="font-size:  1rem;" />
+                                    <label style="font-size: 1rem;" asp-for="Input.ConfirmPassword" class="text-gray">Потвърдете паролата</label>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <div class="row">
+                                    <div class="col-12">
+                                        @if (ViewData["ShortPassword"] != null || ViewData["UpperPassword"] != null || ViewData["LowerPassword"] != null || ViewData["DigitPassword"] != null || ViewData["SpecialPassword"] != null)
+                                        {
+                                            <span class="text-danger" style="font-size: 1rem;">
+                                                Паролата трябва да съдържа поне: @ViewData["ShortPassword"] @ViewData["UpperPassword"] @ViewData["LowerPassword"] @ViewData["DigitPassword"] @ViewData["SpecialPassword"]
+                                            </span>
+                                        }
+                                    </div>
+                                    <div class="col-12">
+                                        <span class="text-danger" style="font-size: 1rem;">
+                                            @ViewData["MissMatch"]
+                                        </span>
+                                        <span class="text-danger" style="font-size: 1rem;">
+                                            @ViewData["PleaseConfirm"]
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-                    <div class="col-12 text-center">
+                        <!-- Row 3: First Name and Last Name -->
+                        <div class="row mb-2 justify-content-between">
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="@Model.Input.FirstName" class="form-control form-control-sm" aria-required="true" placeholder="Вашето име" style="font-size:  1rem;" />
+                                    <label style="font-size: 1rem;" asp-for="@Model.Input.FirstName" class="text-gray">Име</label>
+                                    <span asp-validation-for="@Model.Input.FirstName" class="text-danger" style="font-size:  1rem;"></span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="@Model.Input.LastName" class="form-control form-control-sm" aria-required="true" placeholder="Вашата фамилия" style="font-size:  1rem;" />
+                                    <label style="font-size: 1rem;" asp-for="@Model.Input.LastName" class="text-gray">Фамилия</label>
+                                    <span asp-validation-for="@Model.Input.LastName" class="text-danger" style="font-size:  1rem;"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Row 4: Location and Phone Number -->
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <select asp-for="@Model.Input.Country" asp-items="@Model.Input.CountryList" class="form-select form-control-sm" aria-required="true" style="font-size:  1rem;">
+                                        <option value="" disabled selected>Изберете държавa</option>
+                                    </select>
+                                    <label style="font-size:  1rem;" asp-for="@Model.Input.Country" class="text-gray">Държава</label>
+                                    <span asp-validation-for="@Model.Input.Country" class="text-danger" style="font-size:  1rem;"></span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="@Model.Input.PhoneNumber" class="form-control form-control-sm" aria-required="true" placeholder="0888 123 456" style="font-size:  1rem;" />
+                                    <label style="font-size: 1rem;" asp-for="@Model.Input.PhoneNumber" class="text-gray">Телефон</label>
+                                    <span asp-validation-for="@Model.Input.PhoneNumber" class="text-danger" style="font-size:  1rem;"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Row 5: Date of Birth -->
                         <div class="row">
                             <div class="col-12">
-                                <span class="text-danger" style="font-size: 1rem;">
-                                    @ViewData["ShortPassword"]
-                                </span>
-                            </div>
-                            <div class="col-12">
-                                <span class="text-danger" style="font-size: 1rem;">
-                                    @ViewData["UpperPassword"]
-                                </span>
-                            </div>
-                            <div class="col-12">
-                                <span class="text-danger" style="font-size: 1rem;">
-                                    @ViewData["LowerPassword"]
-                                </span>
-                            </div>
-                            <div class="col-12">
-                                <span class="text-danger" style="font-size: 1rem;">
-                                    @ViewData["DigitPassword"]
-                                </span>
-                            </div>
-                            <div class="col-12">
-                                <span class="text-danger" style="font-size: 1rem;">
-                                    @ViewData["SpecialPassword"]
-                                </span>
-                            </div>
-                            <div class="col-12">
-                                <span class="text-danger" style="font-size: 1rem;">
-                                    @ViewData["MissMatch"]
-                                </span>
-                            </div>
-                            <div class="col-12">
-                                <span class="text-danger" style="font-size: 1rem;">
-                                    @ViewData["PleaseConfirm"]
-                                </span>
+                                <div class="form-floating">
+                                    <input min="@minDate" max="@maxDate" asp-for="@Model.Input.DateOfBirth" class="form-control form-control-sm" aria-required="true" placeholder="Дата на раждане" onkeydown="return false;" onmousedown="return false;" style="font-size: 1rem;" />
+                                    <label style="font-size: 1rem;" asp-for="@Model.Input.DateOfBirth" class="text-gray">Дата на раждане</label>
+                                    <span asp-validation-for="@Model.Input.DateOfBirth" class="text-danger" style="font-size:  1rem;"></span>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <!-- Right Column: Image Upload & Preview -->
+                    <div class="col-md-4 align-content-center" style="max-height: 442px; max-width: 388px;">
+                        <div>
+                            <div class="col-12">
+                                <div class="form-group d-flex align-items-center">
+                                    <label asp-for="@Model.Input.ProfileImage" class=" text-center form-label me-2 d-flex align-items-center mb-0" style="font-size:  1rem; width: 16%;">Снимка</label>
+                                    <input style="font-size:  1rem;" type="file" name="file" class="form-control form-control-sm" accept="image/*" id="imageInput" />
+                                </div>
+                                <span asp-validation-for="@Model.Input.ProfileImage" class="text-danger" style="font-size:  1rem;"></span>
+                                <div id="imagePreview" class="mt-2">
+                                    <img id="previewImage" src="@Model.Input.ProfileImage" alt="Preview" class="img-fluid" style="display: @(string.IsNullOrEmpty(Model.Input.ProfileImage) ? "none" : "block");" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden input to store the image URL -->
+                        <input type="hidden" id="croppedImageData" asp-for="@Model.Input.ProfileImage" />
                     </div>
                 </div>
 
-                <!-- Row 3: First Name and Last Name -->
-                <div class="row mb-2">
-                    <div class="col-12 col-md-6">
-                        <div class="form-floating">
-                            <input asp-for="Input.FirstName" class="form-control form-control-sm" aria-required="true" placeholder="Вашето име" style="font-size: 1rem;" />
-                            <label asp-for="Input.FirstName" class="text-gray">Име</label>
-                            <span asp-validation-for="Input.FirstName" class="text-danger" style="font-size: 1em;"></span>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="form-floating">
-                            <input asp-for="Input.LastName" class="form-control form-control-sm" aria-required="true" placeholder="Вашата фамилия" style="font-size: 1rem;" />
-                            <label asp-for="Input.LastName" class="text-gray">Фамилия</label>
-                            <span asp-validation-for="Input.LastName" class="text-danger" style="font-size: 1rem;"></span>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Row 4: Location and Phone Number -->
-                <div class="row mb-2">
-                    <div class="col-12 col-md-6">
-                        <div class="form-floating">
-                            <select asp-for="Input.Country" asp-items="Model.Input.CountryList" class="form-select form-control-sm" aria-required="true" style="font-size: 1rem;">
-                                <option value="" disabled selected>Изберете държавa</option>
-                            </select>
-                            <label asp-for="Input.Country" class="text-gray">Държава</label>
-                            <span asp-validation-for="Input.Country" class="text-danger" style="font-size: 1rem;"></span>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="form-floating">
-                            <input asp-for="Input.PhoneNumber" class="form-control form-control-sm" aria-required="true" placeholder="0888 123 456" style="font-size: 1rem;" />
-                            <label asp-for="Input.PhoneNumber" class="text-gray">Телефонен номер</label>
-                            <span asp-validation-for="Input.PhoneNumber" class="text-danger" style="font-size: 1rem;"></span>
-                        </div>
-                    </div>
+                <!-- Buttons -->
+                <div id="buttonContainer" class="d-flex justify-content-between pt-0">
+                    <a asp-page="./Login" class="text-decoration-none" style="align-self: center;font-size: 1rem;">Имате акаунт? Влезте</a>
+                    <!-- Submit Button -->
+                    <button id="registerSubmit" type="submit" class="btn text-center btn-lg btn-primary" style="font-size:  1rem; width: 20%">Регистрация</button>
                 </div>
-
-                <!-- Row 5: Date of Birth -->
-                <div class="row mb-2">
-                    <div class="col-12">
-                        <div class="form-floating">
-                            <input asp-for="Input.DateOfBirth" class="form-control form-control-sm" aria-required="true" placeholder="Дата на раждане" onkeydown="return false;" onmousedown="return false;" style="font-size: 1rem;" />
-                            <label asp-for="Input.DateOfBirth" class="text-gray">Дата на раждане</label>
-                            <span asp-validation-for="Input.DateOfBirth" class="text-danger" style="font-size: 1rem;"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Profile Image -->
-                <div class="row mb-0">
-                    <div class="col-12">
-                        <div class="form-group d-flex align-items-center">
-                            <label asp-for="@Model.Input.ProfileImage" class=" text-center form-label me-2 d-flex align-items-center mb-0" style="font-size: 1em; width: 31%;">Профилна снимка</label>
-                            <input type="file" name="file" class="form-control form-control-sm" accept="image/*" id="imageInput" />
-                        </div>
-                        <span asp-validation-for="@Model.Input.ProfileImage" class="text-danger" style="font-size: 1em;"></span>
-                        <!-- Image Preview Container -->
-                        <div id="imagePreview" class="mt-2" style="width:62%">
-                            <img id="previewImage" src="#" alt="Preview" class="img-fluid" style="display:none;" />
-                        </div>
-                    </div>
-                </div>
-                <input type="hidden" id="croppedImageDataUrl" asp-for="Input.ProfileImage" />
-
-                <!-- Submit Button -->
-                <button id="registerSubmit" type="submit" class="w-100 mb-2 btn btn-lg btn-primary" style="font-size: 1rem;">Регистрация</button>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Modal Structure -->
+<!-- Modal for Image Cropping -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <div class="modal-body text-center" style="width: 100%; height: 80vh; overflow: hidden;">
-                <!-- Set fixed height here -->
-                <div id="cropContainer" style="width: 100%; height: 100%; overflow: hidden;">
-                    <img id="cropImage" src="#" alt="Preview" style="max-width: 100%; height: 100%; display: block;"> <!-- Ensure image fits within container -->
+            <div class="modal-body text-center" style="width: 100%; height: 80vh;">
+                <div id="cropContainer">
+                    <img id="cropImage" src="#" alt="Preview" style="display: block;">
                 </div>
             </div>
-            <div class="modal-footer justify-content-between">
-                <!-- Buttons are spaced using flexbox -->
-                <button type="button" class="btn btn-secondary text-center" id="resetCropper">Начално състояние</button>
-                <button type="button" class="btn btn-success text-center" id="confirmUpload">Готово</button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="resetCropper">Начално състояние</button>
+                <button type="button" class="btn btn-success" id="confirmUpload">Готово</button>
             </div>
         </div>
     </div>
 </div>
+
 <script>
     let cropper;
 
@@ -287,7 +303,35 @@
         if (cropper) {
             cropper.reset();  // Reset cropper to original size
         }
-    });
+    });document.getElementById('confirmUpload').addEventListener('click', function () {
+    const previewImage = document.getElementById('previewImage');
+    const previewImager = document.getElementById('imagePreview');
+
+    // Get cropped image as base64
+    const croppedCanvas = cropper.getCroppedCanvas();
+    const croppedDataUrl = croppedCanvas.toDataURL();
+
+    // Set the cropped image preview
+    previewImage.src = croppedDataUrl;
+    previewImage.style.display = 'block';
+    previewImager.classList.add('mb-2');
+    previewImager.classList.add('w-100');
+    previewImager.classList.add('justify-content-center');
+
+    // Set the hidden input value
+    document.getElementById('croppedImageData').value = croppedDataUrl;  // Ensure this matches the hidden input ID
+
+    // Close the modal using the modal instance
+    const modal = document.getElementById('imageModal');
+    const bsModal = bootstrap.Modal.getInstance(modal);  // Use getInstance to get the modal instance
+    bsModal.hide();  // Hide the modal
+});
+// Reset Cropper Button (left button)
+document.getElementById('resetCropper').addEventListener('click', function () {
+    if (cropper) {
+        cropper.reset();  // Reset cropper to original size
+    }
+});
 
     // On form submit, set the ProfileImage input value to the cropped image URL
     document.getElementById('registerForm').addEventListener('submit', function (event) {
@@ -326,4 +370,4 @@
 
     // Run the function to set the date restrictions
     setDateRestrictions();
-</script> 
+</script>

@@ -1,4 +1,4 @@
-using SportConnect.Models;
+п»їusing SportConnect.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,39 +11,45 @@ namespace SportConnect.Web.Models
     {
         public string? Id { get; set; }
 
-        [Required(ErrorMessage = "Моля, въведете потребителско име.")]
-        [StringLength(100, ErrorMessage = "Потребителското име трябва да е от {2} до {1} символа", MinimumLength = 5)]
-        public string UserName { get; set; }
-
-        [Required(ErrorMessage = "Моля, въведете фамилното си име.")]
-        [StringLength(100, ErrorMessage = "Фамилията трябва да е от {2} до {1} символа", MinimumLength = 2)]
-        public string LastName { get; set; }
-
-        [Required(ErrorMessage = "Моля, въведете първото си име.")]
-        [StringLength(100, ErrorMessage = "Името трябва да е от {2} до {1} символа", MinimumLength = 2)]
-        public string FirstName { get; set; }
+        [Required(ErrorMessage = "РњРѕР»СЏ, РІСЉРІРµРґРµС‚Рµ РёРјРµР№Р».")]
+        [EmailAddress(ErrorMessage = "РќРµРІР°Р»РёРґРµРЅ РёРјРµР№Р»")]
+        [Display(Name = "РРјРµР№Р»")]
+        public string Email { get; set; }
 
         public string? BothNames { get; set; }
-        public string? Email { get; set; }
 
-        [Required(ErrorMessage = "Моля, въведете държава.")]
-        [Display(Name = "Държава")]
+        [Required(ErrorMessage = "РњРѕР»СЏ, РІСЉРІРµРґРµС‚Рµ РїРѕС‚СЂРµР±РёС‚РµР»СЃРєРѕ РёРјРµ.")]
+        [StringLength(100, ErrorMessage = "TСЂСЏР±РІР° РґР° Рµ РѕС‚ {2} РґРѕ {1} СЃРёРјРІРѕР»Р°", MinimumLength = 5)]
+        [Display(Name = "РџРѕС‚СЂРµР±РёС‚РµР»СЃРєРѕ РёРјРµ")]
+        public string UserName { get; set; }
+
+        [Required(ErrorMessage = "РњРѕР»СЏ, РІСЉРІРµРґРµС‚Рµ РїСЉСЂРІРѕС‚Рѕ СЃРё РёРјРµ.")]
+        [StringLength(100, ErrorMessage = "TСЂСЏР±РІР° РґР° Рµ РѕС‚ {2} РґРѕ {1} СЃРёРјРІРѕР»Р°", MinimumLength = 2)]
+        [Display(Name = "РџСЉСЂРІРѕ РёРјРµ")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "РњРѕР»СЏ, РІСЉРІРµРґРµС‚Рµ С„Р°РјРёР»РЅРѕС‚Рѕ СЃРё РёРјРµ.")]
+        [StringLength(100, ErrorMessage = "TСЂСЏР±РІР° РґР° Рµ РѕС‚ {2} РґРѕ {1} СЃРёРјРІРѕР»Р°", MinimumLength = 2)]
+        [Display(Name = "Р¤Р°РјРёР»РёСЏ")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "РњРѕР»СЏ, РІСЉРІРµРґРµС‚Рµ СЃРІРѕСЏС‚Р° РґР°С‚Р° РЅР° СЂР°Р¶РґР°РЅРµ.")]
+        [DataType(DataType.Date)]
+        [Display(Name = "Р”Р°С‚Р° РЅР° СЂР°Р¶РґР°РЅРµ")]
+        public DateTime DateOfBirth { get; set; }
+
+        [Required(ErrorMessage = "РњРѕР»СЏ, РІСЉРІРµРґРµС‚Рµ РґСЉСЂР¶Р°РІР°.")]
+        [Display(Name = "Р”СЉСЂР¶Р°РІР°")]
         public string Country { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> CountryList { get; set; } = new List<SelectListItem>();
 
-        [Required(ErrorMessage = "Моля, въведете телефонен номер.")]
-        [Phone(ErrorMessage = "Невалиден телефонен номер.")]
-        [Display(Name = "Телефонен номер")]
+        [Required(ErrorMessage = "РњРѕР»СЏ, РІСЉРІРµРґРµС‚Рµ С‚РµР»РµС„РѕРЅРµРЅ РЅРѕРјРµСЂ.")]
+        [Phone(ErrorMessage = "РќРµРІР°Р»РёРґРµРЅ С‚РµР»РµС„РѕРЅРµРЅ РЅРѕРјРµСЂ.")]
+        [Display(Name = "РўРµР»РµС„РѕРЅРµРЅ РЅРѕРјРµСЂ")]
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "Моля, въведете своята дата на раждане.")]
-        [DataType(DataType.Date)]
-        [Display(Name = "Дата на раждане")]
-        public DateTime? DateOfBirth { get; set; }
-
         public string? ProfileImage { get; set; }
-
         public string? PasswordHash { get; set; }
         public IEnumerable<Participation>? Participations { get; set; } = new List<Participation>();
     }

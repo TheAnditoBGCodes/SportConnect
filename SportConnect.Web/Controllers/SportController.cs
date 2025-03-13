@@ -1,5 +1,4 @@
-
-using CloudinaryDotNet.Actions;
+ï»¿using CloudinaryDotNet.Actions;
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,34 +39,33 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult AddSport()
         {
-            return View();
+            return View(new Sport()); // Ensure a new Sport object is passed
         }
+
         [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
         public async Task<IActionResult> AddSport(Sport model)
         {
             if (string.IsNullOrEmpty(model.Name))
             {
-                ModelState.AddModelError("Name", "Èìåòî å çàäúëæèòåëíî.");
-                ModelState.AddModelError("ImageUrl", "Ìîëÿ, êà÷åòå ïðîôèëíà ñíèìêà.");
+                ModelState.AddModelError("ImageUrl", "Ð¡Ð½Ð¸Ð¼ÐºÐ°Ñ‚Ð° Ðµ Ð·Ð°Ð´ÑŠÐ»Ð¶Ð¸Ñ‚ÐµÐ»Ð½Ð°.");
             }
 
             if (string.IsNullOrEmpty(model.Description))
             {
-                ModelState.AddModelError("Description", "Îïèñàíèåòî å çàäúëæèòåëíî.");
-                ModelState.AddModelError("ImageUrl", "Ìîëÿ, êà÷åòå ïðîôèëíà ñíèìêà.");
+                ModelState.AddModelError("ImageUrl", "Ð¡Ð½Ð¸Ð¼ÐºÐ°Ñ‚Ð° Ðµ Ð·Ð°Ð´ÑŠÐ»Ð¶Ð¸Ñ‚ÐµÐ»Ð½Ð°.");
             }
 
             if (_repository.GetAll().Any(s => s.Name == model.Name))
             {
-                ModelState.AddModelError("Name", "Èìà òàêúâ ñïîðò.");
-                ModelState.AddModelError("ImageUrl", "Ìîëÿ, êà÷åòå ïðîôèëíà ñíèìêà.");
+                ModelState.AddModelError("Name", "Ð˜Ð¼ÐµÑ‚Ð¾ Ðµ Ð¸Ð·Ð¿Ð¾Ð»Ð·Ð²Ð°Ð½Ð¾ Ð¾Ñ‚ Ð´Ñ€ÑƒÐ³ ÑÐ¿Ð¾Ñ€Ñ‚.");
+                ModelState.AddModelError("ImageUrl", "Ð¡Ð½Ð¸Ð¼ÐºÐ°Ñ‚Ð° Ðµ Ð·Ð°Ð´ÑŠÐ»Ð¶Ð¸Ñ‚ÐµÐ»Ð½Ð°.");
             }
 
             if (_repository.GetAll().Any(s => s.Description == model.Description))
             {
-                ModelState.AddModelError("Description", "Òîâà îïèñàíèå å èçïîëçâàíî çà äðóã ñïîðò.");
-                ModelState.AddModelError("ImageUrl", "Ìîëÿ, êà÷åòå ïðîôèëíà ñíèìêà.");
+                ModelState.AddModelError("Description", "ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸ÐµÑ‚Ð¾ Ðµ Ð¸Ð·Ð¿Ð¾Ð»Ð·Ð²Ð°Ð½Ð¾ Ð¾Ñ‚ Ð´Ñ€ÑƒÐ³ ÑÐ¿Ð¾Ñ€Ñ‚.");
+                ModelState.AddModelError("ImageUrl", "Ð¡Ð½Ð¸Ð¼ÐºÐ°Ñ‚Ð° Ðµ Ð·Ð°Ð´ÑŠÐ»Ð¶Ð¸Ñ‚ÐµÐ»Ð½Ð°.");
             }
 
             if (ModelState.IsValid)
@@ -99,22 +97,22 @@ namespace SportConnect.Web.Controllers
         {
             if (string.IsNullOrEmpty(sport.Name))
             {
-                ModelState.AddModelError("Name", "Èìåòî å çàäúëæèòåëíî.");
+                ModelState.AddModelError("Name", "Ð˜Ð¼ÐµÑ‚Ð¾ Ðµ Ð·Ð°Ð´ÑŠÐ»Ð¶Ð¸Ñ‚ÐµÐ»Ð½Ð¾.");
             }
 
             if (string.IsNullOrEmpty(sport.Description))
             {
-                ModelState.AddModelError("Description", "Îïèñàíèåòî å çàäúëæèòåëíî.");
-            }
-
-            if (_repository.GetAll().Any(s => s.Name == sport.Name && s.Id != sport.Id))
-            {
-                ModelState.AddModelError("Name", "Èìà òàêúâ ñïîðò.");
+                ModelState.AddModelError("Description", "ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸ÐµÑ‚Ð¾ Ðµ Ð·Ð°Ð´ÑŠÐ»Ð¶Ð¸Ñ‚ÐµÐ»Ð½Ð¾.");
             }
 
             if (_repository.GetAll().Any(s => s.Description == sport.Description && s.Id != sport.Id))
             {
-                ModelState.AddModelError("Description", "Òîâà îïèñàíèå å èçïîëçâàíî çà äðóã ñïîðò.");
+                ModelState.AddModelError("Name", "Ð˜Ð¼ÐµÑ‚Ð¾ Ðµ Ð¸Ð·Ð¿Ð¾Ð»Ð·Ð²Ð°Ð½Ð¾ Ð¾Ñ‚ Ð´Ñ€ÑƒÐ³ ÑÐ¿Ð¾Ñ€Ñ‚.");
+            }
+
+            if ((_repository.GetAll().Any(s => s.Name == sport.Name && s.Id != sport.Id)))
+            {
+                ModelState.AddModelError("Description", "ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸ÐµÑ‚Ð¾ Ðµ Ð¸Ð·Ð¿Ð¾Ð»Ð·Ð²Ð°Ð½Ð¾ Ð¾Ñ‚ Ð´Ñ€ÑƒÐ³ ÑÐ¿Ð¾Ñ€Ñ‚.");
             }
 
             if (ModelState.IsValid)
@@ -148,7 +146,7 @@ namespace SportConnect.Web.Controllers
         public IActionResult DeleteSport(int id)
         {
             var sport = _repository.GetById(id);
-            var model = new SportDeletionViewModel()
+            var model = new SportViewModel()
             {
                 Name = sport.Name,
                 Description = sport.Description,
@@ -159,9 +157,9 @@ namespace SportConnect.Web.Controllers
 
         [HttpPost]
         [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult DeleteSport(int id, string ConfirmText, SportDeletionViewModel model)
+        public IActionResult DeleteSport(int id, string ConfirmText, SportViewModel model)
         {
-            if (ConfirmText == "ÏÎÒÂÚÐÄÈ")
+            if (ConfirmText == "ÐŸÐžÐ¢Ð’ÐªÐ Ð”Ð˜")
             {
                 var tournaments = _tournamentRepository.GetAllBy(t => t.SportId == id).ToList();
 
@@ -182,7 +180,7 @@ namespace SportConnect.Web.Controllers
                 return RedirectToAction("AllSports");
             }
             var sport1 = _repository.GetById(id);
-            var model1 = new SportDeletionViewModel()
+            var model1 = new SportViewModel()
             {
                 Name = sport1.Name,
                 Description = sport1.Description,

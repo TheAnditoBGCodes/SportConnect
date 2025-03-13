@@ -5,20 +5,32 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using SportConnect.DataAccess;
 using SportConnect.DataAccess.Repository;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Services;
 using SportConnect.Utility;
+using System.Security.Principal;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<SportConnectDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("SportConnect.DataAccess")));
-builder.Services.AddIdentity<SportConnectUser, IdentityRole>().AddEntityFrameworkStores<SportConnectDbContext>().AddDefaultTokenProviders();
+
+builder.Services.AddIdentity<SportConnectUser, IdentityRole>()
+    .AddEntityFrameworkStores<SportConnectDbContext>()
+    .AddDefaultTokenProviders();
+builder.Services.Configure<SecurityStampValidatorOptions>(options =>
+{
+    // enables immediate logout, after updating the user's stat.
+    options.ValidationInterval = TimeSpan.Zero;
+});
 builder.Services.AddRazorPages();
+builder.Services.AddHttpClient();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
@@ -29,11 +41,11 @@ var account = new Account(cloudinarySettings.CloudName, cloudinarySettings.ApiKe
 var cloudinary = new Cloudinary(account);
 builder.Services.AddSingleton(cloudinary);
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = "/Account/Login";
-    options.LogoutPath = "/Account/Logout";
-    options.AccessDeniedPath = "/Account/AccessDenied";
+    options.LoginPath = new PathString("/Identity/Account/Login");
+    options.LogoutPath = new PathString("/Identity/Account/Logout");
+    options.AccessDeniedPath = "/Identity/Account/Login";
 });
 
 builder.Services.AddAuthorization(options =>

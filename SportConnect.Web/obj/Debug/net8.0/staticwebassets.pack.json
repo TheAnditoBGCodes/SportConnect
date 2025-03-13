@@ -1,915 +1,915 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\SportConnect.Web.bundle.scp.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\SportConnect.Web.bundle.scp.css",
       "PackagePath": "staticwebassets\\SportConnect.Web.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\css\\site.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\favicon.ico",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\js\\site.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\bootstrap"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\0057988d-5dae-497b-b7fc-f8d6c81333d2.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\0057988d-5dae-497b-b7fc-f8d6c81333d2.png",
       "PackagePath": "staticwebassets\\uploads\\0057988d-5dae-497b-b7fc-f8d6c81333d2.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\012fe302-bfc6-428e-8da8-22f423b5e391.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\012fe302-bfc6-428e-8da8-22f423b5e391.png",
       "PackagePath": "staticwebassets\\uploads\\012fe302-bfc6-428e-8da8-22f423b5e391.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\01d2e31b-7f89-4af4-9b2f-a94bd7c445ab.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\01d2e31b-7f89-4af4-9b2f-a94bd7c445ab.png",
       "PackagePath": "staticwebassets\\uploads\\01d2e31b-7f89-4af4-9b2f-a94bd7c445ab.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\0286b442-5700-4801-8f4c-8713959a17aa.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\0286b442-5700-4801-8f4c-8713959a17aa.png",
       "PackagePath": "staticwebassets\\uploads\\0286b442-5700-4801-8f4c-8713959a17aa.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\056c6bad-79c8-4684-8058-d26982e909be.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\056c6bad-79c8-4684-8058-d26982e909be.png",
       "PackagePath": "staticwebassets\\uploads\\056c6bad-79c8-4684-8058-d26982e909be.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\06b633bf-018e-46c7-a6e3-0f7a6c4ef44b.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\06b633bf-018e-46c7-a6e3-0f7a6c4ef44b.png",
       "PackagePath": "staticwebassets\\uploads\\06b633bf-018e-46c7-a6e3-0f7a6c4ef44b.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\08e457da-8702-4fd8-b429-21aad0992d32.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\08e457da-8702-4fd8-b429-21aad0992d32.png",
       "PackagePath": "staticwebassets\\uploads\\08e457da-8702-4fd8-b429-21aad0992d32.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\09c2c6bd-f6f5-43ef-9e30-2f6e95e9fccd.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\09c2c6bd-f6f5-43ef-9e30-2f6e95e9fccd.png",
       "PackagePath": "staticwebassets\\uploads\\09c2c6bd-f6f5-43ef-9e30-2f6e95e9fccd.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\09c51470-8769-454b-9dc6-58dd7891ef03.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\09c51470-8769-454b-9dc6-58dd7891ef03.png",
       "PackagePath": "staticwebassets\\uploads\\09c51470-8769-454b-9dc6-58dd7891ef03.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\0c6ff8e2-3ff7-41fd-8861-483a1929f5b1.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\0c6ff8e2-3ff7-41fd-8861-483a1929f5b1.png",
       "PackagePath": "staticwebassets\\uploads\\0c6ff8e2-3ff7-41fd-8861-483a1929f5b1.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\0fec4b93-2fdf-4fee-a8d9-9b722498390d.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\0fec4b93-2fdf-4fee-a8d9-9b722498390d.png",
       "PackagePath": "staticwebassets\\uploads\\0fec4b93-2fdf-4fee-a8d9-9b722498390d.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\10f1405c-6cbc-40d7-9113-096440881766.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\10f1405c-6cbc-40d7-9113-096440881766.png",
       "PackagePath": "staticwebassets\\uploads\\10f1405c-6cbc-40d7-9113-096440881766.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\113912e2-f384-43d1-8515-1941ea5426e3.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\113912e2-f384-43d1-8515-1941ea5426e3.png",
       "PackagePath": "staticwebassets\\uploads\\113912e2-f384-43d1-8515-1941ea5426e3.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\126c6a07-df1a-4bfe-afbe-d73ab76a97de.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\126c6a07-df1a-4bfe-afbe-d73ab76a97de.png",
       "PackagePath": "staticwebassets\\uploads\\126c6a07-df1a-4bfe-afbe-d73ab76a97de.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\134e2267-b705-446e-b36f-4abf85d71cba.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\134e2267-b705-446e-b36f-4abf85d71cba.png",
       "PackagePath": "staticwebassets\\uploads\\134e2267-b705-446e-b36f-4abf85d71cba.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\157778ac-4a25-4c8b-b965-ef1cfc445c39.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\157778ac-4a25-4c8b-b965-ef1cfc445c39.png",
       "PackagePath": "staticwebassets\\uploads\\157778ac-4a25-4c8b-b965-ef1cfc445c39.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\16a95429-2984-4683-8956-658c3c797dc5.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\16a95429-2984-4683-8956-658c3c797dc5.png",
       "PackagePath": "staticwebassets\\uploads\\16a95429-2984-4683-8956-658c3c797dc5.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\1850b6e1-5a0f-4f5b-afa0-e370faab788e.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\1850b6e1-5a0f-4f5b-afa0-e370faab788e.png",
       "PackagePath": "staticwebassets\\uploads\\1850b6e1-5a0f-4f5b-afa0-e370faab788e.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\18571bd0-172e-40de-ac2c-ee01370c0ba0.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\18571bd0-172e-40de-ac2c-ee01370c0ba0.png",
       "PackagePath": "staticwebassets\\uploads\\18571bd0-172e-40de-ac2c-ee01370c0ba0.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\1b1ed539-7f61-46c7-80ab-8a897be28c23.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\1b1ed539-7f61-46c7-80ab-8a897be28c23.png",
       "PackagePath": "staticwebassets\\uploads\\1b1ed539-7f61-46c7-80ab-8a897be28c23.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\1e5bbeda-1272-4e9f-9933-dc2436676c20.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\1e5bbeda-1272-4e9f-9933-dc2436676c20.png",
       "PackagePath": "staticwebassets\\uploads\\1e5bbeda-1272-4e9f-9933-dc2436676c20.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\1ff07de2-d672-441e-9ba9-3a714b2db629.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\1ff07de2-d672-441e-9ba9-3a714b2db629.png",
       "PackagePath": "staticwebassets\\uploads\\1ff07de2-d672-441e-9ba9-3a714b2db629.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\20815410-1b35-41ae-8ad9-97a2573a4c6e.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\20815410-1b35-41ae-8ad9-97a2573a4c6e.png",
       "PackagePath": "staticwebassets\\uploads\\20815410-1b35-41ae-8ad9-97a2573a4c6e.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\223303f3-93a0-4ecf-91e9-97964291e6ea.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\223303f3-93a0-4ecf-91e9-97964291e6ea.png",
       "PackagePath": "staticwebassets\\uploads\\223303f3-93a0-4ecf-91e9-97964291e6ea.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\22cf44a0-0adc-488b-8abd-46f8080856f8.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\22cf44a0-0adc-488b-8abd-46f8080856f8.png",
       "PackagePath": "staticwebassets\\uploads\\22cf44a0-0adc-488b-8abd-46f8080856f8.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\2401bdf7-9b6c-47bf-b2a3-1a9493d25213.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\2401bdf7-9b6c-47bf-b2a3-1a9493d25213.png",
       "PackagePath": "staticwebassets\\uploads\\2401bdf7-9b6c-47bf-b2a3-1a9493d25213.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\2441fb89-12ac-45ff-ab71-443e51917cd1.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\2441fb89-12ac-45ff-ab71-443e51917cd1.png",
       "PackagePath": "staticwebassets\\uploads\\2441fb89-12ac-45ff-ab71-443e51917cd1.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\24a727c9-64ef-4983-9727-248f2ca80417.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\24a727c9-64ef-4983-9727-248f2ca80417.png",
       "PackagePath": "staticwebassets\\uploads\\24a727c9-64ef-4983-9727-248f2ca80417.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\24de0e9c-b2d1-4bfb-afed-2bbd46a97b8c.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\24de0e9c-b2d1-4bfb-afed-2bbd46a97b8c.png",
       "PackagePath": "staticwebassets\\uploads\\24de0e9c-b2d1-4bfb-afed-2bbd46a97b8c.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\2623d9d9-9ab3-4410-8aa7-935a48b2cd5b.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\2623d9d9-9ab3-4410-8aa7-935a48b2cd5b.png",
       "PackagePath": "staticwebassets\\uploads\\2623d9d9-9ab3-4410-8aa7-935a48b2cd5b.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\27375dc5-aaf1-4a1e-8448-a891e0ee7079.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\27375dc5-aaf1-4a1e-8448-a891e0ee7079.png",
       "PackagePath": "staticwebassets\\uploads\\27375dc5-aaf1-4a1e-8448-a891e0ee7079.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\29e5db91-bab6-4d2a-938c-70a0e3546b4f.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\29e5db91-bab6-4d2a-938c-70a0e3546b4f.png",
       "PackagePath": "staticwebassets\\uploads\\29e5db91-bab6-4d2a-938c-70a0e3546b4f.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\2df18363-7adf-4205-92cd-88eada9c97f3.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\2df18363-7adf-4205-92cd-88eada9c97f3.png",
       "PackagePath": "staticwebassets\\uploads\\2df18363-7adf-4205-92cd-88eada9c97f3.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\2fc08dc4-bf3b-448a-b8ce-ef9237a47d63.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\2fc08dc4-bf3b-448a-b8ce-ef9237a47d63.png",
       "PackagePath": "staticwebassets\\uploads\\2fc08dc4-bf3b-448a-b8ce-ef9237a47d63.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3518250e-c4a0-48db-bd54-a4067eb7d070.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3518250e-c4a0-48db-bd54-a4067eb7d070.png",
       "PackagePath": "staticwebassets\\uploads\\3518250e-c4a0-48db-bd54-a4067eb7d070.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\35bea483-6b4a-4e5f-9507-ff86a357adf6.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\35bea483-6b4a-4e5f-9507-ff86a357adf6.png",
       "PackagePath": "staticwebassets\\uploads\\35bea483-6b4a-4e5f-9507-ff86a357adf6.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\39d0ce25-4b00-415d-94b1-7135eb257517.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\39d0ce25-4b00-415d-94b1-7135eb257517.png",
       "PackagePath": "staticwebassets\\uploads\\39d0ce25-4b00-415d-94b1-7135eb257517.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3a12248d-2156-4b88-b0df-78fec92739eb.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3a12248d-2156-4b88-b0df-78fec92739eb.png",
       "PackagePath": "staticwebassets\\uploads\\3a12248d-2156-4b88-b0df-78fec92739eb.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3acc7457-783f-4354-9a08-408987f321b6.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3acc7457-783f-4354-9a08-408987f321b6.png",
       "PackagePath": "staticwebassets\\uploads\\3acc7457-783f-4354-9a08-408987f321b6.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3b43f8b6-6c38-4afe-bff7-94da4687092b.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3b43f8b6-6c38-4afe-bff7-94da4687092b.png",
       "PackagePath": "staticwebassets\\uploads\\3b43f8b6-6c38-4afe-bff7-94da4687092b.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3bf1e77e-b178-427b-8953-2f9657f340ff.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3bf1e77e-b178-427b-8953-2f9657f340ff.png",
       "PackagePath": "staticwebassets\\uploads\\3bf1e77e-b178-427b-8953-2f9657f340ff.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3cb8c53b-d437-4f40-a67a-8c4f9baa5064.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3cb8c53b-d437-4f40-a67a-8c4f9baa5064.png",
       "PackagePath": "staticwebassets\\uploads\\3cb8c53b-d437-4f40-a67a-8c4f9baa5064.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3dd75754-f8dc-4bae-8dbb-55ab6184d464.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3dd75754-f8dc-4bae-8dbb-55ab6184d464.png",
       "PackagePath": "staticwebassets\\uploads\\3dd75754-f8dc-4bae-8dbb-55ab6184d464.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3f114301-e749-4fe7-a260-5e3e6fc2208d.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3f114301-e749-4fe7-a260-5e3e6fc2208d.png",
       "PackagePath": "staticwebassets\\uploads\\3f114301-e749-4fe7-a260-5e3e6fc2208d.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3f96a78e-4ac3-4503-9427-137e6257d1b9.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\3f96a78e-4ac3-4503-9427-137e6257d1b9.png",
       "PackagePath": "staticwebassets\\uploads\\3f96a78e-4ac3-4503-9427-137e6257d1b9.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\4178e554-83a5-47cd-816c-76e6580fe801.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\4178e554-83a5-47cd-816c-76e6580fe801.png",
       "PackagePath": "staticwebassets\\uploads\\4178e554-83a5-47cd-816c-76e6580fe801.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\468c43cb-256a-4a99-9212-ff20a1958a5e.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\468c43cb-256a-4a99-9212-ff20a1958a5e.png",
       "PackagePath": "staticwebassets\\uploads\\468c43cb-256a-4a99-9212-ff20a1958a5e.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\474b9c80-9255-4687-aac7-2d6ee77baac7.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\474b9c80-9255-4687-aac7-2d6ee77baac7.png",
       "PackagePath": "staticwebassets\\uploads\\474b9c80-9255-4687-aac7-2d6ee77baac7.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\47e8576b-23d8-4991-a5fa-9871d5f8efc1.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\47e8576b-23d8-4991-a5fa-9871d5f8efc1.png",
       "PackagePath": "staticwebassets\\uploads\\47e8576b-23d8-4991-a5fa-9871d5f8efc1.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\48aaf7a8-d465-45a7-97c2-106e1e684cef.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\48aaf7a8-d465-45a7-97c2-106e1e684cef.png",
       "PackagePath": "staticwebassets\\uploads\\48aaf7a8-d465-45a7-97c2-106e1e684cef.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\49cb0adf-9234-4530-86ba-e5b8942f91b8.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\49cb0adf-9234-4530-86ba-e5b8942f91b8.png",
       "PackagePath": "staticwebassets\\uploads\\49cb0adf-9234-4530-86ba-e5b8942f91b8.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\4cb8ecfc-1c50-4475-b033-2323a7a732f4.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\4cb8ecfc-1c50-4475-b033-2323a7a732f4.png",
       "PackagePath": "staticwebassets\\uploads\\4cb8ecfc-1c50-4475-b033-2323a7a732f4.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\4e673523-2405-4d59-ab99-c64048f80edb.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\4e673523-2405-4d59-ab99-c64048f80edb.png",
       "PackagePath": "staticwebassets\\uploads\\4e673523-2405-4d59-ab99-c64048f80edb.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\504606e5-73e0-49f0-aee4-eb1a5042a3ae.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\504606e5-73e0-49f0-aee4-eb1a5042a3ae.png",
       "PackagePath": "staticwebassets\\uploads\\504606e5-73e0-49f0-aee4-eb1a5042a3ae.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\508381a3-c98f-4c82-88c1-fad96fff94b3.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\508381a3-c98f-4c82-88c1-fad96fff94b3.png",
       "PackagePath": "staticwebassets\\uploads\\508381a3-c98f-4c82-88c1-fad96fff94b3.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\5227a7cd-11db-41d2-9160-04ae15d8f502.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\5227a7cd-11db-41d2-9160-04ae15d8f502.png",
       "PackagePath": "staticwebassets\\uploads\\5227a7cd-11db-41d2-9160-04ae15d8f502.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\525623e6-e82d-465e-b672-b40121fb82f3.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\525623e6-e82d-465e-b672-b40121fb82f3.png",
       "PackagePath": "staticwebassets\\uploads\\525623e6-e82d-465e-b672-b40121fb82f3.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\53cb976d-9d91-4612-ac6a-167da87003c2.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\53cb976d-9d91-4612-ac6a-167da87003c2.png",
       "PackagePath": "staticwebassets\\uploads\\53cb976d-9d91-4612-ac6a-167da87003c2.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\568e13c4-f357-41ba-9a84-aad565a80844.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\568e13c4-f357-41ba-9a84-aad565a80844.png",
       "PackagePath": "staticwebassets\\uploads\\568e13c4-f357-41ba-9a84-aad565a80844.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\5886b239-f563-4b7a-85ba-088cd3a2d4e6.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\5886b239-f563-4b7a-85ba-088cd3a2d4e6.png",
       "PackagePath": "staticwebassets\\uploads\\5886b239-f563-4b7a-85ba-088cd3a2d4e6.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\599c8e8e-b993-4562-81b8-da6cf7d66056.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\599c8e8e-b993-4562-81b8-da6cf7d66056.png",
       "PackagePath": "staticwebassets\\uploads\\599c8e8e-b993-4562-81b8-da6cf7d66056.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\5ad7706c-5cd5-41fd-a739-636f620d2549.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\5ad7706c-5cd5-41fd-a739-636f620d2549.png",
       "PackagePath": "staticwebassets\\uploads\\5ad7706c-5cd5-41fd-a739-636f620d2549.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\5d360b0d-7cbe-45bb-8b14-5e6378a28e2f.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\5d360b0d-7cbe-45bb-8b14-5e6378a28e2f.png",
       "PackagePath": "staticwebassets\\uploads\\5d360b0d-7cbe-45bb-8b14-5e6378a28e2f.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\5fff1dd1-6af4-4e56-b00b-3dd55b49a4b0.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\5fff1dd1-6af4-4e56-b00b-3dd55b49a4b0.png",
       "PackagePath": "staticwebassets\\uploads\\5fff1dd1-6af4-4e56-b00b-3dd55b49a4b0.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\6135b495-1c76-485d-831a-f3068ad62c91.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\6135b495-1c76-485d-831a-f3068ad62c91.png",
       "PackagePath": "staticwebassets\\uploads\\6135b495-1c76-485d-831a-f3068ad62c91.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\61e76e77-82ac-4ffd-856b-0ee9a48eebe8.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\61e76e77-82ac-4ffd-856b-0ee9a48eebe8.png",
       "PackagePath": "staticwebassets\\uploads\\61e76e77-82ac-4ffd-856b-0ee9a48eebe8.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\64a26444-4495-4faf-b7e3-928c191d07db.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\64a26444-4495-4faf-b7e3-928c191d07db.png",
       "PackagePath": "staticwebassets\\uploads\\64a26444-4495-4faf-b7e3-928c191d07db.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\64b8a14f-9269-48ca-99cd-ef35ade3baf5.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\64b8a14f-9269-48ca-99cd-ef35ade3baf5.png",
       "PackagePath": "staticwebassets\\uploads\\64b8a14f-9269-48ca-99cd-ef35ade3baf5.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\66d38f04-bb49-45eb-82ad-5d07e32b8c1c.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\66d38f04-bb49-45eb-82ad-5d07e32b8c1c.png",
       "PackagePath": "staticwebassets\\uploads\\66d38f04-bb49-45eb-82ad-5d07e32b8c1c.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\67588cad-b4a5-4451-a532-212d51abbf55.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\67588cad-b4a5-4451-a532-212d51abbf55.png",
       "PackagePath": "staticwebassets\\uploads\\67588cad-b4a5-4451-a532-212d51abbf55.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\693436df-38ba-421e-891d-6713cf60c63a.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\693436df-38ba-421e-891d-6713cf60c63a.png",
       "PackagePath": "staticwebassets\\uploads\\693436df-38ba-421e-891d-6713cf60c63a.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\6d617aab-b10a-40ee-b3c9-1cf01c9b1edf.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\6d617aab-b10a-40ee-b3c9-1cf01c9b1edf.png",
       "PackagePath": "staticwebassets\\uploads\\6d617aab-b10a-40ee-b3c9-1cf01c9b1edf.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\6ed84cc5-49ea-4881-a1ec-2d2804fb64d9.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\6ed84cc5-49ea-4881-a1ec-2d2804fb64d9.png",
       "PackagePath": "staticwebassets\\uploads\\6ed84cc5-49ea-4881-a1ec-2d2804fb64d9.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\6fa66d4c-53b4-46dc-a15b-2c2e5790c7ba.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\6fa66d4c-53b4-46dc-a15b-2c2e5790c7ba.png",
       "PackagePath": "staticwebassets\\uploads\\6fa66d4c-53b4-46dc-a15b-2c2e5790c7ba.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\719de470-8ff1-4a68-843c-eb78fb53c292.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\719de470-8ff1-4a68-843c-eb78fb53c292.png",
       "PackagePath": "staticwebassets\\uploads\\719de470-8ff1-4a68-843c-eb78fb53c292.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\72863ee3-d91c-4b65-aa6c-435e3064cd9e.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\72863ee3-d91c-4b65-aa6c-435e3064cd9e.png",
       "PackagePath": "staticwebassets\\uploads\\72863ee3-d91c-4b65-aa6c-435e3064cd9e.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\740ddca6-09a2-4d03-9701-b82fed5e9547.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\740ddca6-09a2-4d03-9701-b82fed5e9547.png",
       "PackagePath": "staticwebassets\\uploads\\740ddca6-09a2-4d03-9701-b82fed5e9547.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\746aa2dc-02c8-4f41-8c95-e188d95fb56b.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\746aa2dc-02c8-4f41-8c95-e188d95fb56b.png",
       "PackagePath": "staticwebassets\\uploads\\746aa2dc-02c8-4f41-8c95-e188d95fb56b.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\746fe75e-8999-427c-9a7f-5c5f603995e4.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\746fe75e-8999-427c-9a7f-5c5f603995e4.png",
       "PackagePath": "staticwebassets\\uploads\\746fe75e-8999-427c-9a7f-5c5f603995e4.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\76e29fe0-52e9-448e-8c7c-510515a905a2.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\76e29fe0-52e9-448e-8c7c-510515a905a2.png",
       "PackagePath": "staticwebassets\\uploads\\76e29fe0-52e9-448e-8c7c-510515a905a2.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\791bbc4d-6e73-4298-928c-ebefb6780bf2.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\791bbc4d-6e73-4298-928c-ebefb6780bf2.png",
       "PackagePath": "staticwebassets\\uploads\\791bbc4d-6e73-4298-928c-ebefb6780bf2.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\79f8d7ba-8be5-4e3d-92eb-9d0eec948933.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\79f8d7ba-8be5-4e3d-92eb-9d0eec948933.png",
       "PackagePath": "staticwebassets\\uploads\\79f8d7ba-8be5-4e3d-92eb-9d0eec948933.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\7a7f8615-5286-4598-8719-40085e2ececd.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\7a7f8615-5286-4598-8719-40085e2ececd.png",
       "PackagePath": "staticwebassets\\uploads\\7a7f8615-5286-4598-8719-40085e2ececd.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\7b1ce957-d5c4-4822-9bd4-b3a61d5090c2.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\7b1ce957-d5c4-4822-9bd4-b3a61d5090c2.png",
       "PackagePath": "staticwebassets\\uploads\\7b1ce957-d5c4-4822-9bd4-b3a61d5090c2.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\7b26d5b3-febc-4977-874d-8b9bc8866db9.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\7b26d5b3-febc-4977-874d-8b9bc8866db9.png",
       "PackagePath": "staticwebassets\\uploads\\7b26d5b3-febc-4977-874d-8b9bc8866db9.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\7c967c73-05bf-4ead-aaf7-92eadf12209e.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\7c967c73-05bf-4ead-aaf7-92eadf12209e.png",
       "PackagePath": "staticwebassets\\uploads\\7c967c73-05bf-4ead-aaf7-92eadf12209e.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\7d197ca2-1a03-45fe-a220-b622da1bedbc.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\7d197ca2-1a03-45fe-a220-b622da1bedbc.png",
       "PackagePath": "staticwebassets\\uploads\\7d197ca2-1a03-45fe-a220-b622da1bedbc.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\7eddf753-46df-46db-96e8-ffa51483f019.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\7eddf753-46df-46db-96e8-ffa51483f019.png",
       "PackagePath": "staticwebassets\\uploads\\7eddf753-46df-46db-96e8-ffa51483f019.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\80761d20-25e0-4d85-b6b7-069a5ecf8880.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\80761d20-25e0-4d85-b6b7-069a5ecf8880.png",
       "PackagePath": "staticwebassets\\uploads\\80761d20-25e0-4d85-b6b7-069a5ecf8880.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\850437c8-7124-46d5-b3b2-d9490be5f4e4.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\850437c8-7124-46d5-b3b2-d9490be5f4e4.png",
       "PackagePath": "staticwebassets\\uploads\\850437c8-7124-46d5-b3b2-d9490be5f4e4.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\86c7b21b-5540-459d-a1a2-80d82c356c45.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\86c7b21b-5540-459d-a1a2-80d82c356c45.png",
       "PackagePath": "staticwebassets\\uploads\\86c7b21b-5540-459d-a1a2-80d82c356c45.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\873170dd-4d1d-4cc4-83d1-61f51b8dc3ec.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\873170dd-4d1d-4cc4-83d1-61f51b8dc3ec.png",
       "PackagePath": "staticwebassets\\uploads\\873170dd-4d1d-4cc4-83d1-61f51b8dc3ec.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\888dfaf2-a1ca-47de-ae3c-dc87aada607c.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\888dfaf2-a1ca-47de-ae3c-dc87aada607c.png",
       "PackagePath": "staticwebassets\\uploads\\888dfaf2-a1ca-47de-ae3c-dc87aada607c.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\89b77378-d4e5-4921-83df-55bebe26d8af.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\89b77378-d4e5-4921-83df-55bebe26d8af.png",
       "PackagePath": "staticwebassets\\uploads\\89b77378-d4e5-4921-83df-55bebe26d8af.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\8a32ad41-267e-4c66-bf46-80bddfc86250.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\8a32ad41-267e-4c66-bf46-80bddfc86250.png",
       "PackagePath": "staticwebassets\\uploads\\8a32ad41-267e-4c66-bf46-80bddfc86250.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\8beb0013-abff-49cc-a37d-e00c288b0e82.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\8beb0013-abff-49cc-a37d-e00c288b0e82.png",
       "PackagePath": "staticwebassets\\uploads\\8beb0013-abff-49cc-a37d-e00c288b0e82.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\8ccb1177-101b-439c-a5be-009cfb8758d1.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\8ccb1177-101b-439c-a5be-009cfb8758d1.png",
       "PackagePath": "staticwebassets\\uploads\\8ccb1177-101b-439c-a5be-009cfb8758d1.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\8dd615ad-2f61-4ea9-bf1d-9c32cdbfe16f.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\8dd615ad-2f61-4ea9-bf1d-9c32cdbfe16f.png",
       "PackagePath": "staticwebassets\\uploads\\8dd615ad-2f61-4ea9-bf1d-9c32cdbfe16f.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9021185d-e698-4637-942f-189af643e2fb.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9021185d-e698-4637-942f-189af643e2fb.png",
       "PackagePath": "staticwebassets\\uploads\\9021185d-e698-4637-942f-189af643e2fb.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9135b49b-c13e-4612-b934-f3765c7248fd.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9135b49b-c13e-4612-b934-f3765c7248fd.png",
       "PackagePath": "staticwebassets\\uploads\\9135b49b-c13e-4612-b934-f3765c7248fd.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\914baacf-df73-4612-bf69-b7d520d2baf8.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\914baacf-df73-4612-bf69-b7d520d2baf8.png",
       "PackagePath": "staticwebassets\\uploads\\914baacf-df73-4612-bf69-b7d520d2baf8.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\91b1ab0f-9099-40d9-947a-abcf8e439b78.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\91b1ab0f-9099-40d9-947a-abcf8e439b78.png",
       "PackagePath": "staticwebassets\\uploads\\91b1ab0f-9099-40d9-947a-abcf8e439b78.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9242e9cc-c236-4591-8941-4e5b1b37f7f3.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9242e9cc-c236-4591-8941-4e5b1b37f7f3.png",
       "PackagePath": "staticwebassets\\uploads\\9242e9cc-c236-4591-8941-4e5b1b37f7f3.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\95ecddcf-a4ed-418a-acd5-2d2c6720aa0b.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\95ecddcf-a4ed-418a-acd5-2d2c6720aa0b.png",
       "PackagePath": "staticwebassets\\uploads\\95ecddcf-a4ed-418a-acd5-2d2c6720aa0b.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9674a75a-a20b-4589-9190-b798ef90f0bc.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9674a75a-a20b-4589-9190-b798ef90f0bc.png",
       "PackagePath": "staticwebassets\\uploads\\9674a75a-a20b-4589-9190-b798ef90f0bc.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9b9e542e-18bc-4d13-8b1c-ef5c653bb065.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9b9e542e-18bc-4d13-8b1c-ef5c653bb065.png",
       "PackagePath": "staticwebassets\\uploads\\9b9e542e-18bc-4d13-8b1c-ef5c653bb065.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9bbd2a06-cdeb-493f-a765-27e4a4d5a33c.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9bbd2a06-cdeb-493f-a765-27e4a4d5a33c.png",
       "PackagePath": "staticwebassets\\uploads\\9bbd2a06-cdeb-493f-a765-27e4a4d5a33c.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9cad0b89-0c2f-4467-873f-521912491f50.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9cad0b89-0c2f-4467-873f-521912491f50.png",
       "PackagePath": "staticwebassets\\uploads\\9cad0b89-0c2f-4467-873f-521912491f50.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9cb008b4-468f-4ae4-858f-5caeb1e55125.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9cb008b4-468f-4ae4-858f-5caeb1e55125.png",
       "PackagePath": "staticwebassets\\uploads\\9cb008b4-468f-4ae4-858f-5caeb1e55125.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9f394577-de0a-4b9c-acb9-990ec65d8b7d.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9f394577-de0a-4b9c-acb9-990ec65d8b7d.png",
       "PackagePath": "staticwebassets\\uploads\\9f394577-de0a-4b9c-acb9-990ec65d8b7d.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9f9bfe33-7b66-445e-b388-a68f56f44c6a.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\9f9bfe33-7b66-445e-b388-a68f56f44c6a.png",
       "PackagePath": "staticwebassets\\uploads\\9f9bfe33-7b66-445e-b388-a68f56f44c6a.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\a26c310e-ce0b-4a41-b097-77d9fbc55b3b.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\a26c310e-ce0b-4a41-b097-77d9fbc55b3b.png",
       "PackagePath": "staticwebassets\\uploads\\a26c310e-ce0b-4a41-b097-77d9fbc55b3b.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\a5a2917e-54a9-466a-87ec-90659936f372.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\a5a2917e-54a9-466a-87ec-90659936f372.png",
       "PackagePath": "staticwebassets\\uploads\\a5a2917e-54a9-466a-87ec-90659936f372.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\aa1ab41c-4746-4fb4-8986-18786e6bc13d.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\aa1ab41c-4746-4fb4-8986-18786e6bc13d.png",
       "PackagePath": "staticwebassets\\uploads\\aa1ab41c-4746-4fb4-8986-18786e6bc13d.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ad147087-c452-4d19-b090-2902c817c53e.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ad147087-c452-4d19-b090-2902c817c53e.png",
       "PackagePath": "staticwebassets\\uploads\\ad147087-c452-4d19-b090-2902c817c53e.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\af3082a9-ff49-419f-86c2-fd27eda59a9e.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\af3082a9-ff49-419f-86c2-fd27eda59a9e.png",
       "PackagePath": "staticwebassets\\uploads\\af3082a9-ff49-419f-86c2-fd27eda59a9e.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\b0c84d7d-36f4-475b-a3aa-abd25a638db4.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\b0c84d7d-36f4-475b-a3aa-abd25a638db4.png",
       "PackagePath": "staticwebassets\\uploads\\b0c84d7d-36f4-475b-a3aa-abd25a638db4.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\b1ed81d6-9fd6-4ca2-adc2-ecf3999a1a49.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\b1ed81d6-9fd6-4ca2-adc2-ecf3999a1a49.png",
       "PackagePath": "staticwebassets\\uploads\\b1ed81d6-9fd6-4ca2-adc2-ecf3999a1a49.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\b2fd7eed-4f9d-4530-8bab-6ef937b905bb.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\b2fd7eed-4f9d-4530-8bab-6ef937b905bb.png",
       "PackagePath": "staticwebassets\\uploads\\b2fd7eed-4f9d-4530-8bab-6ef937b905bb.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\b8a0b0fa-b604-45bb-af9a-cc398a050536.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\b8a0b0fa-b604-45bb-af9a-cc398a050536.png",
       "PackagePath": "staticwebassets\\uploads\\b8a0b0fa-b604-45bb-af9a-cc398a050536.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\b9277b18-c200-4861-b09e-e5846acc7e7d.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\b9277b18-c200-4861-b09e-e5846acc7e7d.png",
       "PackagePath": "staticwebassets\\uploads\\b9277b18-c200-4861-b09e-e5846acc7e7d.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\b9e80aa1-2e7e-4b1f-b318-839984b61c2f.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\b9e80aa1-2e7e-4b1f-b318-839984b61c2f.png",
       "PackagePath": "staticwebassets\\uploads\\b9e80aa1-2e7e-4b1f-b318-839984b61c2f.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ba8f9c97-4587-4313-8dde-79032f701e4f.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ba8f9c97-4587-4313-8dde-79032f701e4f.png",
       "PackagePath": "staticwebassets\\uploads\\ba8f9c97-4587-4313-8dde-79032f701e4f.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\bb135606-2043-4a2e-b0e1-85f4637cd154.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\bb135606-2043-4a2e-b0e1-85f4637cd154.png",
       "PackagePath": "staticwebassets\\uploads\\bb135606-2043-4a2e-b0e1-85f4637cd154.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\bd2e2278-7a2f-451b-a2c3-9ac252302347.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\bd2e2278-7a2f-451b-a2c3-9ac252302347.png",
       "PackagePath": "staticwebassets\\uploads\\bd2e2278-7a2f-451b-a2c3-9ac252302347.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\c1f9da68-d8a8-43fa-87e2-381e91384a27.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\c1f9da68-d8a8-43fa-87e2-381e91384a27.png",
       "PackagePath": "staticwebassets\\uploads\\c1f9da68-d8a8-43fa-87e2-381e91384a27.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\c30d6080-9245-4bd1-b753-6d3c7905f8a5.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\c30d6080-9245-4bd1-b753-6d3c7905f8a5.png",
       "PackagePath": "staticwebassets\\uploads\\c30d6080-9245-4bd1-b753-6d3c7905f8a5.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\c5ee8f8d-68de-4bac-8f97-2cf1bb00de78.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\c5ee8f8d-68de-4bac-8f97-2cf1bb00de78.png",
       "PackagePath": "staticwebassets\\uploads\\c5ee8f8d-68de-4bac-8f97-2cf1bb00de78.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\c5f503a6-c886-4c28-8454-7641ca633ebd.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\c5f503a6-c886-4c28-8454-7641ca633ebd.png",
       "PackagePath": "staticwebassets\\uploads\\c5f503a6-c886-4c28-8454-7641ca633ebd.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\c87fdd74-2756-4a79-ac20-f8499fd07e73.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\c87fdd74-2756-4a79-ac20-f8499fd07e73.png",
       "PackagePath": "staticwebassets\\uploads\\c87fdd74-2756-4a79-ac20-f8499fd07e73.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\cc35737b-7b38-4cce-8c5d-c9502f71e065.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\cc35737b-7b38-4cce-8c5d-c9502f71e065.png",
       "PackagePath": "staticwebassets\\uploads\\cc35737b-7b38-4cce-8c5d-c9502f71e065.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\cc63d8ed-f125-41a7-a7a2-9aab09b082df.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\cc63d8ed-f125-41a7-a7a2-9aab09b082df.png",
       "PackagePath": "staticwebassets\\uploads\\cc63d8ed-f125-41a7-a7a2-9aab09b082df.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ccd30df3-cabe-4d6a-bfd8-fd0849a2a72d.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ccd30df3-cabe-4d6a-bfd8-fd0849a2a72d.png",
       "PackagePath": "staticwebassets\\uploads\\ccd30df3-cabe-4d6a-bfd8-fd0849a2a72d.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\cd3fc444-4b05-431b-a7f3-18f30b47d236.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\cd3fc444-4b05-431b-a7f3-18f30b47d236.png",
       "PackagePath": "staticwebassets\\uploads\\cd3fc444-4b05-431b-a7f3-18f30b47d236.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\cdd39f53-0c1b-49af-8de2-1d2023edb445.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\cdd39f53-0c1b-49af-8de2-1d2023edb445.png",
       "PackagePath": "staticwebassets\\uploads\\cdd39f53-0c1b-49af-8de2-1d2023edb445.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ceba399a-9db7-4eeb-b71f-21489aa23a08.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ceba399a-9db7-4eeb-b71f-21489aa23a08.png",
       "PackagePath": "staticwebassets\\uploads\\ceba399a-9db7-4eeb-b71f-21489aa23a08.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d0f7f3fd-a7e0-41ab-864d-15ff7fae2ec1.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d0f7f3fd-a7e0-41ab-864d-15ff7fae2ec1.png",
       "PackagePath": "staticwebassets\\uploads\\d0f7f3fd-a7e0-41ab-864d-15ff7fae2ec1.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d42d9c36-8957-40d8-afa4-329d3b33fc1b.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d42d9c36-8957-40d8-afa4-329d3b33fc1b.png",
       "PackagePath": "staticwebassets\\uploads\\d42d9c36-8957-40d8-afa4-329d3b33fc1b.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d56279b4-bedd-457f-851c-475854d7b4c0.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d56279b4-bedd-457f-851c-475854d7b4c0.png",
       "PackagePath": "staticwebassets\\uploads\\d56279b4-bedd-457f-851c-475854d7b4c0.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d7d858a5-1f75-470f-abfc-3794ecbd5cc4.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d7d858a5-1f75-470f-abfc-3794ecbd5cc4.png",
       "PackagePath": "staticwebassets\\uploads\\d7d858a5-1f75-470f-abfc-3794ecbd5cc4.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d7e1b46e-7454-4920-9abc-9fdfac4f01d8.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d7e1b46e-7454-4920-9abc-9fdfac4f01d8.png",
       "PackagePath": "staticwebassets\\uploads\\d7e1b46e-7454-4920-9abc-9fdfac4f01d8.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d819a9ea-3855-48f4-ba32-111d7b0a7c41.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d819a9ea-3855-48f4-ba32-111d7b0a7c41.png",
       "PackagePath": "staticwebassets\\uploads\\d819a9ea-3855-48f4-ba32-111d7b0a7c41.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d9b33f68-4f10-488a-97bf-72a3013b7fb8.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\d9b33f68-4f10-488a-97bf-72a3013b7fb8.png",
       "PackagePath": "staticwebassets\\uploads\\d9b33f68-4f10-488a-97bf-72a3013b7fb8.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e06c8c83-21b0-4354-86d6-f1f07001601a.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e06c8c83-21b0-4354-86d6-f1f07001601a.png",
       "PackagePath": "staticwebassets\\uploads\\e06c8c83-21b0-4354-86d6-f1f07001601a.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e0be49db-12be-4555-970a-417053ca0681.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e0be49db-12be-4555-970a-417053ca0681.png",
       "PackagePath": "staticwebassets\\uploads\\e0be49db-12be-4555-970a-417053ca0681.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e3151076-5b38-4ade-a09b-fcbabe0ee212.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e3151076-5b38-4ade-a09b-fcbabe0ee212.png",
       "PackagePath": "staticwebassets\\uploads\\e3151076-5b38-4ade-a09b-fcbabe0ee212.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e337f1c5-4b37-490c-9c4d-bd850ca533d5.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e337f1c5-4b37-490c-9c4d-bd850ca533d5.png",
       "PackagePath": "staticwebassets\\uploads\\e337f1c5-4b37-490c-9c4d-bd850ca533d5.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e34d5df1-d612-40e8-8365-e6d2f870ca0f.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e34d5df1-d612-40e8-8365-e6d2f870ca0f.png",
       "PackagePath": "staticwebassets\\uploads\\e34d5df1-d612-40e8-8365-e6d2f870ca0f.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e42e2015-bf05-47a1-8ede-88bd6836c6b7.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e42e2015-bf05-47a1-8ede-88bd6836c6b7.png",
       "PackagePath": "staticwebassets\\uploads\\e42e2015-bf05-47a1-8ede-88bd6836c6b7.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e473fc14-ab2f-4e94-8139-c9788ec41f03.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e473fc14-ab2f-4e94-8139-c9788ec41f03.png",
       "PackagePath": "staticwebassets\\uploads\\e473fc14-ab2f-4e94-8139-c9788ec41f03.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e5e72d9e-5c3d-46bd-9e90-1c42fa9cc287.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e5e72d9e-5c3d-46bd-9e90-1c42fa9cc287.png",
       "PackagePath": "staticwebassets\\uploads\\e5e72d9e-5c3d-46bd-9e90-1c42fa9cc287.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e65e1cc4-814b-48c0-82ac-63a1e7e3f734.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e65e1cc4-814b-48c0-82ac-63a1e7e3f734.png",
       "PackagePath": "staticwebassets\\uploads\\e65e1cc4-814b-48c0-82ac-63a1e7e3f734.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e6c7b74f-5ee8-4310-a4a6-a36d91785cff.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\e6c7b74f-5ee8-4310-a4a6-a36d91785cff.png",
       "PackagePath": "staticwebassets\\uploads\\e6c7b74f-5ee8-4310-a4a6-a36d91785cff.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ec376518-3e5e-4e55-9e92-f0c2a77b3a0f.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ec376518-3e5e-4e55-9e92-f0c2a77b3a0f.png",
       "PackagePath": "staticwebassets\\uploads\\ec376518-3e5e-4e55-9e92-f0c2a77b3a0f.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ed379974-284f-4a26-a726-ff5136ccf316.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ed379974-284f-4a26-a726-ff5136ccf316.png",
       "PackagePath": "staticwebassets\\uploads\\ed379974-284f-4a26-a726-ff5136ccf316.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ee8b1296-5ff8-406c-943c-300a02cc4631.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ee8b1296-5ff8-406c-943c-300a02cc4631.png",
       "PackagePath": "staticwebassets\\uploads\\ee8b1296-5ff8-406c-943c-300a02cc4631.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f0c5a58e-0c89-45ab-b71a-6ee38b09bd19.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f0c5a58e-0c89-45ab-b71a-6ee38b09bd19.png",
       "PackagePath": "staticwebassets\\uploads\\f0c5a58e-0c89-45ab-b71a-6ee38b09bd19.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f2e6f634-5dff-493d-ae18-507b246c1c44.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f2e6f634-5dff-493d-ae18-507b246c1c44.png",
       "PackagePath": "staticwebassets\\uploads\\f2e6f634-5dff-493d-ae18-507b246c1c44.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f303734e-e872-4332-943c-322a3ebeb9f3.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f303734e-e872-4332-943c-322a3ebeb9f3.png",
       "PackagePath": "staticwebassets\\uploads\\f303734e-e872-4332-943c-322a3ebeb9f3.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f5845c9e-35f0-4303-a188-2a4f4a47dae9.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f5845c9e-35f0-4303-a188-2a4f4a47dae9.png",
       "PackagePath": "staticwebassets\\uploads\\f5845c9e-35f0-4303-a188-2a4f4a47dae9.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f820b178-53c0-4075-823f-f5eedb99e775.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f820b178-53c0-4075-823f-f5eedb99e775.png",
       "PackagePath": "staticwebassets\\uploads\\f820b178-53c0-4075-823f-f5eedb99e775.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f82af47f-d4a4-4eab-be8f-9ddb24e9d70e.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f82af47f-d4a4-4eab-be8f-9ddb24e9d70e.png",
       "PackagePath": "staticwebassets\\uploads\\f82af47f-d4a4-4eab-be8f-9ddb24e9d70e.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f9df59a1-a36f-43d2-9ceb-c3dee4cac71a.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f9df59a1-a36f-43d2-9ceb-c3dee4cac71a.png",
       "PackagePath": "staticwebassets\\uploads\\f9df59a1-a36f-43d2-9ceb-c3dee4cac71a.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f9f0f82c-fdbd-4c4c-8ac1-afca7864c932.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\f9f0f82c-fdbd-4c4c-8ac1-afca7864c932.png",
       "PackagePath": "staticwebassets\\uploads\\f9f0f82c-fdbd-4c4c-8ac1-afca7864c932.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\fb0561fb-26c2-4746-a820-74de1ac280a4.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\fb0561fb-26c2-4746-a820-74de1ac280a4.png",
       "PackagePath": "staticwebassets\\uploads\\fb0561fb-26c2-4746-a820-74de1ac280a4.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\fd0591b9-0bc8-4aa3-8422-3e098e731f26.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\fd0591b9-0bc8-4aa3-8422-3e098e731f26.png",
       "PackagePath": "staticwebassets\\uploads\\fd0591b9-0bc8-4aa3-8422-3e098e731f26.png"
     },
     {
-      "Id": "C:\\Users\\Lenovo\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ffa5c58a-b789-4af5-bc4d-c8b28b8e759e.png",
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\ffa5c58a-b789-4af5-bc4d-c8b28b8e759e.png",
       "PackagePath": "staticwebassets\\uploads\\ffa5c58a-b789-4af5-bc4d-c8b28b8e759e.png"
     },
     {

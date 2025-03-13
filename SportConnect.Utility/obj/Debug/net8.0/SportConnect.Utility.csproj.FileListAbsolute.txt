@@ -11,3 +11,16 @@ C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\refint\SportConnect.Utility.dll
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.pdb
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\ref\SportConnect.Utility.dll
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Utility\bin\Debug\net8.0\SportConnect.Utility.deps.json
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Utility\bin\Debug\net8.0\SportConnect.Utility.dll
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Utility\bin\Debug\net8.0\SportConnect.Utility.pdb
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.csproj.AssemblyReference.cache
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.AssemblyInfoInputs.cache
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.AssemblyInfo.cs
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.csproj.CoreCompileInputs.cache
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.sourcelink.json
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.dll
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\refint\SportConnect.Utility.dll
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\SportConnect.Utility.pdb
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Utility\obj\Debug\net8.0\ref\SportConnect.Utility.dll

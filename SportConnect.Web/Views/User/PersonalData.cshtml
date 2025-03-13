@@ -1,5 +1,5 @@
 ﻿@using SportConnect.Models
-@model SportConnectUserEditViewModel
+@model EditUserViewModel
 
 <style>
     /* Scope styles to this specific view */
@@ -163,7 +163,7 @@
 
                 <div class="d-flex justify-content-between">
                     <p class="fw-bold">Дата на раждане</p>
-                    <p>@Model.DateOfBirth.Value.Date.ToString("dd/MM/yyyy")</p>
+                    <p>@Model.DateOfBirth</p>
                 </div>
 
                 <div class="d-flex justify-content-between">

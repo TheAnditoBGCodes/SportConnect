@@ -1,85 +1,82 @@
 ﻿@using SportConnect.Web.Models
-@model SportDeletionViewModel
+@model SportViewModel
 
 <style>
-    /* Ensure modal content does not overflow */
+    /* Modal adjustments */
     .modal-body {
-        overflow: hidden; /* Hide any overflow */
+        overflow: hidden;
     }
 
-    /* Make sure the image scales to fit the container */
-    #cropImage {
+    /* Profile image styling */
+    .profile-image {
         width: 100%;
-        height: 100%;
-        object-fit: cover; /* Ensures image will cover the container without leaving black bars */
+        max-width: 500px; /* Increased max-width */
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
     }
 
-    /* Hide any overflow if the crop container goes out of bounds */
-    #cropContainer {
-        width: 100%;
-        height: 100%;
-        overflow: hidden; /* Prevents overflow of cropped image */
+    /* Confirm input */
+    .confirm-delete-input {
+        max-width: 110px;
+        height: 30.6px;
     }
 
-    /* Modal footer for buttons */
-    .modal-footer {
+    p {
+        margin-bottom: 0px;
+    }
+
+    main.pb-3 {
+        padding-bottom: 0px !important;
+        min-height: 83vh;
+        align-content: center;
+    }
+
+    /* Button Group */
+    .delete-btn-group {
         display: flex;
-        justify-content: space-between; /* Align buttons to opposite sides */
+        justify-content: space-between;
+        align-items: center;
     }
-
-    .cropper-drag-box {
-        opacity: 50%;
-    }
-
-    #previewImage {
-        height: auto; /* Maintains aspect ratio */
-        display: block; /* Makes sure the image is block-level, so it doesn't cause any inline formatting issues */
-        margin: 0 auto; /* Centers the image horizontally */
-    }
-
-    .container main {
-        min-height: 83vh !important;
-        padding-bottom: 0px !important;
-        align-content: center !important;
-    }
-
-    div.container.main.pb-3 {
-        align-content: center;
-        padding-bottom: 0px !important;
-    }
-
+    /* Container for form centering */
     .container.text-center {
-        align-content: center;
-        padding-bottom: 0px !important;
+        display: flex;
+        justify-content: center; /* Centers the form horizontally */
+    }
+
+    .delete-header {
+        font-size: 24px; /* Increased header font size */
+    }
+
+    /* Margin adjustments for form elements */
+    .mb-2 {
+        margin-bottom: 20px;
     }
 </style>
-<div class="container text-center" style="max-width: 55%;">
-    <form method="post" class="p-3">
-        <h2 class="text-center" style="font-size: 2rem;">Изтрий спорт</h2>
-        <!-- Image centered and made bigger -->
+
+<div class="container text-center">
+    <form method="post" class="delete-profile-form" style="width: 500px; justify-self: center;">
+        <h2 class="delete-header">Изтрий спорт</h2>
+        <!-- Profile Image -->
         <div class="mb-2">
-            <img src="@Model.ImageUrl" class="img-fluid" alt="@Model.Name"
-                 style="width: 80%; max-width: 500px; aspect-ratio: 4 / 3; object-fit: cover;">
+            <img src="@Model.ImageUrl" class="profile-image" alt="@Model.Name">
         </div>
 
-        <div class="col mb-2">
-            <div class="row mb-2">
-                <h3 class="card-title text-center fw-bold mb-2">@Model.Name</h3>
-            </div>
-            <div class="row mb-2">
-                <p class="card-text text-center">@Model.Description</p>
-            </div>
+        <!-- User Info -->
+        <div class="mb-2">
+            <h3 class="fw-bold">@Model.Name</h3>
         </div>
-
-        <div class="d-flex justify-content-between align-items-center gap-2">
-            <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary" style="font-size: 1rem; width: 120px;">Назад</a>
-
+        <!-- Confirm Delete and Action Buttons -->
+        <div class="d-flex justify-content-between align-items-center gap-2 w-100">
+            <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary btn-sm">
+                Назад
+            </a>
             <div class="d-flex align-items-center gap-1">
-                <span class="text-danger fw-bold" style="font-size: 1rem;">ПОТВЪРДИ ИЗТРИВАНЕ:</span>
-                <input type="text" class="form-control text-center" id="confirmDelete" name="ConfirmText" placeholder="ПОТВЪРДИ" required style="font-size: 1rem; width: 120px; height: 32px; padding: 2px 5px;" />
+                <span class="text-danger fw-bold">ПОТВЪРДИ ИЗТРИВАНЕ:</span>
+                <input type="text" class="form-control text-center" id="confirmDelete" name="ConfirmText" placeholder="ПОТВЪРДИ" style="width: 110px;" required />
             </div>
-
-            <button type="submit" class="btn btn-danger" style="font-size: 1rem; width: 120px;">Изтрий</button>
+            <button type="submit" class="btn btn-danger btn-sm">
+                Изтрий
+            </button>
         </div>
     </form>
 </div>

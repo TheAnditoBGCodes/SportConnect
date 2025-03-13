@@ -1,57 +1,73 @@
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
+using SportConnect.DataAccess;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
+using SportConnect.Services;
 using SportConnect.Utility;
 using SportConnect.Web.Models;
+using System.ComponentModel.DataAnnotations;
 using System.Composition;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
+using System.Net.Http;
+using System.Text.Json;
+using static Azure.Core.HttpHeader;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SportConnect.Web.Controllers
 {
     public class UserController : Controller
     {
+        private readonly HttpClient _httpClient;
         private readonly ILogger<UserController> _logger;
         private readonly UserManager<SportConnectUser> _userManager;
         public IRepository<Participation> _participationRepository;
         private readonly SignInManager<SportConnectUser> _signInManager;
-        private static readonly string RestCountriesApiUrl = "https://restcountries.com/v3.1/all";
         public IRepository<SportConnectUser> _repository { get; set; }
+        private readonly Cloudinary _cloudinary;
+        private readonly CloudinaryService _cloudinaryService;
+        private readonly SportConnectDbContext _context;
 
-        public UserController(ILogger<UserController> logger, UserManager<SportConnectUser> userManager, IRepository<Participation> participationRepository, SignInManager<SportConnectUser> signInManager, IRepository<SportConnectUser> repository)
+        public UserController(HttpClient httpClient, ILogger<UserController> logger, UserManager<SportConnectUser> userManager, IRepository<Participation> participationRepository, SignInManager<SportConnectUser> signInManager, IRepository<SportConnectUser> repository, Cloudinary cloudinary, CloudinaryService cloudinaryService, SportConnectDbContext context)
         {
+            _httpClient = httpClient;
             _logger = logger;
             _userManager = userManager;
             _participationRepository = participationRepository;
             _signInManager = signInManager;
             _repository = repository;
+            _cloudinary = cloudinary;
+            _cloudinaryService = cloudinaryService;
+            _context = context;
         }
 
-        private async Task<SelectList> GetCountriesAsync()
+        private async Task<List<SelectListItem>> GetAllCountries()
         {
-            using (HttpClient client = new HttpClient())
+            var response = await _httpClient.GetStringAsync("https://restcountries.com/v3.1/all");
+            var countries = System.Text.Json.JsonSerializer.Deserialize<List<CountryResponse>>(response, new JsonSerializerOptions
             {
-                var response = await client.GetStringAsync(RestCountriesApiUrl);
-                var countries = JsonConvert.DeserializeObject<List<Country>>(response);
-
-                var orderedCountries = countries.OrderBy(c => c.Name.Common)
-                                                 .Select(c => new SelectListItem
-                                                 {
-                                                     Value = c.Name.Common,
-                                                     Text = c.Name.Common
-                                                 });
-
-                // Return a SelectList, not IEnumerable<SelectListItem>
-                return new SelectList(orderedCountries, "Value", "Text");
-            }
+                PropertyNameCaseInsensitive = true
+            });
+            return countries?
+                .OrderBy(c => c.Name.Common)
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Name.Common,
+                    Text = c.Name.Common
+                }).ToList() ?? new List<SelectListItem>();
         }
+
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public async Task<IActionResult> EditUser(string id, string returnUrl = null)
         {
@@ -61,17 +77,18 @@ namespace SportConnect.Web.Controllers
             var editedUser = _repository.GetUserById(id);
             var names = editedUser.FullName.Split(' ').ToList();
 
-            var model = new SportConnectUserEditViewModel();
+            var model = new EditUserViewModel();
             if (id == currentUser.Id)
             {
-                model = new SportConnectUserEditViewModel()
+                model = new EditUserViewModel()
                 {
                     Id = id,
                     UserName = editedUser.UserName,
                     FirstName = names[0],
+                    Email = editedUser.Email,
                     LastName = names[1],
                     Country = editedUser.Country,
-                    CountryList = await GetCountriesAsync(),
+                    CountryList = await GetAllCountries(),
                     PhoneNumber = editedUser.PhoneNumber,
                     DateOfBirth = editedUser.DateOfBirth,
                     ProfileImage = editedUser.ImageUrl
@@ -79,7 +96,7 @@ namespace SportConnect.Web.Controllers
             }
             else
             {
-                model = new SportConnectUserEditViewModel()
+                model = new EditUserViewModel()
                 {
                     Id = id,
                     UserName = editedUser.UserName,
@@ -89,139 +106,218 @@ namespace SportConnect.Web.Controllers
                 };
             }
 
+            // Save returnUrl in ViewBag
             ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllSports", "Sport"); // Default fallback
             return View(model);
         }
 
+        private bool IsValidUsername(string username)
+        {
+            // Define the allowed characters (same as in Identity configuration)
+            var allowedCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
+            foreach (var c in username)
+            {
+                if (!allowedCharacters.Contains(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         [HttpPost]
-        public async Task<IActionResult> EditUser(SportConnectUserEditViewModel user, string returnUrl = null)
+        public async Task<IActionResult> EditUser(EditUserViewModel user, IFormFile? file, string returnUrl = null)
         {
             var currentUser = await _userManager.GetUserAsync(this.User);
             ViewBag.UserId = currentUser.Id;
-
-            var editedUser = _repository.GetUserById(user.Id);
-
             if (user.Id == currentUser.Id)
             {
-                if (_repository.GetAll().Any(s => s.UserName == user.UserName && s.Id != user.Id))
+                if (string.IsNullOrWhiteSpace(user.Email))
                 {
-                    ModelState.AddModelError("UserName", "��������������� ��� � �����.");
+                    ModelState.AddModelError("Email", "Моля, въведете имейл.");
+                }
+                else if (!new EmailAddressAttribute().IsValid(user.Email))
+                {
+                    ModelState.AddModelError("Email", "Невалиден имейл.");
                 }
 
-                if (_repository.GetAll().Any(s => s.PhoneNumber == user.PhoneNumber && s.Id != user.Id))
+                if (string.IsNullOrWhiteSpace(user.UserName))
                 {
-                    ModelState.AddModelError("PhoneNumber", "���� ��������� ����� ���� � ������� � ���� ������.");
+                    ModelState.AddModelError("UserName", "Моля, въведете потребителско име.");
+                }
+                else if (user.UserName.Length < 5 || user.UserName.Length > 100)
+                {
+                    ModelState.AddModelError("UserName", "Tрябва да е от 5 до 100 символа.");
+                }
+                else if (_repository.GetAll().Any(s => s.UserName == user.UserName && s.Id != user.Id))
+                {
+                    ModelState.AddModelError("UserName", "Потребителското име е заето.");
+                }
+                else if (!IsValidUsername(user.UserName))
+                {
+                    ModelState.AddModelError("UserName", "Потребителското име може да съдържа само малки букви и цифри.");
                 }
 
-                if (ModelState.IsValid)
+                if (string.IsNullOrWhiteSpace(user.FirstName))
                 {
-                    editedUser.Id = user.Id;
-                    editedUser.UserName = user.UserName;
-                    editedUser.FullName = $"{user.FirstName} {user.LastName}";
-                    editedUser.Country = user.Country;
-                    editedUser.PhoneNumber = user.PhoneNumber;
-                    editedUser.DateOfBirth = (DateTime)user.DateOfBirth.Value.Date;
-                    editedUser.ImageUrl = user.ProfileImage;
-
-                    var updateResult = await _userManager.UpdateAsync(editedUser);
-
-                    if (!updateResult.Succeeded)
-                    {
-                        foreach (var error in updateResult.Errors)
-                        {
-                            ModelState.AddModelError("", error.Description);
-                        }
-                        user.CountryList = await GetCountriesAsync();
-                        return View(user);
-                    }
-
-                    await _signInManager.RefreshSignInAsync(editedUser);
-
-                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                    {
-                        return Redirect(returnUrl);
-                    }
-
-                    var referrer = Request.Headers["Referer"].ToString();
-
-                    if (User.IsInRole(SD.AdminRole))
-                    {
-                        if (referrer.Contains("PersonalData"))
-                        {
-                            return RedirectToAction("PersonalDataAdmin");
-                        }
-                        else
-                        {
-                            return RedirectToAction("AllUsers");
-                        }
-                    }
-                    return RedirectToAction("PersonalData");
+                    ModelState.AddModelError("FirstName", "Моля, въведете първото си име.");
                 }
-                else
+                else if (user.FirstName.Length < 2 || user.FirstName.Length > 100)
                 {
-                    user.CountryList = await GetCountriesAsync();
+                    ModelState.AddModelError("FirstName", "Tрябва да е от 2 до 100 символа.");
+                }
+
+                if (string.IsNullOrWhiteSpace(user.LastName))
+                {
+                    ModelState.AddModelError("LastName", "Моля, въведете фамилното си име.");
+                }
+                else if (user.LastName.Length < 2 || user.LastName.Length > 100)
+                {
+                    ModelState.AddModelError("LastName", "Tрябва да е от 2 до 100 символа.");
+                }
+
+                if (!user.DateOfBirth.HasValue)
+                {
+                    ModelState.AddModelError("DateOfBirth", "Моля, въведете своята дата на раждане.");
+                }
+
+                if (string.IsNullOrWhiteSpace(user.Country))
+                {
+                    ModelState.AddModelError("Country", "Моля, въведете държава.");
+                }
+
+                if (string.IsNullOrWhiteSpace(user.PhoneNumber))
+                {
+                    ModelState.AddModelError("PhoneNumber", "Моля, въведете телефонен номер.");
+                }
+                else if (!new PhoneAttribute().IsValid(user.PhoneNumber))
+                {
+                    ModelState.AddModelError("PhoneNumber", "Невалиден телефонен номер.");
+                }
+
+                if (!ModelState.IsValid)
+                {
                     return View(user);
                 }
-            }
-            else
-            {
-                if (_repository.GetAll().Any(s => s.UserName == user.UserName && s.Id != user.Id))
+
+                // Retrieve the user entity to update
+                var editedUser = _repository.GetUserById(user.Id);
+
+                if (editedUser == null)
                 {
-                    ModelState.AddModelError("UserName", "��������������� ��� � �����.");
+                    ModelState.AddModelError(string.Empty, "User not found.");
+                    return View(user);
                 }
+
+                // Update the user properties from the model
+                editedUser.UserName = user.UserName;
+                editedUser.ImageUrl = user.ProfileImage;
+                editedUser.FullName = $"{user.FirstName} {user.LastName}";
+                editedUser.Email = user.Email;
+                editedUser.Country = user.Country;
+                editedUser.PhoneNumber = user.PhoneNumber;
+                editedUser.DateOfBirth = user.DateOfBirth.Value.Date;
 
                 if (ModelState.IsValid)
                 {
-                    editedUser.Id = user.Id;
-                    editedUser.UserName = user.UserName;
-                    editedUser.FullName = $"{user.FirstName} {user.LastName}";
-                    editedUser.ImageUrl = user.ProfileImage;
+                    var result = await _userManager.UpdateAsync(editedUser);
 
-                    var updateResult = await _userManager.UpdateAsync(editedUser);
-
-                    if (!updateResult.Succeeded)
+                    if (result.Succeeded)
                     {
-                        foreach (var error in updateResult.Errors)
+                        await _context.SaveChangesAsync(); // Save changes if necessary
+
+                        // Redirect based on returnUrl
+                        if (!string.IsNullOrEmpty(returnUrl))
                         {
-                            ModelState.AddModelError("", error.Description);
+                            return Redirect(returnUrl);
                         }
-                        user.CountryList = await GetCountriesAsync();
-                        return View(user);
-                    }
-
-                    await _signInManager.RefreshSignInAsync(editedUser);
-
-                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                    {
-                        return Redirect(returnUrl);
-                    }
-
-                    var referrer = Request.Headers["Referer"].ToString();
-
-                    if (referrer.Contains("PersonalData"))
-                    {
-                        return RedirectToAction("PersonalData");
-                    }
-                    else
-                    {
                         return RedirectToAction("AllUsers");
                     }
                 }
-                else
+
+                return View(user);
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(user.UserName))
                 {
-                    user.CountryList = await GetCountriesAsync();
+                    ModelState.AddModelError("UserName", "Моля, въведете потребителско име.");
+                }
+                else if (user.UserName.Length < 5 || user.UserName.Length > 100)
+                {
+                    ModelState.AddModelError("UserName", "Tрябва да е от 5 до 100 символа.");
+                }
+                else if (_repository.GetAll().Any(s => s.UserName == user.UserName && s.Id != user.Id))
+                {
+                    ModelState.AddModelError("UserName", "Потребителското име е заето.");
+                }
+                else if (!IsValidUsername(user.UserName))
+                {
+                    ModelState.AddModelError("UserName", "Потребителското име може да съдържа само малки букви и цифри.");
+                }
+
+                if (string.IsNullOrWhiteSpace(user.FirstName))
+                {
+                    ModelState.AddModelError("FirstName", "Моля, въведете първото си име.");
+                }
+                else if (user.FirstName.Length < 2 || user.FirstName.Length > 100)
+                {
+                    ModelState.AddModelError("FirstName", "Tрябва да е от 2 до 100 символа.");
+                }
+
+                if (string.IsNullOrWhiteSpace(user.LastName))
+                {
+                    ModelState.AddModelError("LastName", "Моля, въведете фамилното си име.");
+                }
+                else if (user.LastName.Length < 2 || user.LastName.Length > 100)
+                {
+                    ModelState.AddModelError("LastName", "Tрябва да е от 2 до 100 символа.");
+                }
+
+                if (!ModelState.IsValid)
+                {
                     return View(user);
                 }
+
+                // Retrieve the user entity to update
+                var editedUser = _repository.GetUserById(user.Id);
+
+                if (editedUser == null)
+                {
+                    ModelState.AddModelError(string.Empty, "User not found.");
+                    return View(user);
+                }
+
+                // Update the user properties from the model
+                editedUser.UserName = user.UserName;
+                editedUser.ImageUrl = user.ProfileImage;
+                editedUser.FullName = $"{user.FirstName} {user.LastName}";
+
+                // Check if all the fields are valid
+                if (ModelState.IsValid)
+                {
+                    // Update the user in the identity database
+                    var result = await _userManager.UpdateAsync(editedUser);
+
+                    if (result.Succeeded)
+                    {
+                        // Save changes if Identity update is successful
+                        await _context.SaveChangesAsync(); // Ensure this is for the changes in your repository if needed
+                        return RedirectToAction("AllUsers");
+                    }
+                }
+
+                // If model state is invalid, return the view with the errors
+                return View(user);
             }
         }
-
+            
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public IActionResult PersonalData()
         {
             var user = _userManager.GetUserAsync(this.User).Result;
             var names = user.FullName.Split(' ').ToList();
-            var model = new SportConnectUserEditViewModel()
+            var model = new EditUserViewModel()
             {
                 Id = user.Id,
                 UserName = user.UserName,
@@ -265,60 +361,74 @@ namespace SportConnect.Web.Controllers
             var model = _repository.GetAll();
             return View(model.ToList());
         }
-
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public async Task<IActionResult> DeleteUser(string id, string returnUrl = null)
         {
             var currentUser = await _userManager.GetUserAsync(this.User);
             ViewBag.UserId = currentUser.Id;
 
-            var deletedUser = _repository.GetUserById(id);
-            var names = deletedUser.FullName.Split(' ').ToList();
+            var editedUser = _repository.GetUserById(id);
+            var names = editedUser.FullName.Split(' ').ToList();
 
-            var model = new SportConnectUserEditViewModel();
+            var model = new EditUserViewModel();
             if (id == currentUser.Id)
             {
-                model = new SportConnectUserEditViewModel()
+                model = new EditUserViewModel()
                 {
                     Id = id,
-                    UserName = deletedUser.UserName,
+                    UserName = editedUser.UserName,
                     FirstName = names[0],
+                    Email = editedUser.Email,
                     LastName = names[1],
-                    Country = deletedUser.Country,
-                    Email = deletedUser.Email,
-                    CountryList = await GetCountriesAsync(),
-                    PhoneNumber = deletedUser.PhoneNumber,
-                    DateOfBirth = deletedUser.DateOfBirth,
-                    ProfileImage = deletedUser.ImageUrl
+                    Country = editedUser.Country,
+                    CountryList = await GetAllCountries(),
+                    PhoneNumber = editedUser.PhoneNumber,
+                    DateOfBirth = editedUser.DateOfBirth,
+                    ProfileImage = editedUser.ImageUrl
                 };
             }
             else
             {
-                model = new SportConnectUserEditViewModel()
+                model = new EditUserViewModel()
                 {
                     Id = id,
-                    UserName = deletedUser.UserName,
+                    UserName = editedUser.UserName,
                     FirstName = names[0],
                     LastName = names[1],
-                    ProfileImage = deletedUser.ImageUrl
+                    ProfileImage = editedUser.ImageUrl
                 };
             }
 
+            // Save returnUrl in ViewBag
             ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllSports", "Sport"); // Default fallback
             return View(model);
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         [HttpPost]
-        public async Task<IActionResult> DeleteUser(string ConfirmText, SportConnectUserEditViewModel user, string returnUrl = null)
+        public async Task<IActionResult> DeleteUser(string ConfirmText, EditUserViewModel user, string returnUrl = null)
         {
-            if (ConfirmText == "��������")
+            var deletedUser = _repository.GetUserById(user.Id);
+            List<string> names = new List<string>();
+
+            if (deletedUser == null)
+            {
+                ModelState.AddModelError(string.Empty, "User not found.");
+                names = deletedUser.FullName.Split(' ').ToList();
+                user.UserName = deletedUser.UserName;
+                user.FirstName = names[0];
+                user.LastName = names.Count > 1 ? names[1] : "";
+                user.ProfileImage = deletedUser.ImageUrl;
+
+                ViewBag.ReturnUrl = returnUrl;
+
+                return View(user);
+            }
+
+            if (ConfirmText == "ПОТВЪРДИ")
             {
                 var currentUser = await _userManager.GetUserAsync(this.User);
                 ViewBag.UserId = currentUser.Id;
-
-                var deletedUser = _repository.GetUserById(user.Id);
-
                 if (user.Id == currentUser.Id)
                 {
                     var result = await _userManager.DeleteAsync(deletedUser);
@@ -335,11 +445,13 @@ namespace SportConnect.Web.Controllers
                 }
                 else
                 {
+                    // Force sign out the other user after deleted
+
                     var result = await _userManager.DeleteAsync(deletedUser);
 
                     if (result.Succeeded)
                     {
-                        await _signInManager.SignOutAsync();
+                        await _userManager.UpdateSecurityStampAsync(deletedUser);
                         return RedirectToAction("AllUsers");
                     }
                     else if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
@@ -348,6 +460,14 @@ namespace SportConnect.Web.Controllers
                     }
                 }
             }
+            ModelState.AddModelError(string.Empty, "User not found.");
+            names = deletedUser.FullName.Split(' ').ToList();
+            user.UserName = deletedUser.UserName;
+            user.FirstName = names[0];
+            user.LastName = names.Count > 1 ? names[1] : "";
+            user.ProfileImage = deletedUser.ImageUrl;
+
+            ViewBag.ReturnUrl = returnUrl;
             return View(user);
         }
 

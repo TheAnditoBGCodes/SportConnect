@@ -15,6 +15,24 @@
         object-fit: cover; /* Ensures image will cover the container without leaving black bars */
     }
 
+    .sport-btn {
+        flex: 1; /* Makes all buttons equal in size */
+        max-width: 95px; /* Adjust width */
+        font-size: 14px; /* Adjust font size */
+    }
+
+    .sport-btn-user {
+        flex: 1; /* Makes all buttons equal in size */
+        max-width: 100%; /* Adjust width */
+        padding: 5px 8px; /* Thinner buttons */
+        font-size: 14px; /* Adjust font size */
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: space-around; /* Ensures equal spacing */
+        gap: 10px; /* Uniform spacing between buttons */
+    }
     /* Hide any overflow if the crop container goes out of bounds */
     #cropContainer {
         width: 100%;
@@ -48,6 +66,10 @@
             padding-bottom: 0px !important;
         }
 
+    .btn-group.d-flex.justify-content-between {
+        width: 100% !important;
+    }
+
     .sticky-search {
         position: sticky;
         top: 60px; /* Adjust based on your header height */
@@ -56,6 +78,22 @@
         padding: 10px 0;
     }
 
+    #sportItem {
+        width: 100%;
+        max-width: 390px; /* Adjusts the max size of cards */
+        height: auto; /* Ensures content adapts dynamically */
+        min-height: 414.3px;
+    }
+
+    .sport-img {
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .delete-header {
+        padding-top: 10px; /* Adds space between the title and top */
+    }
 </style>
 
 <script>
@@ -63,7 +101,7 @@
         const header = document.querySelector(".navbar");
         const searchBar = document.querySelector(".sticky-search");
         if (header && searchBar) {
-            searchBar.style.top = ${header.offsetHeight}px;
+            searchBar.style.top = `${header.offsetHeight}px`;
         }
 
         const cardItems = document.querySelectorAll('[id^="sportItem"]');
@@ -97,25 +135,49 @@
             mainElement.classList.remove('pb-3');
             mainElement.classList.add('align-content-center');
         }
-    });
 
-    function filterSports() {
-        const searchValue = document.getElementById("sportSearch").value.toLowerCase();
-        const sportsList = document.getElementById("sportsList").getElementsByClassName("sport-item");
-        let found = false;
+        function matchCardHeights() {
+            let sportItems = document.querySelectorAll('.sport-item:not(.add-sport-card)');
+            let addSportCard = document.querySelector('.add-sport-card');
 
-        for (let i = 0; i < sportsList.length; i++) {
-            const sportItem = sportsList[i];
-            const sportName = sportItem.getElementsByClassName("card-title")[0].innerText.toLowerCase();
+            if (sportItems.length > 0 && addSportCard) {
+                // Find the tallest sport card
+                let maxHeight = 0;
+                sportItems.forEach(item => {
+                    maxHeight = Math.max(maxHeight, item.offsetHeight);
+                });
 
-            if (sportName.includes(searchValue)) {
-                sportItem.style.display = "";
-                found = true;
-            } else {
-                sportItem.style.display = "none";
+                // Apply max height to Add Sport card
+                addSportCard.style.height = maxHeight + "px";
             }
         }
-    }
+
+        matchCardHeights();
+        window.addEventListener("resize", matchCardHeights);
+
+        // Function for dynamic search filtering
+        function filterSports() {
+            const searchValue = document.getElementById("sportSearch").value.toLowerCase(); // Convert search input to lowercase
+            const sportsList = document.getElementById("sportsList").getElementsByClassName("sport-item"); // Corrected to use getElementsByClassName
+
+            for (let i = 0; i < sportsList.length; i++) {
+                const sportItem = sportsList[i];
+                const sportNameElement = sportItem.querySelector(".fw-bold"); // Select the name element directly
+                const sportName = sportNameElement ? sportNameElement.innerText.toLowerCase() : ''; // Safely access the name and convert it to lowercase
+
+                // If the name matches the search value, show the item, otherwise hide it
+                if (sportName.includes(searchValue)) {
+                    sportItem.style.display = ""; // Show
+                } else {
+                    sportItem.style.display = "none"; // Hide
+                }
+            }
+        }
+
+        // Bind the filterSports function to the input event of the search bar
+        document.getElementById("sportSearch").addEventListener("input", filterSports);
+    });
+
 </script>
 
 @if (User.IsInRole(SD.AdminRole))
@@ -135,6 +197,7 @@
     {
         <div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 83vh;">
             <div class="container">
+                <h2 class="delete-header mb-0 text-center">Спортове</h2>
                 <!-- Thinner search box -->
                 <div class="justify-content-center align-items-center sticky-search mb-3 mt-1">
                     <form method="post" class="d-flex justify-content-center">
@@ -146,24 +209,24 @@
                 <div class="row justify-content-center align-content-center" id="sportsList">
                     @foreach (var item in Model)
                     {
-                        <div id="sportItem" class="col-lg-4 col-md-6 col-12 mb-3 sport-item" style="transition: transform 0.3s ease;">
-                            <div class="card" style="width: 100%; height: 100%;">
-                                <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" style="aspect-ratio: 4 / 3; object-fit: cover;">
+                        <div id="sportItem" class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3 sport-item text-center" style="transition: transform 0.3s ease;">
+                            <div class="card sport-card">
+                                <img src="@item.ImageUrl" class="card-img-top sport-img" alt="@item.Name">
                                 <div class="card-body">
-                                    <h3 class="card-title text-center fw-bold">@item.Name</h3>
-                                    <p class="card-text text-center">@item.Description</p>
-                                    <div class="btn-group d-flex justify-content-between w-100">
-                                        <a asp-controller="Sport" asp-action="EditSport" asp-route-id="@item.Id" class="btn btn-warning btn-sm text-white text-center">Промени</a>
-                                        <a asp-controller="Sport" asp-action="DeleteSport" asp-route-id="@item.Id" class="btn btn-danger btn-sm text-center">Изтрий</a>
-                                        <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" class="btn btn-primary btn-sm text-center">Турнири</a>
+                                    <h3 class="fw-bold">@item.Name</h3>
+                                    <p>@item.Description</p>
+                                    <div class="btn-group d-flex justify-content-between">
+                                        <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" class="btn btn-primary btn-sm sport-btn">Турнири</a>
+                                        <a asp-controller="Sport" asp-action="EditSport" asp-route-id="@item.Id" class="btn btn-warning btn-sm text-white sport-btn">Редактирай</a>
+                                        <a asp-controller="Sport" asp-action="DeleteSport" asp-route-id="@item.Id" class="btn btn-danger btn-sm sport-btn">Изтрий</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     }
-                    <!-- Add Sport Card -->
-                    <div id="sportItem" class="col-lg-4 col-md-6 col-12 mb-3 sport-item add-sport-card" style="transition: transform 0.3s ease;">
-                        <div class="card" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+
+                    <div id="sportItem" class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3 sport-item text-center" style="transition: transform 0.3s ease;">
+                        <div class="card sport-card" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
                             <div class="card-body p-0 d-flex justify-content-center align-items-center" style="height: 100%; width: 100%;">
                                 <a asp-action="AddSport" asp-controller="Sport" class="btn btn-success btn-lg text-white w-100 h-100 d-flex justify-content-center align-items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -192,6 +255,7 @@ else
     {
         <div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 83vh;">
             <div class="container">
+                <h2 class="delete-header mb-0 text-center">Спортове</h2>
                 <!-- Thinner search box -->
                 <div class="justify-content-center align-items-center sticky-search mb-3 mt-1">
                     <form method="post" class="d-flex justify-content-center">
@@ -203,14 +267,14 @@ else
                 <div class="row justify-content-center align-content-center" id="sportsList">
                     @foreach (var item in Model)
                     {
-                        <div id="sportItem" class="col-lg-4 col-md-6 col-12 mb-3 sport-item" style="transition: transform 0.3s ease;">
-                            <div class="card" style="width: 100%; height: 100%;">
-                                <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" style="aspect-ratio: 4 / 3; object-fit: cover;">
+                        <div id="sportItem" class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3 sport-item text-center" style="transition: transform 0.3s ease;">
+                            <div class="card sport-card">
+                                <img src="@item.ImageUrl" class="card-img-top sport-img" alt="@item.Name">
                                 <div class="card-body">
-                                    <h3 class="card-title text-center fw-bold">@item.Name</h3>
-                                    <p class="card-text text-center">@item.Description</p>
-                                    <div class="btn-group d-flex justify-content-between w-100">
-                                        <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" class="btn btn-primary btn-sm text-center">Турнири</a>
+                                    <h3 class="fw-bold">@item.Name</h3>
+                                    <p>@item.Description</p>
+                                    <div class="btn-group d-flex justify-content-between">
+                                        <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" class="btn btn-primary btn-sm sport-btn-user text-center">Турнири</a>
                                     </div>
                                 </div>
                             </div>

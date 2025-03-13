@@ -1,6 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
+﻿#nullable disable
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +9,6 @@ using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
-using CloudinaryDotNet.Actions;
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -22,56 +19,57 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
+using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.DataAccess;
 using SportConnect.Models;
-using SportConnect.Utility;
 using SportConnect.Services;
-using Newtonsoft.Json;
-using System.Diagnostics.Metrics;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using SportConnect.Utility;
+using System.Text.Json;
 
 namespace SportConnect.Web.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-
+        private readonly IRepository<SportConnectUser> _repository;
+        private readonly HttpClient _httpClient;
         private SportConnectDbContext _context;
         private readonly SignInManager<SportConnectUser> _signInManager;
         private readonly UserManager<SportConnectUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IUserStore<SportConnectUser> _userStore;
         private readonly IUserEmailStore<SportConnectUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly Cloudinary _cloudinary;
         private readonly CloudinaryService _cloudinaryService;
-        private static readonly string RestCountriesApiUrl = "https://restcountries.com/v3.1/all";
+        private readonly IUserStore<SportConnectUser> _userStore;
 
-        public RegisterModel(Cloudinary cloudinary, SportConnectDbContext context,
-            UserManager<SportConnectUser> userManager,
-            IUserStore<SportConnectUser> userStore,
+        public RegisterModel(
+            IRepository<SportConnectUser> repository,
+            HttpClient httpClient,
+            SportConnectDbContext context,
             SignInManager<SportConnectUser> signInManager,
-            ILogger<RegisterModel> logger,
+            UserManager<SportConnectUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IEmailSender emailSender, CloudinaryService cloudinaryService)
+            ILogger<RegisterModel> logger,
+            IEmailSender emailSender,
+            Cloudinary cloudinary,
+            CloudinaryService cloudinaryService,
+            IUserStore<SportConnectUser> userStore) // Add IUserStore<SportConnectUser> here
         {
-            _cloudinary = cloudinary;
-            _userManager = userManager;
+            _repository = repository;
+            _httpClient = httpClient;
             _context = context;
-            _userStore = userStore;
-            _emailStore = (IUserEmailStore<SportConnectUser>)GetEmailStore();
             _signInManager = signInManager;
-            _emailSender = emailSender;
-            _logger = logger;
+            _userManager = userManager;
             _roleManager = roleManager;
+            _logger = logger;
             _emailSender = emailSender;
+            _cloudinary = cloudinary;
             _cloudinaryService = cloudinaryService;
+            _userStore = userStore; // Initialize directly
+            _emailStore = (IUserEmailStore<SportConnectUser>)_userStore; // Cast to IUserEmailStore
         }
-
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -96,6 +94,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+
         public class InputModel
         {
             /// <summary>
@@ -128,17 +127,17 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             public IEnumerable<SelectListItem> RoleList { get; set; } = new List<SelectListItem>();
 
             [Required(ErrorMessage = "Моля, въведете потребителско име.")]
-            [StringLength(100, ErrorMessage = "Потребителското име трябва да е от {2} до {1} символа", MinimumLength = 5)]
+            [StringLength(100, ErrorMessage = "Tрябва да е от {2} до {1} символа", MinimumLength = 5)]
             [Display(Name = "Потребителско име")]
             public string Username { get; set; }
 
             [Required(ErrorMessage = "Моля, въведете първото си име.")]
-            [StringLength(100, ErrorMessage = "Името трябва да е от {2} до {1} символа", MinimumLength = 2)]
+            [StringLength(100, ErrorMessage = "Tрябва да е от {2} до {1} символа", MinimumLength = 2)]
             [Display(Name = "Първо име")]
             public string FirstName { get; set; }
 
             [Required(ErrorMessage = "Моля, въведете фамилното си име.")]
-            [StringLength(100, ErrorMessage = "Фамилията трябва да е от {2} до {1} символа", MinimumLength = 2)]
+            [StringLength(100, ErrorMessage = "Tрябва да е от {2} до {1} символа", MinimumLength = 2)]
             [Display(Name = "Фамилия")]
             public string LastName { get; set; }
 
@@ -163,17 +162,20 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             public string ProfileImage { get; set; }
         }
 
-        private async Task<List<string>> GetCountriesAsync()
+        private async Task<List<SelectListItem>> GetAllCountries()
         {
-            using (HttpClient client = new HttpClient())
+            var response = await _httpClient.GetStringAsync("https://restcountries.com/v3.1/all");
+            var countries = System.Text.Json.JsonSerializer.Deserialize<List<CountryResponse>>(response, new JsonSerializerOptions
             {
-                var response = await client.GetStringAsync(RestCountriesApiUrl);
-                var countries = JsonConvert.DeserializeObject<List<Country>>(response);
-
-                return countries.OrderBy(c => c.Name.Common)
-                                .Select(c => c.Name.Common)
-                                .ToList();
-            }
+                PropertyNameCaseInsensitive = true
+            });
+            return countries?
+                .OrderBy(c => c.Name.Common)
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Name.Common,
+                    Text = c.Name.Common
+                }).ToList() ?? new List<SelectListItem>();
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -186,61 +188,92 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             {
                 await _roleManager.CreateAsync(new IdentityRole(SD.UserRole));
             }
-            var countries = await GetCountriesAsync();
+            var roles = _roleManager.Roles.Select(x => x.Name).ToList();
             Input = new()
             {
-                CountryList = countries.Select(y => new SelectListItem()
+                RoleList = roles.Select(y => new SelectListItem
                 {
                     Value = y,
-                    Text = y
-                }).ToList()
+                    Text = y,
+                }).ToList(),
+                CountryList = await GetAllCountries()
             };
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
+        private bool IsValidUsername(string username)
+        {
+            // Define the allowed characters (same as in Identity configuration)
+            var allowedCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
+            foreach (var c in username)
+            {
+                if (!allowedCharacters.Contains(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             string password = Input.Password;
-            bool passwordHasErrors = false;  // Flag to check if any password-related errors were found
+            bool passwordHasErrors = false;
 
-            // Check password validity
+            if (Input.Username != null)
+            {
+                if (_repository.GetAll().Any(s => s.UserName == Input.Username && s.Id != Input.Username))
+                {
+                    ModelState.AddModelError("Input.Username", "Заето.");
+                }
+
+                if (!IsValidUsername(Input.Username))
+                {
+                    ModelState.AddModelError("Input.Username", "Може да съдържа само малки букви и цифри.");
+                }
+            }
+
+            if (_repository.GetAll().Any(s => s.Email == Input.Email))
+            {
+                ModelState.AddModelError("Input.Email", "Заето.");
+            }
+
+            if (_repository.GetAll().Any(s => s.PhoneNumber == Input.PhoneNumber))
+            {
+                ModelState.AddModelError("Input.PhoneNumber", "Заето.");
+            }
+
             if (string.IsNullOrEmpty(password) || password.Length < 8)
             {
-                ModelState.AddModelError("", "");
-                ViewData["ShortPassword"] = "Паролата трябва да бъде поне 8 символа.";  // Send error to view via ViewData
+                ViewData["ShortPassword"] = "8 символа;";  // Send error to view via ViewData
                 passwordHasErrors = true;
             }
             else
             {
-                if(!password.Any(char.IsUpper))
+                if (!password.Any(char.IsUpper))
                 {
-                    ModelState.AddModelError("", "");
-                    ViewData["UpperPassword"] = "Паролата трябва да съдържа поне една главна буква.";  // Send error to view via ViewData
+                    ViewData["UpperPassword"] = "една главна буква;";  // Send error to view via ViewData
                     passwordHasErrors = true;
                 }
 
-                if (!password.Any(char.IsDigit))
+                if (!Input.Username.Any(char.IsDigit))
                 {
-                    ModelState.AddModelError("", "");
-                    ViewData["DigitPassword"] = "Паролата трябва да съдържа поне една цифра.";  // Send error to view via ViewData
+                    ViewData["DigitPassword"] = "една цифра;";  // Send error to view via ViewData
                     passwordHasErrors = true;
                 }
 
                 if (!password.Any(char.IsLower))
                 {
-                    ModelState.AddModelError("", "");
-                    ViewData["LowerPassword"] = "Паролата трябва да съдържа поне една малка буква.";  // Send error to view via ViewData
+                    ViewData["LowerPassword"] = "една малка буква;";  // Send error to view via ViewData
                     passwordHasErrors = true;
                 }
 
                 if (!password.Any(c => !char.IsLetterOrDigit(c)))
                 {
-                    ModelState.AddModelError("", "");
-                    ViewData["SpecialPassword"] = "Паролата трябва да съдържа поне един специален символ.";  // Send error to view via ViewData
+                    ViewData["SpecialPassword"] = "един специален символ;";  // Send error to view via ViewData
                     passwordHasErrors = true;
                 }
             }
@@ -256,6 +289,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 ModelState.AddModelError("", "");
                 ViewData["PleaseConfirm"] = "Моля потвърдете паролата.";
             }
+
             if (ModelState.IsValid)
             {
                 var user = new SportConnectUser
@@ -271,6 +305,8 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
+
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -281,7 +317,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, SD.UserRole);
+                        await _userManager.AddToRoleAsync(user, SD.AdminRole);
                     }
 
                     var userId = await _userManager.GetUserIdAsync(user);
@@ -312,12 +348,17 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 }
             }
 
-            var countries = await GetCountriesAsync();
-            Input.CountryList = countries.Select(y => new SelectListItem()
+
+            var roles = _roleManager.Roles.Select(x => x.Name).ToList();
+            Input = new()
             {
-                Value = y,
-                Text = y
-            }).ToList();
+                RoleList = roles.Select(y => new SelectListItem
+                {
+                    Value = y,
+                    Text = y,
+                }).ToList(),
+                CountryList = await GetAllCountries()
+            };
             ModelState.AddModelError("Input.ProfileImage", "Моля, качете профилна снимка.");
             return Page();
         }
@@ -347,12 +388,12 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
     }
 }
 
-public class Country
+class CountryResponse
 {
     public CountryName Name { get; set; }
 }
 
-public class CountryName
+class CountryName
 {
     public string Common { get; set; }
 }

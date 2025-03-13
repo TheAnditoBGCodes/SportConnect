@@ -20,13 +20,14 @@
         body {
             padding-top: 60px; /* Adjusted to prevent content from being hidden under the fixed header */
         }
-        
+
         .navbar-nav .nav-link,
         .footer a,
         .footer {
             font-size: 1rem !important; /* Ensure consistency across navbar and footer */
         }
-        .navbar-brand{
+
+        .navbar-brand {
             align-content: center !important;
             font-size: 1.4rem !important; /* Ensure consistency across navbar and footer */
             font-weight: bolder;
@@ -66,19 +67,34 @@
                         @if (User.IsInRole(SD.AdminRole))
                         {
                             <li class="nav-item d-flex align-content-center">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSports">Панел Спортове</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSports">Спортове</a>
                             </li>
                             <li class="nav-item d-flex align-content-center">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsAdmin">Панел Турнири</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournaments">Турнири</a>
                             </li>
                             <li class="nav-item d-flex align-content-center">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AllUsers">Панел Потребители</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AllUsers">Потребители</a>
                             </li>
                             <li class="nav-item d-flex align-content-center">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsMyAdmin">Мои турнири</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="MyTournaments">Мои турнири</a>
                             </li>
                             <li class="nav-item d-flex align-content-center">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="ParticipationsMy">Мои участия</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="MyParticipations">Мои участия</a>
+                            </li>
+                        }
+                        else if (User.IsInRole(SD.UserRole))
+                        {
+                            <li class="nav-item d-flex align-content-center">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSports">Спортове</a>
+                            </li>
+                            <li class="nav-item d-flex align-content-center">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournaments">Турнири</a>
+                            </li>
+                            <li class="nav-item d-flex align-content-center">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="MyTournaments">Мои турнири</a>
+                            </li>
+                            <li class="nav-item d-flex align-content-center">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="MyParticipations">Мои участия</a>
                             </li>
                         }
                         else
@@ -87,13 +103,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="AllSports">Спортове</a>
                             </li>
                             <li class="nav-item d-flex align-content-center">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsAdmin">Турнири</a>
-                            </li>
-                            <li class="nav-item d-flex align-content-center">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournamentsMy">Мои турнири</a>
-                            </li>
-                            <li class="nav-item d-flex align-content-center">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="ParticipationsMy">Мои участия</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="AllTournaments">Турнири</a>
                             </li>
                         }
                     </ul>

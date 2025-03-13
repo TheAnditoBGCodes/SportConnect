@@ -11,3 +11,16 @@ C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\refint\SportConnect.Services.dll
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\SportConnect.Services.pdb
 C:\Users\Lenovo\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\ref\SportConnect.Services.dll
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\bin\Debug\net8.0\SportConnect.Services.deps.json
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\bin\Debug\net8.0\SportConnect.Services.dll
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\bin\Debug\net8.0\SportConnect.Services.pdb
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\SportConnect.Services.csproj.AssemblyReference.cache
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\SportConnect.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\SportConnect.Services.AssemblyInfoInputs.cache
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\SportConnect.Services.AssemblyInfo.cs
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\SportConnect.Services.csproj.CoreCompileInputs.cache
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\SportConnect.Services.sourcelink.json
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\SportConnect.Services.dll
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\refint\SportConnect.Services.dll
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\SportConnect.Services.pdb
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\ref\SportConnect.Services.dll
