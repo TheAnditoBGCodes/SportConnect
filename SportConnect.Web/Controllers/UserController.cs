@@ -311,7 +311,7 @@ namespace SportConnect.Web.Controllers
                 return View(user);
             }
         }
-            
+
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public IActionResult PersonalData()
         {
@@ -356,11 +356,50 @@ namespace SportConnect.Web.Controllers
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult AllUsers()
+        public async Task<IActionResult> AllUsers(EditUserViewModel? filter)
         {
-            var model = _repository.GetAll();
-            return View(model.ToList());
+            if (filter == null)
+            {
+                return View(new EditUserViewModel());
+            }
+
+            var query = _repository.GetAll().AsQueryable();
+
+            // Filter by country if selected
+            if (!string.IsNullOrEmpty(filter.Country))
+            {
+                query = query.Where(p => p.Country == filter.Country);
+            }
+            // Filter by UserName or FullName if either contains the filter value, case-insensitive and trimming spaces
+            if (!string.IsNullOrEmpty(filter.UserName))
+            {
+                string trimmedFilter = filter.UserName.Trim().ToLower();
+
+                query = query.Where(p => p.UserName.Trim().ToLower().Contains(trimmedFilter) || p.FullName.Trim().ToLower().Contains(trimmedFilter));
+            }
+            // Filter users by the specified birth year
+            if (filter.BirthYear.HasValue)
+            {
+                // Filter users born in the selected year
+                query = query.Where(p => p.DateOfBirth.Year == filter.BirthYear);
+            }
+
+            // Get the list of countries for the dropdown
+            ViewBag.Countries = await GetAllCountries();
+
+            // Prepare the model with filtered data
+            var model = new EditUserViewModel
+            {
+                UserName = filter.UserName,
+                BirthYear = filter.BirthYear,
+                Country = filter.Country,
+                Users = _repository.GetAll().ToList(),
+                FilteredUsers = query.ToList(),
+            };
+
+            return View(model);
         }
+
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public async Task<IActionResult> DeleteUser(string id, string returnUrl = null)
         {
@@ -445,13 +484,12 @@ namespace SportConnect.Web.Controllers
                 }
                 else
                 {
-                    // Force sign out the other user after deleted
+		    await _userManager.UpdateSecurityStampAsync(deletedUser);
 
                     var result = await _userManager.DeleteAsync(deletedUser);
 
                     if (result.Succeeded)
-                    {
-                        await _userManager.UpdateSecurityStampAsync(deletedUser);
+                    {  
                         return RedirectToAction("AllUsers");
                     }
                     else if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))

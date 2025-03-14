@@ -49,8 +49,8 @@
 -> (Участия)
 	-> (Отказване на участие)
 
-(Премахване на ненужни модели)
--> SportDeletionViewModel
--> SportConnectUserEditViewModel
+(Модели за използване)
+-> SportViewModel
+-> EditUserViewModel
 
 (Подобрения на идентичността на SportConnet като уеб приложение)

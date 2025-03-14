@@ -13,6 +13,8 @@ using SportConnect.Web.Models;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SportConnect.Web.Controllers
 {
@@ -35,11 +37,29 @@ namespace SportConnect.Web.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        [HttpGet]
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult AddSport()
+        [AllowAnonymous]
+        public async Task<IActionResult> AllSports(SportViewModel? filter)
         {
-            return View(new Sport()); // Ensure a new Sport object is passed
+            if (filter == null)
+            {
+                return View(new SportViewModel());
+            }
+
+            var query = _repository.GetAll().AsQueryable();
+            if (!string.IsNullOrEmpty(filter.Name))
+            {
+                string trimmedFilter = filter.Name.Trim().ToLower();
+                query = query.Where(p => p.Name.Trim().ToLower().Contains(trimmedFilter));
+            }
+
+            var model = new SportViewModel
+            {
+                Name = filter.Name,
+                Sports = _repository.GetAll().ToList(),
+                FilteredSports = query.ToList(),
+            };
+
+            return View(model);
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
@@ -118,11 +138,11 @@ namespace SportConnect.Web.Controllers
             if (ModelState.IsValid)
             {
                 // Reload the entity from the database to avoid tracking multiple instances
-                var dbSport = _repository.GetById(sport.Id);
+                var dbSport = _repository.GetById((int)sport.Id);
                 if (dbSport != null)
                 {
                     // Copy the values from the form submission (this avoids tracking conflicts)
-                    dbSport.Id = sport.Id;
+                    dbSport.Id = (int)sport.Id;
                     dbSport.Name = sport.Name;
                     dbSport.Description = sport.Description;
                     dbSport.ImageUrl = sport.ImageUrl;
@@ -134,12 +154,6 @@ namespace SportConnect.Web.Controllers
             }
 
             return View(sport);
-        }
-
-        [AllowAnonymous]
-        public IActionResult AllSports()
-        {
-            return View(_repository.GetAll().ToList());
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]

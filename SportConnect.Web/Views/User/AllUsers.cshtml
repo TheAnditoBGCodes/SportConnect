@@ -1,94 +1,137 @@
-﻿@using SportConnect.Models
-@model List<SportConnectUser>
+﻿@using SportConnect.Web.Models
+@model EditUserViewModel
 
-@if (!Model.Any())
-{
-    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
-        <div class="container p-2 border rounded" style="max-width: 17%; padding: 0.5rem;">
-            <h1 class="text-center mb-3" style="font-size: 1.3rem;">Няма потребители</h1>
-            <div class="d-flex justify-content-center align-items-center mt-3">
-                <a asp-action="Index" asp-controller="Home" class="btn btn-secondary" style="font-size: 1rem; margin-right: 0px;">Назад</a>
-            </div>
-        </div>
-    </div>
+<style>
+    .container main {
+        min-height: 83vh;
+        padding-bottom: 0px !important;
+    }
 
-}
-else
-{
-    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
-        <div class="container p-2 border rounded" style="max-width: 90%; padding: 0.5rem;">
-            <div class="d-flex justify-content-center align-items-center mb-3">
-                <h1 class="m-0" style="font-size: 1.3rem;">Всички потребители</h1>
-            </div>
+        .container main.pb-3 {
+            align-content: center;
+            padding-bottom: 0px !important;
+        }
 
-            <div class="table-container flex-grow-1" style="overflow-y: auto; max-height: 430px;">
-                <table class="table table-striped table-hover text-center align-middle" style="font-size: 0.8rem;">
-                    <thead class="table-dark" style="position: sticky; top: 0; z-index: 2;">
-                        <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">Потребителско име</th>
-                            <th class="text-center">Пълно име</th>
-                            <th class="text-center">Дата на раждане</th>
-                            <th class="text-center">Възраст</th>
-                            <th class="text-center">Локация</th>
-                            <th class="text-center">Телефонен номер</th>
-                            <th class="text-center">Имейл</th>
-                            <th class="text-center">Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
+    .btn-group {
+        display: flex;
+        justify-content: space-around; /* Ensures equal spacing */
+        gap: 10px; /* Uniform spacing between buttons */
+    }
+
+    .sticky-search {
+        position: sticky;
+        top: 60px; /* Adjust based on your header height */
+        background-color: none;
+        z-index: 999; /* Keep it above content */
+        padding: 10px 0;
+        justify-content: center !important;
+    }
+
+    #searchContainer{
+        justify-content: center !important;
+    }
+</style>
+
+<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 83vh;">
+    <div class="container">
+        <h2 class="delete-header mb-0 text-center">Потребители</h2>
+
+        <div id="searchContainer" class="align-items-center sticky-search mb-3 mt-1">
+            <form method="post" class="d-flex justify-content-center w-100 align-items-center">
+
+                <input id="sportSearch" class="form-control me-2" placeholder="Име" asp-for="@Model.UserName" style="font-size: 1rem; width: 300px;" />
+
+                <!-- Country Dropdown with same width as input -->
+                <select asp-for="@Model.Country" asp-items="@ViewBag.Countries" class="form-select form-control-sm me-2" aria-required="true" style="font-size: 1rem; width: 300px;">
+                    <option value="" selected>Изберете държавa</option>
+                </select>
+
+                <!-- Birth Year Dropdown with same width as input -->
+                <select asp-for="BirthYear" class="form-select form-control-sm me-2" aria-required="true" style="font-size: 1rem; width: 300px;">
+                    <option value="" selected>Изберете година на раждане</option>
+                    @{
+                        var currentYear = DateTime.Now.Year;
+                        var startYear = currentYear - 120;
+                        var endYear = currentYear - 13;
+
+                        for (int year = startYear; year <= endYear; year++)
                         {
-                            <tr>
-                                <td class="align-middle">@item.Id</td>
-                                <td class="align-middle">@item.UserName</td>
-                                <td class="align-middle">@item.FullName</td>
-                                <td class="align-middle">@item.DateOfBirth</td>
-                                @{
-
-                                    // Calculate age based on DateOfBirth
-                                    int age = DateTime.Now.Year - item.DateOfBirth.Year;
-
-                                    // Adjust age if birthday hasn't occurred yet this year
-                                    if (DateTime.Now.Month < item.DateOfBirth.Month ||
-                                    (DateTime.Now.Month == item.DateOfBirth.Month && DateTime.Now.Day < item.DateOfBirth.Day))
-                                    {
-                                        age--;
-                                    }
-                                }
-                                <td class="align-middle">@age</td>
-                                <td class="align-middle">@item.Country</td>
-                                <td class="align-middle">@item.PhoneNumber</td>
-                                <td class="align-middle">@item.Email</td>
-                                <td class="align-middle text-nowrap">
-                                    <div class="btn-group">
-                                        <a asp-controller="User" asp-action="EditUser" asp-route-id="@item.Id" asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-warning btn-sm">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-pen-fill">
-                                                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001" />
-                                            </svg>
-                                        </a>
-                                        <a asp-controller="User" asp-action="DeleteUser" asp-route-id="@item.Id" asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-danger btn-sm">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-trash-fill">
-                                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
-                                            </svg>
-                                        </a>
-                                        <a asp-controller="User" asp-action="UserDetails" asp-route-id="@item.Id" class="btn btn-info btn-sm font-weight-bold">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-info-circle">
-                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0=" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                            <option value="@year">@year</option>
                         }
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </select>
 
-            <div class="d-flex justify-content-center mt-3">
-                <a asp-action="Index" asp-controller="Home" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary" style="font-size: 1rem;">Търси</button>
+            </form>
+        </div>
+
+        <div class="container mt-4">
+            <div class="list-group">
+                @foreach (var user in Model.FilteredUsers)
+                {
+                    <div class="list-group-item d-flex align-items-center justify-content-between py-3 mb-3 border rounded">
+                        <!-- Profile Image & Name -->
+                        <div class="d-flex align-items-center flex-shrink-0" style="min-width: 200px;">
+                            <img src="@user.ImageUrl" alt="Профилна снимка"
+                                 class="me-3"
+                                 style="width: 50px; height: 50px; object-fit: cover;">
+                            <div class="flex-fill px-2">
+                                <strong class="mb-0">@user.FullName</strong>
+                                <small class="d-block"><i class="bi bi-telephone"></i> @user.UserName</small>
+                            </div>
+                        </div>
+
+                        <!-- User Info (Equal Width Columns) -->
+                        <div class="d-flex flex-grow-1 justify-content-between text-center">
+                            <div class="flex-fill px-2">
+                                <strong>Държава</strong>
+                                <small class="d-block"><i class="bi bi-geo-alt"></i> @user.Country</small>
+                            </div>
+                            <div class="flex-fill px-2">
+                                <strong>Имейл</strong>
+                                <small class="d-block"><i class="bi bi-envelope"></i> @user.Email</small>
+                            </div>
+                            <div class="flex-fill px-2">
+                                <strong>Телефон</strong>
+                                <small class="d-block"><i class="bi bi-telephone"></i> @user.PhoneNumber</small>
+                            </div>
+                            @{
+                                int age = DateTime.Now.Year - user.DateOfBirth.Year;
+                                if (DateTime.Now.Month < user.DateOfBirth.Month ||
+                                (DateTime.Now.Month == user.DateOfBirth.Month && DateTime.Now.Day < user.DateOfBirth.Day))
+                                {
+                                    age--;
+                                }
+                            }
+                            <div class="flex-fill px-2">
+                                <strong>Дата на раждане (години)</strong>
+                                <small class="d-block">
+                                    <i class="bi bi-calendar"></i>@user.DateOfBirth.ToString("dd.MM.yyyy") (@age години)
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <a asp-controller="User" asp-action="EditUser" asp-route-id="@user.Id" asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-warning btn-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-pen-fill">
+                                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001" />
+                                </svg>
+                            </a>
+                            <a asp-controller="User" asp-action="DeleteUser" asp-route-id="@user.Id" asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-danger btn-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-trash-fill">
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                                </svg>
+                            </a>
+                            <a asp-controller="User" asp-action="UserDetails" asp-route-id="@user.Id" class="btn btn-info btn-sm font-weight-bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-info-circle">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
-}
+</div>

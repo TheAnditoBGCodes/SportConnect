@@ -8,8 +8,9 @@ namespace SportConnect.Web.Models
 {
     public class SportViewModel
     {
-        public int Id { get; set; }
-
+        public List<Sport>? Sports { get; set; }
+        public List<Sport>? FilteredSports { get; set; }
+        public int? Id { get; set; }
         public string? Name { get; set; }
 
         public string? Description { get; set; }
@@ -20,7 +21,7 @@ namespace SportConnect.Web.Models
         {
             return new Sport
             {
-                Id = Id,
+                Id = (int)Id,
                 Name = Name,
                 Description = Description,
                 ImageUrl = ImageUrl

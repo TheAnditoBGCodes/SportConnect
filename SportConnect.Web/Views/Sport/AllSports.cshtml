@@ -1,6 +1,6 @@
-﻿@using SportConnect.Models
+﻿@using SportConnect.Web.Models
 @using SportConnect.Utility
-@model List<Sport>
+@model SportViewModel
 
 <style>
     /* Ensure modal content does not overflow */
@@ -101,7 +101,7 @@
         const header = document.querySelector(".navbar");
         const searchBar = document.querySelector(".sticky-search");
         if (header && searchBar) {
-            searchBar.style.top = `${header.offsetHeight}px`;
+            searchBar.style.top = `${header.offsetHeight}px`;  // Fixed template literal
         }
 
         const cardItems = document.querySelectorAll('[id^="sportItem"]');
@@ -154,35 +154,12 @@
 
         matchCardHeights();
         window.addEventListener("resize", matchCardHeights);
-
-        // Function for dynamic search filtering
-        function filterSports() {
-            const searchValue = document.getElementById("sportSearch").value.toLowerCase(); // Convert search input to lowercase
-            const sportsList = document.getElementById("sportsList").getElementsByClassName("sport-item"); // Corrected to use getElementsByClassName
-
-            for (let i = 0; i < sportsList.length; i++) {
-                const sportItem = sportsList[i];
-                const sportNameElement = sportItem.querySelector(".fw-bold"); // Select the name element directly
-                const sportName = sportNameElement ? sportNameElement.innerText.toLowerCase() : ''; // Safely access the name and convert it to lowercase
-
-                // If the name matches the search value, show the item, otherwise hide it
-                if (sportName.includes(searchValue)) {
-                    sportItem.style.display = ""; // Show
-                } else {
-                    sportItem.style.display = "none"; // Hide
-                }
-            }
-        }
-
-        // Bind the filterSports function to the input event of the search bar
-        document.getElementById("sportSearch").addEventListener("input", filterSports);
     });
-
 </script>
 
 @if (User.IsInRole(SD.AdminRole))
 {
-    @if (Model.Count < 1)
+    @if (Model.Sports.Count < 1)
     {
         <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh;">
             <div class="container p-2" style="max-width: 50%; padding: 0.5rem;">
@@ -198,16 +175,19 @@
         <div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 83vh;">
             <div class="container">
                 <h2 class="delete-header mb-0 text-center">Спортове</h2>
-                <!-- Thinner search box -->
                 <div class="justify-content-center align-items-center sticky-search mb-3 mt-1">
-                    <form method="post" class="d-flex justify-content-center">
-                        <input id="sportSearch" class="form-control w-50" placeholder="Спорт" oninput="filterSports()" />
+                    <form method="get" class="d-flex justify-content-center">
+                        <!-- Search Input -->
+                        <input id="sportSearch" name="filter.Name" class="form-control w-50" placeholder="Спорт" value="@Model.Name" />
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary ms-2" style="font-size: 1rem;">Търси</button>
                     </form>
                 </div>
 
                 <!-- Row with centered cards -->
                 <div class="row justify-content-center align-content-center" id="sportsList">
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.FilteredSports)
                     {
                         <div id="sportItem" class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3 sport-item text-center" style="transition: transform 0.3s ease;">
                             <div class="card sport-card">
@@ -243,7 +223,7 @@
 }
 else
 {
-    @if (Model.Count < 1)
+    @if (Model.Sports.Count < 1)
     {
         <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh;">
             <div class="container p-2" style="max-width: 50%; padding: 0.5rem;">
@@ -256,16 +236,19 @@ else
         <div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 83vh;">
             <div class="container">
                 <h2 class="delete-header mb-0 text-center">Спортове</h2>
-                <!-- Thinner search box -->
                 <div class="justify-content-center align-items-center sticky-search mb-3 mt-1">
-                    <form method="post" class="d-flex justify-content-center">
-                        <input id="sportSearch" class="form-control w-50" placeholder="Спорт" oninput="filterSports()" />
+                    <form method="get" class="d-flex justify-content-center">
+                        <!-- Search Input -->
+                        <input id="sportSearch" name="filter.Name" class="form-control w-50" placeholder="Спорт" value="@Model.Name" />
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary ms-2" style="font-size: 1rem;">Търси</button>
                     </form>
                 </div>
 
                 <!-- Row with centered cards -->
                 <div class="row justify-content-center align-content-center" id="sportsList">
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.FilteredSports)
                     {
                         <div id="sportItem" class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3 sport-item text-center" style="transition: transform 0.3s ease;">
                             <div class="card sport-card">

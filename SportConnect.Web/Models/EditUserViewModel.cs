@@ -9,10 +9,13 @@ namespace SportConnect.Web.Models
 {
     public class EditUserViewModel
     {
+        public List<SportConnectUser>? Users { get; set; }
+        public List<SportConnectUser>? FilteredUsers { get; set; }
         public string? Id { get; set; }
         public string? Email { get; set; }
         public string? BothNames { get; set; }
         public string? UserName { get; set; }
+        public int? BirthYear { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
