@@ -29,12 +29,12 @@ namespace SportConnect.Web.Controllers
 {
     public class UserController : Controller
     {
-        private readonly HttpClient _httpClient;
         private readonly ILogger<UserController> _logger;
         private readonly UserManager<SportConnectUser> _userManager;
         public IRepository<Participation> _participationRepository;
         private readonly SignInManager<SportConnectUser> _signInManager;
         public IRepository<SportConnectUser> _repository { get; set; }
+        private readonly HttpClient _httpClient;
         private readonly Cloudinary _cloudinary;
         private readonly CloudinaryService _cloudinaryService;
         private readonly SportConnectDbContext _context;
@@ -370,6 +370,7 @@ namespace SportConnect.Web.Controllers
             {
                 query = query.Where(p => p.Country == filter.Country);
             }
+
             // Filter by UserName or FullName if either contains the filter value, case-insensitive and trimming spaces
             if (!string.IsNullOrEmpty(filter.UserName))
             {
@@ -377,6 +378,15 @@ namespace SportConnect.Web.Controllers
 
                 query = query.Where(p => p.UserName.Trim().ToLower().Contains(trimmedFilter) || p.FullName.Trim().ToLower().Contains(trimmedFilter));
             }
+
+            // Filter by UserName or FullName if either contains the filter value, case-insensitive and trimming spaces
+            if (!string.IsNullOrEmpty(filter.Email))
+            {
+                string trimmedFilter = filter.Email.Trim().ToLower();
+
+                query = query.Where(p => p.Email.Trim().ToLower().Contains(trimmedFilter) || p.PhoneNumber.Trim().ToLower().Contains(trimmedFilter));
+            }
+
             // Filter users by the specified birth year
             if (filter.BirthYear.HasValue)
             {
@@ -394,6 +404,7 @@ namespace SportConnect.Web.Controllers
                 BirthYear = filter.BirthYear,
                 Country = filter.Country,
                 Users = _repository.GetAll().ToList(),
+                Email = filter.Email,
                 FilteredUsers = query.ToList(),
             };
 

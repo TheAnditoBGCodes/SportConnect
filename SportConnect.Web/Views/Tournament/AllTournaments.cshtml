@@ -1,0 +1,180 @@
+﻿@model TournamentFilterViewModel
+
+<style>
+    /* Ensure modal content does not overflow */
+    .modal-body {
+        overflow: hidden; /* Hide any overflow */
+    }
+
+    /* Make sure the image scales to fit the container */
+    #cropImage {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures image will cover the container without leaving black bars */
+    }
+
+    .sport-btn {
+        flex: 1; /* Makes all buttons equal in size */
+        max-width: 95px; /* Adjust width */
+        font-size: 14px; /* Adjust font size */
+    }
+
+    .sport-btn-user {
+        flex: 1; /* Makes all buttons equal in size */
+        max-width: 100%; /* Adjust width */
+        padding: 5px 8px; /* Thinner buttons */
+        font-size: 14px; /* Adjust font size */
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: space-around; /* Ensures equal spacing */
+        gap: 10px; /* Uniform spacing between buttons */
+    }
+    /* Hide any overflow if the crop container goes out of bounds */
+    #cropContainer {
+        width: 100%;
+        height: 100%;
+        overflow: hidden; /* Prevents overflow of cropped image */
+    }
+
+    /* Modal footer for buttons */
+    .modal-footer {
+        display: flex;
+        justify-content: space-between; /* Align buttons to opposite sides */
+    }
+
+    .cropper-drag-box {
+        opacity: 50%;
+    }
+
+    #previewImage {
+        height: auto; /* Maintains aspect ratio */
+        display: block; /* Makes sure the image is block-level, so it doesn't cause any inline formatting issues */
+        margin: 0 auto; /* Centers the image horizontally */
+    }
+
+    .container main {
+        min-height: 83vh;
+        padding-bottom: 0px !important;
+    }
+
+        .container main.pb-3 {
+            align-content: center;
+            padding-bottom: 0px !important;
+        }
+
+    .btn-group.d-flex.justify-content-between {
+        width: 100% !important;
+    }
+
+    .sticky-search {
+        position: sticky;
+        top: 60px; /* Adjust based on your header height */
+        background-color: none;
+        z-index: 999; /* Keep it above content */
+        padding: 10px 0;
+    }
+
+    #sportItem {
+        width: 100%;
+        max-width: 390px; /* Adjusts the max size of cards */
+        height: auto; /* Ensures content adapts dynamically */
+        min-height: 414.3px;
+    }
+
+    .sport-img {
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .delete-header {
+        padding-top: 10px; /* Adds space between the title and top */
+    }
+</style>
+
+@if (Model.Tournaments.Count < 1)
+{
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh;">
+        <div class="container p-2" style="max-width: 50%; padding: 0.5rem;">
+            <h1 class="text-center mb-3" style="font-size: 5rem;">Няма турнири</h1>
+            <div class="d-flex justify-content-center mt-3">
+                <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="@Url.Action("AllTournaments", "Tournament")" class="btn btn-success text-center" style="font-size: 1rem;">Добави</a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 83vh;">
+        <div class="container">
+            <h2 class="delete-header mb-0 text-center">Спортове</h2>
+            <div class="justify-content-center align-items-center sticky-search mb-3 mt-1">
+                <form method="get" class="d-flex justify-content-center">
+                    <!-- Search Input -->
+                    <input id="sportSearch" name="filter.Name" class="form-control w-50" placeholder="Спорт" value="@Model.SportId" />
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary ms-2" style="font-size: 1rem;">Търси</button>
+                </form>
+            </div>
+        </div><div class="container mt-4">
+            <div class="list-group">
+                @foreach (var tournament in Model.FilteredTournaments)
+                {
+                    <div class="list-group-item d-flex align-items-center justify-content-between py-3 mb-3 border rounded">
+                        <!-- Tournament Image & Name -->
+                        <div class="d-flex align-items-center flex-shrink-0" style="min-width: 200px;">
+                            <img src="@tournament.ImageUrl" alt="Турнирно лого"
+                                 class="me-3"
+                                 style="width: 50px; height: 50px; object-fit: cover;">
+                            <div class="flex-fill px-2">
+                                <strong class="mb-0">@tournament.Name</strong>
+                                <small class="d-block"><i class="bi bi-geo-alt"></i> @tournament.Country</small>
+                            </div>
+                        </div>
+
+                        <!-- Tournament Info (Equal Width Columns) -->
+                        <div class="d-flex flex-grow-1 justify-content-between text-center">
+                            <div class="flex-fill px-2">
+                                <strong>Описание</strong>
+                                <small class="d-block">@tournament.Description</small>
+                            </div>
+                            <div class="flex-fill px-2">
+                                <strong>Организатор</strong>
+                                <small class="d-block"><i class="bi bi-person"></i> @tournament.Organizer.FullName</small>
+                            </div>
+                            <div class="flex-fill px-2">
+                                <strong>Дата на провеждане</strong>
+                                <small class="d-block"><i class="bi bi-calendar"></i> @tournament.Date.ToString("dd.MM.yyyy")</small>
+                            </div>
+                            <div class="flex-fill px-2">
+                                <strong>Краен срок</strong>
+                                <small class="d-block"><i class="bi bi-clock"></i> @tournament.Deadline.ToString("dd.MM.yyyy")</small>
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <a asp-controller="Tournament" asp-action="EditTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="@Url.Action("AllTournaments", "Tournament")" class="btn btn-warning btn-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-pen-fill">
+                                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001" />
+                                </svg>
+                            </a>
+                            <a asp-controller="Tournament" asp-action="DeleteTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="@Url.Action("AllTournaments", "Tournament")" class="btn btn-danger btn-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-trash-fill">
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                                </svg>
+                            </a>
+                            <a asp-controller="Tournament" asp-action="TournamentDetails" asp-route-id="@tournament.Id" class="btn btn-info btn-sm font-weight-bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-info-circle">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

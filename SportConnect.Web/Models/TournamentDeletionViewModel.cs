@@ -50,7 +50,6 @@ public class TournamentDeletionViewModel
             Description = Description,
             Deadline = Deadline ?? DateTime.MinValue,
             Date = Date ?? DateTime.MinValue,
-            Location = Location,
             SportId = SportId.GetValueOrDefault(),
             OrganizerId = OrganizerId
         };

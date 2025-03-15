@@ -11,8 +11,9 @@ namespace SportConnect.Web.Models
         public DateTime? Date { get; set; }
         public int? SportId { get; set; }
         public SelectList Sports { get; set; }
-        public List<Tournament> Tournaments { get; set; }
-        public List<Participation> UserParticipations { get; set; }
+        public List<Tournament>? Tournaments { get; set; }
+        public List<Tournament>? FilteredTournaments { get; set; }
+        public List<Participation>? UserParticipations { get; set; }
         public string? UserId { get; set; }
     }
 }

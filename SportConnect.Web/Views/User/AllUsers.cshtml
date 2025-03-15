@@ -38,8 +38,10 @@
 
         <div id="searchContainer" class="align-items-center sticky-search mb-3 mt-1">
             <form method="post" class="d-flex justify-content-center w-100 align-items-center">
-
+                
                 <input id="sportSearch" class="form-control me-2" placeholder="Име" asp-for="@Model.UserName" style="font-size: 1rem; width: 300px;" />
+
+                <input id="sportSearch" class="form-control me-2" placeholder="Имейл / Телефон" asp-for="@Model.Email" style="font-size: 1rem; width: 300px;" />
 
                 <!-- Country Dropdown with same width as input -->
                 <select asp-for="@Model.Country" asp-items="@ViewBag.Countries" class="form-select form-control-sm me-2" aria-required="true" style="font-size: 1rem; width: 300px;">

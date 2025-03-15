@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SportConnect.Services")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0572253ed9f620672783e5691a96188e051bb74a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0338537015e940d718de160b84cf7dc32e3f5c0f")]
 [assembly: System.Reflection.AssemblyProductAttribute("SportConnect.Services")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SportConnect.Services")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

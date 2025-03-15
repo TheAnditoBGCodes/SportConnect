@@ -1,5 +1,5 @@
 ﻿@using SportConnect.Models
-@model Sport
+@model TournamentViewModel
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
 <style>
@@ -72,7 +72,7 @@
     <div class="row justify-content-center w-100">
         <div class="col-12 col-md-8 col-lg-6 form-container" style="width:68%">
             <form id="loginForm" method="post" enctype="multipart/form-data">
-                <h2 class="text-center" style="font-size: 2rem;">Добави спорт</h2>
+                <h2 class="text-center" style="font-size: 2rem;">Добави турнир</h2>
                 <div asp-validation-summary="ModelOnly" class="text-danger mt-2 small" role="alert"></div>
 
                 <div class="row mb-2">
@@ -107,9 +107,70 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <input type="date" asp-for="@Model.Date" id="Model_Date" class="form-control form-control-sm" onmousedown="return false;" onkeydown="return false;" />
+                                    <label asp-for="@Model.Date">Дата на провеждане</label>
+                                    <span asp-validation-for="@Model.Date" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <input type="time" asp-for="@Model.DateTimer" class="form-control form-control-sm" />
+                                    <label asp-for="@Model.DateTimer">Време на провеждане</label>
+                                    <span asp-validation-for="@Model.DateTimer" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <input type="date" asp-for="@Model.Deadline" id="Model_Deadline" class="form-control form-control-sm" onmousedown="return false;" onkeydown="return false;" />
+                                    <label asp-for="@Model.Deadline">Дата на краен срок</label>
+                                    <span asp-validation-for="@Model.Deadline" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <input type="time" asp-for="@Model.DeadlineTime" class="form-control form-control-sm" />
+                                    <label asp-for="@Model.DeadlineTime">Време на краен срок</label>
+                                    <span asp-validation-for="@Model.DeadlineTime" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <div class="row">
+                                <div class="col-12">
+                                    <span asp-validation-for="@Model.DateOrder" class="text-danger text-center small"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <select asp-for="@Model.Country" asp-items="@Model.CountryList" class="form-select form-control-sm" aria-required="true">
+                                        <option value="" disabled selected>Изберете държавa</option>
+                                    </select>
+                                    <label asp-for="@Model.Country" class="text-gray">Държава</label>
+                                    <span asp-validation-for="@Model.Country" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                    <select asp-for="@Model.SportId" asp-items="@Model.Sports" class="form-select form-control-sm" aria-required="true">
+                                        <option value="" disabled selected>Изберете спорт</option>
+                                    </select>
+                                    <label asp-for="@Model.SportId" class="text-gray">Спорт</label>
+                                    <span asp-validation-for="@Model.SportId" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 align-content-center">
                         <div>
                             <div class="col-12">
                                 <div class="form-group d-flex align-items-center">
@@ -130,7 +191,7 @@
 
                 <!-- Buttons -->
                 <div id="buttonContainer" class="d-flex justify-content-between pt-0">
-                    <a asp-action="AllSports" asp-controller="Sport" class="btn btn-secondary">Назад</a>
+                    <a href="@ViewBag.ReturnUrl" class="btn btn-secondary">Назад</a>
                     <button type="submit" id="submitSport" class="btn btn-success text-white">Добави</button>
                 </div>
             </form>
@@ -156,6 +217,37 @@
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let today = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
+
+        let eventDateInput = document.getElementById("Model_Date");
+        let deadlineDateInput = document.getElementById("Model_Deadline");
+
+        // Set initial min dates for event and deadline
+        eventDateInput.setAttribute("min", today);
+        deadlineDateInput.setAttribute("min", today);
+
+        // When event date is selected, update deadline max date
+        eventDateInput.addEventListener("change", function () {
+            let selectedDate = eventDateInput.value;
+            if (selectedDate) {
+                deadlineDateInput.setAttribute("max", selectedDate);  // Limit deadline to the event date
+            } else {
+                deadlineDateInput.removeAttribute("max"); // Reset if no event date is selected
+            }
+        });
+
+        // When deadline is selected, update event date min date
+        deadlineDateInput.addEventListener("change", function () {
+            let selectedDeadline = deadlineDateInput.value;
+            if (selectedDeadline) {
+                eventDateInput.setAttribute("min", selectedDeadline);  // Prevent event date before deadline
+            } else {
+                eventDateInput.setAttribute("min", today); // Reset to today's date if no deadline is set
+            }
+        });
+    });
+
     let cropper;
 
     document.getElementById('imageInput').addEventListener('change', function (event) {
@@ -187,6 +279,7 @@
             reader.readAsDataURL(file);
         }
     });
+
     document.getElementById('confirmUpload').addEventListener('click', function () {
         const previewImage = document.getElementById('previewImage');
         const previewImager = document.getElementById('imagePreview');
@@ -227,30 +320,4 @@
             profileImageInput.value = previewImage.src;
         }
     });
-
-    // Disable date selection for users under 13 or over 120 years old
-    function setDateRestrictions() {
-        const today = new Date();
-        const minAgeDate = new Date();
-        const maxAgeDate = new Date();
-
-        // Set the minimum date to 13 years ago
-        minAgeDate.setFullYear(today.getFullYear() - 13);
-        // Set the maximum date to 120 years ago
-        maxAgeDate.setFullYear(today.getFullYear() - 120);
-
-        // Format the date as YYYY-MM-DD
-        const minDateString = minAgeDate.toISOString().split('T')[0];
-        const maxDateString = maxAgeDate.toISOString().split('T')[0];
-
-        // Set the min and max attributes for the DateOfBirth input field
-        const dateOfBirthInput = document.getElementById('Input_DateOfBirth');
-        if (dateOfBirthInput) {
-            dateOfBirthInput.setAttribute('min', maxDateString);
-            dateOfBirthInput.setAttribute('max', minDateString);
-        }
-    }
-
-    // Run the function to set the date restrictions
-    setDateRestrictions();
 </script>

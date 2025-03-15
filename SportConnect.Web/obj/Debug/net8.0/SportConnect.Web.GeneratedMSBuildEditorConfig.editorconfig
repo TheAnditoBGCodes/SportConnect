@@ -226,28 +226,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BvcnRcRWRpdFNwb3J0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/AddTournamentAdmin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxBZGRUb3VybmFtZW50QWRtaW4uY3NodG1s
+[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/AddTournament.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxBZGRUb3VybmFtZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/AddTournamentMy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxBZGRUb3VybmFtZW50TXkuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/AddTournamentMyAdmin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxBZGRUb3VybmFtZW50TXlBZG1pbi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/AllTournamentsAdmin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxBbGxUb3VybmFtZW50c0FkbWluLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/AllTournamentsMy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxBbGxUb3VybmFtZW50c015LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/AllTournamentsMyAdmin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxBbGxUb3VybmFtZW50c015QWRtaW4uY3NodG1s
+[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/AllTournaments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxBbGxUb3VybmFtZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/DeleteTournamentAdmin.cshtml]

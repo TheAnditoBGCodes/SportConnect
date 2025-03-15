@@ -1,7 +1,40 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\iliev_7x3wtf6\\source\\repos\\sportconnect\\sportconnect.web\\views\\tournament\\alltournaments.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\views\\tournament\\alltournaments.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\iliev_7x3wtf6\\source\\repos\\sportconnect\\sportconnect.web\\views\\user\\allusers.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\views\\user\\allusers.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{03212114-56B5-4902-9713-A49D36D8EBED}|SportConnect.Models\\SportConnect.Models.csproj|c:\\users\\iliev_7x3wtf6\\source\\repos\\sportconnect\\sportconnect.models\\tournament.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03212114-56B5-4902-9713-A49D36D8EBED}|SportConnect.Models\\SportConnect.Models.csproj|solutionrelative:sportconnect.models\\tournament.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\iliev_7x3wtf6\\source\\repos\\sportconnect\\sportconnect.web\\views\\sport\\allsports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\views\\sport\\allsports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\iliev_7x3wtf6\\source\\repos\\sportconnect\\sportconnect.web\\views\\user\\personaldata.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\views\\user\\personaldata.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\iliev_7x3wtf6\\source\\repos\\sportconnect\\sportconnect.web\\models\\tournamentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\models\\tournamentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\iliev_7x3wtf6\\source\\repos\\sportconnect\\sportconnect.web\\controllers\\tournamentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\controllers\\tournamentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\iliev_7x3wtf6\\source\\repos\\sportconnect\\sportconnect.web\\views\\tournament\\addtournament.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\views\\tournament\\addtournament.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +42,110 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AllUsers.cshtml",
+              "DocumentMoniker": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\User\\AllUsers.cshtml",
+              "RelativeDocumentMoniker": "SportConnect.Web\\Views\\User\\AllUsers.cshtml",
+              "ToolTip": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\User\\AllUsers.cshtml",
+              "RelativeToolTip": "SportConnect.Web\\Views\\User\\AllUsers.cshtml",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAAAIgAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-15T20:53:16.291Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AllSports.cshtml",
+              "DocumentMoniker": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\Sport\\AllSports.cshtml",
+              "RelativeDocumentMoniker": "SportConnect.Web\\Views\\Sport\\AllSports.cshtml",
+              "ToolTip": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\Sport\\AllSports.cshtml",
+              "RelativeToolTip": "SportConnect.Web\\Views\\Sport\\AllSports.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-15T19:36:42.926Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PersonalData.cshtml",
+              "DocumentMoniker": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\User\\PersonalData.cshtml",
+              "RelativeDocumentMoniker": "SportConnect.Web\\Views\\User\\PersonalData.cshtml",
+              "ToolTip": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\User\\PersonalData.cshtml",
+              "RelativeToolTip": "SportConnect.Web\\Views\\User\\PersonalData.cshtml",
+              "ViewState": "AgIAAJAAAAAAAAAAAAAAAKgAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-15T17:28:42.923Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Tournament.cs",
+              "DocumentMoniker": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Models\\Tournament.cs",
+              "RelativeDocumentMoniker": "SportConnect.Models\\Tournament.cs",
+              "ToolTip": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Models\\Tournament.cs",
+              "RelativeToolTip": "SportConnect.Models\\Tournament.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAIwC4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T16:59:39.246Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AllTournaments.cshtml",
+              "DocumentMoniker": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\Tournament\\AllTournaments.cshtml",
+              "RelativeDocumentMoniker": "SportConnect.Web\\Views\\Tournament\\AllTournaments.cshtml",
+              "ToolTip": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\Tournament\\AllTournaments.cshtml",
+              "RelativeToolTip": "SportConnect.Web\\Views\\Tournament\\AllTournaments.cshtml",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAowI8AAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-15T16:52:28.575Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TournamentViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Models\\TournamentViewModel.cs",
+              "RelativeDocumentMoniker": "SportConnect.Web\\Models\\TournamentViewModel.cs",
+              "ToolTip": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Models\\TournamentViewModel.cs",
+              "RelativeToolTip": "SportConnect.Web\\Models\\TournamentViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T14:46:27.701Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TournamentController.cs",
+              "DocumentMoniker": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Controllers\\TournamentController.cs",
+              "RelativeDocumentMoniker": "SportConnect.Web\\Controllers\\TournamentController.cs",
+              "ToolTip": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Controllers\\TournamentController.cs",
+              "RelativeToolTip": "SportConnect.Web\\Controllers\\TournamentController.cs",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAAwK0AAABkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T14:03:45.994Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AddTournament.cshtml",
+              "DocumentMoniker": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\Tournament\\AddTournament.cshtml",
+              "RelativeDocumentMoniker": "SportConnect.Web\\Views\\Tournament\\AddTournament.cshtml",
+              "ToolTip": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Views\\Tournament\\AddTournament.cshtml",
+              "RelativeToolTip": "SportConnect.Web\\Views\\Tournament\\AddTournament.cshtml",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAIwFUAAABqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-15T14:24:24.242Z"
             }
           ]
         }
