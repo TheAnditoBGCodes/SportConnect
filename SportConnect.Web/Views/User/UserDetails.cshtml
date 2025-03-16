@@ -1,287 +1,186 @@
 ﻿@using SportConnect.Models
-@model SportConnectUserViewModel
-
-<script>
-    function showConfirmationButtons(id) {
-        // Hide the "Откажи се" button and show the "Не" and "Да" buttons within the same btn-group
-        document.getElementById('delete-' + id).style.display = 'none';
-        document.getElementById('confirm-' + id).style.display = 'inline-flex';
-    }
-
-    function hideConfirmationButtons(id) {
-        // Hide the "Не" and "Да" buttons and show the "Откажи се" button again within the same btn-group
-        document.getElementById('confirm-' + id).style.display = 'none';
-        document.getElementById('delete-' + id).style.display = 'inline-block';
-    }
-
-    function confirmDelete(id) {
-        // Call your delete action here
-        window.location.href = '/Participation/DeleteParticipationUserDetails/' + id;
-    }
-</script>
+@model UserViewModel
 
 <style>
-    .btn-group {
-        width: 100%; /* Set the width of the button group */
-        display: flex; /* Align buttons horizontally */
-        justify-content: center; /* Ensure the buttons are spaced evenly */
+    /* Scope styles to this specific view */
+    .profile-delete-view {
+        max-width: 50%; /* Increased the width of the form container */
+        margin: 0 auto;
     }
 
-    .confirmation-buttons {
-        display: none; /* Initially hide the confirmation buttons */
-        width: 100%; /* Set the width of the confirmation buttons group */
-        justify-content: center; /* Ensure the buttons are spaced evenly */
-        flex-grow: 1; /* Make sure it fills the button group */
-    }
-
-        .confirmation-buttons .btn {
-            width: 100%; /* Make each button slightly smaller to fit side by side */
-            margin: 0;
+        .profile-delete-view .form-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
         }
 
-    .btn-group .btn {
-        flex-grow: 1; /* Make buttons stretch to fill available space */
-        margin: 0;
+        /* Profile image section */
+        .profile-delete-view .col-md-3.text-center {
+            padding-left: 0 !important;
+            padding-right: 1rem !important;
+        }
+
+        .profile-delete-view .col-md-8.text-start.d-flex.flex-column {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        /* Profile image container */
+        .profile-delete-view .profile-image-container {
+            width: 250px; /* Increased size of profile image container */
+            height: 250px;
+            overflow: hidden;
+            display: flex;
+            justify-content: flex-start;
+            padding-left: 0;
+        }
+
+            .profile-delete-view .profile-image-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        /* User data section */
+        .profile-delete-view .col-md-8 {
+            flex: 1;
+        }
+
+        /* Adjust font sizes and spacing for a larger form */
+        .profile-delete-view h2 {
+            font-size: 2rem;
+        }
+
+        .profile-delete-view .col-md-8 p {
+            font-size: 1rem;
+        }
+
+            .profile-delete-view .col-md-8 p.fw-bold {
+                font-size: 1rem;
+            }
+
+        .profile-delete-view .form-row .d-flex.justify-content-between p {
+            font-size: 1rem;
+        }
+
+        /* Button styles */
+        .profile-delete-view .btn {
+            font-size: 1rem;
+            width: 90px;
+        }
+
+        .profile-delete-view .btn-secondary {
+            width: 90px;
+        }
+
+        /* Customize input field */
+        .profile-delete-view .form-control {
+            font-size: 1rem;
+            padding: 5px 10px;
+            width: 110px;
+        }
+
+    .container main {
+        min-height: 83vh !important;
+        padding-bottom: 0px !important;
+        align-content: center !important;
     }
 
-    /* Column Widths */
-    th, td {
-        text-align: center;
+    div.container.main.pb-3 {
+        align-content: center;
+        padding-bottom: 0px !important;
     }
 
-    .column-id, .column-registration, .column-tournament, .column-sport, .column-date, .column-deadline {
-        width: 14%; /* Set each column width to 14% */
+    .container.text-center {
+        align-content: center;
+        padding-bottom: 0px !important;
     }
 
-    .column-actions {
-        width: 16%; /* Set the last column (Actions) to 16% */
+    p {
+        margin-bottom: 0px !important;
+        align-content: center !important;
+        height: 40px !important;
+    }
+
+    .profile-delete-view .d-flex.align-items-center input {
+        height: 38px;
+    }
+
+    .profile-delete-view .d-flex.align-items-center span {
+        font-size: 1rem;
+    }
+
+    .d-flex.justify-content-between {
+        align-content: center !important;
     }
 </style>
 
-@if (!Model.Participations.Any())
-{
-    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
-        <div class="container p-2 border rounded" style="max-width: 55%; padding: 0.5rem;">
-            <h1 class="text-center mb-3" style="font-size: 1.3rem;">Данни на профила</h1>
-            <form method="post">
-                <!-- Row 2: Names + Age -->
-                <div class="row mb-1">
-                    <!-- Reduced margin-bottom -->
-                    <div class="col">
-                        <div class="form-floating mb-2">
-                            <!-- Reduced margin-bottom -->
-                            <input readonly asp-for="@Model.UserName" class="form-control" aria-required="true" placeholder="user име" style="font-size: 0.8rem;" />
-                            <label asp-for="@Model.UserName" style="font-size: 0.8rem;">Потребителско име</label>
-                            <span asp-validation-for="@Model.UserName" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-floating mb-2">
-                            <!-- Reduced margin-bottom -->
-                            <input readonly asp-for="@Model.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" style="font-size: 0.8rem;" />
-                            <label asp-for="@Model.Email" style="font-size: 0.8rem;">Имейл</label>
-                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
-                        </div>
-                    </div>
+<div class="container profile-delete-view">
+    <form method="post">
+        <h2 class="text-center justify-content-center">Моят профил</h2>
+
+        <!-- Row 1: Username and Email -->
+        <div class="row mb-2" style="display: none;">
+            <div class="col-12 col-md-6">
+                <div class="form-floating">
+                    <input asp-for="@Model.Id" class="form-control form-control-sm" aria-required="true" placeholder="Вашето потребителско име" style="font-size: 1rem;" />
+                    <label asp-for="@Model.Id" class="text-gray">Потребителско име</label>
+                    <span asp-validation-for="@Model.Id" class="text-danger" style="font-size: 1rem;"></span>
                 </div>
-
-                <div class="row mb-1">
-                    <!-- First half for BothNames -->
-                    <div class="col-6">
-                        <div class="form-floating mb-2">
-                            <input readonly asp-for="@Model.BothNames" class="form-control" aria-required="true" placeholder="Вашата фамилия" style="font-size: 0.8rem;" />
-                            <label asp-for="@Model.BothNames" style="font-size: 0.8rem;">Име</label>
-                            <span asp-validation-for="@Model.BothNames" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <!-- Second half split between DateOfBirth and age -->
-                    <div class="col-3">
-                        <div class="form-floating mb-2">
-                            <input readonly type="date" asp-for="@Model.DateOfBirth" class="form-control" aria-required="true" placeholder="Age" style="font-size: 0.8rem;" />
-                            <label asp-for="@Model.DateOfBirth" style="font-size: 0.8rem;">Дата на раждане</label>
-                            <span asp-validation-for="@Model.DateOfBirth" class="text-danger"></span>
-                        </div>
-                    </div>
-                    @{
-                        //e based on DateOfBirth
-                        int age = DateTime.Now.Year - @Model.DateOfBirth.Year;
-
-                        // Adjust age if birthday hasn't occurred yet this year
-                        if (DateTime.Now.Month < @Model.DateOfBirth.Month ||
-                        (DateTime.Now.Month == @Model.DateOfBirth.Month && DateTime.Now.Day < @Model.DateOfBirth.Day))
-                        {
-                            age--;
-                        }
-                    }
-                    <div class="col-3">
-                        <div class="form-floating mb-2">
-                            <input readonly type="text" asp-for="@age" class="form-control" aria-required="true" placeholder="Age" style="font-size: 0.8rem;" />
-                            <label asp-for="@age" style="font-size: 0.8rem;">Възраст</label>
-                            <span asp-validation-for="@age" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Row 3: Phone + Location -->
-                <div class="row mb-1">
-                    <!-- Reduced margin-bottom -->
-                    <div class="col">
-                        <div class="form-floating mb-2">
-                            <!-- Reduced margin-bottom -->
-                            <input readonly type="tel" asp-for="@Model.PhoneNumber" class="form-control" aria-required="true" placeholder="0888 123 456" style="font-size: 0.8rem;" />
-                            <label asp-for="@Model.PhoneNumber" style="font-size: 0.8rem;">Телефонен номер</label>
-                            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-floating mb-2">
-                            <!-- Reduced margin-bottom -->
-                            <input readonly asp-for="@Model.Country" class="form-control" aria-required="true" placeholder="Location" style="font-size: 0.8rem;" />
-                            <label asp-for="@Model.Country" style="font-size: 0.8rem;">Локация</label>
-                            <span asp-validation-for="@Model.Country" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <h2 class="text-center" style="font-size: 1.1rem;">Потребителят няма участия</h2>
-            <div class="d-flex justify-content-center mt-2">
-                <!-- Centering the button -->
-                <a asp-action="AllUsers" class="btn btn-secondary" style="font-size: 0.8rem;" asp-controller="User">Назад</a>
             </div>
         </div>
-    </div>
-}
-else
-{
-    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh; font-size: 0.9rem;">
-        <div class="container p-2 border rounded" style="max-width: 90%; padding: 0.5rem;">
-            <h1 class="text-center mb-3" style="font-size: 1.3rem;">Данни на профила</h1>
-            <form method="post">
-                <!-- Row 2: Names + Age -->
-                <div class="row mb-1">
-                    <!-- Reduced margin-bottom -->
-                    <div class="col">
-                        <div class="form-floating mb-2">
-                            <!-- Reduced margin-bottom -->
-                            <input readonly asp-for="@Model.UserName" class="form-control" aria-required="true" placeholder="user име" style="font-size: 0.8rem;" />
-                            <label asp-for="@Model.UserName" style="font-size: 0.8rem;">Потребителско име</label>
-                            <span asp-validation-for="@Model.UserName" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-floating mb-2">
-                            <!-- Reduced margin-bottom -->
-                            <input readonly asp-for="@Model.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" style="font-size: 0.8rem;" />
-                            <label asp-for="@Model.Email" style="font-size: 0.8rem;">Имейл</label>
-                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
-                        </div>
-                    </div>
+
+        <!-- Profile Image and User Data -->
+        <div class="form-row d-flex mb-2 align-items-stretch">
+            <!-- Profile Image Section (square container) -->
+            <div class="text-center" style="width: 240px; height:240px; margin-right: 1rem;">
+                <div class="profile-image-container" style="width: inherit; height:inherit;">
+                    <img src="@Model.ProfileImage" alt="@Model.UserName" />
                 </div>
-
-                <div class="row mb-1">
-                    <!-- First half for BothNames -->
-                    <div class="col-6">
-                        <div class="form-floating mb-2">
-                            <input readonly asp-for="@Model.BothNames" class="form-control" aria-required="true" placeholder="Вашата фамилия" style="font-size: 0.8rem;" />
-                            <label asp-for="@Model.BothNames" style="font-size: 0.8rem;">Име</label>
-                            <span asp-validation-for="@Model.BothNames" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <!-- Second half split between DateOfBirth and age -->
-                    <div class="col-3">
-                        <div class="form-floating mb-2">
-                            <input readonly type="date" asp-for="@Model.DateOfBirth" class="form-control" aria-required="true" placeholder="Age" style="font-size: 0.8rem;" />
-                            <label asp-for="@Model.DateOfBirth" style="font-size: 0.8rem;">Дата на раждане</label>
-                            <span asp-validation-for="@Model.DateOfBirth" class="text-danger"></span>
-                        </div>
-                    </div>
-                    @{
-                        //e based on DateOfBirth
-                        int age = DateTime.Now.Year - @Model.DateOfBirth.Year;
-
-                        // Adjust age if birthday hasn't occurred yet this year
-                        if (DateTime.Now.Month < @Model.DateOfBirth.Month ||
-                        (DateTime.Now.Month == @Model.DateOfBirth.Month && DateTime.Now.Day < @Model.DateOfBirth.Day))
-                        {
-                            age--;
-                        }
-                    }
-                    <div class="col-3">
-                        <div class="form-floating mb-2">
-                            <input readonly type="text" asp-for="@age" class="form-control" aria-required="true" placeholder="Age" style="font-size: 0.8rem;" />
-                            <label asp-for="@age" style="font-size: 0.8rem;">Възраст</label>
-                            <span asp-validation-for="@age" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Row 3: Phone + Location -->
-                <div class="row mb-1">
-                    <!-- Reduced margin-bottom -->
-                    <div class="col">
-                        <div class="form-floating mb-2">
-                            <!-- Reduced margin-bottom -->
-                            <input readonly type="tel" asp-for="@Model.PhoneNumber" class="form-control" aria-required="true" placeholder="0888 123 456" style="font-size: 0.8rem;" />
-                            <label asp-for="@Model.PhoneNumber" style="font-size: 0.8rem;">Телефонен номер</label>
-                            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-floating mb-2">
-                            <!-- Reduced margin-bottom -->
-                            <input readonly asp-for="@Model.Country" class="form-control" aria-required="true" placeholder="Location" style="font-size: 0.8rem;" />
-                            <label asp-for="@Model.Country" style="font-size: 0.8rem;">Локация</label>
-                            <span asp-validation-for="@Model.Country" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <h2 class="text-center" style="font-size: 1.1rem;">Участия</h2>
-
-            <div class="table-container" style="overflow-y: auto; max-height: 400px;">
-                <table class="table table-striped table-hover text-center align-middle" style="font-size: 0.8rem;">
-                    <thead class="table-dark" style="position: sticky; top: 0; z-index: 2;">
-                        <tr>
-                            <th class="column-id">#</th>
-                            <th class="column-registration">Дата на регистрация</th>
-                            <th class="column-tournament">Турнир</th>
-                            <th class="column-sport">Спорт</th>
-                            <th class="column-date">Дата на провеждане</th>
-                            <th class="column-deadline">Краен срок</th>
-                            <th class="column-actions">Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Participations)
-                        {
-                            <tr>
-                                <td class="column-id">@item.Id</td>
-                                <td class="column-registration">@item.RegistrationDate</td>
-                                <td class="column-tournament">@item.Tournament.Name</td>
-                                <td class="column-sport">@item.Tournament.Sport</td>
-                                <td class="column-date">@item.Tournament.Date</td>
-                                <td class="column-deadline">@item.Tournament.Deadline</td>
-                                <td class="column-actions">
-                                    <div class="btn-group" role="group">
-                                        <!-- Confirmation buttons will appear when the "Откажи се" button is clicked -->
-                                        <div id="confirm-@item.Id" class="confirmation-buttons">
-                                            <a onclick="hideConfirmationButtons(@item.Id)" class="btn btn-success">Не</a>
-                                            <a onclick="confirmDelete(@item.Id)" class="btn btn-danger">Да</a>
-                                        </div>
-                                        <!-- The "Откажи се" button is initially visible -->
-                                        <a id="delete-@item.Id" onclick="showConfirmationButtons(@item.Id)" class="btn btn-danger" style="display: inline-block;">Откажи се</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
             </div>
-            <div class="d-flex justify-content-center mt-2">
-                <a asp-action="AllUsers" class="btn btn-secondary" style="font-size: 0.8rem;" asp-controller="User">Назад</a>
+
+            <!-- User Details Section (taking up remaining space) -->
+            <div class="col-md-8 text-start d-flex flex-column">
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Име</p>
+                    <p>@Model.BothNames</p>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Потребителско име</p>
+                    <p>@Model.UserName</p>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Имейл</p>
+                    <p>@Model.Email</p>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Телефонен номер</p>
+                    <p>@Model.PhoneNumber</p>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Дата на раждане</p>
+                    <p>@Model.DateOfBirth</p>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Държава</p>
+                    <p>@Model.Country</p>
+                </div>
             </div>
         </div>
-    </div>
-}
+
+        <!-- Confirm Delete and Action Buttons -->
+        <div class="d-flex justify-content-between align-items-center gap-2 w-100">
+            <a asp-controller="User" asp-action="EditUser" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("PersonalData", "User")" class="btn btn-warning btn-sm text-white">
+                Промени
+            </a>
+            <a asp-controller="User" asp-action="DeleteUser" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("PersonalData", "User")" class="btn btn-danger btn-sm">
+                Изтрий
+            </a>
+        </div>
+    </form>
+</div>

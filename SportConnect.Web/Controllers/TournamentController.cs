@@ -57,11 +57,11 @@ namespace SportConnect.Web.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> AllTournaments(TournamentFilterViewModel? filter)
+        public async Task<IActionResult> AllTournaments(TournamentViewModel? filter)
         {
             if (filter == null)
             {
-                return View(new TournamentFilterViewModel());
+                return View(new TournamentViewModel());
             }
 
             var query = _repository.GetAll().AsQueryable();
@@ -71,11 +71,44 @@ namespace SportConnect.Web.Controllers
                 query = query.Where(p => p.SportId == filter.SportId.Value);
             }
 
-            ViewBag.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
+            if (filter.Country != null)
+            {
+                query = query.Where(p => p.Country == filter.Country);
+            }
 
-            var model = new TournamentFilterViewModel
+            if (!string.IsNullOrWhiteSpace(filter.Name))
+            {
+                string filteredname = filter.Name.Trim().ToLower();
+                query = query.Where(p => p.Name.ToLower().Contains(filteredname));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.OrganizerName))
+            {
+                string filteredname = filter.OrganizerName.Trim().ToLower();
+                query = query.Where(p => p.Organizer.FullName.ToLower().Contains(filteredname));
+            }
+
+            if (filter.StartDate != null)
+            {
+                query = query.Where(p => p.Date >= filter.StartDate);
+            }
+
+            if (filter.EndDate != null)
+            {
+                query = query.Where(p => p.Date <= filter.EndDate);
+            }
+
+            ViewBag.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
+            ViewBag.Countries = await GetAllCountries();
+
+            var model = new TournamentViewModel
             {
                 SportId = filter.SportId,
+                Country = filter.Country,
+                Name = filter.Name,
+                OrganizerName = filter.OrganizerName,
+                StartDate = filter.StartDate,
+                EndDate = filter.EndDate,
                 FilteredTournaments = query.Include(x => x.Organizer).Include(x => x.Sport).ToList(),
                 Tournaments = _repository.GetAll().ToList(),
             };
@@ -86,8 +119,10 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public async Task<IActionResult> AddTournament(string returnUrl = null)
         {
+            var currentUser = await _userManager.GetUserAsync(this.User);
             var model = new TournamentViewModel()
             {
+                OrganizerId = currentUser.Id,
                 CountryList = await GetAllCountries(),
                 Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name")
             };
@@ -99,9 +134,6 @@ namespace SportConnect.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTournament(TournamentViewModel tournament, string returnUrl = null)
         {
-            var user = _userManager.GetUserAsync(this.User).Result;
-            tournament.OrganizerId = user.Id;
-
             if (string.IsNullOrWhiteSpace(tournament.Name) || tournament.Name.Length < 5 || tournament.Name.Length > 100)
             {
                 ModelState.AddModelError("Name", "Името трябва да е между 5 и 100 символа");
@@ -159,13 +191,13 @@ namespace SportConnect.Web.Controllers
 
             if (tournament.Date.HasValue && tournament.DateTimer.HasValue)
             {
-                var eventDateTime = tournament.Date.Value.Date + tournament.DateTimer.Value.TimeOfDay;
+                var eventDateTime = tournament.Date.Value.Date + tournament.DateTimer.Value;
                 tournament.Date = eventDateTime;
             }
 
             if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
             {
-                var deadlineDateTime = tournament.Deadline.Value.Date + tournament.DeadlineTime.Value.TimeOfDay;
+                var deadlineDateTime = tournament.Deadline.Value.Date + tournament.DeadlineTime.Value;
                 tournament.Deadline = deadlineDateTime;
             }
 
@@ -186,12 +218,326 @@ namespace SportConnect.Web.Controllers
             return View(tournament);
         }
 
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        public async Task<IActionResult> EditTournament(int id, string returnUrl = null)
+        {
+            var tournament = _repository.GetById(id);
+
+            var model = new TournamentViewModel()
+            {
+                Id = tournament.Id,
+                OrganizerId = tournament.OrganizerId,
+                Date = tournament.Date.Date,
+                DateTimer = tournament.Date.TimeOfDay,
+                Deadline = tournament.Deadline.Date,
+                ImageUrl = tournament.ImageUrl,
+                DeadlineTime = tournament.Deadline.TimeOfDay,
+                Description = tournament.Description,
+                Country = tournament.Country,
+                CountryList = await GetAllCountries(),
+                Name = tournament.Name,
+                SportId = tournament.SportId,
+                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", tournament.SportId),
+            };
+
+            var currentUser = await _userManager.GetUserAsync(this.User);
+            ViewBag.UserId = currentUser.Id;
+            ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllTournaments", "Tournament");
+            return View(model);
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        [HttpPost]
+        public async Task<IActionResult> EditTournament(TournamentViewModel tournament, string returnUrl = null)
+        {
+            var user = await _userManager.GetUserAsync(this.User);
+            ViewBag.UserId = user.Id;
+
+            if (ViewBag.UserId == tournament.OrganizerId)
+            {
+                if (string.IsNullOrWhiteSpace(tournament.Name) || tournament.Name.Length < 5 || tournament.Name.Length > 100)
+                {
+                    ModelState.AddModelError("Name", "Името трябва да е между 5 и 100 символа");
+                }
+
+                if (string.IsNullOrWhiteSpace(tournament.Description) || tournament.Description.Length < 5 || tournament.Description.Length > 100)
+                {
+                    ModelState.AddModelError("Description", "Описанието трябва да е между 5 и 100 символа");
+                }
+
+                if (_repository.GetAll().Any(s => s.Name == tournament.Name && s.Id != tournament.Id))
+                {
+                    ModelState.AddModelError("Name", "Името е вече заето.");
+                }
+
+                if (_repository.GetAll().Any(s => s.Description == tournament.Description && s.Id != tournament.Id))
+                {
+                    ModelState.AddModelError("Description", "Описанието е вече заето.");
+                }
+                if (tournament.SportId == null)
+                {
+                    ModelState.AddModelError("SportId", "Спортът е задължителен");
+                }
+
+                if (tournament.ImageUrl == null)
+                {
+                    ModelState.AddModelError("ImageUrl", "Задължителна");
+                }
+
+
+                if (tournament.Country == null)
+                {
+                    ModelState.AddModelError("Country", "Задължителна");
+                }
+
+                if (!tournament.Date.HasValue)
+                {
+                    ModelState.AddModelError("Date", "Датата е задължителна");
+                }
+
+                if (!tournament.Deadline.HasValue)
+                {
+                    ModelState.AddModelError("Deadline", "Задължителен");
+                }
+
+                if (!tournament.DateTimer.HasValue)
+                {
+                    ModelState.AddModelError("DateTimer", "Часът е задължителен");
+                }
+
+                if (!tournament.DeadlineTime.HasValue)
+                {
+                    ModelState.AddModelError("DeadlineTime", "Часът е задължителен");
+                }
+
+                if (tournament.Date.HasValue && tournament.DateTimer.HasValue)
+                {
+                    var eventDateTime = tournament.Date.Value.Date + tournament.DateTimer.Value;
+                    tournament.Date = eventDateTime;
+                }
+
+                if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
+                {
+                    var deadlineDateTime = tournament.Deadline.Value.Date + tournament.DeadlineTime.Value;
+                    tournament.Deadline = deadlineDateTime;
+                }
+
+                if (tournament.Deadline.HasValue && tournament.Date.HasValue && tournament.Deadline > tournament.Date)
+                {
+                    ModelState.AddModelError("DateOrder", "Турнира трябва да почва след крайния срок.");
+                }
+
+                if (ModelState.IsValid)
+                {
+                    _repository.Update(tournament.GetTournament());
+                    return Redirect(returnUrl);
+                }
+
+                ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllTournaments", "Tournament");
+                tournament.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
+                tournament.CountryList = await GetAllCountries();
+                return View(tournament);
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(tournament.Name) || tournament.Name.Length < 5 || tournament.Name.Length > 100)
+                {
+                    ModelState.AddModelError("Name", "Името трябва да е между 5 и 100 символа");
+                }
+
+                if (string.IsNullOrWhiteSpace(tournament.Description) || tournament.Description.Length < 5 || tournament.Description.Length > 100)
+                {
+                    ModelState.AddModelError("Description", "Описанието трябва да е между 5 и 100 символа");
+                }
+
+                if (_repository.GetAll().Any(s => s.Name == tournament.Name && s.Id != tournament.Id))
+                {
+                    ModelState.AddModelError("Name", "Името е вече заето.");
+                }
+
+                if (_repository.GetAll().Any(s => s.Description == tournament.Description && s.Id != tournament.Id))
+                {
+                    ModelState.AddModelError("Description", "Описанието е вече заето.");
+                }
+
+                if (tournament.ImageUrl == null)
+                {
+                    ModelState.AddModelError("ImageUrl", "Задължителна");
+                }
+
+                if (ModelState.IsValid)
+                {
+                    _repository.Update(tournament.GetTournament());
+                    return Redirect(returnUrl);
+                }
+
+                ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllTournaments", "Tournament");
+                return View(tournament);
+            }
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        public IActionResult DeleteTournament(int id, string returnUrl = null)
+        {
+            var tournament = _repository.GetById(id);
+
+            var model = new TournamentViewModel()
+            {
+                Id = tournament.Id,
+                Name = tournament.Name,
+                ImageUrl = tournament.ImageUrl,
+                Description = tournament.Description,
+            };
+
+            ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllTournaments", "Tournament");
+            return View(model);
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        [HttpPost]
+        public IActionResult DeleteTournament(string ConfirmText, TournamentViewModel model, string returnUrl = null)
+        {
+            var tournament = _repository.GetById((int)model.Id);
+
+            if (ConfirmText == "ПОТВЪРДИ")
+            {
+                var range = _participationsRepository.GetAllBy(x => x.TournamentId == tournament.Id);
+                _participationsRepository.DeleteRange(range);
+                _repository.Delete(tournament);
+                return Redirect(returnUrl);
+            }
+
+            var model1 = new TournamentViewModel()
+            {
+                Id = tournament.Id,
+                Name = tournament.Name,
+                ImageUrl = tournament.ImageUrl,
+                Description = tournament.Description,
+            };
+
+            ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllTournaments", "Tournament");
+            return View(model1);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> SportTournaments(int id, TournamentViewModel? filter)
+        {
+            var tournaments = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).Where(x => x.SportId == id);
+
+            if (filter == null)
+            {
+                return View(new TournamentViewModel());
+            }
+
+            var query = tournaments.AsQueryable();
+
+            if (filter.Country != null)
+            {
+                query = query.Where(p => p.Country == filter.Country);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Name))
+            {
+                string filteredname = filter.Name.Trim().ToLower();
+                query = query.Where(p => p.Name.ToLower().Contains(filteredname));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.OrganizerName))
+            {
+                string filteredname = filter.OrganizerName.Trim().ToLower();
+                query = query.Where(p => p.Organizer.FullName.ToLower().Contains(filteredname));
+            }
+
+            if (filter.StartDate != null)
+            {
+                query = query.Where(p => p.Date >= filter.StartDate);
+            }
+
+            if (filter.EndDate != null)
+            {
+                query = query.Where(p => p.Date <= filter.EndDate);
+            }
+
+            ViewBag.Countries = await GetAllCountries();
+
+            var model = new TournamentViewModel
+            {
+                Country = filter.Country,
+                Name = filter.Name,
+                OrganizerName = filter.OrganizerName,
+                StartDate = filter.StartDate,
+                EndDate = filter.EndDate,
+                FilteredTournaments = query.Include(x => x.Organizer).Include(x => x.Sport).ToList(),
+                Tournaments = tournaments.ToList(),
+            };
+
+            return View(model);
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        public async Task<IActionResult> MyTournaments(TournamentViewModel? filter)
+        {
+            var currentUser = await _userManager.GetUserAsync(this.User);
+            var currentUserId = currentUser.Id;
+
+            var tournaments = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).Where(x => x.OrganizerId == currentUserId);
+
+            if (filter == null)
+            {
+                return View(new TournamentViewModel());
+            }
+
+            var query = tournaments.AsQueryable();
+
+            if (filter.SportId != null)
+            {
+                query = query.Where(p => p.SportId == filter.SportId.Value);
+            }
+
+            if (filter.Country != null)
+            {
+                query = query.Where(p => p.Country == filter.Country);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Name))
+            {
+                string filteredname = filter.Name.Trim().ToLower();
+                query = query.Where(p => p.Name.ToLower().Contains(filteredname));
+            }
+
+            if (filter.StartDate != null)
+            {
+                query = query.Where(p => p.Date >= filter.StartDate);
+            }
+
+            if (filter.EndDate != null)
+            {
+                query = query.Where(p => p.Date <= filter.EndDate);
+            }
+
+            ViewBag.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
+            ViewBag.Countries = await GetAllCountries();
+
+            var model = new TournamentViewModel
+            {
+                SportId = filter.SportId,
+                Country = filter.Country,
+                Name = filter.Name,
+                StartDate = filter.StartDate,
+                EndDate = filter.EndDate,
+                FilteredTournaments = query.Include(x => x.Organizer).Include(x => x.Sport).ToList(),
+                Tournaments = tournaments.ToList(),
+            };
+
+            return View(model);
+        }
+
         [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult TournamentDetailsAdmin(int id)
         {
             var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
             var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
-            var model = new TournamentDeletionViewModel()
+            var model = new TournamentViewModel()
             {
                 Id = tournament.Id,
                 OrganizerName = tournament.Organizer.FullName,
@@ -211,7 +557,7 @@ namespace SportConnect.Web.Controllers
         {
             var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
             var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
-            var model = new TournamentDeletionViewModel()
+            var model = new TournamentViewModel()
             {
                 Id = tournament.Id,
                 OrganizerName = tournament.Organizer.FullName,
@@ -231,241 +577,9 @@ namespace SportConnect.Web.Controllers
         {
             var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
             var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
-            var model = new TournamentDeletionViewModel()
-            {
-                Id = tournament.Id,
-                OrganizerName = tournament.Organizer.FullName,
-                Date = tournament.Date,
-                Deadline = tournament.Deadline,
-                Description = tournament.Description,
-                Location = tournament.Country,
-                Name = tournament.Name,
-                SportName = tournament.Sport.Name,
-                Participations = range
-            };
-            return View(model);
-        }
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult EditTournamentAdmin(int id)
-        {
-            var tournament = _repository.GetById(id);
-
-            if (tournament == null)
-            {
-                return NotFound();
-            }
-
             var model = new TournamentViewModel()
             {
                 Id = tournament.Id,
-                OrganizerId = tournament.OrganizerId,
-                Date = tournament.Date.Date, // Extract only the date part
-                DateTimer = tournament.Date, // Full DateTime, used for time extraction
-                Deadline = tournament.Deadline.Date, // Extract only the date part
-                DeadlineTime = tournament.Deadline, // Full DateTime, used for time extraction
-                Description = tournament.Description,
-                Location = tournament.Country,
-                Name = tournament.Name,
-                SportId = tournament.SportId,
-                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", tournament.SportId)
-            };
-
-            return View(model);
-        }
-
-        [HttpPost]
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult EditTournamentAdmin(TournamentViewModel model)
-        {
-            var user = _userManager.GetUserAsync(this.User).Result;
-
-            if (user == null)
-            {
-                return RedirectToAction("AllTournamentsAdmin", "Tournament");
-            }
-
-            model.OrganizerId = user.Id;
-
-            // Combine Date and Time
-            if (model.Date.HasValue && model.DateTimer.HasValue)
-            {
-                var combinedDate = model.Date.Value.Date + model.DateTimer.Value.TimeOfDay;
-                model.Date = combinedDate;
-            }
-
-            // Combine Deadline and DeadlineTime
-            if (model.Deadline.HasValue && model.DeadlineTime.HasValue)
-            {
-                var combinedDeadline = model.Deadline.Value.Date + model.DeadlineTime.Value.TimeOfDay;
-                model.Deadline = combinedDeadline;
-            }
-
-            // Check if Deadline is before Date
-            if (model.Deadline.HasValue && model.Date.HasValue && model.Deadline > model.Date)
-            {
-                ModelState.AddModelError("DateOrder", "Êðàéíèÿò ñðîê íà òóðíèðà íå ìîæå äà áúäå ñëåä äàòàòà íà ïðîâåæäàíå.");
-            }
-
-            if (!_repository.IsPropertyUnique(s => s.Name == model.Name && s.Id != model.Id))
-            {
-                ModelState.AddModelError("Name", "Èìà òàêúâ ñïîðò.");
-            }
-            if (!_repository.IsPropertyUnique(s => s.Description == model.Description && s.Id != model.Id))
-            {
-                ModelState.AddModelError("Description", "Òîâà îïèñàíèå å èçïîëçâàíî çà äðóã ñïîðò.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                model.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
-                return View(model);
-            }
-
-            return RedirectToAction("AllTournamentsAdmin", "Tournament");
-        }
-
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult EditTournamentMyAdmin(int id)
-        {
-            var tournament = _repository.GetById(id);
-
-            if (tournament == null)
-            {
-                return NotFound();
-            }
-
-            var model = new TournamentViewModel()
-            {
-                Id = tournament.Id,
-                OrganizerId = tournament.OrganizerId,
-                Date = tournament.Date.Date, // Extract only the date part
-                DateTimer = tournament.Date, // Full DateTime, used for time extraction
-                Deadline = tournament.Deadline.Date, // Extract only the date part
-                DeadlineTime = tournament.Deadline, // Full DateTime, used for time extraction
-                Description = tournament.Description,
-                Location = tournament.Country,
-                Name = tournament.Name,
-                SportId = tournament.SportId,
-                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", tournament.SportId)
-            };
-
-            return View(model);
-        }
-
-        [HttpPost]
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult EditTournamentMyAdmin(TournamentViewModel model)
-        {
-            var user = _userManager.GetUserAsync(this.User).Result;
-
-            if (user == null)
-            {
-                return RedirectToAction("AllTournamentsMyAdmin", "Tournament");
-            }
-
-            model.OrganizerId = user.Id;
-
-            // Combine Date and Time
-            if (model.Date.HasValue && model.DateTimer.HasValue)
-            {
-                var combinedDate = model.Date.Value.Date + model.DateTimer.Value.TimeOfDay;
-                model.Date = combinedDate;
-            }
-
-            // Combine Deadline and DeadlineTime
-            if (model.Deadline.HasValue && model.DeadlineTime.HasValue)
-            {
-                var combinedDeadline = model.Deadline.Value.Date + model.DeadlineTime.Value.TimeOfDay;
-                model.Deadline = combinedDeadline;
-            }
-
-            // Check if Deadline is before Date
-            if (model.Deadline.HasValue && model.Date.HasValue && model.Deadline > model.Date)
-            {
-                ModelState.AddModelError("DateOrder", "Êðàéíèÿò ñðîê íà òóðíèðà íå ìîæå äà áúäå ñëåä äàòàòà íà ïðîâåæäàíå.");
-            }
-
-            if (!_repository.IsPropertyUnique(s => s.Name == model.Name && s.Id != model.Id))
-            {
-                ModelState.AddModelError("Name", "Èìà òàêúâ ñïîðò.");
-            }
-            if (!_repository.IsPropertyUnique(s => s.Description == model.Description && s.Id != model.Id))
-            {
-                ModelState.AddModelError("Description", "Òîâà îïèñàíèå å èçïîëçâàíî çà äðóã ñïîðò.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                model.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
-                return View(model);
-            }
-
-            return RedirectToAction("AllTournamentsMyAdmin", "Tournament");
-        }
-
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        public IActionResult EditTournamentMy(int id)
-        {
-            var tournament = _repository.GetById(id);
-            var model = new TournamentViewModel()
-            {
-                Id = tournament.Id,
-                OrganizerId = tournament.OrganizerId,
-                Date = tournament.Date,
-                Deadline = tournament.Deadline,
-                Description = tournament.Description,
-                Location = tournament.Country,
-                Name = tournament.Name,
-                Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", tournament.SportId)
-            };
-            return View(model);
-        }
-
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        [HttpPost]
-        public IActionResult EditTournamentMy(TournamentViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                viewModel.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name", viewModel.SportId);
-                return View(viewModel);
-            }
-
-            var tournament = _repository.GetById(viewModel.Id ?? 0);
-            tournament.Name = viewModel.Name;
-            tournament.Description = viewModel.Description;
-            tournament.Date = viewModel.Date ?? tournament.Date;
-            tournament.Deadline = viewModel.Deadline ?? tournament.Deadline;
-            tournament.Country = viewModel.Location;
-            tournament.SportId = viewModel.SportId ?? tournament.SportId;
-
-            _repository.Update(tournament);
-            return RedirectToAction("AllTournamentsMy", "Tournament");
-        }
-
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult SportTournaments(int id)
-        {
-            var tournaments = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).Where(x => x.SportId == id);
-            var sport = _sportRepository.GetById(id);
-            var model = new SportDeletionViewModel()
-            {
-                Name = sport.Name,
-                Description = sport.Description,
-                Tournaments = tournaments
-            };
-            return View(model);
-        }
-
-       
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult DeleteTournamentAdmin(int id)
-        {
-            var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
-            var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
-            var model = new TournamentDeletionViewModel()
-            {
-                Id = tournament.Id,
                 OrganizerName = tournament.Organizer.FullName,
                 Date = tournament.Date,
                 Deadline = tournament.Deadline,
@@ -476,88 +590,6 @@ namespace SportConnect.Web.Controllers
                 Participations = range
             };
             return View(model);
-        }
-
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        [HttpPost]
-        public IActionResult DeleteTournamentAdmin(int id, string ConfirmText, TournamentDeletionViewModel model)
-        {
-            if (ConfirmText == "ÏÎÒÂÚÐÄÈ")
-            {
-                var range = _participationsRepository.GetAllBy(x => x.TournamentId == id);
-                _participationsRepository.DeleteRange(range);
-                var entity = _repository.GetById(id);
-                _repository.Delete(entity);
-                return RedirectToAction("AllTournamentsAdmin");
-            }
-            return View(model);
-        }
-
-
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult DeleteTournamentMyAdmin(int id)
-        {
-            var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
-            var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
-            var model = new TournamentDeletionViewModel()
-            {
-                Id = tournament.Id,
-                OrganizerName = tournament.Organizer.FullName,
-                Date = tournament.Date,
-                Deadline = tournament.Deadline,
-                Description = tournament.Description,
-                Location = tournament.Country,
-                Name = tournament.Name,
-                SportName = tournament.Sport.Name,
-                Participations = range
-            };
-            return View(model);
-        }
-
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        [HttpPost]
-        public IActionResult DeleteTournamentMyAdmin(int id, string ConfirmText, TournamentDeletionViewModel model)
-        {
-            if (ConfirmText == "ÏÎÒÂÚÐÄÈ")
-            {
-                var range = _participationsRepository.GetAllBy(x => x.TournamentId == id);
-                _participationsRepository.DeleteRange(range);
-                var entity = _repository.GetById(id);
-                _repository.Delete(entity);
-                return RedirectToAction("AllTournamentsMyAdmin");
-            }
-            return View(model);
-        }
-
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        public IActionResult DeleteTournamentMy(int id)
-        {
-            var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
-            var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
-            var model = new TournamentDeletionViewModel()
-            {
-                Id = tournament.Id,
-                OrganizerName = tournament.Organizer.FullName,
-                Date = tournament.Date,
-                Deadline = tournament.Deadline,
-                Description = tournament.Description,
-                Location = tournament.Country,
-                Name = tournament.Name,
-                SportName = tournament.Sport.Name,
-                Participations = range
-            };
-            return View(model);
-        }
-
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        [HttpPost]
-        public IActionResult DeleteTournamentMy(int id, TournamentDeletionViewModel model)
-        {
-            var range = _participationsRepository.GetAllBy(x => x.TournamentId == id);
-            _participationsRepository.DeleteRange(range);
-            var entity = _repository.GetById(id);
-            _repository.Delete(entity);
-            return RedirectToAction("AllTournamentsMy", "Tournament");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -77,10 +77,10 @@ namespace SportConnect.Web.Controllers
             var editedUser = _repository.GetUserById(id);
             var names = editedUser.FullName.Split(' ').ToList();
 
-            var model = new EditUserViewModel();
+            var model = new UserViewModel();
             if (id == currentUser.Id)
             {
-                model = new EditUserViewModel()
+                model = new UserViewModel()
                 {
                     Id = id,
                     UserName = editedUser.UserName,
@@ -96,7 +96,7 @@ namespace SportConnect.Web.Controllers
             }
             else
             {
-                model = new EditUserViewModel()
+                model = new UserViewModel()
                 {
                     Id = id,
                     UserName = editedUser.UserName,
@@ -126,7 +126,7 @@ namespace SportConnect.Web.Controllers
         }
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         [HttpPost]
-        public async Task<IActionResult> EditUser(EditUserViewModel user, IFormFile? file, string returnUrl = null)
+        public async Task<IActionResult> EditUser(UserViewModel user, IFormFile? file, string returnUrl = null)
         {
             var currentUser = await _userManager.GetUserAsync(this.User);
             ViewBag.UserId = currentUser.Id;
@@ -317,7 +317,7 @@ namespace SportConnect.Web.Controllers
         {
             var user = _userManager.GetUserAsync(this.User).Result;
             var names = user.FullName.Split(' ').ToList();
-            var model = new EditUserViewModel()
+            var model = new UserViewModel()
             {
                 Id = user.Id,
                 UserName = user.UserName,
@@ -334,33 +334,28 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.AdminRole}")]
         public IActionResult UserDetails(string id)
         {
-            var user = _repository.GetUserById(id);
-            var participations = _participationRepository.AllWithIncludes(p => p.Tournament, p => p.Tournament.Sport).Where(p => p.ParticipantId == id).ToList();
-
+            var user = _userManager.GetUserAsync(this.User).Result;
             var names = user.FullName.Split(' ').ToList();
-
-            var model = new SportConnectUserViewModel()
+            var model = new UserViewModel()
             {
-                Id = id,
+                Id = user.Id,
                 UserName = user.UserName,
                 BothNames = $"{names[0]} {names[1]}",
                 DateOfBirth = user.DateOfBirth,
                 Country = user.Country,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
+                ProfileImage = user.ImageUrl
             };
-
-            model.Participations = participations;
-
             return View(model);
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
-        public async Task<IActionResult> AllUsers(EditUserViewModel? filter)
+        public async Task<IActionResult> AllUsers(UserViewModel? filter)
         {
             if (filter == null)
             {
-                return View(new EditUserViewModel());
+                return View(new UserViewModel());
             }
 
             var query = _repository.GetAll().AsQueryable();
@@ -398,7 +393,7 @@ namespace SportConnect.Web.Controllers
             ViewBag.Countries = await GetAllCountries();
 
             // Prepare the model with filtered data
-            var model = new EditUserViewModel
+            var model = new UserViewModel
             {
                 UserName = filter.UserName,
                 BirthYear = filter.BirthYear,
@@ -420,10 +415,10 @@ namespace SportConnect.Web.Controllers
             var editedUser = _repository.GetUserById(id);
             var names = editedUser.FullName.Split(' ').ToList();
 
-            var model = new EditUserViewModel();
+            var model = new UserViewModel();
             if (id == currentUser.Id)
             {
-                model = new EditUserViewModel()
+                model = new UserViewModel()
                 {
                     Id = id,
                     UserName = editedUser.UserName,
@@ -439,7 +434,7 @@ namespace SportConnect.Web.Controllers
             }
             else
             {
-                model = new EditUserViewModel()
+                model = new UserViewModel()
                 {
                     Id = id,
                     UserName = editedUser.UserName,
@@ -456,7 +451,7 @@ namespace SportConnect.Web.Controllers
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         [HttpPost]
-        public async Task<IActionResult> DeleteUser(string ConfirmText, EditUserViewModel user, string returnUrl = null)
+        public async Task<IActionResult> DeleteUser(string ConfirmText, UserViewModel user, string returnUrl = null)
         {
             var deletedUser = _repository.GetUserById(user.Id);
             List<string> names = new List<string>();

@@ -19,6 +19,9 @@ public class TournamentViewModel
 
     public DateTime? Date { get; set; }
 
+    public DateTime? StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
+
     public DateTime? Deadline { get; set; }
 
     public string? Location { get; set; }
@@ -35,11 +38,14 @@ public class TournamentViewModel
     public IEnumerable<Participation>? Participations { get; set; } = new List<Participation>();
     public IEnumerable<Participation>? UserParticipations { get; set; } = new List<Participation>();
     public List<Tournament>? Tournaments { get; set; }
+    public List<Tournament>? FilteredTournaments { get; set; }
     public string? UserId { get; set; }
 
-    public DateTime? DateTimer { get; set; }
+    [DataType(DataType.Time)]
+    public TimeSpan? DateTimer { get; set; }
 
-    public DateTime? DeadlineTime { get; set; }
+    [DataType(DataType.Time)]
+    public TimeSpan? DeadlineTime { get; set; }
 
     public Tournament GetTournament()
     {

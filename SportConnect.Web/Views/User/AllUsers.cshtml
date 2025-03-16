@@ -1,5 +1,5 @@
 ﻿@using SportConnect.Web.Models
-@model EditUserViewModel
+@model UserViewModel
 
 <style>
     .container main {
@@ -36,7 +36,7 @@
     <div class="container">
         <h2 class="delete-header mb-0 text-center">Потребители</h2>
 
-        <div id="searchContainer" class="align-items-center sticky-search mb-3 mt-1">
+        <div class="justify-content-center align-items-center sticky-search mb-3 mt-1">
             <form method="post" class="d-flex justify-content-center w-100 align-items-center">
                 
                 <input id="sportSearch" class="form-control me-2" placeholder="Име" asp-for="@Model.UserName" style="font-size: 1rem; width: 300px;" />

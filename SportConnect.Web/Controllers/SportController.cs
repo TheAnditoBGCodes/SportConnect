@@ -63,6 +63,12 @@ namespace SportConnect.Web.Controllers
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
+        public IActionResult AddSport()
+        {
+            return View(new Sport());
+        }
+
+        [Authorize(Roles = $"{SD.AdminRole}")]
         [HttpPost]
         public async Task<IActionResult> AddSport(Sport model)
         {
