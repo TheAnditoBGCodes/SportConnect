@@ -135,7 +135,7 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-floating">
-                                    <input type="time" asp-for="@Model.DeadlineTime" class="form-control form-control-sm" value="@Model.DateTimer?.ToString("hh\\:mm")" />
+                                    <input type="time" asp-for="@Model.DeadlineTime" class="form-control form-control-sm" value="@Model.DeadlineTime?.ToString("hh\\:mm")" />
                                     <label asp-for="@Model.DeadlineTime">Време на краен срок</label>
                                     <span asp-validation-for="@Model.DeadlineTime" class="text-danger small"></span>
                                 </div>

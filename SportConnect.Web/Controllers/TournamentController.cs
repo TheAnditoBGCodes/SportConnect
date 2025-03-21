@@ -57,7 +57,7 @@ namespace SportConnect.Web.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> AllTournaments(TournamentViewModel? filter)
+        public async Task<IActionResult> AllTournaments(TournamentViewModel? filter, string returnUrl = null)
         {
             if (filter == null)
             {
@@ -113,6 +113,7 @@ namespace SportConnect.Web.Controllers
                 Tournaments = _repository.GetAll().ToList(),
             };
 
+            ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllTournaments", "Tournament");
             return View(model);
         }
 
@@ -153,6 +154,7 @@ namespace SportConnect.Web.Controllers
             {
                 ModelState.AddModelError("Description", "Описанието е вече заето.");
             }
+
             if (tournament.SportId == null)
             {
                 ModelState.AddModelError("SportId", "Спортът е задължителен");
@@ -162,7 +164,6 @@ namespace SportConnect.Web.Controllers
             {
                 ModelState.AddModelError("ImageUrl", "Задължителна");
             }
-
 
             if (tournament.Country == null)
             {
@@ -176,35 +177,55 @@ namespace SportConnect.Web.Controllers
 
             if (!tournament.Deadline.HasValue)
             {
-                ModelState.AddModelError("Deadline", "Задължителен");
+                ModelState.AddModelError("Deadline", "Краен срок е задължителен");
             }
 
             if (!tournament.DateTimer.HasValue)
             {
-                ModelState.AddModelError("DateTimer", "Часът е задължителен");
+                ModelState.AddModelError("DateTimer", "Задължителен");
             }
 
             if (!tournament.DeadlineTime.HasValue)
             {
-                ModelState.AddModelError("DeadlineTime", "Часът е задължителен");
+                ModelState.AddModelError("DeadlineTime", "Задължителен");
+            }
+
+            DateTime eventDateTime = tournament.Deadline.Value.Date.Add(tournament.DeadlineTime.Value);
+            DateTime deadlineDateTime = tournament.Date.Value.Date.Add(tournament.DateTimer.Value);
+
+            // Combine the Date and Time for Deadline and Event Date
+            if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
+            {
+                deadlineDateTime = tournament.Deadline.Value.Date.Add(tournament.DeadlineTime.Value);
+
+                var deadlineDateTimeTruncated = deadlineDateTime.Date.AddHours(deadlineDateTime.TimeOfDay.Hours).AddMinutes(deadlineDateTime.TimeOfDay.Minutes);
+                var nowTruncated = DateTime.Now.Date.AddHours(DateTime.Now.TimeOfDay.Hours).AddMinutes(DateTime.Now.TimeOfDay.Minutes);
+                if (deadlineDateTimeTruncated < nowTruncated)
+                {
+                    ModelState.AddModelError("DeadlineTime", "Не може да е в миналото.");
+                }
             }
 
             if (tournament.Date.HasValue && tournament.DateTimer.HasValue)
             {
-                var eventDateTime = tournament.Date.Value.Date + tournament.DateTimer.Value;
-                tournament.Date = eventDateTime;
+                eventDateTime = tournament.Date.Value.Date.Add(tournament.DateTimer.Value);
+
+                // Check if the event start date-time is before the deadline
+                if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
+                {
+                    deadlineDateTime = tournament.Deadline.Value.Date.Add(tournament.DeadlineTime.Value);
+
+                    // Truncate both the eventDateTime and deadlineDateTime to the minute level
+                    var eventTruncated = eventDateTime.AddSeconds(-eventDateTime.Second).AddMilliseconds(-eventDateTime.Millisecond).AddMicroseconds(-eventDateTime.Microsecond);
+                    if (eventTruncated < deadlineDateTime)
+                    {
+                        ModelState.AddModelError("DateOrder", "Началната дата не може да бъде преди крайния срок.");
+                    }
+                }
             }
 
-            if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
-            {
-                var deadlineDateTime = tournament.Deadline.Value.Date + tournament.DeadlineTime.Value;
-                tournament.Deadline = deadlineDateTime;
-            }
-
-            if (tournament.Deadline.HasValue && tournament.Date.HasValue && tournament.Deadline > tournament.Date)
-            {
-                ModelState.AddModelError("DateOrder", "Турнира трябва да почва след крайния срок.");
-            }
+            tournament.Deadline = deadlineDateTime;
+            tournament.Date = eventDateTime;
 
             if (ModelState.IsValid)
             {
@@ -274,18 +295,18 @@ namespace SportConnect.Web.Controllers
                 {
                     ModelState.AddModelError("Description", "Описанието е вече заето.");
                 }
+
                 if (tournament.SportId == null)
                 {
                     ModelState.AddModelError("SportId", "Спортът е задължителен");
                 }
 
-                if (tournament.ImageUrl == null)
+                if (string.IsNullOrWhiteSpace(tournament.ImageUrl))
                 {
                     ModelState.AddModelError("ImageUrl", "Задължителна");
                 }
 
-
-                if (tournament.Country == null)
+                if (string.IsNullOrWhiteSpace(tournament.Country))
                 {
                     ModelState.AddModelError("Country", "Задължителна");
                 }
@@ -297,35 +318,55 @@ namespace SportConnect.Web.Controllers
 
                 if (!tournament.Deadline.HasValue)
                 {
-                    ModelState.AddModelError("Deadline", "Задължителен");
+                    ModelState.AddModelError("Deadline", "Краен срок е задължителен");
                 }
 
                 if (!tournament.DateTimer.HasValue)
                 {
-                    ModelState.AddModelError("DateTimer", "Часът е задължителен");
+                    ModelState.AddModelError("DateTimer", "Задължителен");
                 }
 
                 if (!tournament.DeadlineTime.HasValue)
                 {
-                    ModelState.AddModelError("DeadlineTime", "Часът е задължителен");
+                    ModelState.AddModelError("DeadlineTime", "Задължителен");
+                }
+
+                DateTime eventDateTime = tournament.Deadline.Value.Date.Add(tournament.DeadlineTime.Value);
+                DateTime deadlineDateTime = tournament.Date.Value.Date.Add(tournament.DateTimer.Value);
+
+                // Combine the Date and Time for Deadline and Event Date
+                if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
+                {
+                    deadlineDateTime = tournament.Deadline.Value.Date.Add(tournament.DeadlineTime.Value);
+
+                    var deadlineDateTimeTruncated = deadlineDateTime.Date.AddHours(deadlineDateTime.TimeOfDay.Hours).AddMinutes(deadlineDateTime.TimeOfDay.Minutes);
+                    var nowTruncated = DateTime.Now.Date.AddHours(DateTime.Now.TimeOfDay.Hours).AddMinutes(DateTime.Now.TimeOfDay.Minutes);
+                    if (deadlineDateTimeTruncated < nowTruncated)
+                    {
+                        ModelState.AddModelError("DeadlineTime", "Не може да е в миналото.");
+                    }
                 }
 
                 if (tournament.Date.HasValue && tournament.DateTimer.HasValue)
                 {
-                    var eventDateTime = tournament.Date.Value.Date + tournament.DateTimer.Value;
-                    tournament.Date = eventDateTime;
+                    eventDateTime = tournament.Date.Value.Date.Add(tournament.DateTimer.Value);
+
+                    // Check if the event start date-time is before the deadline
+                    if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
+                    {
+                        deadlineDateTime = tournament.Deadline.Value.Date.Add(tournament.DeadlineTime.Value);
+
+                        // Truncate both the eventDateTime and deadlineDateTime to the minute level
+                        var eventTruncated = eventDateTime.AddSeconds(-eventDateTime.Second).AddMilliseconds(-eventDateTime.Millisecond).AddMicroseconds(-eventDateTime.Microsecond);
+                        if (eventTruncated < deadlineDateTime)
+                        {
+                            ModelState.AddModelError("DateOrder", "Началната дата не може да бъде преди крайния срок.");
+                        }
+                    }
                 }
 
-                if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
-                {
-                    var deadlineDateTime = tournament.Deadline.Value.Date + tournament.DeadlineTime.Value;
-                    tournament.Deadline = deadlineDateTime;
-                }
-
-                if (tournament.Deadline.HasValue && tournament.Date.HasValue && tournament.Deadline > tournament.Date)
-                {
-                    ModelState.AddModelError("DateOrder", "Турнира трябва да почва след крайния срок.");
-                }
+                tournament.Deadline = deadlineDateTime;
+                tournament.Date = eventDateTime;
 
                 if (ModelState.IsValid)
                 {
@@ -360,7 +401,7 @@ namespace SportConnect.Web.Controllers
                     ModelState.AddModelError("Description", "Описанието е вече заето.");
                 }
 
-                if (tournament.ImageUrl == null)
+                if (string.IsNullOrWhiteSpace(tournament.ImageUrl))
                 {
                     ModelState.AddModelError("ImageUrl", "Задължителна");
                 }
@@ -474,7 +515,65 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        
+        [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
+        public async Task<IActionResult> UserTournaments(string id, TournamentViewModel? filter, string returnUrl = null)
+        {
+            ViewBag.ReturnUrl = returnUrl ?? Url.Action("UserDetails", "User", new { id = id });
+
+            var tournaments = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).Where(x => x.OrganizerId == id);
+
+            if (filter == null)
+            {
+                return View(new TournamentViewModel());
+            }
+
+            var query = tournaments.AsQueryable();
+
+            if (filter.SportId != null)
+            {
+                query = query.Where(p => p.SportId == filter.SportId.Value);
+            }
+
+            if (filter.Country != null)
+            {
+                query = query.Where(p => p.Country == filter.Country);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Name))
+            {
+                string filteredname = filter.Name.Trim().ToLower();
+                query = query.Where(p => p.Name.ToLower().Contains(filteredname));
+            }
+
+            if (filter.StartDate != null)
+            {
+                query = query.Where(p => p.Date >= filter.StartDate);
+            }
+
+            if (filter.EndDate != null)
+            {
+                query = query.Where(p => p.Date <= filter.EndDate);
+            }
+
+            ViewBag.Sports = new SelectList(_sportRepository.GetAll(), "Id", "Name");
+            ViewBag.Countries = await GetAllCountries();
+
+            var model = new TournamentViewModel
+            {
+                SportId = filter.SportId,
+                Country = filter.Country,
+                Name = filter.Name,
+                StartDate = filter.StartDate,
+                EndDate = filter.EndDate,
+                FilteredTournaments = query.Include(x => x.Organizer).Include(x => x.Sport).ToList(),
+                Tournaments = tournaments.ToList(),
+            };
+
+            return View(model);
+        }
+
+        [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
         public async Task<IActionResult> MyTournaments(TournamentViewModel? filter)
         {
             var currentUser = await _userManager.GetUserAsync(this.User);
@@ -532,63 +631,31 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult TournamentDetailsAdmin(int id)
+        [AllowAnonymous]
+        public async Task<IActionResult> TournamentDetails(int id, string returnUrl = null)
         {
             var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
             var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
-            var model = new TournamentViewModel()
-            {
-                Id = tournament.Id,
-                OrganizerName = tournament.Organizer.FullName,
-                Date = tournament.Date,
-                Deadline = tournament.Deadline,
-                Description = tournament.Description,
-                Location = tournament.Country,
-                Name = tournament.Name,
-                SportName = tournament.Sport.Name,
-                Participations = range
-            };
-            return View(model);
-        }
 
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult TournamentDetailsMyAdmin(int id)
-        {
-            var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
-            var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
-            var model = new TournamentViewModel()
-            {
-                Id = tournament.Id,
-                OrganizerName = tournament.Organizer.FullName,
-                Date = tournament.Date,
-                Deadline = tournament.Deadline,
-                Description = tournament.Description,
-                Location = tournament.Country,
-                Name = tournament.Name,
-                SportName = tournament.Sport.Name,
-                Participations = range
-            };
-            return View(model);
-        }
+            var user = _userManager.GetUserAsync(this.User).Result;
+            ViewBag.UserId = user.Id;
 
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        public IActionResult TournamentDetailsMy(int id)
-        {
-            var range = _participationsRepository.AllWithIncludes(x => x.Tournament, x => x.Participant).Where(x => x.TournamentId == id);
-            var tournament = _repository.AllWithIncludes(x => x.Organizer, x => x.Sport).FirstOrDefault(x => x.Id == id);
             var model = new TournamentViewModel()
             {
                 Id = tournament.Id,
                 OrganizerName = tournament.Organizer.FullName,
+                Organizer = tournament.Organizer,
                 Date = tournament.Date,
                 Deadline = tournament.Deadline,
                 Description = tournament.Description,
-                Location = tournament.Country,
+                Country = tournament.Country,
                 Name = tournament.Name,
+                ImageUrl = tournament.ImageUrl,
+                Participations = range,
                 SportName = tournament.Sport.Name,
-                Participations = range
             };
+
+            ViewBag.ReturnUrl = returnUrl ?? Url.Action("TournamentDetails", "Tournament");
             return View(model);
         }
 

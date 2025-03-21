@@ -194,8 +194,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Participation/ParticipationsMy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGljaXBhdGlvblxQYXJ0aWNpcGF0aW9uc015LmNzaHRtbA==
+[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Participation/MyParticipations.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGljaXBhdGlvblxNeVBhcnRpY2lwYXRpb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Participation/TournamentParticipations.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGljaXBhdGlvblxUb3VybmFtZW50UGFydGljaXBhdGlvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Participation/UserParticipations.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGljaXBhdGlvblxVc2VyUGFydGljaXBhdGlvbnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Shared/Error.cshtml]
@@ -250,16 +258,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxTcG9ydFRvdXJuYW1lbnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/TournamentDetailsAdmin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxUb3VybmFtZW50RGV0YWlsc0FkbWluLmNzaHRtbA==
+[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/TournamentDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxUb3VybmFtZW50RGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/TournamentDetailsMy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxUb3VybmFtZW50RGV0YWlsc015LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/TournamentDetailsMyAdmin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxUb3VybmFtZW50RGV0YWlsc015QWRtaW4uY3NodG1s
+[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Tournament/UserTournaments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG91cm5hbWVudFxVc2VyVG91cm5hbWVudHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/User/AllUsers.cshtml]

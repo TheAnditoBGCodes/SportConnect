@@ -27,6 +27,7 @@ public class TournamentViewModel
     public string? Location { get; set; }
 
     public int? SportId { get; set; }
+    public bool? Approved { get; set; }
 
     public string? Country { get; set; }
     public IEnumerable<SelectListItem>? CountryList { get; set; } = new List<SelectListItem>();

@@ -124,21 +124,14 @@
                             </div>
 
                             <!-- Row 4: Location and Phone Number -->
-                            <div class="row mb-2">
-                                <div class="col-12 col-md-6">
+                            <div class="row">
+                                <div class="col-12">
                                     <div class="form-floating">
                                         <select asp-for="@Model.Country" asp-items="@Model.CountryList" class="form-select form-control-sm" aria-required="true" style="font-size:  1rem;">
                                             <option value="" disabled selected>Изберете държавa</option>
                                         </select>
                                         <label style="font-size:  1rem;" asp-for="@Model.Country" class="text-gray">Държава</label>
                                         <span asp-validation-for="@Model.Country" class="text-danger" style="font-size:  1rem;"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating">
-                                        <input asp-for="@Model.PhoneNumber" class="form-control form-control-sm" aria-required="true" placeholder="0888 123 456" style="font-size:  1rem;" />
-                                        <label style="font-size: 1rem;" asp-for="@Model.PhoneNumber" class="text-gray">Телефон</label>
-                                        <span asp-validation-for="@Model.PhoneNumber" class="text-danger" style="font-size:  1rem;"></span>
                                     </div>
                                 </div>
                             </div>

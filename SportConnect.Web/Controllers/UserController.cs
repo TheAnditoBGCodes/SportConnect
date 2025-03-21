@@ -29,25 +29,29 @@ namespace SportConnect.Web.Controllers
 {
     public class UserController : Controller
     {
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<TournamentController> _logger;
         private readonly UserManager<SportConnectUser> _userManager;
-        public IRepository<Participation> _participationRepository;
-        private readonly SignInManager<SportConnectUser> _signInManager;
+        public IRepository<Tournament> _tournamentsRepository { get; set; }
+        public IRepository<Sport> _sportRepository { get; set; }
         public IRepository<SportConnectUser> _repository { get; set; }
+        public IRepository<Participation> _participationsRepository { get; set; }
         private readonly HttpClient _httpClient;
         private readonly Cloudinary _cloudinary;
+        private readonly SignInManager<SportConnectUser> _signInManager;
         private readonly CloudinaryService _cloudinaryService;
         private readonly SportConnectDbContext _context;
 
-        public UserController(HttpClient httpClient, ILogger<UserController> logger, UserManager<SportConnectUser> userManager, IRepository<Participation> participationRepository, SignInManager<SportConnectUser> signInManager, IRepository<SportConnectUser> repository, Cloudinary cloudinary, CloudinaryService cloudinaryService, SportConnectDbContext context)
+        public UserController(ILogger<TournamentController> logger, UserManager<SportConnectUser> userManager, IRepository<Tournament> tournamentsRepository, IRepository<Sport> sportRepository, IRepository<SportConnectUser> repository, IRepository<Participation> participationsRepository, HttpClient httpClient, Cloudinary cloudinary, SignInManager<SportConnectUser> signInManager, CloudinaryService cloudinaryService, SportConnectDbContext context)
         {
-            _httpClient = httpClient;
             _logger = logger;
             _userManager = userManager;
-            _participationRepository = participationRepository;
-            _signInManager = signInManager;
+            _tournamentsRepository = tournamentsRepository;
+            _sportRepository = sportRepository;
             _repository = repository;
+            _participationsRepository = participationsRepository;
+            _httpClient = httpClient;
             _cloudinary = cloudinary;
+            _signInManager = signInManager;
             _cloudinaryService = cloudinaryService;
             _context = context;
         }
@@ -89,7 +93,6 @@ namespace SportConnect.Web.Controllers
                     LastName = names[1],
                     Country = editedUser.Country,
                     CountryList = await GetAllCountries(),
-                    PhoneNumber = editedUser.PhoneNumber,
                     DateOfBirth = editedUser.DateOfBirth,
                     ProfileImage = editedUser.ImageUrl
                 };
@@ -186,15 +189,6 @@ namespace SportConnect.Web.Controllers
                     ModelState.AddModelError("Country", "Моля, въведете държава.");
                 }
 
-                if (string.IsNullOrWhiteSpace(user.PhoneNumber))
-                {
-                    ModelState.AddModelError("PhoneNumber", "Моля, въведете телефонен номер.");
-                }
-                else if (!new PhoneAttribute().IsValid(user.PhoneNumber))
-                {
-                    ModelState.AddModelError("PhoneNumber", "Невалиден телефонен номер.");
-                }
-
                 if (!ModelState.IsValid)
                 {
                     return View(user);
@@ -215,7 +209,6 @@ namespace SportConnect.Web.Controllers
                 editedUser.FullName = $"{user.FirstName} {user.LastName}";
                 editedUser.Email = user.Email;
                 editedUser.Country = user.Country;
-                editedUser.PhoneNumber = user.PhoneNumber;
                 editedUser.DateOfBirth = user.DateOfBirth.Value.Date;
 
                 if (ModelState.IsValid)
@@ -325,16 +318,15 @@ namespace SportConnect.Web.Controllers
                 DateOfBirth = user.DateOfBirth,
                 Country = user.Country,
                 Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
                 ProfileImage = user.ImageUrl
             };
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole}")]
-        public IActionResult UserDetails(string id)
+        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        public async Task<IActionResult> UserDetails(string id, string returnUrl = null)
         {
-            var user = _userManager.GetUserAsync(this.User).Result;
+            var user = _repository.GetUserById(id);
             var names = user.FullName.Split(' ').ToList();
             var model = new UserViewModel()
             {
@@ -344,9 +336,12 @@ namespace SportConnect.Web.Controllers
                 DateOfBirth = user.DateOfBirth,
                 Country = user.Country,
                 Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
                 ProfileImage = user.ImageUrl
             };
+            var myself = await _userManager.GetUserAsync(this.User);
+            ViewBag.UserId = myself.Id;
+
+            ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllUsers", "User");
             return View(model);
         }
 
@@ -379,7 +374,7 @@ namespace SportConnect.Web.Controllers
             {
                 string trimmedFilter = filter.Email.Trim().ToLower();
 
-                query = query.Where(p => p.Email.Trim().ToLower().Contains(trimmedFilter) || p.PhoneNumber.Trim().ToLower().Contains(trimmedFilter));
+                query = query.Where(p => p.Email.Trim().ToLower().Contains(trimmedFilter));
             }
 
             // Filter users by the specified birth year
@@ -427,7 +422,6 @@ namespace SportConnect.Web.Controllers
                     LastName = names[1],
                     Country = editedUser.Country,
                     CountryList = await GetAllCountries(),
-                    PhoneNumber = editedUser.PhoneNumber,
                     DateOfBirth = editedUser.DateOfBirth,
                     ProfileImage = editedUser.ImageUrl
                 };

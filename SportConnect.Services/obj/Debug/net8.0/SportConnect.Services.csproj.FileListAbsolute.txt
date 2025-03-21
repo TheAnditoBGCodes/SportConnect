@@ -24,3 +24,10 @@ C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug
 C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\refint\SportConnect.Services.dll
 C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\SportConnect.Services.pdb
 C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\ref\SportConnect.Services.dll
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\bin\Debug\net8.0\SportConnect.DataAccess.dll
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\bin\Debug\net8.0\SportConnect.Models.dll
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\bin\Debug\net8.0\SportConnect.Utility.dll
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\bin\Debug\net8.0\SportConnect.DataAccess.pdb
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\bin\Debug\net8.0\SportConnect.Models.pdb
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\bin\Debug\net8.0\SportConnect.Utility.pdb
+C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Services\obj\Debug\net8.0\SportCon.79ED3B53.Up2Date

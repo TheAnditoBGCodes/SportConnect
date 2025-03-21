@@ -1,11 +1,6 @@
-Check Everything Working
-
-TournamentDetails
-
-MyParticipations
-
-UserDetails
-
-Правилни Имейли и Номера за Потребители
-
-Подобрения на идентичността на SportConnect като уеб приложение
+Fix Pathfindings And Authorizations 
+Check Project Task Requirements
+Everything Should Be Asynchronous
+Ensure Correct Email
+Login Forgotten Password
+Graphical Improvements

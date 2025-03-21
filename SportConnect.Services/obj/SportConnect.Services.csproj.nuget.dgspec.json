@@ -4,6 +4,216 @@
     "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Services\\SportConnect.Services.csproj": {}
   },
   "projects": {
+    "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.DataAccess\\SportConnect.DataAccess.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.DataAccess\\SportConnect.DataAccess.csproj",
+        "projectName": "SportConnect.DataAccess",
+        "projectPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.DataAccess\\SportConnect.DataAccess.csproj",
+        "packagesPath": "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.DataAccess\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\iliev_7x3wtf6\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Models\\SportConnect.Models.csproj": {
+                "projectPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Models\\SportConnect.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.27.4, )"
+            },
+            "Google.Cloud.Translation.V2": {
+              "target": "Package",
+              "version": "[3.4.0, )"
+            },
+            "IsoNames": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.12, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[8.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Models\\SportConnect.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Models\\SportConnect.Models.csproj",
+        "projectName": "SportConnect.Models",
+        "projectPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Models\\SportConnect.Models.csproj",
+        "packagesPath": "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\iliev_7x3wtf6\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Utility\\SportConnect.Utility.csproj": {
+                "projectPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Utility\\SportConnect.Utility.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.27.4, )"
+            },
+            "Google.Cloud.Translation.V2": {
+              "target": "Package",
+              "version": "[3.4.0, )"
+            },
+            "IsoNames": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.12, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[8.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Services\\SportConnect.Services.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -12,6 +222,95 @@
         "projectPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Services\\SportConnect.Services.csproj",
         "packagesPath": "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Services\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\iliev_7x3wtf6\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.DataAccess\\SportConnect.DataAccess.csproj": {
+                "projectPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.DataAccess\\SportConnect.DataAccess.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.27.4, )"
+            },
+            "Google.Cloud.Translation.V2": {
+              "target": "Package",
+              "version": "[3.4.0, )"
+            },
+            "IsoNames": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Utility\\SportConnect.Utility.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Utility\\SportConnect.Utility.csproj",
+        "projectName": "SportConnect.Utility",
+        "projectPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Utility\\SportConnect.Utility.csproj",
+        "packagesPath": "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Utility\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\iliev_7x3wtf6\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -56,13 +355,9 @@
               "target": "Package",
               "version": "[1.1.0, )"
             },
-            "Microsoft.AspNetCore.Http.Features": {
+            "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[5.0.17, )"
-            },
-            "Microsoft.Extensions.Configuration.Abstractions": {
-              "target": "Package",
-              "version": "[9.0.1, )"
+              "version": "[8.0.12, )"
             }
           },
           "imports": [

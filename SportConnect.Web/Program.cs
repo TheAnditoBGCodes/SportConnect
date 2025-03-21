@@ -29,6 +29,7 @@ builder.Services.Configure<SecurityStampValidatorOptions>(options =>
     // enables immediate logout, after updating the user's stat.
     options.ValidationInterval = TimeSpan.Zero;
 });
+
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -47,7 +48,6 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = new PathString("/Identity/Account/Logout");
     options.AccessDeniedPath = "/Identity/Account/Login";
 });
-
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireAuthenticatedUser", policy =>
@@ -55,6 +55,7 @@ builder.Services.AddAuthorization(options =>
 });
 
 var app = builder.Build();
+app.UseMiddleware<TournamentCleanupMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

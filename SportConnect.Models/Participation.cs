@@ -23,6 +23,6 @@ namespace SportConnect.Models
         public Tournament Tournament { get; set; }
 
         [Required]
-        public DateTime RegistrationDate { get; set; }
+        public bool Approved { get; set; }
     }
 }

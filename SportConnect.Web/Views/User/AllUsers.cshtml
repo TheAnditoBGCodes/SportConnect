@@ -94,10 +94,6 @@
                                 <strong>Имейл</strong>
                                 <small class="d-block"><i class="bi bi-envelope"></i> @user.Email</small>
                             </div>
-                            <div class="flex-fill px-2">
-                                <strong>Телефон</strong>
-                                <small class="d-block"><i class="bi bi-telephone"></i> @user.PhoneNumber</small>
-                            </div>
                             @{
                                 int age = DateTime.Now.Year - user.DateOfBirth.Year;
                                 if (DateTime.Now.Month < user.DateOfBirth.Month ||
@@ -115,20 +111,8 @@
                         </div>
 
                         <div class="btn-group">
-                            <a asp-controller="User" asp-action="EditUser" asp-route-id="@user.Id" asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-warning btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-pen-fill">
-                                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001" />
-                                </svg>
-                            </a>
-                            <a asp-controller="User" asp-action="DeleteUser" asp-route-id="@user.Id" asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-danger btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-trash-fill">
-                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
-                                </svg>
-                            </a>
-                            <a asp-controller="User" asp-action="UserDetails" asp-route-id="@user.Id" class="btn btn-info btn-sm font-weight-bold">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-info-circle">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                </svg>
+                            <a asp-controller="User" asp-action="UserDetails" asp-route-id="@user.Id" asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-primary text-white btn-sm">
+                                Информация
                             </a>
                         </div>
                     </div>

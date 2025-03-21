@@ -99,7 +99,7 @@
     }
 </style>
 
-@if (Model.Tournaments.Count < 1)
+@if (Model.Tournaments.Count == 0)
 {
     <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh;">
         <div class="container p-2" style="max-width: 50%; padding: 0.5rem;">
@@ -203,7 +203,7 @@ else
 
                             <div class="card-footer text-center">
                                 <div class="d-flex justify-content-between w-100">
-                                            <a asp-controller="Tournament" asp-action="TournamentDetails" asp-route-id="@tournament.Id" asp-route-returnUrl="@Url.Action("AllTournaments", "Tournament")" class="btn btn-primary text-white btn-sm mx-auto">Информация</a>
+                                    <a asp-controller="Tournament" asp-action="TournamentDetails" asp-route-id="@tournament.Id" asp-route-returnUrl="@Url.Action("AllTournaments", "Tournament")" class="btn btn-primary text-white btn-sm mx-auto">Информация</a>
                                 </div>
                             </div>
                         </div>

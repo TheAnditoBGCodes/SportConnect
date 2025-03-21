@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "El8boQ4gLb8=",
+  "dgSpecHash": "36lmrmee2W0=",
   "success": true,
   "projectFilePath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\SportConnect.Web.csproj",
   "expectedPackageFiles": [
@@ -108,8 +108,10 @@
     "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.1\\microsoft.extensions.dependencyinjection.9.0.1.nupkg.sha512",
     "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.1\\microsoft.extensions.dependencyinjection.abstractions.9.0.1.nupkg.sha512",
     "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\microsoft.extensions.dependencymodel\\9.0.1\\microsoft.extensions.dependencymodel.9.0.1.nupkg.sha512",
+    "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\8.0.0\\microsoft.extensions.diagnostics.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\8.0.0\\microsoft.extensions.fileproviders.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\microsoft.extensions.fileproviders.embedded\\8.0.12\\microsoft.extensions.fileproviders.embedded.8.0.12.nupkg.sha512",
+    "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\8.0.0\\microsoft.extensions.hosting.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\microsoft.extensions.identity.core\\8.0.12\\microsoft.extensions.identity.core.8.0.12.nupkg.sha512",
     "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\microsoft.extensions.identity.stores\\8.0.12\\microsoft.extensions.identity.stores.8.0.12.nupkg.sha512",
     "C:\\Users\\iliev_7x3wtf6\\.nuget\\packages\\microsoft.extensions.logging\\9.0.1\\microsoft.extensions.logging.9.0.1.nupkg.sha512",

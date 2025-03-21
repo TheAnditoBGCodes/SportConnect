@@ -236,7 +236,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.DataAccess\\SportConnect.DataAccess.csproj": {
+                "projectPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.DataAccess\\SportConnect.DataAccess.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -273,6 +277,10 @@
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
               "version": "[9.0.1, )"
+            },
+            "Microsoft.Extensions.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [

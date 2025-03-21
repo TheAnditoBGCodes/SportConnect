@@ -1,0 +1,239 @@
+﻿﻿@using SportConnect.Models
+@model TournamentViewModel
+
+<script>
+    // Function to replace the "Отказване" button with confirmation buttons
+    function replaceWithConfirmation(tournamentId, isApproved) {
+        var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
+
+        // Dynamically build the URL using JavaScript
+        var url = "/Participation/DeleteParticipation/" + tournamentId + "?returnUrl=%2FParticipation%2FMyParticipations"; // Use the actual tournament ID
+
+        // Replace the content of the participationButtons with Yes and No options
+        participationButtons.innerHTML = `
+                    <a href="${url}" class="btn btn-danger w-50 btn-sm">Да</a>
+                    <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButton(${tournamentId}, ${isApproved})">Не</a>
+                `;
+    }
+
+    // Function to restore the "Отказване" button and revert back to the original state
+    function restoreQuitButton(tournamentId, isApproved) {
+        var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
+
+        // Restore the appropriate buttons based on the approval status
+        if (isApproved) {
+            participationButtons.innerHTML = `
+                        <button class="btn btn-success text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                        <a id="quitParticipation-${tournamentId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(${tournamentId}, ${isApproved})">Отказване</a>
+                    `;
+        } else {
+            participationButtons.innerHTML = `
+                        <button class="btn btn-secondary text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
+                        <a id="quitParticipation-${tournamentId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(${tournamentId}, ${isApproved})">Отказване</a>
+                    `;
+        }
+    }
+</script>
+
+<style>
+    /* Scope styles to this specific view */
+    .profile-delete-view {
+        max-width: 70%; /* Increased the width of the form container */
+        max-height: 83vh; /* Increased the width of the form container */
+        margin: 0 auto;
+    }
+
+        .profile-delete-view .form-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        /* Profile image section */
+        .profile-delete-view .col-md-3.text-center {
+            padding-left: 0 !important;
+            padding-right: 1rem !important;
+        }
+
+        .profile-delete-view .col-md-8.text-start.d-flex.flex-column {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        /* Profile image container */
+        .profile-delete-view .profile-image-container {
+            width: 250px; /* Increased size of profile image container */
+            height: 250px;
+            overflow: hidden;
+            display: flex;
+            justify-content: flex-start;
+            padding-left: 0;
+        }
+
+            .profile-delete-view .profile-image-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        /* User data section */
+        .profile-delete-view .col-md-8 {
+            flex: 1;
+        }
+
+        /* Adjust font sizes and spacing for a larger form */
+        .profile-delete-view h2 {
+            font-size: 2rem;
+        }
+
+        .profile-delete-view .col-md-8 p {
+            font-size: 1rem;
+        }
+
+            .profile-delete-view .col-md-8 p.fw-bold {
+                font-size: 1rem;
+            }
+
+        .profile-delete-view .form-row .d-flex.justify-content-between p {
+            font-size: 1rem;
+        }
+
+        /* Button styles */
+        .profile-delete-view .btn {
+            font-size: 1rem;
+            width: 90px;
+        }
+
+        .profile-delete-view .btn-secondary {
+            width: 90px;
+        }
+
+        /* Customize input field */
+        .profile-delete-view .form-control {
+            font-size: 1rem;
+            padding: 5px 10px;
+            width: 110px;
+        }
+
+    .container main {
+        min-height: 83vh !important;
+        padding-bottom: 0px !important;
+        align-content: center !important;
+    }
+
+    div.container.main.pb-3 {
+        align-content: center;
+        padding-bottom: 0px !important;
+    }
+
+    .container.text-center {
+        align-content: center;
+        padding-bottom: 0px !important;
+    }
+
+    p {
+        margin-bottom: 0px !important;
+        align-content: center !important;
+        height: 40px !important;
+    }
+
+    .profile-delete-view .d-flex.align-items-center input {
+        height: 38px;
+    }
+
+    .profile-delete-view .d-flex.align-items-center span {
+        font-size: 1rem;
+    }
+
+    .d-flex.justify-content-between {
+        align-content: center !important;
+    }
+</style>
+
+
+<div class="container profile-delete-view">
+    <form method="post">
+        <h2 class="text-center justify-content-center">@Model.Name</h2>
+
+        <!-- Profile Image and User Data -->
+        <div class="form-row d-flex mb-2 align-items-stretch">
+            <div class="text-center" style="width: 320px; height:240px; margin-right: 1rem;">
+                <div class="profile-image-container" style="width: inherit; height:inherit;">
+                    <img src="@Model.ImageUrl" alt="@Model.Name" />
+                </div>
+            </div>
+
+            <div class="col-md-8 text-start d-flex flex-column">
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Описание</p>
+                    <p>@Model.Description</p>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Организатор</p>
+                    <p>@Model.OrganizerName</p>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Спорт</p>
+                    <p>@Model.SportName</p>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Дата</p>
+                    <p>@Model.Date</p>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Краен срок</p>
+                    <p>@Model.Deadline</p>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Държава</p>
+                    <p>@Model.Country</p>
+                </div>
+            </div>
+        </div>
+        @{ int tournamentid = (int)Model.Id;}
+        <div class="d-flex justify-content-between align-items-center gap-2 w-100">
+            <a href="@ViewBag.ReturnUrl" class="btn btn-secondary text-center" style="font-size: 1rem;">Назад</a>
+            @if (Model.Deadline.Value.AddSeconds(-Model.Deadline.Value.Second).AddMilliseconds(-Model.Deadline.Value.Millisecond).AddMicroseconds(-Model.Deadline.Value.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
+            {
+                <div id="participationButtons-@tournamentid" class="d-flex justify-content-between align-items-center " style="width: 200px;">
+                    @{
+                        var participation = Model.Participations?.FirstOrDefault(p => p.ParticipantId == ViewBag.UserId);
+                    }
+
+                    @if (participation == null)
+                    {
+                        <!-- User has not participated -->
+                        <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("TournamentDetails", "Tournament")" class="btn btn-success btn-sm w-100">
+                            Участвай
+                        </a>
+                    }
+                    else if (participation.Approved == false)
+                    {
+                        <!-- User participation is pending -->
+                        <button class="btn btn-secondary text-white btn-sm w-50" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
+                        <a id="quitParticipation-@tournamentid" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(@tournamentid, true)">Отказване</a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-success text-white btn-sm w-50" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                        <a id="quitParticipation-@tournamentid" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(@tournamentid, true)">Отказване</a>
+                    }
+                </div>
+            }
+            <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("TournamentDetails", "Tournament")" class="btn btn-primary btn-sm" style="width: 110px;">
+                Участници
+            </a>
+            <a asp-controller="Tournament" asp-action="EditTournament" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("TournamentDetails", "Tournament")" class="btn btn-warning btn-sm text-white">
+                Промени
+            </a>
+            <a asp-controller="Tournament" asp-action="ДелетеTournament" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("TournamentDetails", "Tournament")" class="btn btn-danger btn-sm text-white">
+                Изтрий
+            </a>
+        </div>
+    </form>
+</div>

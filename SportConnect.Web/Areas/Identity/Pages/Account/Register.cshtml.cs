@@ -152,11 +152,6 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             [ValidateNever]
             public IEnumerable<SelectListItem> CountryList { get; set; } = new List<SelectListItem>();
 
-            [Required(ErrorMessage = "Моля, въведете телефонен номер.")]
-            [Phone(ErrorMessage = "Невалиден телефонен номер.")]
-            [Display(Name = "Телефонен номер")]
-            public string PhoneNumber { get; set; }
-
             [Required(ErrorMessage = "Моля, качете профилна снимка.")]
             [Display(Name = "Профилна снимка")]
             public string ProfileImage { get; set; }
@@ -241,11 +236,6 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 ModelState.AddModelError("Input.Email", "Заето.");
             }
 
-            if (_repository.GetAll().Any(s => s.PhoneNumber == Input.PhoneNumber))
-            {
-                ModelState.AddModelError("Input.PhoneNumber", "Заето.");
-            }
-
             if (string.IsNullOrEmpty(password) || password.Length < 8)
             {
                 ViewData["ShortPassword"] = "8 символа;";  // Send error to view via ViewData
@@ -296,7 +286,6 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 {
                     FullName = $"{Input.FirstName} {Input.LastName}",
                     DateOfBirth = (DateTime)Input.DateOfBirth,
-                    PhoneNumber = Input.PhoneNumber,
                     Country = Input.Country,
                     ImageUrl = Input.ProfileImage
                 };
