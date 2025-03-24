@@ -1,20 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|c:\\users\\iliev_7x3wtf6\\source\\repos\\sportconnect\\sportconnect.web\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C5BB4DF-EE9B-449C-9FD1-F7C55E6DC8D1}|SportConnect.Web\\SportConnect.Web.csproj|solutionrelative:sportconnect.web\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8DF6FAB0-6F09-45DD-A561-869407ECB24F}|SportConnect.DataAccess\\SportConnect.DataAccess.csproj|c:\\users\\iliev_7x3wtf6\\source\\repos\\sportconnect\\sportconnect.dataaccess\\repository\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8DF6FAB0-6F09-45DD-A561-869407ECB24F}|SportConnect.DataAccess\\SportConnect.DataAccess.csproj|solutionrelative:sportconnect.dataaccess\\repository\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8DF6FAB0-6F09-45DD-A561-869407ECB24F}|SportConnect.DataAccess\\SportConnect.DataAccess.csproj|c:\\users\\iliev_7x3wtf6\\source\\repos\\sportconnect\\sportconnect.dataaccess\\repository\\irepository\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8DF6FAB0-6F09-45DD-A561-869407ECB24F}|SportConnect.DataAccess\\SportConnect.DataAccess.csproj|solutionrelative:sportconnect.dataaccess\\repository\\irepository\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -22,48 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "SportConnect.Web\\Controllers\\UserController.cs",
-              "ToolTip": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\Controllers\\UserController.cs",
-              "RelativeToolTip": "SportConnect.Web\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAqwCgAAAA+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T08:48:43.262Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Repository.cs",
-              "DocumentMoniker": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.DataAccess\\Repository\\Repository.cs",
-              "RelativeDocumentMoniker": "SportConnect.DataAccess\\Repository\\Repository.cs",
-              "ToolTip": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.DataAccess\\Repository\\Repository.cs",
-              "RelativeToolTip": "SportConnect.DataAccess\\Repository\\Repository.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAkwCsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T08:47:46.074Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IRepository.cs",
-              "DocumentMoniker": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.DataAccess\\Repository\\IRepository\\IRepository.cs",
-              "RelativeDocumentMoniker": "SportConnect.DataAccess\\Repository\\IRepository\\IRepository.cs",
-              "ToolTip": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.DataAccess\\Repository\\IRepository\\IRepository.cs",
-              "RelativeToolTip": "SportConnect.DataAccess\\Repository\\IRepository\\IRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T08:47:45.252Z"
             }
           ]
         }

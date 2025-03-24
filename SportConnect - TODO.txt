@@ -1,6 +1,5 @@
-Forgotten Email
 Fix Pathfindings
-Email Confirmtion
 
 Testing Of Models Controllers Services To 60% Functionality Coverage
+
 Graphical Improvements Of Visual Identity Of SportConnect
