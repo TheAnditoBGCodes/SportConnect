@@ -39,9 +39,8 @@ namespace SportConnect.Web.Controllers
         private readonly Cloudinary _cloudinary;
         private readonly SignInManager<SportConnectUser> _signInManager;
         private readonly CloudinaryService _cloudinaryService;
-        private readonly SportConnectDbContext _context;
 
-        public UserController(ILogger<TournamentController> logger, UserManager<SportConnectUser> userManager, IRepository<Tournament> tournamentsRepository, IRepository<Sport> sportRepository, IRepository<SportConnectUser> repository, IRepository<Participation> participationsRepository, HttpClient httpClient, Cloudinary cloudinary, SignInManager<SportConnectUser> signInManager, CloudinaryService cloudinaryService, SportConnectDbContext context)
+        public UserController(ILogger<TournamentController> logger, UserManager<SportConnectUser> userManager, IRepository<Tournament> tournamentsRepository, IRepository<Sport> sportRepository, IRepository<SportConnectUser> repository, IRepository<Participation> participationsRepository, HttpClient httpClient, Cloudinary cloudinary, SignInManager<SportConnectUser> signInManager, CloudinaryService cloudinaryService)
         {
             _logger = logger;
             _userManager = userManager;
@@ -53,7 +52,6 @@ namespace SportConnect.Web.Controllers
             _cloudinary = cloudinary;
             _signInManager = signInManager;
             _cloudinaryService = cloudinaryService;
-            _context = context;
         }
 
         private async Task<List<SelectListItem>> GetAllCountries()
@@ -78,7 +76,7 @@ namespace SportConnect.Web.Controllers
             var currentUser = await _userManager.GetUserAsync(this.User);
             ViewBag.UserId = currentUser.Id;
 
-            var editedUser = _repository.GetUserById(id);
+            var editedUser = await _repository.GetUserById(id);
             var names = editedUser.FullName.Split(' ').ToList();
 
             var model = new UserViewModel();
@@ -114,7 +112,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        private bool IsValidUsername(string username)
+        private async Task<bool> IsValidUsername(string username)
         {
             // Define the allowed characters (same as in Identity configuration)
             var allowedCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -127,12 +125,14 @@ namespace SportConnect.Web.Controllers
             }
             return true;
         }
+
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         [HttpPost]
         public async Task<IActionResult> EditUser(UserViewModel user, IFormFile? file, string returnUrl = null)
         {
             var currentUser = await _userManager.GetUserAsync(this.User);
             ViewBag.UserId = currentUser.Id;
+
             if (user.Id == currentUser.Id)
             {
                 if (string.IsNullOrWhiteSpace(user.Email))
@@ -152,11 +152,11 @@ namespace SportConnect.Web.Controllers
                 {
                     ModelState.AddModelError("UserName", "Tрябва да е от 5 до 100 символа.");
                 }
-                else if (_repository.GetAll().Any(s => s.UserName == user.UserName && s.Id != user.Id))
+                else if ((await _repository.GetAll()).Any(s => s.UserName == user.UserName && s.Id != user.Id))
                 {
                     ModelState.AddModelError("UserName", "Потребителското име е заето.");
                 }
-                else if (!IsValidUsername(user.UserName))
+                else if (!await IsValidUsername(user.UserName))
                 {
                     ModelState.AddModelError("UserName", "Потребителското име може да съдържа само малки букви и цифри.");
                 }
@@ -195,7 +195,7 @@ namespace SportConnect.Web.Controllers
                 }
 
                 // Retrieve the user entity to update
-                var editedUser = _repository.GetUserById(user.Id);
+                var editedUser = (await _repository.GetUserById(user.Id));
 
                 if (editedUser == null)
                 {
@@ -217,7 +217,7 @@ namespace SportConnect.Web.Controllers
 
                     if (result.Succeeded)
                     {
-                        await _context.SaveChangesAsync(); // Save changes if necessary
+                        await _repository.Save(); // Save changes if necessary
 
                         // Redirect based on returnUrl
                         if (!string.IsNullOrEmpty(returnUrl))
@@ -240,11 +240,11 @@ namespace SportConnect.Web.Controllers
                 {
                     ModelState.AddModelError("UserName", "Tрябва да е от 5 до 100 символа.");
                 }
-                else if (_repository.GetAll().Any(s => s.UserName == user.UserName && s.Id != user.Id))
+                else if ((await _repository.GetAll()).Any(s => s.UserName == user.UserName && s.Id != user.Id))
                 {
                     ModelState.AddModelError("UserName", "Потребителското име е заето.");
                 }
-                else if (!IsValidUsername(user.UserName))
+                else if (!await IsValidUsername(user.UserName))
                 {
                     ModelState.AddModelError("UserName", "Потребителското име може да съдържа само малки букви и цифри.");
                 }
@@ -273,7 +273,7 @@ namespace SportConnect.Web.Controllers
                 }
 
                 // Retrieve the user entity to update
-                var editedUser = _repository.GetUserById(user.Id);
+                var editedUser = (await _repository.GetUserById(user.Id));
 
                 if (editedUser == null)
                 {
@@ -286,16 +286,13 @@ namespace SportConnect.Web.Controllers
                 editedUser.ImageUrl = user.ProfileImage;
                 editedUser.FullName = $"{user.FirstName} {user.LastName}";
 
-                // Check if all the fields are valid
                 if (ModelState.IsValid)
                 {
-                    // Update the user in the identity database
                     var result = await _userManager.UpdateAsync(editedUser);
 
                     if (result.Succeeded)
                     {
-                        // Save changes if Identity update is successful
-                        await _context.SaveChangesAsync(); // Ensure this is for the changes in your repository if needed
+                        await _repository.Save();
                         return RedirectToAction("AllUsers");
                     }
                 }
@@ -306,9 +303,9 @@ namespace SportConnect.Web.Controllers
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        public IActionResult PersonalData()
+        public async Task<IActionResult> PersonalData()
         {
-            var user = _userManager.GetUserAsync(this.User).Result;
+            var user = await _userManager.GetUserAsync(this.User);
             var names = user.FullName.Split(' ').ToList();
             var model = new UserViewModel()
             {
@@ -326,7 +323,7 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public async Task<IActionResult> UserDetails(string id, string returnUrl = null)
         {
-            var user = _repository.GetUserById(id);
+            var user = (await _repository.GetUserById(id));
             var names = user.FullName.Split(' ').ToList();
             var model = new UserViewModel()
             {
@@ -353,7 +350,7 @@ namespace SportConnect.Web.Controllers
                 return View(new UserViewModel());
             }
 
-            var query = _repository.GetAll().AsQueryable();
+            var query = (await _repository.GetAll()).AsQueryable();
 
             // Filter by country if selected
             if (!string.IsNullOrEmpty(filter.Country))
@@ -393,7 +390,7 @@ namespace SportConnect.Web.Controllers
                 UserName = filter.UserName,
                 BirthYear = filter.BirthYear,
                 Country = filter.Country,
-                Users = _repository.GetAll().ToList(),
+                Users = (await _repository.GetAll()).ToList(),
                 Email = filter.Email,
                 FilteredUsers = query.ToList(),
             };
@@ -407,7 +404,7 @@ namespace SportConnect.Web.Controllers
             var currentUser = await _userManager.GetUserAsync(this.User);
             ViewBag.UserId = currentUser.Id;
 
-            var editedUser = _repository.GetUserById(id);
+            var editedUser = (await _repository.GetUserById(id));
             var names = editedUser.FullName.Split(' ').ToList();
 
             var model = new UserViewModel();
@@ -447,7 +444,7 @@ namespace SportConnect.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string ConfirmText, UserViewModel user, string returnUrl = null)
         {
-            var deletedUser = _repository.GetUserById(user.Id);
+            var deletedUser = (await _repository.GetUserById(user.Id));
             List<string> names = new List<string>();
 
             if (deletedUser == null)
@@ -475,6 +472,7 @@ namespace SportConnect.Web.Controllers
                     if (result.Succeeded)
                     {
                         await _signInManager.SignOutAsync();
+                        await _repository.Save();
                         return RedirectToAction("Index", "Home");
                     }
                     else if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
@@ -484,12 +482,12 @@ namespace SportConnect.Web.Controllers
                 }
                 else
                 {
-		    await _userManager.UpdateSecurityStampAsync(deletedUser);
-
+                    await _userManager.UpdateSecurityStampAsync(deletedUser);
                     var result = await _userManager.DeleteAsync(deletedUser);
 
                     if (result.Succeeded)
-                    {  
+                    {
+                        await _repository.Save();
                         return RedirectToAction("AllUsers");
                     }
                     else if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))

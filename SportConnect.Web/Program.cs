@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using SportConnect.DataAccess;
 using SportConnect.DataAccess.Repository;
 using SportConnect.DataAccess.Repository.IRepository;
@@ -19,22 +18,22 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<SportConnectDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("SportConnect.DataAccess")));
+builder.Services.AddDbContext<SportConnectDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+    x => x.MigrationsAssembly("SportConnect.DataAccess")));
 
 builder.Services.AddIdentity<SportConnectUser, IdentityRole>()
     .AddEntityFrameworkStores<SportConnectDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.Configure<SecurityStampValidatorOptions>(options =>
 {
-    // enables immediate logout, after updating the user's stat.
+    // Enables immediate logout, after updating the user's stat.
     options.ValidationInterval = TimeSpan.Zero;
 });
 
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<IEmailSender, EmailSender>();
-
 builder.Services.AddScoped<CloudinaryService>();
 
 var cloudinarySettings = builder.Configuration.GetSection("Cloudinary").Get<CloudinarySettings>();
@@ -61,7 +60,6 @@ app.UseMiddleware<TournamentCleanupMiddleware>();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -78,4 +76,20 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+// Ensure async execution of database migrations
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<SportConnectDbContext>();
+        await context.Database.MigrateAsync(); // Apply pending migrations asynchronously
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error during migration: {ex.Message}");
+    }
+}
+
+// Run the app asynchronously
+await app.RunAsync();

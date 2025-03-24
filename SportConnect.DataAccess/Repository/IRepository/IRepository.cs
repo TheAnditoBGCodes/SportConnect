@@ -4,23 +4,25 @@ namespace SportConnect.DataAccess.Repository.IRepository
 {
     public interface IRepository<T> where T : class
     {
-        bool IsPropertyUnique(Expression<Func<T, bool>> predicate);
-        void DeleteRange(IEnumerable<T> range);
+        Task<bool> IsPropertyUnique(Expression<Func<T, bool>> predicate);
+        Task DeleteRange(IEnumerable<T> range);
 
-        T GetUserById(string id);
+        Task<T> GetUserById(string id);
         
-        T GetById(int id);
+        Task<T> GetById(int id);
 
-        void Add(T entity);
+        Task Add(T entity);
 
-        void Update(T entity);
+        Task Save();
 
-        void Delete(T entity);
+        Task Update(T entity);
 
-        IEnumerable<T> GetAll();
+        Task Delete(T entity);
 
-        IEnumerable<T> GetAllBy(Expression<Func<T,bool>> filter);
+        Task<IEnumerable<T>> GetAll();
 
-        IEnumerable<T> AllWithIncludes(params Expression<Func<T, object>>[] includes);
+        Task<IEnumerable<T>> GetAllBy(Expression<Func<T,bool>> filter);
+
+        Task<IEnumerable<T>> AllWithIncludes(params Expression<Func<T, object>>[] includes);
     }
 }

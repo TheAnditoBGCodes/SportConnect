@@ -28,5 +28,15 @@ namespace SportConnect.Web.Models
                 ImageUrl = ImageUrl
             };
         }
+
+        public Sport ToSportAdd()
+        {
+            return new Sport
+            {
+                Name = Name,
+                Description = Description,
+                ImageUrl = ImageUrl
+            };
+        }
     }
 }

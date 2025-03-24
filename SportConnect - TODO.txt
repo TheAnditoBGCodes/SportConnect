@@ -1,6 +1,6 @@
-Fix Pathfindings And Authorizations 
-Check Project Task Requirements
-Everything Should Be Asynchronous
-Ensure Correct Email
-Login Forgotten Password
-Graphical Improvements
+Forgotten Email
+Fix Pathfindings
+Email Confirmtion
+
+Testing Of Models Controllers Services To 60% Functionality Coverage
+Graphical Improvements Of Visual Identity Of SportConnect

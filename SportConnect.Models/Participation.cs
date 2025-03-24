@@ -22,7 +22,6 @@ namespace SportConnect.Models
         public int TournamentId { get; set; }
         public Tournament Tournament { get; set; }
 
-        [Required]
         public bool Approved { get; set; }
     }
 }

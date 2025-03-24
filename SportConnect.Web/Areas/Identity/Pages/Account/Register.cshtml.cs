@@ -197,7 +197,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        private bool IsValidUsername(string username)
+        private async Task<bool> IsValidUsername(string username)
         {
             // Define the allowed characters (same as in Identity configuration)
             var allowedCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -210,6 +210,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             }
             return true;
         }
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -220,18 +221,18 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 
             if (Input.Username != null)
             {
-                if (_repository.GetAll().Any(s => s.UserName == Input.Username && s.Id != Input.Username))
+                if ((await _repository.GetAll()).Any(s => s.UserName == Input.Username && s.Id != Input.Username))
                 {
                     ModelState.AddModelError("Input.Username", "Заето.");
                 }
 
-                if (!IsValidUsername(Input.Username))
+                if (!await IsValidUsername(Input.Username))
                 {
                     ModelState.AddModelError("Input.Username", "Може да съдържа само малки букви и цифри.");
                 }
             }
 
-            if (_repository.GetAll().Any(s => s.Email == Input.Email))
+            if ((await _repository.GetAll()).Any(s => s.Email == Input.Email))
             {
                 ModelState.AddModelError("Input.Email", "Заето.");
             }
@@ -306,7 +307,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, SD.AdminRole);
+                        await _userManager.AddToRoleAsync(user, SD.UserRole);
                     }
 
                     var userId = await _userManager.GetUserIdAsync(user);
@@ -352,7 +353,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private async Task<IdentityUser> CreateUser()
         {
             try
             {
@@ -366,7 +367,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             }
         }
 
-        private IUserEmailStore<SportConnectUser> GetEmailStore()
+        private async Task<IUserEmailStore<SportConnectUser>> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {

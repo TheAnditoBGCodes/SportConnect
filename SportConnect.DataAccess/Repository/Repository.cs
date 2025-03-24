@@ -6,8 +6,8 @@ namespace SportConnect.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private SportConnectDbContext _context;
-        private DbSet<T> _dbSet;
+        private readonly SportConnectDbContext _context;
+        private readonly DbSet<T> _dbSet;
 
         public Repository(SportConnectDbContext context)
         {
@@ -15,63 +15,68 @@ namespace SportConnect.DataAccess.Repository
             _dbSet = context.Set<T>();
         }
 
-        public void Add(T entity)
+        public async Task Add(T entity)
         {
-            _dbSet.Add(entity);
-            _context.SaveChanges();
+            await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<T> AllWithIncludes(params Expression<Func<T, object>>[] includes)
+        public async Task<IEnumerable<T>> AllWithIncludes(params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _dbSet;
             foreach (var item in includes)
             {
                 query = query.Include(item);
             }
-            return query;
-        }
-        public bool IsPropertyUnique(Expression<Func<T, bool>> predicate)
-        {
-            return !_dbSet.Any(predicate);
+            return await query.ToListAsync();
         }
 
-        public void Delete(T entity)
+        public async Task<bool> IsPropertyUnique(Expression<Func<T, bool>> predicate)
+        {
+            return !await _dbSet.AnyAsync(predicate);
+        }
+
+        public async Task Delete(T entity)
         {
             _dbSet.Remove(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteRange(IEnumerable<T> range)
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteRange(IEnumerable<T> range)
         {
             _dbSet.RemoveRange(range);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            return _dbSet;
+            return await _dbSet.ToListAsync();
         }
 
-        public IEnumerable<T> GetAllBy(Expression<Func<T, bool>> filter)
+        public async Task<IEnumerable<T>> GetAllBy(Expression<Func<T, bool>> filter)
         {
-            IQueryable<T> query = _dbSet.Where(filter);
-            return query;
+            return await _dbSet.Where(filter).ToListAsync();
         }
 
-        public T GetById(int id)
+        public async Task<T?> GetById(int id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public T GetUserById(string id)
+        public async Task<T?> GetUserById(string id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
             _dbSet.Update(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
