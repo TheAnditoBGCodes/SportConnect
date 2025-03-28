@@ -1,66 +1,39 @@
-using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Services;
 using SportConnect.Utility;
 using SportConnect.Web.Models;
-using System.Composition;
 using System.Diagnostics;
-using System.Text.Json;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SportConnect.Web.Controllers
 {
     public class ParticipationController : Controller
     {
-        private readonly ILogger<TournamentController> _logger;
         private readonly UserManager<SportConnectUser> _userManager;
-        public IRepository<Tournament> _tournamentsRepository { get; set; }
+        public IRepository<Tournament> _tournamentRepository { get; set; }
         public IRepository<Sport> _sportRepository { get; set; }
-        public IRepository<Participation> _participationsRepository { get; set; }
-        public IRepository<SportConnectUser> _usersRepository { get; set; }
-        private readonly HttpClient _httpClient;
-        private readonly Cloudinary _cloudinary;
-        private readonly CloudinaryService _cloudinaryService;
+        public IRepository<Participation> _participationRepository { get; set; }
+        public IRepository<SportConnectUser> _userRepository { get; set; }
+        public CountryService _countryService { get; set; }
 
-        public ParticipationController(ILogger<TournamentController> logger, UserManager<SportConnectUser> userManager, IRepository<Tournament> tournamentsRepository, IRepository<Sport> sportRepository, IRepository<Participation> participationsRepository, IRepository<SportConnectUser> usersRepository, HttpClient httpClient, Cloudinary cloudinary, CloudinaryService cloudinaryService)
+        public ParticipationController(UserManager<SportConnectUser> userManager, IRepository<Tournament> tournamentRepository, IRepository<Sport> sportRepository, IRepository<Participation> participationRepository, IRepository<SportConnectUser> userRepository, CountryService countryService)
         {
-            _logger = logger;
             _userManager = userManager;
-            _tournamentsRepository = tournamentsRepository;
+            _tournamentRepository = tournamentRepository;
             _sportRepository = sportRepository;
-            _participationsRepository = participationsRepository;
-            _usersRepository = usersRepository;
-            _httpClient = httpClient;
-            _cloudinary = cloudinary;
-            _cloudinaryService = cloudinaryService;
-        }
-
-        private async Task<List<SelectListItem>> GetAllCountries()
-        {
-            var response = await _httpClient.GetStringAsync("https://restcountries.com/v3.1/all");
-            var countries = System.Text.Json.JsonSerializer.Deserialize<List<CountryResponse>>(response, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
-            return countries?
-                .OrderBy(c => c.Name.Common)
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Name.Common,
-                    Text = c.Name.Common
-                }).ToList() ?? new List<SelectListItem>();
+            _participationRepository = participationRepository;
+            _userRepository = userRepository;
+            _countryService = countryService;
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        public async Task<IActionResult> MyParticipations(TournamentViewModel? filter, string returnUrl = null)
+        public async Task<IActionResult> MyParticipations(TournamentViewModel? filter)
         {
+            HttpContext.Session.Remove("ReturnUrl");
             if (filter == null)
             {
                 return View(new TournamentViewModel());
@@ -68,8 +41,8 @@ namespace SportConnect.Web.Controllers
 
             var currentUser = (await _userManager.GetUserAsync(this.User)).Id;
             ViewBag.UserId = currentUser;
-            // Start querying directly from the database
-            var query = (await _tournamentsRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
+
+            var query = (await _tournamentRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
                 .Where(t => t.Participations.Any(p => p.ParticipantId == currentUser));
 
             // Apply approval status filter
@@ -99,7 +72,7 @@ namespace SportConnect.Web.Controllers
             if (!string.IsNullOrWhiteSpace(filter.OrganizerName))
             {
                 string filteredname = filter.OrganizerName.Trim().ToLower();
-                query = query.Where(p => p.Organizer.FullName.ToLower().Contains(filteredname));
+                query = query.Where(p => p.Organizer.FullName.ToLower().Contains(filteredname) || p.Organizer.UserName.ToLower().Contains(filteredname));
             }
 
             if (filter.StartDate != null)
@@ -116,7 +89,7 @@ namespace SportConnect.Web.Controllers
             var filteredTournaments = query.ToList();
 
             ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
-            ViewBag.Countries = await GetAllCountries();
+            ViewBag.Countries = await _countryService.GetAllCountriesAsync();
 
             var model = new TournamentViewModel
             {
@@ -128,16 +101,14 @@ namespace SportConnect.Web.Controllers
                 EndDate = filter.EndDate,
                 Approved = filter.Approved,
                 FilteredTournaments = filteredTournaments,
-                Tournaments = (await _tournamentsRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
+                Tournaments = (await _tournamentRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
                 .Where(t => t.Participations.Any(p => p.ParticipantId == currentUser)).ToList(),
             };
 
-            ViewBag.ReturnUrl = returnUrl ?? Url.Action("MyParticipations", "Participation");
             return View(model);
         }
-        
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        public async Task<IActionResult> TournamentParticipations(int id, UserViewModel? filter, string returnUrl = null)
+        public async Task<IActionResult> TournamentParticipations(int id, string returnUrl, UserViewModel? filter)
         {
             if (filter == null)
             {
@@ -147,7 +118,7 @@ namespace SportConnect.Web.Controllers
             var currentUser = (await _userManager.GetUserAsync(this.User)).Id;
             ViewBag.UserId = currentUser;
 
-            var query = (await _usersRepository.AllWithIncludes(t => t.Participations)).Where(t => t.Participations.Any(p => p.TournamentId == id));
+            var query = (await _userRepository.AllWithIncludes(t => t.Participations)).Where(t => t.Participations.Any(p => p.TournamentId == id));
 
             // Apply approval status filter
             if (filter.Approved.HasValue)
@@ -188,36 +159,43 @@ namespace SportConnect.Web.Controllers
             var filteredTournaments = query.ToList();
 
             ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
-            ViewBag.Countries = await GetAllCountries();
-            ViewBag.Tournament = (await _tournamentsRepository.GetById(id));
+            ViewBag.Countries = await _countryService.GetAllCountriesAsync();
+            ViewBag.Tournament = (await _tournamentRepository.GetById(id));
 
             var model = new UserViewModel
             {
+                TournamentId = id,
                 UserName = filter.UserName,
                 BirthYear = filter.BirthYear,
                 Country = filter.Country,
                 Email = filter.Email,
                 FilteredUsers = filteredTournaments,
                 Approved = filter.Approved,
-                Users = (await _usersRepository.AllWithIncludes(t => t.Participations)).Where(t => t.Participations.Any(p => p.TournamentId == id)).ToList(),
+                Users = (await _userRepository.AllWithIncludes(t => t.Participations)).Where(t => t.Participations.Any(p => p.TournamentId == id)).ToList(),
             };
 
-            ViewBag.ReturnUrl = returnUrl ?? Url.Action("TournamentDetails", "Tournament", new { id = id });
+            var storedReturnUrl = HttpContext.Session.GetString("ReturnUrl");
+            if (!string.IsNullOrEmpty(returnUrl) && string.IsNullOrEmpty(storedReturnUrl))
+            {
+                HttpContext.Session.SetString("ReturnUrl", returnUrl);
+            }
+
+            ViewBag.ReturnUrl = HttpContext.Session.GetString("ReturnUrl") ?? Url.Action("AllTournaments", "Tournament");
             return View(model);
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        public async Task<IActionResult> UserParticipations(string id, TournamentViewModel? filter, string returnUrl = null)
+        public async Task<IActionResult> UserParticipations(string id, int tournamentId, TournamentViewModel? filter, string returnUrl, string tournamentUrl = null)
         {
             if (filter == null)
             {
                 return View(new TournamentViewModel());
             }
 
-            var currentUser = (await _usersRepository.GetUserById(id)).Id;
+            var currentUser = (await _userRepository.GetUserById(id)).Id;
             ViewBag.UserId = currentUser;
 
-            var query = (await _tournamentsRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
+            var query = (await _tournamentRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
                 .Where(t => t.Participations.Any(p => p.ParticipantId == currentUser));
 
             // Apply approval status filter
@@ -247,7 +225,7 @@ namespace SportConnect.Web.Controllers
             if (!string.IsNullOrWhiteSpace(filter.OrganizerName))
             {
                 string filteredname = filter.OrganizerName.Trim().ToLower();
-                query = query.Where(p => p.Organizer.FullName.ToLower().Contains(filteredname));
+                query = query.Where(p => p.Organizer.FullName.ToLower().Contains(filteredname) || p.Organizer.UserName.ToLower().Contains(filteredname));
             }
 
             if (filter.StartDate != null)
@@ -264,10 +242,11 @@ namespace SportConnect.Web.Controllers
             var filteredTournaments = query.ToList();
 
             ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
-            ViewBag.Countries = await GetAllCountries();
+            ViewBag.Countries = await _countryService.GetAllCountriesAsync();
 
             var model = new TournamentViewModel
             {
+                PreviousId = tournamentId,
                 SportId = filter.SportId,
                 Country = filter.Country,
                 Name = filter.Name,
@@ -276,16 +255,36 @@ namespace SportConnect.Web.Controllers
                 EndDate = filter.EndDate,
                 Approved = filter.Approved,
                 FilteredTournaments = filteredTournaments,
-                Tournaments = (await _tournamentsRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
+                Tournaments = (await _tournamentRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
                 .Where(t => t.Participations.Any(p => p.ParticipantId == currentUser)).ToList(),
             };
 
-            ViewBag.ReturnUrl = returnUrl ?? Url.Action("UserDetails", "User", new { id = id });
+            var storedRootReturnUrl = HttpContext.Session.GetString("RootReturnUrl");
+            var storedCurrentReturnUrl = HttpContext.Session.GetString("CurrentReturnUrl");
+
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                // If this is the first time navigating, set the root return URL.
+                if (string.IsNullOrEmpty(storedRootReturnUrl))
+                {
+                    HttpContext.Session.SetString("RootReturnUrl", returnUrl);
+                }
+
+                // Always update the current return URL (used for immediate back navigation)
+                HttpContext.Session.SetString("CurrentReturnUrl", returnUrl);
+            }
+
+            ViewBag.ReturnUrl = HttpContext.Session.GetString("CurrentReturnUrl") ?? Url.Action("AllTournaments", "Tournament");
+            ViewBag.RootReturnUrl = HttpContext.Session.GetString("RootReturnUrl") ?? Url.Action("TournamentParticipations", "Participation", new { id = tournamentId });
+            if (tournamentUrl != null)
+            {
+                ViewBag.RootReturnUrl = tournamentUrl;
+            }
             return View(model);
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        public async Task<IActionResult> AddParticipation(int id, string returnUrl = null)
+        public async Task<IActionResult> AddParticipation(int id, string returnUrl)
         {
             var participation = new Participation
             {
@@ -293,28 +292,26 @@ namespace SportConnect.Web.Controllers
                 TournamentId = id,
                 Approved = false,
             };
-            await _participationsRepository.Add(participation);
+            await _participationRepository.Add(participation);
             return Redirect(returnUrl);
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        public async Task<IActionResult> DeleteParticipation(int id, string returnUrl = null)
+        public async Task<IActionResult> DeleteParticipation(int tournamentId, string userId, string returnUrl = null)
         {
-            var currentUser = (await _userManager.GetUserAsync(this.User)).Id;
-            ViewBag.UserId = currentUser;
-            var participation = (await _participationsRepository.GetAll()).FirstOrDefault(x => x.ParticipantId == currentUser && x.TournamentId == id);
-            var tournament = (await _tournamentsRepository.GetById(id));
+            var participation = (await _participationRepository.GetAll()).FirstOrDefault(x => x.ParticipantId == userId && x.TournamentId == tournamentId);
+            var tournament = (await _tournamentRepository.GetById(tournamentId));
             tournament.Participations.ToList().Remove(participation);
-            await _participationsRepository.Delete(participation);
+            await _participationRepository.Delete(participation);
             return Redirect(returnUrl);
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
         public async Task<IActionResult> ApproveParticipation(int tournamentId, string userId, string returnUrl = null)
         {
-            var participation = (await _participationsRepository.GetAll()).FirstOrDefault(x => x.ParticipantId == userId && x.TournamentId == tournamentId);
+            var participation = (await _participationRepository.GetAll()).FirstOrDefault(x => x.ParticipantId == userId && x.TournamentId == tournamentId);
             participation.Approved = true;
-            await _participationsRepository.Update(participation);
+            await _participationRepository.Update(participation);
             return Redirect(returnUrl);
         }
 

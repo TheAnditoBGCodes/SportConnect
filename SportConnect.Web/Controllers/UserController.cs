@@ -1,73 +1,49 @@
-﻿using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
-using Newtonsoft.Json;
-using SportConnect.DataAccess;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Services;
 using SportConnect.Utility;
 using SportConnect.Web.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Composition;
 using System.Diagnostics;
-using System.Diagnostics.Metrics;
-using System.Net.Http;
-using System.Text.Json;
-using static Azure.Core.HttpHeader;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SportConnect.Web.Controllers
 {
     public class UserController : Controller
     {
-        private readonly ILogger<TournamentController> _logger;
         private readonly UserManager<SportConnectUser> _userManager;
-        public IRepository<Tournament> _tournamentsRepository { get; set; }
+        public IRepository<Tournament> _tournamentRepository { get; set; }
         public IRepository<Sport> _sportRepository { get; set; }
-        public IRepository<SportConnectUser> _repository { get; set; }
-        public IRepository<Participation> _participationsRepository { get; set; }
-        private readonly HttpClient _httpClient;
-        private readonly Cloudinary _cloudinary;
+        public IRepository<SportConnectUser> _userRepository { get; set; }
+        public IRepository<Participation> _participationRepository { get; set; }
         private readonly SignInManager<SportConnectUser> _signInManager;
-        private readonly CloudinaryService _cloudinaryService;
+        public CountryService _countryService { get; set; }
 
-        public UserController(ILogger<TournamentController> logger, UserManager<SportConnectUser> userManager, IRepository<Tournament> tournamentsRepository, IRepository<Sport> sportRepository, IRepository<SportConnectUser> repository, IRepository<Participation> participationsRepository, HttpClient httpClient, Cloudinary cloudinary, SignInManager<SportConnectUser> signInManager, CloudinaryService cloudinaryService)
+        public UserController(UserManager<SportConnectUser> userManager, IRepository<Tournament> tournamentRepository, IRepository<Sport> sportRepository, IRepository<SportConnectUser> userRepository, IRepository<Participation> participationRepository, SignInManager<SportConnectUser> signInManager, CountryService countryService)
         {
-            _logger = logger;
             _userManager = userManager;
-            _tournamentsRepository = tournamentsRepository;
+            _tournamentRepository = tournamentRepository;
             _sportRepository = sportRepository;
-            _repository = repository;
-            _participationsRepository = participationsRepository;
-            _httpClient = httpClient;
-            _cloudinary = cloudinary;
+            _userRepository = userRepository;
+            _participationRepository = participationRepository;
             _signInManager = signInManager;
-            _cloudinaryService = cloudinaryService;
+            _countryService = countryService;
         }
 
-        private async Task<List<SelectListItem>> GetAllCountries()
+        private async Task<bool> IsValidUsername(string username)
         {
-            var response = await _httpClient.GetStringAsync("https://restcountries.com/v3.1/all");
-            var countries = System.Text.Json.JsonSerializer.Deserialize<List<CountryResponse>>(response, new JsonSerializerOptions
+            // Define the allowed characters (same as in Identity configuration)
+            var allowedCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
+            foreach (var c in username)
             {
-                PropertyNameCaseInsensitive = true
-            });
-            return countries?
-                .OrderBy(c => c.Name.Common)
-                .Select(c => new SelectListItem
+                if (!allowedCharacters.Contains(c))
                 {
-                    Value = c.Name.Common,
-                    Text = c.Name.Common
-                }).ToList() ?? new List<SelectListItem>();
+                    return false;
+                }
+            }
+            return true;
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
@@ -76,7 +52,7 @@ namespace SportConnect.Web.Controllers
             var currentUser = await _userManager.GetUserAsync(this.User);
             ViewBag.UserId = currentUser.Id;
 
-            var editedUser = await _repository.GetUserById(id);
+            var editedUser = await _userRepository.GetUserById(id);
             var names = editedUser.FullName.Split(' ').ToList();
 
             var model = new UserViewModel();
@@ -90,7 +66,7 @@ namespace SportConnect.Web.Controllers
                     Email = editedUser.Email,
                     LastName = names[1],
                     Country = editedUser.Country,
-                    CountryList = await GetAllCountries(),
+                    CountryList = await _countryService.GetAllCountriesAsync(),
                     DateOfBirth = editedUser.DateOfBirth,
                     ProfileImage = editedUser.ImageUrl
                 };
@@ -110,20 +86,6 @@ namespace SportConnect.Web.Controllers
             // Save returnUrl in ViewBag
             ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllSports", "Sport"); // Default fallback
             return View(model);
-        }
-
-        private async Task<bool> IsValidUsername(string username)
-        {
-            // Define the allowed characters (same as in Identity configuration)
-            var allowedCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
-            foreach (var c in username)
-            {
-                if (!allowedCharacters.Contains(c))
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
@@ -152,7 +114,7 @@ namespace SportConnect.Web.Controllers
                 {
                     ModelState.AddModelError("UserName", "Tрябва да е от 5 до 100 символа.");
                 }
-                else if ((await _repository.GetAll()).Any(s => s.UserName == user.UserName && s.Id != user.Id))
+                else if ((await _userRepository.GetAll()).Any(s => s.UserName == user.UserName && s.Id != user.Id))
                 {
                     ModelState.AddModelError("UserName", "Потребителското име е заето.");
                 }
@@ -191,19 +153,13 @@ namespace SportConnect.Web.Controllers
 
                 if (!ModelState.IsValid)
                 {
+                    ViewBag.ReturnUrl = returnUrl;
+                    user.CountryList = await _countryService.GetAllCountriesAsync();
                     return View(user);
                 }
 
-                // Retrieve the user entity to update
-                var editedUser = (await _repository.GetUserById(user.Id));
+                var editedUser = (await _userRepository.GetUserById(user.Id));
 
-                if (editedUser == null)
-                {
-                    ModelState.AddModelError(string.Empty, "User not found.");
-                    return View(user);
-                }
-
-                // Update the user properties from the model
                 editedUser.UserName = user.UserName;
                 editedUser.ImageUrl = user.ProfileImage;
                 editedUser.FullName = $"{user.FirstName} {user.LastName}";
@@ -211,23 +167,13 @@ namespace SportConnect.Web.Controllers
                 editedUser.Country = user.Country;
                 editedUser.DateOfBirth = user.DateOfBirth.Value.Date;
 
-                if (ModelState.IsValid)
+                var result = await _userManager.UpdateAsync(editedUser);
+
+                if (result.Succeeded)
                 {
-                    var result = await _userManager.UpdateAsync(editedUser);
-
-                    if (result.Succeeded)
-                    {
-                        await _repository.Save(); // Save changes if necessary
-
-                        // Redirect based on returnUrl
-                        if (!string.IsNullOrEmpty(returnUrl))
-                        {
-                            return Redirect(returnUrl);
-                        }
-                        return RedirectToAction("AllUsers");
-                    }
+                    await _userRepository.Save();
+                    return Redirect(returnUrl);
                 }
-
                 return View(user);
             }
             else
@@ -240,7 +186,7 @@ namespace SportConnect.Web.Controllers
                 {
                     ModelState.AddModelError("UserName", "Tрябва да е от 5 до 100 символа.");
                 }
-                else if ((await _repository.GetAll()).Any(s => s.UserName == user.UserName && s.Id != user.Id))
+                else if ((await _userRepository.GetAll()).Any(s => s.UserName == user.UserName && s.Id != user.Id))
                 {
                     ModelState.AddModelError("UserName", "Потребителското име е заето.");
                 }
@@ -269,35 +215,23 @@ namespace SportConnect.Web.Controllers
 
                 if (!ModelState.IsValid)
                 {
+                    ViewBag.ReturnUrl = returnUrl;
                     return View(user);
                 }
 
-                // Retrieve the user entity to update
-                var editedUser = (await _repository.GetUserById(user.Id));
+                var editedUser = (await _userRepository.GetUserById(user.Id));
 
-                if (editedUser == null)
-                {
-                    ModelState.AddModelError(string.Empty, "User not found.");
-                    return View(user);
-                }
-
-                // Update the user properties from the model
                 editedUser.UserName = user.UserName;
                 editedUser.ImageUrl = user.ProfileImage;
                 editedUser.FullName = $"{user.FirstName} {user.LastName}";
 
-                if (ModelState.IsValid)
+                var result = await _userManager.UpdateAsync(editedUser);
+
+                if (result.Succeeded)
                 {
-                    var result = await _userManager.UpdateAsync(editedUser);
-
-                    if (result.Succeeded)
-                    {
-                        await _repository.Save();
-                        return RedirectToAction("AllUsers");
-                    }
+                    await _userRepository.Save();
+                    return Redirect(returnUrl);
                 }
-
-                // If model state is invalid, return the view with the errors
                 return View(user);
             }
         }
@@ -320,37 +254,16 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
-        public async Task<IActionResult> UserDetails(string id, string returnUrl = null)
-        {
-            var user = (await _repository.GetUserById(id));
-            var names = user.FullName.Split(' ').ToList();
-            var model = new UserViewModel()
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                BothNames = $"{names[0]} {names[1]}",
-                DateOfBirth = user.DateOfBirth,
-                Country = user.Country,
-                Email = user.Email,
-                ProfileImage = user.ImageUrl
-            };
-            var myself = await _userManager.GetUserAsync(this.User);
-            ViewBag.UserId = myself.Id;
-
-            ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllUsers", "User");
-            return View(model);
-        }
-
         [Authorize(Roles = $"{SD.AdminRole}")]
-        public async Task<IActionResult> AllUsers(UserViewModel? filter)
+        public async Task<IActionResult> AllUsers(UserViewModel? filter, string returnUrl)
         {
+            HttpContext.Session.Remove("ReturnUrl");
             if (filter == null)
             {
                 return View(new UserViewModel());
             }
 
-            var query = (await _repository.GetAll()).AsQueryable();
+            var query = (await _userRepository.GetAll()).AsQueryable();
 
             // Filter by country if selected
             if (!string.IsNullOrEmpty(filter.Country))
@@ -382,7 +295,7 @@ namespace SportConnect.Web.Controllers
             }
 
             // Get the list of countries for the dropdown
-            ViewBag.Countries = await GetAllCountries();
+            ViewBag.Countries = await _countryService.GetAllCountriesAsync();
 
             // Prepare the model with filtered data
             var model = new UserViewModel
@@ -390,11 +303,12 @@ namespace SportConnect.Web.Controllers
                 UserName = filter.UserName,
                 BirthYear = filter.BirthYear,
                 Country = filter.Country,
-                Users = (await _repository.GetAll()).ToList(),
+                Users = (await _userRepository.GetAll()).ToList(),
                 Email = filter.Email,
                 FilteredUsers = query.ToList(),
             };
 
+            ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllUsers", "User");
             return View(model);
         }
 
@@ -404,36 +318,17 @@ namespace SportConnect.Web.Controllers
             var currentUser = await _userManager.GetUserAsync(this.User);
             ViewBag.UserId = currentUser.Id;
 
-            var editedUser = (await _repository.GetUserById(id));
+            var editedUser = (await _userRepository.GetUserById(id));
             var names = editedUser.FullName.Split(' ').ToList();
 
-            var model = new UserViewModel();
-            if (id == currentUser.Id)
+            var model = new UserViewModel()
             {
-                model = new UserViewModel()
-                {
-                    Id = id,
-                    UserName = editedUser.UserName,
-                    FirstName = names[0],
-                    Email = editedUser.Email,
-                    LastName = names[1],
-                    Country = editedUser.Country,
-                    CountryList = await GetAllCountries(),
-                    DateOfBirth = editedUser.DateOfBirth,
-                    ProfileImage = editedUser.ImageUrl
-                };
-            }
-            else
-            {
-                model = new UserViewModel()
-                {
-                    Id = id,
-                    UserName = editedUser.UserName,
-                    FirstName = names[0],
-                    LastName = names[1],
-                    ProfileImage = editedUser.ImageUrl
-                };
-            }
+                Id = id,
+                UserName = editedUser.UserName,
+                FirstName = names[0],
+                LastName = names[1],
+                ProfileImage = editedUser.ImageUrl
+            };
 
             // Save returnUrl in ViewBag
             ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllSports", "Sport"); // Default fallback
@@ -442,24 +337,9 @@ namespace SportConnect.Web.Controllers
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         [HttpPost]
-        public async Task<IActionResult> DeleteUser(string ConfirmText, UserViewModel user, string returnUrl = null)
+        public async Task<IActionResult> DeleteUser(string ConfirmText, UserViewModel user, string returnUrl)
         {
-            var deletedUser = (await _repository.GetUserById(user.Id));
-            List<string> names = new List<string>();
-
-            if (deletedUser == null)
-            {
-                ModelState.AddModelError(string.Empty, "User not found.");
-                names = deletedUser.FullName.Split(' ').ToList();
-                user.UserName = deletedUser.UserName;
-                user.FirstName = names[0];
-                user.LastName = names.Count > 1 ? names[1] : "";
-                user.ProfileImage = deletedUser.ImageUrl;
-
-                ViewBag.ReturnUrl = returnUrl;
-
-                return View(user);
-            }
+            var deletedUser = (await _userRepository.GetUserById(user.Id));
 
             if (ConfirmText == "ПОТВЪРДИ")
             {
@@ -472,12 +352,8 @@ namespace SportConnect.Web.Controllers
                     if (result.Succeeded)
                     {
                         await _signInManager.SignOutAsync();
-                        await _repository.Save();
+                        await _userRepository.Save();
                         return RedirectToAction("Index", "Home");
-                    }
-                    else if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                    {
-                        return Redirect(returnUrl);
                     }
                 }
                 else
@@ -487,16 +363,14 @@ namespace SportConnect.Web.Controllers
 
                     if (result.Succeeded)
                     {
-                        await _repository.Save();
+                        await _userRepository.Save();
                         return RedirectToAction("AllUsers");
-                    }
-                    else if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                    {
-                        return Redirect(returnUrl);
                     }
                 }
             }
-            ModelState.AddModelError(string.Empty, "User not found.");
+
+            List<string> names = new List<string>();
+            user.Id = deletedUser.Id;
             names = deletedUser.FullName.Split(' ').ToList();
             user.UserName = deletedUser.UserName;
             user.FirstName = names[0];

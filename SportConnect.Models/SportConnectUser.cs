@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using SportConnect.Models;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace SportConnect.Models
 {

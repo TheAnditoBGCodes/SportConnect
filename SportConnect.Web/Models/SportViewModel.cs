@@ -1,8 +1,4 @@
 using SportConnect.Models;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Drawing;
 
 namespace SportConnect.Web.Models
 {
@@ -18,7 +14,7 @@ namespace SportConnect.Web.Models
 
         public string? ImageUrl { get; set; }
 
-        public Sport ToSport()
+        public async Task<Sport> ToSport()
         {
             return new Sport
             {
@@ -29,7 +25,7 @@ namespace SportConnect.Web.Models
             };
         }
 
-        public Sport ToSportAdd()
+        public async Task<Sport> ToSportAdd()
         {
             return new Sport
             {

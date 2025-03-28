@@ -2,13 +2,15 @@
 @using SportConnect.Utility
 @model UserViewModel
 
-@if (Model.Id == ViewBag.UserId)
-{
-
+@{
+    // Calculate the max and min dates
     var today = DateTime.Today;
     var maxDate = today.AddYears(-13).ToString("yyyy-MM-dd"); // 13 years ago
     var minDate = today.AddYears(-120).ToString("yyyy-MM-dd"); // 120 years ago
+}
 
+@if (Model.Id == ViewBag.UserId)
+{
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
     <style>
         /* Ensure modal content does not overflow */
@@ -123,9 +125,8 @@
                                 </div>
                             </div>
 
-                            <!-- Row 4: Location and Phone Number -->
-                            <div class="row">
-                                <div class="col-12">
+                            <div class="row mb-2 justify-content-between">
+                                <div class="col-12 col-md-6">
                                     <div class="form-floating">
                                         <select asp-for="@Model.Country" asp-items="@Model.CountryList" class="form-select form-control-sm" aria-required="true" style="font-size:  1rem;">
                                             <option value="" disabled selected>Изберете държавa</option>
@@ -134,13 +135,9 @@
                                         <span asp-validation-for="@Model.Country" class="text-danger" style="font-size:  1rem;"></span>
                                     </div>
                                 </div>
-                            </div>
-
-                            <!-- Row 5: Date of Birth -->
-                            <div class="row">
-                                <div class="col-12">
+                                <div class="col-12 col-md-6">
                                     <div class="form-floating">
-                                        <input min="@minDate" max="@maxDate" asp-for="@Model.DateOfBirth" class="form-control form-control-sm" aria-required="true" placeholder="Дата на раждане" onkeydown="return false;" onmousedown="return false;" style="font-size: 1rem;" />
+                                        <input type="date" asp-for="@Model.DateOfBirth" class="form-control form-control-sm" min="@minDate" max="@maxDate" aria-required="true" placeholder="Дата на раждане" onkeydown="return false;" onmousedown="return false;" style="font-size: 1rem;" />
                                         <label style="font-size: 1rem;" asp-for="@Model.DateOfBirth" class="text-gray">Дата на раждане</label>
                                         <span asp-validation-for="@Model.DateOfBirth" class="text-danger" style="font-size:  1rem;"></span>
                                     </div>
@@ -297,32 +294,6 @@
                 profileImageInput.value = previewImage.src;
             }
         });
-
-        // Disable date selection for users under 13 or over 120 years old
-        function setDateRestrictions() {
-            const today = new Date();
-            const minAgeDate = new Date();
-            const maxAgeDate = new Date();
-
-            // Set the minimum date to 13 years ago
-            minAgeDate.setFullYear(today.getFullYear() - 13);
-            // Set the maximum date to 120 years ago
-            maxAgeDate.setFullYear(today.getFullYear() - 120);
-
-            // Format the date as YYYY-MM-DD
-            const minDateString = minAgeDate.toISOString().split('T')[0];
-            const maxDateString = maxAgeDate.toISOString().split('T')[0];
-
-            // Set the min and max attributes for the DateOfBirth input field
-            const dateOfBirthInput = document.getElementById('Input_DateOfBirth');
-            if (dateOfBirthInput) {
-                dateOfBirthInput.setAttribute('min', maxDateString);
-                dateOfBirthInput.setAttribute('max', minDateString);
-            }
-        }
-
-        // Run the function to set the date restrictions
-        setDateRestrictions();
     </script>
 }
 else

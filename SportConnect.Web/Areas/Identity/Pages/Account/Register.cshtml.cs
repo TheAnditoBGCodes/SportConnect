@@ -1,74 +1,40 @@
 ﻿#nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
-using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 using SportConnect.DataAccess.Repository.IRepository;
-using SportConnect.DataAccess;
 using SportConnect.Models;
 using SportConnect.Services;
 using SportConnect.Utility;
-using System.Text.Json;
 
 namespace SportConnect.Web.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
         private readonly IRepository<SportConnectUser> _repository;
-        private readonly HttpClient _httpClient;
-        private SportConnectDbContext _context;
         private readonly SignInManager<SportConnectUser> _signInManager;
         private readonly UserManager<SportConnectUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly CountryService _countryService;
         private readonly IUserEmailStore<SportConnectUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
-        private readonly Cloudinary _cloudinary;
-        private readonly CloudinaryService _cloudinaryService;
         private readonly IUserStore<SportConnectUser> _userStore;
 
-        public RegisterModel(
-            IRepository<SportConnectUser> repository,
-            HttpClient httpClient,
-            SportConnectDbContext context,
-            SignInManager<SportConnectUser> signInManager,
-            UserManager<SportConnectUser> userManager,
-            RoleManager<IdentityRole> roleManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
-            Cloudinary cloudinary,
-            CloudinaryService cloudinaryService,
-            IUserStore<SportConnectUser> userStore) // Add IUserStore<SportConnectUser> here
+        public RegisterModel(IRepository<SportConnectUser> repository, SignInManager<SportConnectUser> signInManager, UserManager<SportConnectUser> userManager, RoleManager<IdentityRole> roleManager, CountryService countryService, ILogger<RegisterModel> logger, IUserStore<SportConnectUser> userStore)
         {
             _repository = repository;
-            _httpClient = httpClient;
-            _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
+            _countryService = countryService;
             _logger = logger;
-            _emailSender = emailSender;
-            _cloudinary = cloudinary;
-            _cloudinaryService = cloudinaryService;
-            _userStore = userStore; // Initialize directly
-            _emailStore = (IUserEmailStore<SportConnectUser>)_userStore; // Cast to IUserEmailStore
+            _userStore = userStore;
+            _emailStore = (IUserEmailStore<SportConnectUser>)_userStore;
         }
 
         /// <summary>
@@ -157,22 +123,6 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             public string ProfileImage { get; set; }
         }
 
-        private async Task<List<SelectListItem>> GetAllCountries()
-        {
-            var response = await _httpClient.GetStringAsync("https://restcountries.com/v3.1/all");
-            var countries = System.Text.Json.JsonSerializer.Deserialize<List<CountryResponse>>(response, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
-            return countries?
-                .OrderBy(c => c.Name.Common)
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Name.Common,
-                    Text = c.Name.Common
-                }).ToList() ?? new List<SelectListItem>();
-        }
-
         public async Task OnGetAsync(string returnUrl = null)
         {
             if (!await _roleManager.RoleExistsAsync(SD.AdminRole))
@@ -191,7 +141,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                     Value = y,
                     Text = y,
                 }).ToList(),
-                CountryList = await GetAllCountries()
+                CountryList = await _countryService.GetAllCountriesAsync()
             };
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -199,7 +149,6 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 
         private async Task<bool> IsValidUsername(string username)
         {
-            // Define the allowed characters (same as in Identity configuration)
             var allowedCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
             foreach (var c in username)
             {
@@ -239,37 +188,36 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 
             if (string.IsNullOrEmpty(password) || password.Length < 8)
             {
-                ViewData["ShortPassword"] = "8 символа;";  // Send error to view via ViewData
+                ViewData["ShortPassword"] = "8 символа;";
                 passwordHasErrors = true;
             }
             else
             {
                 if (!password.Any(char.IsUpper))
                 {
-                    ViewData["UpperPassword"] = "една главна буква;";  // Send error to view via ViewData
+                    ViewData["UpperPassword"] = "една главна буква;";
                     passwordHasErrors = true;
                 }
 
                 if (!Input.Username.Any(char.IsDigit))
                 {
-                    ViewData["DigitPassword"] = "една цифра;";  // Send error to view via ViewData
+                    ViewData["DigitPassword"] = "една цифра;";
                     passwordHasErrors = true;
                 }
 
                 if (!password.Any(char.IsLower))
                 {
-                    ViewData["LowerPassword"] = "една малка буква;";  // Send error to view via ViewData
+                    ViewData["LowerPassword"] = "една малка буква;";
                     passwordHasErrors = true;
                 }
 
                 if (!password.Any(c => !char.IsLetterOrDigit(c)))
                 {
-                    ViewData["SpecialPassword"] = "един специален символ;";  // Send error to view via ViewData
+                    ViewData["SpecialPassword"] = "един специален символ;";
                     passwordHasErrors = true;
                 }
             }
 
-            // Only check for mismatch if both password and confirm password are filled and no previous errors for password
             if (passwordHasErrors == false && !string.IsNullOrEmpty(Input.Password) && !string.IsNullOrEmpty(Input.ConfirmPassword) && Input.Password != Input.ConfirmPassword)
             {
                 ModelState.AddModelError("", "");
@@ -295,8 +243,6 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
-
-
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -307,37 +253,19 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, SD.UserRole);
+                        await _userManager.AddToRoleAsync(user, SD.AdminRole);
                     }
 
                     var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
 
             var roles = _roleManager.Roles.Select(x => x.Name).ToList();
             Input = new()
@@ -347,12 +275,11 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                     Value = y,
                     Text = y,
                 }).ToList(),
-                CountryList = await GetAllCountries()
+                CountryList = await _countryService.GetAllCountriesAsync()
             };
             ModelState.AddModelError("Input.ProfileImage", "Моля, качете профилна снимка.");
             return Page();
         }
-
         private async Task<IdentityUser> CreateUser()
         {
             try
@@ -376,14 +303,4 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             return (IUserEmailStore<SportConnectUser>)_userStore;
         }
     }
-}
-
-class CountryResponse
-{
-    public CountryName Name { get; set; }
-}
-
-class CountryName
-{
-    public string Common { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿@using SportConnect.Web.Models
+﻿@using SportConnect.Utility
+@using SportConnect.Web.Models
 @model UserViewModel
 
 <style>
@@ -72,52 +73,57 @@
             <div class="list-group">
                 @foreach (var user in Model.FilteredUsers)
                 {
-                    <div class="list-group-item d-flex align-items-center justify-content-between py-3 mb-3 border rounded">
-                        <!-- Profile Image & Name -->
-                        <div class="d-flex align-items-center flex-shrink-0" style="min-width: 200px;">
-                            <img src="@user.ImageUrl" alt="Профилна снимка"
-                                 class="me-3"
-                                 style="width: 50px; height: 50px; object-fit: cover;">
-                            <div class="flex-fill px-2">
-                                <strong class="mb-0">@user.FullName</strong>
-                                <small class="d-block"><i class="bi bi-telephone"></i> @user.UserName</small>
-                            </div>
-                        </div>
+                    <div class="list-group-item d-flex flex-column align-items-center justify-content-between py-2 px-2 mb-1 border rounded">
+                        <!-- User Info (Profile Image & Details) -->
+                        <div class="d-flex align-items-center justify-content-between w-100">
 
-                        <!-- User Info (Equal Width Columns) -->
-                        <div class="d-flex flex-grow-1 justify-content-between text-center">
-                            <div class="flex-fill px-2">
-                                <strong>Държава</strong>
-                                <small class="d-block"><i class="bi bi-geo-alt"></i> @user.Country</small>
-                            </div>
-                            <div class="flex-fill px-2">
-                                <strong>Имейл</strong>
-                                <small class="d-block"><i class="bi bi-envelope"></i> @user.Email</small>
-                            </div>
-                            @{
-                                int age = DateTime.Now.Year - user.DateOfBirth.Year;
-                                if (DateTime.Now.Month < user.DateOfBirth.Month ||
-                                (DateTime.Now.Month == user.DateOfBirth.Month && DateTime.Now.Day < user.DateOfBirth.Day))
-                                {
-                                    age--;
+                            <div class="d-flex flex-grow-1 justify-content-between text-center">
+                                <div class="d-flex align-items-center flex-shrink-0" style="min-width: 200px;">
+                                    <img src="@user.ImageUrl" alt="Профилна снимка"
+                                         class="me-3"
+                                         style="width: 50px; height: 50px; object-fit: cover;">
+                                    <div class="px-2">
+                                        <strong class="mb-0">@user.FullName</strong>
+                                        <small class="d-block"><i class="bi bi-telephone"></i> @user.UserName</small>
+                                    </div>
+                                </div>
+                                <div class="px-3">
+                                    <strong>Държава</strong>
+                                    <small class="d-block"><i class="bi bi-geo-alt"></i> @user.Country</small>
+                                </div>
+                                <div class="px-3">
+                                    <strong>Имейл</strong>
+                                    <small class="d-block"><i class="bi bi-envelope"></i> @user.Email</small>
+                                </div>
+                                @{
+                                    int age = DateTime.Now.Year - user.DateOfBirth.Year;
+                                    if (DateTime.Now.Month < user.DateOfBirth.Month ||
+                                    (DateTime.Now.Month == user.DateOfBirth.Month && DateTime.Now.Day < user.DateOfBirth.Day))
+                                    {
+                                        age--;
+                                    }
                                 }
-                            }
-                            <div class="flex-fill px-2">
-                                <strong>Дата на раждане (години)</strong>
-                                <small class="d-block">
-                                    <i class="bi bi-calendar"></i>@user.DateOfBirth.ToString("dd.MM.yyyy") (@age години)
-                                </small>
+                                <div class="px-3">
+                                    <strong>Дата на раждане (години)</strong>
+                                    <small class="d-block">
+                                        <i class="bi bi-calendar"></i> @user.DateOfBirth.ToString("dd.MM.yyyy") (@age години)
+                                    </small>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="btn-group">
-                            <a asp-controller="User" asp-action="UserDetails" asp-route-id="@user.Id" asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-primary text-white btn-sm">
-                                Информация
-                            </a>
+                        <!-- Action Buttons Below User Data -->
+                        <div class="btn-group w-100 mt-2" style="gap: 150px;">
+                            <a asp-controller="Participation" asp-action="UserParticipations" asp-route-id="@user.Id" asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-primary btn-sm">Участия</a>
+                            <a asp-controller="Tournament" asp-action="UserTournaments" asp-route-id="@user.Id" asp-route-returnUrl="/User/AllUsers" class="btn btn-success btn-sm">Турнири</a>
+                            @if (User.IsInRole(SD.AdminRole) || user.Id == ViewBag.UserId)
+                            {
+                                <a asp-controller="User" asp-action="EditUser" asp-route-id="@user.Id" asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-warning btn-sm text-white">Промени</a>
+                                <a asp-controller="User" asp-action="DeleteUser" asp-route-id="@user.Id" asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-danger btn-sm">Изтрий</a>
+                            }
                         </div>
                     </div>
                 }
-            </div>
         </div>
     </div>
 </div>

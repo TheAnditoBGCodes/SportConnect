@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using SportConnect.Models;
-using SportConnect.Utility;
 using System.ComponentModel.DataAnnotations;
 
 public class TournamentViewModel
 {
     public int? Id { get; set; }
+    public int? PreviousId { get; set; }
 
     public string? Name { get; set; }
 
@@ -48,7 +48,7 @@ public class TournamentViewModel
     [DataType(DataType.Time)]
     public TimeSpan? DeadlineTime { get; set; }
 
-    public Tournament GetTournament()
+    public async Task<Tournament> GetTournament()
     {
         return new Tournament
         {

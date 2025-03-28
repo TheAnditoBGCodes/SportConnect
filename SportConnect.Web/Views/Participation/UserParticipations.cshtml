@@ -1,6 +1,38 @@
 ﻿@model TournamentViewModel
 
 <script>
+    // Function to replace the "Отказване" button with confirmation buttons
+    function replaceWithConfirmation(tournamentId, isApproved) {
+        var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
+
+        const userId = '@ViewBag.UserId';
+        var url = `/Participation/DeleteParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FParticipation%2FUserParticipations%2F${userId}`;
+
+        // Replace the content of the participationButtons with Yes and No options
+        participationButtons.innerHTML = `
+                    <a href="${url}" class="btn btn-danger w-50 btn-sm">Да</a>
+                    <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButton(${tournamentId}, ${isApproved})">Не</a>
+                `;
+    }
+
+    // Function to restore the "Отказване" button and revert back to the original state
+    function restoreQuitButton(tournamentId, isApproved) {
+        var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
+
+        // Restore the appropriate buttons based on the approval status
+        if (isApproved) {
+            participationButtons.innerHTML = `
+                        <button class="btn btn-success text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                        <a id="quitParticipation-${tournamentId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(${tournamentId}, ${isApproved})">Отказване</a>
+                    `;
+        } else {
+            participationButtons.innerHTML = `
+                        <button class="btn btn-secondary text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
+                        <a id="quitParticipation-${tournamentId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(${tournamentId}, ${isApproved})">Отказване</a>
+                    `;
+        }
+    }
+
     function toggleApprovalButtons(tournamentId, approve) {
         // Get the participation buttons container for the specific tournament
         const participationButtons = document.getElementById('participationButtons-' + tournamentId);
@@ -9,7 +41,7 @@
         const userId = '@ViewBag.UserId';
 
         if (approve) {
-            var url = `/Participation/ApproveParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FParticipation%2FMyParticipations`;
+            var url = `/Participation/ApproveParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FParticipation%2FUserParticipations%2F${userId}`;
 
             participationButtons.innerHTML = `
                 <button class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-${tournamentId}" onclick="confirmApproval(${tournamentId}, false)">
@@ -20,7 +52,7 @@
                 </a>
             `;
         } else {
-            var url = `/Participation/DeleteParticipation/${tournamentId}?returnUrl=%2FParticipation%2FMyParticipations`;
+            var url = `/Participation/DeleteParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FParticipation%2FUserParticipations%2F${userId}`;
 
             participationButtons.innerHTML = `
                 <a href="${url}" class="btn btn-success text-white w-100 btn-sm" id="approveBtn-${tournamentId}">
@@ -154,7 +186,7 @@
         <div class="container p-2" style="max-width: 50%; padding: 0.5rem;">
             <h1 class="text-center mb-3" style="font-size: 5rem;">Нямаш участия</h1>
             <div class="d-flex justify-content-center mt-3">
-                <a href="@ViewBag.ReturnUrl" class="btn btn-secondary text-center" style="font-size: 1rem;">Назад</a>
+                <a href="@ViewBag.RootReturnUrl" class="btn btn-secondary text-center" style="font-size: 1rem;">Назад</a>
             </div>
         </div>
     </div>
@@ -202,7 +234,7 @@ else
                     <!-- Row 3: Buttons -->
                     <div class="d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary me-2" style="font-size: 1rem;">Търси</button>
-                        <a href="@ViewBag.ReturnUrl" class="btn btn-secondary text-center" style="font-size: 1rem;">Назад</a>
+                        <a href="@ViewBag.RootReturnUrl" class="btn btn-secondary text-center" style="font-size: 1rem;">Назад</a>
                     </div>
                 </form>
             </div>
@@ -271,15 +303,13 @@ else
                                                 }
                                                 else
                                                 {
-                                                    <!-- Display Approved button for already approved participation -->
-                                                    <button class="btn btn-success text-white w-100 btn-sm" onmousedown="return false;" onkeydown="return false;">
-                                                        Одобрен
-                                                    </button>
+                                                    <button class="btn btn-success text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                                                    <a id="quitParticipation-@tournament.Id" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(@tournament.Id, true)">Отказване</a>
                                                 }
                                             }
                                         }
                                     </div>
-                                    <a asp-controller="Tournament" asp-action="TournamentDetails" asp-route-id="@tournament.Id" asp-route-returnUrl="@Url.Action("MyParticipations", "Participation")" class="btn btn-primary text-white btn-sm">Информация</a>
+                                    <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="@Url.Action("UserParticipations", "Participation", new { id = ViewBag.UserId })" class="btn btn-primary text-white btn-sm">Участници</a>
                                 </div>
                             </div>
                         </div>

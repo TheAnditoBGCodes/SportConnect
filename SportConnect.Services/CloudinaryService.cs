@@ -2,9 +2,6 @@
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using System.IO;
-using System.Security.Principal;
-using System.Threading.Tasks;
 
 namespace SportConnect.Services
 {

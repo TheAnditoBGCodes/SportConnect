@@ -191,8 +191,8 @@
 
                 <!-- Buttons -->
                 <div id="buttonContainer" class="d-flex justify-content-between pt-0">
-                    <a href="@ViewBag.ReturnUrl" class="btn btn-secondary">Назад</a>
-                    <button type="submit" id="submitSport" class="btn btn-success text-white">Добави</button>
+                    <a a href="@ViewBag.ReturnUrl" class="btn btn-secondary">Назад</a>
+                    <button type="submit" id="submitSport" asp-route-returnUrl="@ViewBag.ReturnUrl" class="btn btn-success text-white">Добави</button>
                 </div>
             </form>
         </div>

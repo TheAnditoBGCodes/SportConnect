@@ -1,40 +1,25 @@
-﻿using CloudinaryDotNet.Actions;
-using CloudinaryDotNet;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Scaffolding;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
-using SportConnect.Services;
 using SportConnect.Utility;
 using SportConnect.Web.Models;
 using System.Diagnostics;
-using System.Linq;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SportConnect.Web.Controllers
 {
     public class SportController : Controller
     {
-        private readonly ILogger<SportController> _logger;
-        public IRepository<Sport> _repository { get; set; }
+        public IRepository<Sport> _sportRepository { get; set; }
         public IRepository<Tournament> _tournamentRepository { get; set; }
-        public IRepository<Participation> _participationsRepository { get; set; }
-        private readonly CloudinaryService _cloudinaryService;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        public IRepository<Participation> _participationRepository { get; set; }
 
-        public SportController(ILogger<SportController> logger, IRepository<Sport> repository, IRepository<Tournament> tournamentRepository, IRepository<Participation> participationsRepository, CloudinaryService cloudinaryService, IWebHostEnvironment webHostEnvironment)
+        public SportController(IRepository<Sport> sportRepository, IRepository<Tournament> tournamentRepository, IRepository<Participation> participationRepository)
         {
-            _logger = logger;
-            _repository = repository;
+            _sportRepository = sportRepository;
             _tournamentRepository = tournamentRepository;
-            _participationsRepository = participationsRepository;
-            _cloudinaryService = cloudinaryService;
-            _webHostEnvironment = webHostEnvironment;
+            _participationRepository = participationRepository;
         }
 
         [AllowAnonymous]
@@ -45,18 +30,20 @@ namespace SportConnect.Web.Controllers
                 return View(new SportViewModel());
             }
 
-            var query = (await _repository.GetAll()).AsQueryable();
+            var allSports = await _sportRepository.GetAll(); // Fetch all sports asynchronously
+            var query = allSports.AsQueryable(); // Work with an IQueryable for filtering
+
             if (!string.IsNullOrEmpty(filter.Name))
             {
                 string trimmedFilter = filter.Name.Trim().ToLower();
-                query = query.Where(p => p.Name.Trim().ToLower().Contains(trimmedFilter));
+                query = query.Where(p => p.Name.Trim().ToLower().Contains(trimmedFilter)); // Apply filtering
             }
 
             var model = new SportViewModel
             {
                 Name = filter.Name,
-                Sports = (await _repository.GetAll()).ToList(),
-                FilteredSports = query.ToList(),
+                Sports = allSports.ToList(), // All sports, unfiltered
+                FilteredSports = query.ToList(), // Apply filters and return results asynchronously
             };
 
             return View(model);
@@ -82,13 +69,13 @@ namespace SportConnect.Web.Controllers
                 ModelState.AddModelError("ImageUrl", "Снимката е задължителна.");
             }
 
-            if ((await _repository.GetAll()).Any(s => s.Name == model.Name))
+            if ((await _sportRepository.GetAll()).Any(s => s.Name == model.Name))
             {
                 ModelState.AddModelError("Name", "Името е използвано от друг спорт.");
                 ModelState.AddModelError("ImageUrl", "Снимката е задължителна.");
             }
 
-            if ((await _repository.GetAll()).Any(s => s.Description == model.Description))
+            if ((await _sportRepository.GetAll()).Any(s => s.Description == model.Description))
             {
                 ModelState.AddModelError("Description", "Описанието е използвано от друг спорт.");
                 ModelState.AddModelError("ImageUrl", "Снимката е задължителна.");
@@ -96,7 +83,7 @@ namespace SportConnect.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                await _repository.Add(model.ToSportAdd());
+                await _sportRepository.Add(await model.ToSportAdd());
                 return RedirectToAction("AllSports");
             }
 
@@ -106,7 +93,7 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.AdminRole}")]
         public async Task<IActionResult> EditSport(int id)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await _sportRepository.GetById(id);
             var model = new SportViewModel
             {
                 Id = id,
@@ -131,12 +118,12 @@ namespace SportConnect.Web.Controllers
                 ModelState.AddModelError("Description", "Описанието е задължително.");
             }
 
-            if ((await _repository.GetAll()).Any(s => s.Description == sport.Description && s.Id != sport.Id))
+            if ((await _sportRepository.GetAll()).Any(s => s.Description == sport.Description && s.Id != sport.Id))
             {
                 ModelState.AddModelError("Name", "Името е използвано от друг спорт.");
             }
 
-            if (((await _repository.GetAll()).Any(s => s.Name == sport.Name && s.Id != sport.Id)))
+            if (((await _sportRepository.GetAll()).Any(s => s.Name == sport.Name && s.Id != sport.Id)))
             {
                 ModelState.AddModelError("Description", "Описанието е използвано от друг спорт.");
             }
@@ -144,28 +131,24 @@ namespace SportConnect.Web.Controllers
             if (ModelState.IsValid)
             {
                 // Reload the entity from the database to avoid tracking multiple instances
-                var dbSport = (await _repository.GetById((int)sport.Id));
-                if (dbSport != null)
-                {
-                    // Copy the values from the form submission (this avoids tracking conflicts)
-                    dbSport.Id = (int)sport.Id;
-                    dbSport.Name = sport.Name;
-                    dbSport.Description = sport.Description;
-                    dbSport.ImageUrl = sport.ImageUrl;
+                var dbSport = (await _sportRepository.GetById((int)sport.Id));
 
-                    await _repository.Update(dbSport);
-                    return RedirectToAction("AllSports");
-                }
-                return View(sport);
+                // Copy the values from the form submission (this avoids tracking conflicts)
+                dbSport.Id = (int)sport.Id;
+                dbSport.Name = sport.Name;
+                dbSport.Description = sport.Description;
+                dbSport.ImageUrl = sport.ImageUrl;
+
+                await _sportRepository.Update(dbSport);
+                return RedirectToAction("AllSports");
             }
-
             return View(sport);
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
         public async Task<IActionResult> DeleteSport(int id)
         {
-            var sport = await _repository.GetById(id);
+            var sport = await _sportRepository.GetById(id);
             var model = new SportViewModel()
             {
                 Name = sport.Name,
@@ -185,21 +168,17 @@ namespace SportConnect.Web.Controllers
 
                 foreach (var tournament in tournaments)
                 {
-                    var participations = (await _participationsRepository.GetAllBy(p => p.TournamentId == tournament.Id)).ToList();
-                    await _participationsRepository.DeleteRange(participations);
+                    var participations = (await _participationRepository.GetAllBy(p => p.TournamentId == tournament.Id)).ToList();
+                    await _participationRepository.DeleteRange(participations);
                 }
 
                 await _tournamentRepository.DeleteRange(tournaments);
 
-                var sport = await _repository.GetById(id);
-                if (sport != null)
-                {
-                    await _repository.Delete(sport);
-                }
-
+                var sport = await _sportRepository.GetById(id);
+                await _sportRepository.Delete(sport);
                 return RedirectToAction("AllSports");
             }
-            var sport1 = await _repository.GetById(id);
+            var sport1 = await _sportRepository.GetById(id);
             var model1 = new SportViewModel()
             {
                 Name = sport1.Name,

@@ -1,5 +1,7 @@
-Fix Pathfindings
+Everything In All Controllers Should Become Optimization
 
-Testing Of Models Controllers Services To 60% Functionality Coverage
+Making And Testing All Functionalities For All User Type
 
-Graphical Improvements Of Visual Identity Of SportConnect
+Testing Of Models Controllers Services 60% Functionality
+
+Graphical Improvement Of Visual Identity Of SportConnect

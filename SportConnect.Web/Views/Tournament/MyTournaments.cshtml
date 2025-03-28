@@ -1,5 +1,40 @@
 ﻿@model TournamentViewModel
 
+<script>
+    // Function to replace the "Отказване" button with confirmation buttons
+    function replaceWithConfirmation(tournamentId, isApproved) {
+        var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
+
+        const sportId = '@Model.Id';
+        const userId = '@ViewBag.UserId';
+        var url = `/Participation/DeleteParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FTournament%2FMyTournaments`;
+
+        // Replace the content of the participationButtons with Yes and No options
+        participationButtons.innerHTML = `
+                            <a href="${url}" class="btn btn-danger w-50 btn-sm">Да</a>
+                            <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButton(${tournamentId}, ${isApproved})">Не</a>
+                        `;
+    }
+
+    // Function to restore the "Отказване" button and revert back to the original state
+    function restoreQuitButton(tournamentId, isApproved) {
+        var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
+
+        // Restore the appropriate buttons based on the approval status
+        if (isApproved) {
+            participationButtons.innerHTML = `
+                                <button class="btn btn-success text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                                <a id="quitParticipation-${tournamentId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(${tournamentId}, ${isApproved})">Отказване</a>
+                            `;
+        } else {
+            participationButtons.innerHTML = `
+                                <button class="btn btn-secondary text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
+                                <a id="quitParticipation-${tournamentId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(${tournamentId}, ${isApproved})">Отказване</a>
+                            `;
+        }
+    }
+</script>
+
 <style>
     /* Ensure modal content does not overflow */
     .modal-body {
@@ -105,7 +140,7 @@
         <div class="container p-2" style="max-width: 50%; padding: 0.5rem;">
             <h1 class="text-center mb-3" style="font-size: 5rem;">Няма турнири</h1>
             <div class="d-flex justify-content-center mt-3">
-                <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="@Url.Action("AllTournaments", "Tournament")" class="btn btn-success text-center" style="font-size: 1rem;">Добави</a>
+                <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="/Tournament/MyTournaments" class="btn btn-success text-center" style="font-size: 1rem;">Добави</a>
             </div>
         </div>
     </div>
@@ -148,8 +183,7 @@ else
                     <!-- Row 3: Buttons -->
                     <div class="d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary me-2" style="font-size: 1rem;">Търси</button>
-                        <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="@Url.Action("AllTournaments", "Tournament")"
-                           class="btn btn-success text-center" style="font-size: 1rem;">Добави</a>
+                        <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="/Tournament/MyTournaments" class="btn btn-success text-center" style="font-size: 1rem;">Добави</a>
                     </div>
                 </form>
             </div>
@@ -199,10 +233,49 @@ else
                                     </div>
                                 </div>
                             </div>
-
+                            @{
+                                string userId = ViewBag.UserId;
+                                int tournamentid = tournament.Id;
+                            }
                             <div class="card-footer text-center">
                                 <div class="d-flex justify-content-between w-100">
-                                            <a asp-controller="Tournament" asp-action="TournamentDetails" asp-route-id="@tournament.Id" asp-route-returnUrl="@Url.Action("AllTournaments", "Tournament")" class="btn btn-primary text-white btn-sm mx-auto">Информация</a>
+                                    <div class="d-flex justify-content-between align-items-center gap-2 w-100">
+                                        @if (tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
+                                        {
+                                            <div id="participationButtons-@tournamentid" class="d-flex justify-content-between align-items-center " style="width: 200px;">
+                                                @{
+                                                    var participation = tournament.Participations.FirstOrDefault(p => p.ParticipantId == userId);
+                                                }
+                                                @if (participation == null)
+                                                {
+                                                    <!-- User has not participated -->
+                                                    <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/MyTournaments" class="btn btn-success btn-sm w-100">
+                                                        Участвай
+                                                    </a>
+                                                }
+                                                else if (participation.Approved == false)
+                                                {
+                                                    <!-- User participation is pending -->
+                                                    <button class="btn btn-secondary text-white btn-sm w-50" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
+                                                    <a id="quitParticipation-@tournamentid" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(@tournamentid, false)">Отказване</a>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn btn-success text-white btn-sm w-50" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                                                    <a id="quitParticipation-@tournamentid" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(@tournamentid, true)">Отказване</a>
+                                                }
+                                            </div>
+                                        }
+                                        <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/MyTournaments" class="btn btn-primary btn-sm" style="width: 110px;">
+                                            Участници
+                                        </a>
+                                        <a asp-controller="Tournament" asp-action="EditTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/MyTournaments" class="btn btn-warning btn-sm text-white">
+                                            Промени
+                                        </a>
+                                        <a asp-controller="Tournament" asp-action="DeleteTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/MyTournaments" class="btn btn-danger btn-sm text-white">
+                                            Изтрий
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,96 +1,110 @@
 ﻿@using SportConnect.Models
 @using SportConnect.Utility
 @model UserViewModel
-
-
 @{
-    Tournament tournament = ViewBag.Tournament;
+    var currUser = ViewBag.UserId;
 }
-
 <script>
-    function toggleApprovalButtons(tournamentId, approve) {
-        // Get the participation buttons container for the specific tournament
-        const participationButtons = document.getElementById('participationButtonsApprove-' + tournamentId);
-
-        // Get the user ID from ViewBag
-        const userId = '@ViewBag.UserId';
-
-        if (approve) {
-            var url = `/Participation/ApproveParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FParticipation%2FMyParticipations`;
-
-            participationButtons.innerHTML = `
-                        <button class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-${tournamentId}" onclick="confirmApproval(${tournamentId}, false)">
-                            Не
-                        </button>
-                        <a href="${url}" class="btn btn-success text-white w-100 btn-sm" id="approveBtn-${tournamentId}">
-                            Да
-                        </a>
-                    `;
-        } else {
-            var url = `/Participation/DeleteParticipation/${tournamentId}?returnUrl=%2FParticipation%2FMyParticipations`;
-
-            participationButtons.innerHTML = `
-                        <a href="${url}" class="btn btn-success text-white w-100 btn-sm" id="approveBtn-${tournamentId}">
-                            Да
-                        </a>
-                        <button class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-${tournamentId}" onclick="confirmApproval(${tournamentId}, false)">
-                            Не
-                        </button>
-                    `;
-        }
-    }
-
-    function confirmApproval(tournamentId, approve) {
+    function toggleApprovalButtons(tournamentId, userId, approve) {
         // Get the participation buttons container for the specific tournament
         const participationButtons = document.getElementById('participationButtonsApprove-' + tournamentId);
 
         if (approve) {
-            // Perform the approval logic here (e.g., send AJAX request or update status)
-            console.log("Approved participation for tournament ID: " + tournamentId);
+            var url = `/Participation/ApproveParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FParticipation%2FTournamentParticipations%2F${tournamentId}`;
+
+            participationButtons.innerHTML =
+                `<button class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-${tournamentId}" onclick="confirmApproval(${tournamentId}, \'${userId}\', false)">
+                                Не
+                            </button>
+                            <a href="${url}" class="btn btn-success text-white w-100 btn-sm" id="approveBtn-${tournamentId}">
+                                Да
+                                </a>`
+                ;
         } else {
-            // If clicked "Не одобри", revert back to the original state with swapped order
-            participationButtons.innerHTML = `
-                                    <button class="btn btn-success text-white w-100 btn-sm" id="approveBtn-${tournamentId}" onclick="toggleApprovalButtons(${tournamentId}, true)">
-                                        Одобри
-                                    </button>
-                                    <button class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-${tournamentId}" onclick="toggleApprovalButtons(${tournamentId}, false)">
-                                        Не одобри
-                                    </button>
-                            `;
+            var url = `/Participation/DeleteParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FParticipation%2FTournamentParticipations%2F${tournamentId}`;
+
+            participationButtons.innerHTML =
+                `<a href="${url}" class="btn btn-success text-white w-100 btn-sm" id="approveBtn-${tournamentId}">
+                                Да
+                            </a>
+                                    <button class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-${tournamentId}" onclick="confirmApproval(${tournamentId}, \'${userId}\', false)">
+                                Не
+                                </button>`
+                ;
         }
     }
 
-    function replaceWithConfirmation(tournamentId, isApproved) {
+    function confirmApproval(tournamentId, userId, approve) {
+        // Get the participation buttons container for the specific tournament
+        const participationButtons = document.getElementById('participationButtonsApprove-' + tournamentId);
+        participationButtons.innerHTML =
+            `<a class="btn btn-success text-white w-100 btn-sm" id="approveBtn-${tournamentId}" onclick="toggleApprovalButtons(${tournamentId}, \'${userId}\', true)">
+                                                Одобри
+                                            </a>
+                                                    <a class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-${tournamentId}" onclick="toggleApprovalButtons(${tournamentId},\'${userId}\', false)">
+                                                Не одобри
+                                                </a>`
+            ;
+    }
+    
+    // Function to replace the "Отказване" button with confirmation buttons
+    function replaceWithConfirmation(tournamentId, userId, isApproved) {
         var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
 
-        // Dynamically build the URL using JavaScript
-        var url = "/Participation/DeleteParticipation/" + tournamentId + "?returnUrl=%2FParticipation%2FMyParticipations"; // Use the actual tournament ID
+        var url = `/Participation/DeleteParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FParticipation%2FTournamentParticipations%2F${tournamentId}`;
 
         // Replace the content of the participationButtons with Yes and No options
         participationButtons.innerHTML = `
-                        <a href="${url}" class="btn btn-success text-white btn-sm w-50 h-100" style="font-size: 1rem; text-align: center !important;">Да</a>
-                            <a href="javascript:void(0);" class="btn btn-danger text-white btn-sm w-50 h-100" style="font-size: 1rem; text-align: center !important;" onclick="restoreQuitButton(${tournamentId}, ${isApproved})">Не</a>
-                    `;
+                    <a href="${url}" class="btn btn-danger w-50 btn-sm">Да</a>
+                        <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButton(${tournamentId},\'${userId}\', ${isApproved})">Не</a>
+                `;
     }
 
+    // Function to replace the "Отказване" button with confirmation buttons
+    function replaceWithConfirmationUser(tournamentId, userId, isApproved) {
+        var participationButtons = document.getElementById("participationButtonsApprove-" + tournamentId); // Unique ID for each tournament
+
+        var url = `/Participation/DeleteParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FParticipation%2FTournamentParticipations%2F${tournamentId}`;
+
+        // Replace the content of the participationButtons with Yes and No options
+        participationButtons.innerHTML = `
+                        <a href="${url}" class="btn btn-danger w-50 btn-sm">Да</a>
+                                <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButtonUser(${tournamentId},\'${userId}\', ${isApproved})">Не</a>
+                    `;
+    }
+    
     // Function to restore the "Отказване" button and revert back to the original state
-    function restoreQuitButton(tournamentId, isApproved) {
+    function restoreQuitButton(tournamentId, userId, isApproved) {
         var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
 
         // Restore the appropriate buttons based on the approval status
         if (isApproved) {
             participationButtons.innerHTML = `
-                            <button class="btn btn-success text-white btn-sm w-50 h-100" style="font-size: 1rem; text-align: center !important;" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
-                            <a id="quiterParticipation-${tournamentId}" class="btn btn-danger w-50 h-100 btn-sm" style="font-size: 1rem; text-align: center !important;" onclick="replaceWithConfirmation(${tournamentId}, ${isApproved})">Отказване</a>
-                        `;
+                        <button class="btn btn-success text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                                    <a id="quitParticipation-${userId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(${tournamentId}, \'${userId}\', ${isApproved})">Отказване</a>
+                    `;
         } else {
             participationButtons.innerHTML = `
-                            <button class="btn btn-secondary text-white btn-sm w-50 h-100" style="font-size: 1rem; text-align: center !important;" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
-                            <a id="quiterParticipation-${tournamentId}" class="btn btn-danger w-50 h-100 btn-sm" style="font-size: 1rem; text-align: center !important;" onclick="replaceWithConfirmation(${tournamentId}, ${isApproved})">Отказване</a>
-                        `;
+                        <button class="btn btn-secondary text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
+                                    <a id="quitParticipation-${userId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(${tournamentId}, \'${userId}\', ${isApproved})">Отказване</a>
+                    `;
         }
     }
+
+    // Function to restore the "Отказване" button and revert back to the original state
+    function restoreQuitButtonUser(tournamentId, userId, isApproved) {
+        var participationButtons = document.getElementById("participationButtonsApprove-" + tournamentId); // Unique ID for each tournament
+        participationButtons.innerHTML = `
+                                <button class="btn btn-success text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                                                <a id="quiterParticipation-${userId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmationUser(${tournamentId}, \'${userId}\', ${isApproved})">Отказване</a>
+                            `;
+    }
 </script>
+
+@{
+    Tournament tournament = ViewBag.Tournament;
+    var userId = ViewBag.UserId;
+}
 
 <style>
     /* Ensure modal content does not overflow */
@@ -265,14 +279,13 @@ else
                                 }
                                 else if (participation.Approved == false)
                                 {
-                                    <!-- User participation is pending -->
                                     <button class="btn btn-secondary text-white btn-sm w-50 h-100" style="font-size: 1rem; text-align: center !important;" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
-                                    <a id="quiterParticipation-@tournament.Id" class="btn btn-danger w-50 h-100 btn-sm" style="font-size: 1rem; text-align: center !important;" onclick="replaceWithConfirmation(@tournament.Id, false)">Отказване</a>
+                                    <a id="quitParticipation-@tournament.Id" class="btn btn-danger w-50 h-100 btn-sm" style="font-size: 1rem; text-align: center !important;" onclick="replaceWithConfirmation(@tournament.Id, '@currUser', false)">Отказване</a>
                                 }
                                 else
                                 {
-                                    <button class="btn btn-success text-white btn-sm h-100 w-50" onmousedown="return false;" style="font-size: 1rem; text-align: center !important;" onkeydown="return false;">Одобрен</button>
-                                    <a id="quiterParticipation-@tournament.Id" class="btn btn-danger w-50 h-100 btn-sm" style="font-size: 1rem; text-align: center !important;" onclick="replaceWithConfirmation(@tournament.Id, true)">Отказване</a>
+                                    <button class="btn btn-success text-white btn-sm w-50 h-100" style="font-size: 1rem; text-align: center !important;" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                                    <a id="quitParticipation-@tournament.Id" class="btn btn-danger w-50 h-100 btn-sm" style="font-size: 1rem; text-align: center !important;" onclick="replaceWithConfirmation(@tournament.Id, '@currUser', true)">Отказване</a>
                                 }
                             </div>
                         }
@@ -283,76 +296,69 @@ else
             <div class="row justify-content-center">
                 @foreach (var user in Model.FilteredUsers)
                 {
-                    <div class="list-group-item d-flex align-items-center justify-content-between py-3 mb-3 border rounded">
-                        <!-- Profile Image & Name -->
-                        <div class="d-flex align-items-center flex-shrink-0" style="min-width: 200px;">
-                            <img src="@user.ImageUrl" alt="Профилна снимка"
-                                 class="me-3"
-                                 style="width: 50px; height: 50px; object-fit: cover;">
-                            <div class="flex-fill px-2">
-                                <strong class="mb-0">@user.FullName</strong>
-                                <small class="d-block"><i class="bi bi-telephone"></i> @user.UserName</small>
-                            </div>
-                        </div>
-
-                        <!-- User Info (Equal Width Columns) -->
-                        <div class="d-flex flex-grow-1 justify-content-between text-center">
-                            <div class="flex-fill px-2">
-                                <strong>Държава</strong>
-                                <small class="d-block"><i class="bi bi-geo-alt"></i> @user.Country</small>
-                            </div>
-                            <div class="flex-fill px-2">
-                                <strong>Имейл</strong>
-                                <small class="d-block"><i class="bi bi-envelope"></i> @user.Email</small>
-                            </div>
-                            @{
-                                int age = DateTime.Now.Year - user.DateOfBirth.Year;
-                                if (DateTime.Now.Month < user.DateOfBirth.Month ||
-                                (DateTime.Now.Month == user.DateOfBirth.Month && DateTime.Now.Day < user.DateOfBirth.Day))
-                                {
-                                    age--;
-                                }
-                            }
-                            <div class="flex-fill px-2">
-                                <strong>Дата на раждане (години)</strong>
-                                <small class="d-block">
-                                    <i class="bi bi-calendar"></i>@user.DateOfBirth.ToString("dd.MM.yyyy") (@age години)
-                                </small>
-                            </div>
-                        </div>
-                        @if (User.IsInRole(SD.AdminRole))
-                        {
-                            <div class="card-footer text-center">
-                                <div class="d-flex justify-content-between w-100 align-items-center">
-                                    <div class="d-flex" id="participationButtonsApprove-@tournament.Id" style="width:200px !important;">
-                                        @{
-                                            var userParticipation = tournament.Participations?.FirstOrDefault(p => p.ParticipantId == user.Id);
-
-                                            if (userParticipation != null)
-                                            {
-                                                if (!userParticipation.Approved)
-                                                {
-                                                    <!-- Display Approve and Disapprove buttons -->
-                                                    <button class="btn btn-success text-white w-100 btn-sm" id="approveBtn-@tournament.Id" onclick="toggleApprovalButtons(@tournament.Id, true)">
-                                                        Одобри
-                                                    </button>
-                                                    <button class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-@tournament.Id" onclick="toggleApprovalButtons(@tournament.Id, false)">
-                                                        Не одобри
-                                                    </button>
-                                                }
-                                                else
-                                                {
-                                                    <!-- Display Approved button for already approved participation -->
-                                                    <button class="btn btn-success text-white w-100 btn-sm" onmousedown="return false;" onkeydown="return false;">
-                                                        Одобрен
-                                                    </button>
-                                                }
-                                            }
-                                        }
+                    <div class="list-group-item d-flex flex-column align-items-center justify-content-between py-2 px-2 mb-1 border rounded">
+                        <!-- User Info (Profile Image & Details) -->
+                        <div class="d-flex align-items-center justify-content-between w-100">
+                            <div class="d-flex flex-grow-1 justify-content-between text-center">
+                                <div class="d-flex align-items-center flex-shrink-0" style="min-width: 200px;">
+                                    <img src="@user.ImageUrl" alt="Профилна снимка"
+                                         class="me-3"
+                                         style="width: 50px; height: 50px; object-fit: cover;">
+                                    <div class="px-2">
+                                        <strong class="mb-0">@user.FullName</strong>
+                                        <small class="d-block"><i class="bi bi-telephone"></i> @user.UserName</small>
                                     </div>
                                 </div>
+                                <div class="px-3">
+                                    <strong>Държава</strong>
+                                    <small class="d-block"><i class="bi bi-geo-alt"></i> @user.Country</small>
+                                </div>
+                                <div class="px-3">
+                                    <strong>Имейл</strong>
+                                    <small class="d-block"><i class="bi bi-envelope"></i> @user.Email</small>
+                                </div>
+                                @{
+                                    int age = DateTime.Now.Year - user.DateOfBirth.Year;
+                                    if (DateTime.Now.Month < user.DateOfBirth.Month ||
+                                    (DateTime.Now.Month == user.DateOfBirth.Month && DateTime.Now.Day < user.DateOfBirth.Day))
+                                    {
+                                        age--;
+                                    }
+                                }
+                                <div class="px-3">
+                                    <strong>Дата на раждане (години)</strong>
+                                    <small class="d-block">
+                                        <i class="bi bi-calendar"></i> @user.DateOfBirth.ToString("dd.MM.yyyy") (@age години)
+                                    </small>
+                                </div>
                             </div>
-                        }
+                        </div><!-- Action Buttons Below User Data -->
+                        <div class="d-flex justify-content-between w-100 mt-2" style="gap: 800px;">
+                            <a asp-controller="Participation" asp-action="UserParticipations" asp-route-id="@user.Id" asp-route-tournamentId="@Model.TournamentId" asp-route-tournamentUrl="/Participation/TournamentParticipations/@Model.TournamentId" class="btn btn-primary btn-sm flex-fill mx-1">Участия</a>
+
+                            @if (User.IsInRole(SD.AdminRole))
+                            {
+                                var userParticipation = tournament.Participations?.FirstOrDefault(p => p.ParticipantId == user.Id);
+
+                                if (userParticipation != null)
+                                {
+                                    if (!userParticipation.Approved)
+                                    {
+                                        <div class="d-flex flex-fill">
+                                            <a class="btn btn-success text-white btn-sm flex-fill" id="approveBtn-@tournament.Id" onclick="toggleApprovalButtons(@tournament.Id, '@userId', true)">Одобри</a>
+                                            <a class="btn btn-danger text-white btn-sm flex-fill" id="disapproveBtn-@tournament.Id" onclick="toggleApprovalButtons(@tournament.Id, '@userId', false)">Не одобри</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex flex-fill">
+                                            <button class="btn btn-success text-white btn-sm flex-fill" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                                            <a id="quiterParticipation-@user.Id" class="btn btn-danger btn-sm flex-fill" onclick="replaceWithConfirmationUser(@tournament.Id, '@user.Id', true)">Отказване</a>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
                     </div>
                 }
             </div>

@@ -5,8 +5,8 @@
     function replaceWithConfirmation(tournamentId, isApproved) {
         var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
 
-        // Dynamically build the URL using JavaScript
-        var url = "/Participation/DeleteParticipation/" + tournamentId + "?returnUrl=%2FParticipation%2FMyParticipations"; // Use the actual tournament ID
+        const userId = '@ViewBag.UserId';
+        var url = `/Participation/DeleteParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FParticipation%2FMyParticipations`;
 
         // Replace the content of the participationButtons with Yes and No options
         participationButtons.innerHTML = `
@@ -134,7 +134,7 @@
         <div class="container p-2" style="max-width: 50%; padding: 0.5rem;">
             <h1 class="text-center mb-3" style="font-size: 5rem;">Нямаш участия</h1>
             <div class="d-flex justify-content-center mt-3">
-                <a asp-controller="Tournament" asp-action="AllTournaments" asp-route-returnUrl="@Url.Action("MyParticipations", "Participation")" class="btn btn-success text-center" style="font-size: 1rem;">Участвай</a>
+                <a asp-controller="Tournament" asp-action="AllTournaments" class="btn btn-success text-center" style="font-size: 1rem;">Участвай</a>
             </div>
         </div>
     </div>
@@ -182,7 +182,7 @@ else
                     <!-- Row 3: Buttons -->
                     <div class="d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary me-2" style="font-size: 1rem;">Търси</button>
-                        <a asp-controller="Tournament" asp-action="AllTournaments" asp-route-returnUrl="@Url.Action("MyParticipations", "Participation")" class="btn btn-success text-center" style="font-size: 1rem;">Участвай</a>
+                        <a asp-controller="Tournament" asp-action="AllTournaments" class="btn btn-success text-center" style="font-size: 1rem;">Участвай</a>
                     </div>
                 </form>
             </div>
@@ -252,7 +252,7 @@ else
                                             }
                                         }
                                     </div>
-                                    <a asp-controller="Tournament" asp-action="TournamentDetails" asp-route-id="@tournament.Id" asp-route-returnUrl="@Url.Action("MyParticipations", "Participation")" class="btn btn-primary text-white btn-sm">Информация</a>
+                                    <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="@Url.Action("MyParticipations", "Participation")" class="btn btn-primary text-white btn-sm">Участници</a>
                                 </div>
                             </div>
                         </div>

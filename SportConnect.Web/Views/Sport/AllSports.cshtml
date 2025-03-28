@@ -198,7 +198,7 @@
                                     <h3 class="fw-bold">@item.Name</h3>
                                     <p>@item.Description</p>
                                     <div class="btn-group d-flex justify-content-between">
-                                        <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" class="btn btn-primary btn-sm sport-btn">Турнири</a>
+                                        <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" asp-route-returnUrl="@Url.Action("AllSports", "Sport")" class="btn btn-primary btn-sm sport-btn">Турнири</a>
                                         <a asp-controller="Sport" asp-action="EditSport" asp-route-id="@item.Id" class="btn btn-warning btn-sm text-white sport-btn">Редактирай</a>
                                         <a asp-controller="Sport" asp-action="DeleteSport" asp-route-id="@item.Id" class="btn btn-danger btn-sm sport-btn">Изтрий</a>
                                     </div>
@@ -247,7 +247,7 @@ else
                                     <h3 class="fw-bold">@item.Name</h3>
                                     <p>@item.Description</p>
                                     <div class="btn-group d-flex justify-content-between">
-                                        <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" class="btn btn-primary btn-sm sport-btn-user text-center">Турнири</a>
+                                        <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" asp-route-returnUrl="@Url.Action("AllSports", "Sport")" class="btn btn-primary btn-sm sport-btn-user text-center">Турнири</a>
                                     </div>
                                 </div>
                             </div>
