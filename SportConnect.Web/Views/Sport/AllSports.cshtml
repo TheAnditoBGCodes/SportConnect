@@ -246,8 +246,8 @@ else
                                 <div class="card-body">
                                     <h3 class="fw-bold">@item.Name</h3>
                                     <p>@item.Description</p>
-                                    <div class="btn-group d-flex justify-content-between">
-                                        <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" asp-route-returnUrl="@Url.Action("AllSports", "Sport")" class="btn btn-primary btn-sm sport-btn-user text-center">Турнири</a>
+                                    <div class="btn-group d-flex justify-content-center">
+                                        <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" asp-route-returnUrl="@Url.Action("AllSports", "Sport")" class="btn btn-primary btn-sm sport-btn">Турнири</a>
                                     </div>
                                 </div>
                             </div>

@@ -5,12 +5,11 @@ namespace SportConnect.Web.Models
 {
     public class UserViewModel
     {
+        public int? TournamentId { get; set; }
         public List<SportConnectUser>? Users { get; set; }
         public List<SportConnectUser>? FilteredUsers { get; set; }
         public string? Id { get; set; }
-        public int? TournamentId { get; set; }
         public string? Email { get; set; }
-        public string? BothNames { get; set; }
         public string? UserName { get; set; }
         public int? BirthYear { get; set; }
         public string? FirstName { get; set; }
@@ -21,7 +20,5 @@ namespace SportConnect.Web.Models
         public IEnumerable<SelectListItem>? CountryList { get; set; } = new List<SelectListItem>();
         public string? PhoneNumber { get; set; }
         public string? ProfileImage { get; set; }
-        public string? PasswordHash { get; set; }
-        public IEnumerable<Participation>? Participations { get; set; } = new List<Participation>();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Utility;
@@ -83,7 +82,7 @@ namespace SportConnect.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                await _sportRepository.Add(await model.ToSportAdd());
+                await _sportRepository.Add(await model.ToSport());
                 return RedirectToAction("AllSports");
             }
 

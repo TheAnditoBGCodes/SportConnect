@@ -1,7 +1,3 @@
-Everything In All Controllers Should Become Optimization
-
-Making And Testing All Functionalities For All User Type
-
 Testing Of Models Controllers Services 60% Functionality
 
 Graphical Improvement Of Visual Identity Of SportConnect

@@ -141,7 +141,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                     Value = y,
                     Text = y,
                 }).ToList(),
-                CountryList = await _countryService.GetAllCountriesAsync()
+                CountryList = _countryService.GetAllCountries()
             };
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -275,7 +275,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                     Value = y,
                     Text = y,
                 }).ToList(),
-                CountryList = await _countryService.GetAllCountriesAsync()
+                CountryList = _countryService.GetAllCountries()
             };
             ModelState.AddModelError("Input.ProfileImage", "Моля, качете профилна снимка.");
             return Page();

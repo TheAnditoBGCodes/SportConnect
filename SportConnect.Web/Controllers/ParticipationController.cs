@@ -30,7 +30,7 @@ namespace SportConnect.Web.Controllers
             _countryService = countryService;
         }
 
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole}")]
         public async Task<IActionResult> MyParticipations(TournamentViewModel? filter)
         {
             HttpContext.Session.Remove("ReturnUrl");
@@ -89,7 +89,7 @@ namespace SportConnect.Web.Controllers
             var filteredTournaments = query.ToList();
 
             ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
-            ViewBag.Countries = await _countryService.GetAllCountriesAsync();
+            ViewBag.Countries = _countryService.GetAllCountries();
 
             var model = new TournamentViewModel
             {
@@ -159,12 +159,11 @@ namespace SportConnect.Web.Controllers
             var filteredTournaments = query.ToList();
 
             ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
-            ViewBag.Countries = await _countryService.GetAllCountriesAsync();
+            ViewBag.Countries = _countryService.GetAllCountries();
             ViewBag.Tournament = (await _tournamentRepository.GetById(id));
 
             var model = new UserViewModel
             {
-                TournamentId = id,
                 UserName = filter.UserName,
                 BirthYear = filter.BirthYear,
                 Country = filter.Country,
@@ -242,7 +241,7 @@ namespace SportConnect.Web.Controllers
             var filteredTournaments = query.ToList();
 
             ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
-            ViewBag.Countries = await _countryService.GetAllCountriesAsync();
+            ViewBag.Countries = _countryService.GetAllCountries();
 
             var model = new TournamentViewModel
             {
@@ -283,7 +282,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole}")]
         public async Task<IActionResult> AddParticipation(int id, string returnUrl)
         {
             var participation = new Participation

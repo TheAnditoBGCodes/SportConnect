@@ -75,12 +75,6 @@
                             <li class="nav-item d-flex align-content-center">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AllUsers">Потребители</a>
                             </li>
-                            <li class="nav-item d-flex align-content-center">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Tournament" asp-action="MyTournaments">Мои турнири</a>
-                            </li>
-                            <li class="nav-item d-flex align-content-center">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Participation" asp-action="MyParticipations">Мои участия</a>
-                            </li>
                         }
                         else if (User.IsInRole(SD.UserRole))
                         {
@@ -124,7 +118,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - SportConnect - <a asp-area="" asp-controller="Home" asp-action="Privacy">Сигурност</a>
+            &copy; 2025 - SportConnect
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

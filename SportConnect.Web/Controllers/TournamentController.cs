@@ -51,6 +51,12 @@ namespace SportConnect.Web.Controllers
                 query = query.Where(p => p.SportId == filter.SportId.Value);
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.OrganizerName))
+            {
+                string filteredname = filter.OrganizerName.Trim().ToLower();
+                query = query.Where(p => p.Organizer.FullName.ToLower().Contains(filteredname));
+            }
+
             if (filter.Country != null)
             {
                 query = query.Where(p => p.Country == filter.Country);
@@ -73,10 +79,11 @@ namespace SportConnect.Web.Controllers
             }
 
             ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
-            ViewBag.Countries = await _countryService.GetAllCountriesAsync();
+            ViewBag.Countries = _countryService.GetAllCountries();
 
             var model = new TournamentViewModel
             {
+                OrganizerName = filter.OrganizerName,
                 SportId = filter.SportId,
                 Country = filter.Country,
                 Name = filter.Name,
@@ -89,21 +96,21 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole}")]
         public async Task<IActionResult> AddTournament(string returnUrl)
         {
             var currentUser = await _userManager.GetUserAsync(this.User);
             var model = new TournamentViewModel()
             {
                 OrganizerId = currentUser.Id,
-                CountryList = await _countryService.GetAllCountriesAsync(),
+                CountryList = _countryService.GetAllCountries(),
                 Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name")
             };
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole}")]
         [HttpPost]
         public async Task<IActionResult> AddTournament(TournamentViewModel tournament, string returnUrl)
         {
@@ -201,13 +208,13 @@ namespace SportConnect.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                await _tournamentRepository.Add(await tournament.GetTournament());
+                await _tournamentRepository.Add(await tournament.ToTournament());
                 return Redirect(returnUrl);
             }
 
             ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllTournaments", "Tournament");
             tournament.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
-            tournament.CountryList = await _countryService.GetAllCountriesAsync();
+            tournament.CountryList = _countryService.GetAllCountries();
             return View(tournament);
         }
 
@@ -227,7 +234,7 @@ namespace SportConnect.Web.Controllers
                 DeadlineTime = tournament.Deadline.TimeOfDay,
                 Description = tournament.Description,
                 Country = tournament.Country,
-                CountryList = await _countryService.GetAllCountriesAsync(),
+                CountryList = _countryService.GetAllCountries(),
                 Name = tournament.Name,
                 SportId = tournament.SportId,
                 Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name", tournament.SportId),
@@ -349,7 +356,7 @@ namespace SportConnect.Web.Controllers
                 edited.Deadline = (DateTime)tournament.Deadline;
                 edited.Date = (DateTime)tournament.Date;
                 edited.Country = tournament.Country;
-                edited.Sport = tournament.Sport;
+                edited.SportId = (int)tournament.SportId;
 
                 if (ModelState.IsValid)
                 {
@@ -359,7 +366,7 @@ namespace SportConnect.Web.Controllers
 
                 ViewBag.ReturnUrl = returnUrl;
                 tournament.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
-                tournament.CountryList = await _countryService.GetAllCountriesAsync();
+                tournament.CountryList = _countryService.GetAllCountries();
                 return View(tournament);
             }
             else
@@ -479,6 +486,12 @@ namespace SportConnect.Web.Controllers
                 query = query.Where(p => p.Name.ToLower().Contains(filteredname));
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.OrganizerName))
+            {
+                string filteredname = filter.OrganizerName.Trim().ToLower();
+                query = query.Where(p => p.Organizer.FullName.ToLower().Contains(filteredname));
+            }
+
             if (filter.StartDate != null)
             {
                 query = query.Where(p => p.Date >= filter.StartDate);
@@ -489,10 +502,11 @@ namespace SportConnect.Web.Controllers
                 query = query.Where(p => p.Date <= filter.EndDate);
             }
 
-            ViewBag.Countries = await _countryService.GetAllCountriesAsync();
+            ViewBag.Countries = _countryService.GetAllCountries();
 
             var model = new TournamentViewModel
             {
+                OrganizerName = filter.OrganizerName,
                 Id = id,
                 Country = filter.Country,
                 Name = filter.Name,
@@ -545,7 +559,7 @@ namespace SportConnect.Web.Controllers
             }
 
             ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
-            ViewBag.Countries = await _countryService.GetAllCountriesAsync();
+            ViewBag.Countries = _countryService.GetAllCountries();
 
             var currentUser = await _userManager.GetUserAsync(this.User);
             var currentUserId = currentUser.Id;
@@ -553,6 +567,7 @@ namespace SportConnect.Web.Controllers
 
             var model = new TournamentViewModel
             {
+                PreviousId = tournamentId,
                 SportId = filter.SportId,
                 Country = filter.Country,
                 Name = filter.Name,
@@ -561,7 +576,6 @@ namespace SportConnect.Web.Controllers
                 FilteredTournaments = query.Include(x => x.Organizer).Include(X => X.Participations).Include(x => x.Sport).ToList(),
                 Tournaments = tournaments.ToList(),
             };
-
 
             var storedRootReturnUrl = HttpContext.Session.GetString("RootReturnUrl");
             var storedCurrentReturnUrl = HttpContext.Session.GetString("CurrentReturnUrl");
@@ -587,7 +601,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
+        [Authorize(Roles = $"{SD.UserRole}")]
         public async Task<IActionResult> MyTournaments(TournamentViewModel? filter)
         {
             HttpContext.Session.Remove("ReturnUrl");
@@ -632,7 +646,7 @@ namespace SportConnect.Web.Controllers
             }
 
             ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
-            ViewBag.Countries = await _countryService.GetAllCountriesAsync();
+            ViewBag.Countries = _countryService.GetAllCountries();
 
             var model = new TournamentViewModel
             {

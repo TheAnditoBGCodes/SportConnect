@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SportConnect.Models;
 using SportConnect.Web.Models;
 using System.Diagnostics;
 
@@ -7,22 +9,18 @@ namespace SportConnect.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<SportConnectUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(UserManager<SportConnectUser> userManager)
         {
-            _logger = logger;
+            _userManager = userManager;
         }
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
-
-        [AllowAnonymous]
-        public IActionResult Privacy()
-        {
+            var user = await _userManager.GetUserAsync(this.User);
+            ViewBag.UserName = user.UserName;
             return View();
         }
 

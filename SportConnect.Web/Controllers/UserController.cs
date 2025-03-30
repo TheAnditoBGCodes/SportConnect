@@ -66,7 +66,7 @@ namespace SportConnect.Web.Controllers
                     Email = editedUser.Email,
                     LastName = names[1],
                     Country = editedUser.Country,
-                    CountryList = await _countryService.GetAllCountriesAsync(),
+                    CountryList = _countryService.GetAllCountries(),
                     DateOfBirth = editedUser.DateOfBirth,
                     ProfileImage = editedUser.ImageUrl
                 };
@@ -154,7 +154,7 @@ namespace SportConnect.Web.Controllers
                 if (!ModelState.IsValid)
                 {
                     ViewBag.ReturnUrl = returnUrl;
-                    user.CountryList = await _countryService.GetAllCountriesAsync();
+                    user.CountryList = _countryService.GetAllCountries();
                     return View(user);
                 }
 
@@ -245,7 +245,8 @@ namespace SportConnect.Web.Controllers
             {
                 Id = user.Id,
                 UserName = user.UserName,
-                BothNames = $"{names[0]} {names[1]}",
+                FirstName = names[0],
+                LastName = names[1],
                 DateOfBirth = user.DateOfBirth,
                 Country = user.Country,
                 Email = user.Email,
@@ -295,7 +296,7 @@ namespace SportConnect.Web.Controllers
             }
 
             // Get the list of countries for the dropdown
-            ViewBag.Countries = await _countryService.GetAllCountriesAsync();
+            ViewBag.Countries = _countryService.GetAllCountries();
 
             // Prepare the model with filtered data
             var model = new UserViewModel
@@ -315,9 +316,6 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public async Task<IActionResult> DeleteUser(string id, string returnUrl = null)
         {
-            var currentUser = await _userManager.GetUserAsync(this.User);
-            ViewBag.UserId = currentUser.Id;
-
             var editedUser = (await _userRepository.GetUserById(id));
             var names = editedUser.FullName.Split(' ').ToList();
 

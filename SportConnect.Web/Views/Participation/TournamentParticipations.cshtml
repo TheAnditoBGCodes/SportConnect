@@ -3,6 +3,7 @@
 @model UserViewModel
 @{
     var currUser = ViewBag.UserId;
+    Tournament tournament = ViewBag.Tournament;
 }
 <script>
     function toggleApprovalButtons(tournamentId, userId, approve) {
@@ -100,11 +101,6 @@
                             `;
     }
 </script>
-
-@{
-    Tournament tournament = ViewBag.Tournament;
-    var userId = ViewBag.UserId;
-}
 
 <style>
     /* Ensure modal content does not overflow */
@@ -207,7 +203,7 @@
             <h1 class="text-center mb-3" style="font-size: 5rem;">Няма участници</h1>
             <div class="d-flex justify-content-center mt-3">
                 <a href="@ViewBag.ReturnUrl" class="btn btn-secondary text-center" style="font-size: 1rem;">Назад</a>
-                @if (tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
+                @if (!User.IsInRole(SD.AdminRole) && tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
                 {
                     <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@tournament.Id" asp-route-returnUrl="@Url.Action("TournamentParticipations", "Participation")" class="btn btn-success text-center ms-2">
                         Участвай
@@ -263,7 +259,7 @@ else
                         <a href="@ViewBag.ReturnUrl" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
                         <!-- Submit Button -->
                         <button type="submit" class="btn btn-primary ms-2" style="font-size: 1rem;">Търси</button>
-                        @if (tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
+                        @if (!User.IsInRole(SD.AdminRole) && tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
                         {
                             <div id="participationButtons-@tournament.Id" class="d-flex justify-content-between align-items-center text-center ms-2" style="width: 200px; height: 37.6px !important;">
                                 @{
@@ -272,8 +268,7 @@ else
 
                                 @if (participation == null)
                                 {
-                                    <!-- User has not participated -->
-                                    <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("TournamentDetails", "Tournament")" class="btn btn-success btn-sm w-100 h-100" style="font-size: 1rem; text-align: center !important;">
+                                    <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@tournament.Id" asp-route-returnUrl="@Url.Action("TournamentParticipations", "Participation")" class="btn btn-success text-center ms-2">
                                         Участвай
                                     </a>
                                 }
@@ -332,33 +327,42 @@ else
                                     </small>
                                 </div>
                             </div>
-                        </div><!-- Action Buttons Below User Data -->
-                        <div class="d-flex justify-content-between w-100 mt-2" style="gap: 800px;">
-                            <a asp-controller="Participation" asp-action="UserParticipations" asp-route-id="@user.Id" asp-route-tournamentId="@Model.TournamentId" asp-route-tournamentUrl="/Participation/TournamentParticipations/@Model.TournamentId" class="btn btn-primary btn-sm flex-fill mx-1">Участия</a>
+                        </div>
+                        @if (!User.IsInRole(SD.AdminRole))
+                        {
+                            <div class="d-flex justify-content-around w-100 mt-2">
+                                <a style="width:20%;" asp-controller="Participation" asp-action="UserParticipations" asp-route-id="@user.Id" asp-route-tournamentId="@tournament.Id" asp-route-tournamentUrl="/Participation/TournamentParticipations/@tournament.Id" class="btn btn-primary btn-sm">Участия</a>
+                                <a style="width:20%;" asp-controller="Tournament" asp-action="UserTournaments" asp-route-id="@user.Id" asp-route-tournamentId="@tournament.Id" asp-route-tournamentUrl="/Participation/TournamentParticipations/@tournament.Id" class="btn btn-success btn-sm">Турнири</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="d-flex justify-content-between w-100 mt-2">
+                                <a style="width:20%;" asp-controller="Participation" asp-action="UserParticipations" asp-route-id="@user.Id" asp-route-tournamentId="@tournament.Id" asp-route-tournamentUrl="/Participation/TournamentParticipations/@tournament.Id" class="btn btn-primary btn-sm">Участия</a>
+                                <a style="width:20%;" asp-controller="Tournament" asp-action="UserTournaments" asp-route-id="@user.Id" asp-route-tournamentId="@tournament.Id" asp-route-tournamentUrl="/Participation/TournamentParticipations/@tournament.Id" class="btn btn-success btn-sm">Турнири</a>
+                                @{
+                                    var userParticipation = tournament.Participations?.FirstOrDefault(p => p.ParticipantId == user.Id);
 
-                            @if (User.IsInRole(SD.AdminRole))
-                            {
-                                var userParticipation = tournament.Participations?.FirstOrDefault(p => p.ParticipantId == user.Id);
-
-                                if (userParticipation != null)
-                                {
-                                    if (!userParticipation.Approved)
+                                    if (userParticipation != null)
                                     {
-                                        <div class="d-flex flex-fill">
-                                            <a class="btn btn-success text-white btn-sm flex-fill" id="approveBtn-@tournament.Id" onclick="toggleApprovalButtons(@tournament.Id, '@userId', true)">Одобри</a>
-                                            <a class="btn btn-danger text-white btn-sm flex-fill" id="disapproveBtn-@tournament.Id" onclick="toggleApprovalButtons(@tournament.Id, '@userId', false)">Не одобри</a>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="d-flex flex-fill">
-                                            <button class="btn btn-success text-white btn-sm flex-fill" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
-                                            <a id="quiterParticipation-@user.Id" class="btn btn-danger btn-sm flex-fill" onclick="replaceWithConfirmationUser(@tournament.Id, '@user.Id', true)">Отказване</a>
-                                        </div>
+                                        if (!userParticipation.Approved)
+                                        {
+                                            <div style="width:20%;" class="d-flex" id="participationButtonsApprove-@tournament.Id">
+                                                <a class="btn btn-success text-white btn-sm flex-fill" id="approveBtn-@tournament.Id" onclick="toggleApprovalButtons(@tournament.Id, '@user.Id', true)">Одобри</a>
+                                                <a class="btn btn-danger text-white btn-sm flex-fill" id="disapproveBtn-@tournament.Id" onclick="toggleApprovalButtons(@tournament.Id, '@user.Id', false)">Не одобри</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="width:20%;" class="d-flex" id="participationButtonsApprove-@tournament.Id">
+                                                <button class="btn btn-success text-white btn-sm flex-fill" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                                                <a id="quiterParticipation-@user.Id" class="btn btn-danger btn-sm flex-fill" onclick="replaceWithConfirmationUser(@tournament.Id, '@user.Id', true)">Отказване</a>
+                                            </div>
+                                        }
                                     }
                                 }
-                            }
-                        </div>
+                            </div>
+                        }
                     </div>
                 }
             </div>
