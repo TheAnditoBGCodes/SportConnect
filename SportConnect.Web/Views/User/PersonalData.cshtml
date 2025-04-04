@@ -2,178 +2,340 @@
 @model UserViewModel
 
 <style>
-    /* Scope styles to this specific view */
+.profile-delete-view {
+        max-width: 1000px;
+        width: 832px;
+        background-color: #8ee697 !important;
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+.profile-delete-view h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    color: black;
+}
+
+main{
+    display: flex;
+    align-content: center;
+    justify-content: center !important;
+}
+
+.profile-delete-view .form-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+/* Profile image container */
+.profile-delete-view .profile-image-container {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.profile-delete-view .profile-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* User data section styling */
+.profile-delete-view .d-flex.justify-content-between {
+    padding: 0.6rem 0;
+        border-bottom: 3px solid #6fd277;
+}
+.container{
+    height: 78vh;
+    align-content: center;
+}
+.profile-delete-view .d-flex.justify-content-between:last-child {
+    border-bottom: none;
+}
+
+.profile-delete-view .fw-bold {
+    color: #555;
+}
+
+    /* Button styling */
+    .btn-warning {
+        background-color: #AA7700;
+        border-color: #AA7700;
+        padding: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+        }
+
+
+    /* Button styling */
+    .btn-danger {
+        background-color: red;
+        border-color: red;
+        padding: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+        }
+
+p{
+    margin: 0;
+    align-content: center;
+}
+
+/* Action buttons container */
+.profile-delete-view .action-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* Responsive adjustments from register view */
+@@media (max-width: 768px) {
     .profile-delete-view {
-        max-width: 50%; /* Increased the width of the form container */
+        width: 90%;
+    }
+    
+    .profile-delete-view .form-row {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .profile-delete-view .col-md-8 {
+        width: 100% !important;
+        margin-top: 1rem;
+    }
+}
+
+/* Additional responsive adjustments */
+@@media (max-width: 480px) {
+    .profile-delete-view {
+        padding: 0.5rem;
+        border-radius: 6px;
+        max-width: 100%;
+    }
+    
+    .profile-delete-view h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 0.5rem;
+    }
+    
+    .profile-delete-view .profile-image-container,
+    .profile-delete-view .profile-image-container img {
+        width: 200px !important;
+        height: 200px !important;
+    }
+    
+    .profile-delete-view .text-center {
+        width: 200px !important;
+        height: 200px !important;
+        margin-right: 0 !important;
+    }
+    
+    .profile-delete-view .col-md-8 {
+        height: auto !important;
+    }
+    
+    .profile-delete-view .d-flex.justify-content-between {
+        height: auto !important;
+        padding: 0.4rem 0;
+        font-size: 0.9rem !important;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .btn-warning, .btn-danger {
+        width: 100%;
+        font-size: 0.9rem !important;
+        padding: 0.5rem;
+    }
+}
+
+@@media (max-width: 320px) {
+    .profile-delete-view {
+        padding: 0.25rem;
+    }
+    
+    .profile-delete-view h2 {
+        font-size: 1.25rem !important;
+    }
+    
+    .profile-delete-view .profile-image-container,
+    .profile-delete-view .profile-image-container img,
+    .profile-delete-view .text-center {
+        width: 150px !important;
+        height: 150px !important;
+    }
+    
+    .profile-delete-view .d-flex.justify-content-between {
+        font-size: 0.8rem !important;
+        padding: 0.3rem 0;
+    }
+    
+    .btn-warning, .btn-danger {
+        padding: 0.4rem;
+        font-size: 0.8rem !important;
+    }
+}
+
+/* Height-based media queries */
+@@media (max-height: 600px) {
+    .container {
+        height: auto !important;
+        min-height: auto !important;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    
+    .profile-delete-view .form-row {
+        margin-bottom: 0.25rem !important;
+    }
+    
+    .profile-delete-view .d-flex.justify-content-between {
+        padding: 0.3rem 0;
+    }
+}
+
+/* Tablet landscape adjustments */
+@@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .container {
+        height: 85vh !important;
+    }
+    
+    .profile-delete-view {
+        width: 90% !important;
+    }
+    
+    .profile-delete-view .text-center,
+    .profile-delete-view .profile-image-container {
+        width: 250px !important;
+        height: 250px !important;
+    }
+    
+    .profile-delete-view .col-md-8 {
+        width: 100% !important;
+        height: 250px !important;
+    }
+}
+
+/* High resolution screens */
+@@media (min-width: 1400px) {
+    .profile-delete-view {
+        max-width: 1200px;
         margin: 0 auto;
     }
+}
 
-        .profile-delete-view .form-row {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-        }
-
-        /* Profile image section */
-        .profile-delete-view .col-md-3.text-center {
-            padding-left: 0 !important;
-            padding-right: 1rem !important;
-        }
-
-        .profile-delete-view .col-md-8.text-start.d-flex.flex-column {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
-
-        /* Profile image container */
-        .profile-delete-view .profile-image-container {
-            width: 250px; /* Increased size of profile image container */
-            height: 250px;
-            overflow: hidden;
-            display: flex;
-            justify-content: flex-start;
-            padding-left: 0;
-        }
-
-            .profile-delete-view .profile-image-container img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-        /* User data section */
-        .profile-delete-view .col-md-8 {
-            flex: 1;
-        }
-
-        /* Adjust font sizes and spacing for a larger form */
-        .profile-delete-view h2 {
-            font-size: 2rem;
-        }
-
-        .profile-delete-view .col-md-8 p {
-            font-size: 1rem;
-        }
-
-            .profile-delete-view .col-md-8 p.fw-bold {
-                font-size: 1rem;
-            }
-
-        .profile-delete-view .form-row .d-flex.justify-content-between p {
-            font-size: 1rem;
-        }
-
-        /* Button styles */
-        .profile-delete-view .btn {
-            font-size: 1rem;
-            width: 90px;
-        }
-
-        .profile-delete-view .btn-secondary {
-            width: 90px;
-        }
-
-        /* Customize input field */
-        .profile-delete-view .form-control {
-            font-size: 1rem;
-            padding: 5px 10px;
-            width: 110px;
-        }
-
-    .container main {
-        min-height: 83vh !important;
-        padding-bottom: 0px !important;
-        align-content: center !important;
+/* Print styles */
+@@media print {
+    .container {
+        height: auto !important;
     }
-
-    div.container.main.pb-3 {
-        align-content: center;
-        padding-bottom: 0px !important;
+    
+    .btn-warning, .btn-danger {
+        background-color: #333 !important;
+        border-color: #333 !important;
+        color: white !important;
     }
-
-    .container.text-center {
-        align-content: center;
-        padding-bottom: 0px !important;
+    
+    .profile-delete-view .profile-image-container img {
+        border: 1px solid #000 !important;
     }
-
-    p {
-        margin-bottom: 0px !important;
-        align-content: center !important;
-        height: 40px !important;
+    
+    .profile-delete-view .d-flex.justify-content-between {
+        border-bottom: 1px solid #000;
     }
+}
 
-    .profile-delete-view .d-flex.align-items-center input {
-        height: 38px;
+/* Handle column stacking on mobile */
+@@media (max-width: 767px) {
+    .profile-delete-view .form-row {
+        flex-direction: column;
+        align-items: center;
     }
-
-    .profile-delete-view .d-flex.align-items-center span {
-        font-size: 1rem;
+    
+    .profile-delete-view .text-center,
+    .profile-delete-view .col-md-8 {
+        width: 100% !important;
+        margin-right: 0;
     }
-
-    .d-flex.justify-content-between {
-        align-content: center !important;
+    
+    .profile-delete-view .col-md-8 {
+        margin-top: 1rem;
     }
+    
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
 </style>
-
-<div class="container profile-delete-view">
+<div class="profile-delete-view">
     <form method="post">
-        <h2 class="text-center justify-content-center">Моят профил</h2>
+        <h2 class="text-center">Моят профил</h2>
 
-        <!-- Row 1: Username and Email -->
-        <div class="row mb-2" style="display: none;">
-            <div class="col-12 col-md-6">
-                <div class="form-floating">
-                    <input asp-for="@Model.Id" class="form-control form-control-sm" aria-required="true" placeholder="Вашето потребителско име" style="font-size: 1rem;" />
-                    <label asp-for="@Model.Id" class="text-gray">Потребителско име</label>
-                    <span asp-validation-for="@Model.Id" class="text-danger" style="font-size: 1rem;"></span>
-                </div>
-            </div>
-        </div>
+        <!-- Hidden ID field -->
+        <input type="hidden" asp-for="@Model.Id" />
 
         <!-- Profile Image and User Data -->
-        <div class="form-row d-flex mb-2 align-items-stretch">
-            <!-- Profile Image Section (square container) -->
-            <div class="text-center" style="width: 200px; height:200px; margin-right: 1rem;">
-                <div class="profile-image-container" style="width: inherit; height:inherit;">
+        <div class="form-row d-flex align-items-start">
+            <!-- Profile Image Section -->
+            <div class="text-center" style="width: 300px !important; height: 300px !important; margin-right: 16px;">
+                <div class="profile-image-container" style="width: 300px !important; height: 300px !important;">
                     <img src="@Model.ProfileImage" alt="@Model.UserName" />
                 </div>
             </div>
 
-            <!-- User Details Section (taking up remaining space) -->
-            <div class="col-md-8 text-start d-flex flex-column">
-                <div class="d-flex justify-content-between">
-                    <p class="fw-bold">Име</p>
+            <!-- User Details Section -->
+            <div class="col-md-8 text-start d-flex flex-column" style="height: 300px !important; width: 500px !important;">
+                <div class="d-flex justify-content-between align-content-center" style="height: 60px !important;">
+                    <p class="fw-bolder">Име</p>
                     <p>@Model.FirstName @Model.LastName</p>
                 </div>
 
-                <div class="d-flex justify-content-between">
-                    <p class="fw-bold">Потребителско име</p>
+                <div class="d-flex justify-content-between align-content-center" style="height: 60px !important;">
+                    <p class="fw-bolder">Потребителско име</p>
                     <p>@Model.UserName</p>
                 </div>
 
-                <div class="d-flex justify-content-between">
-                    <p class="fw-bold">Имейл</p>
+                <div class="d-flex justify-content-between align-content-center" style="height: 60px !important;">
+                    <p class="fw-bolder">Имейл</p>
                     <p>@Model.Email</p>
                 </div>
 
-                <div class="d-flex justify-content-between">
-                    <p class="fw-bold">Дата на раждане</p>
-                    <p>@Model.DateOfBirth</p>
+                <div class="d-flex justify-content-between align-content-center" style="height: 60px !important;">
+                    <p class="fw-bolder">Дата на раждане</p>
+                    <p>@Model.DateOfBirth.Value.ToString("dd.MM.yyyy") (@Model.Age години)</p>
                 </div>
 
-                <div class="d-flex justify-content-between">
-                    <p class="fw-bold">Държава</p>
+                <div class="d-flex justify-content-between align-content-center" style="height: 60px !important;">
+                    <p class="fw-bolder">Държава</p>
                     <p>@Model.Country</p>
                 </div>
             </div>
         </div>
 
-        <!-- Confirm Delete and Action Buttons -->
-        <div class="d-flex justify-content-between align-items-center gap-2 w-100">
-            <a asp-controller="User" asp-action="EditUser" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("PersonalData", "User")" class="btn btn-warning btn-sm text-white">
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a asp-controller="User" asp-action="EditUser" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("PersonalData", "User")" class="btn btn-warning dashboard-btn text-white">
                 Промени
             </a>
-            <a asp-controller="User" asp-action="DeleteUser" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("PersonalData", "User")" class="btn btn-danger btn-sm">
+            <a asp-controller="User" asp-action="DeleteUser" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("PersonalData", "User")" class="btn btn-danger">
                 Изтрий
             </a>
         </div>

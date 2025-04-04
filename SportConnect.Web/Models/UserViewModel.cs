@@ -6,6 +6,7 @@ namespace SportConnect.Web.Models
     public class UserViewModel
     {
         public int? TournamentId { get; set; }
+        public int? Age { get; set; }
         public List<SportConnectUser>? Users { get; set; }
         public List<SportConnectUser>? FilteredUsers { get; set; }
         public string? Id { get; set; }

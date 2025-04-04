@@ -118,7 +118,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             [ValidateNever]
             public IEnumerable<SelectListItem> CountryList { get; set; } = new List<SelectListItem>();
 
-            [Required(ErrorMessage = "Моля, качете профилна снимка.")]
+            [Required(ErrorMessage = "Моля, качете снимка.")]
             [Display(Name = "Профилна снимка")]
             public string ProfileImage { get; set; }
         }
@@ -199,7 +199,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                     passwordHasErrors = true;
                 }
 
-                if (!Input.Username.Any(char.IsDigit))
+                if (!password.Any(char.IsDigit))
                 {
                     ViewData["DigitPassword"] = "една цифра;";
                     passwordHasErrors = true;
@@ -253,7 +253,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, SD.AdminRole);
+                        await _userManager.AddToRoleAsync(user, SD.UserRole);
                     }
 
                     var userId = await _userManager.GetUserIdAsync(user);
@@ -277,7 +277,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 }).ToList(),
                 CountryList = _countryService.GetAllCountries()
             };
-            ModelState.AddModelError("Input.ProfileImage", "Моля, качете профилна снимка.");
+            ModelState.AddModelError("Input.ProfileImage", "Моля, качете снимка.");
             return Page();
         }
         private async Task<IdentityUser> CreateUser()

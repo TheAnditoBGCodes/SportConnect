@@ -107,7 +107,8 @@ namespace SportConnect.Web.Controllers
 
             return View(model);
         }
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+
+        [AllowAnonymous]
         public async Task<IActionResult> TournamentParticipations(int id, string returnUrl, UserViewModel? filter)
         {
             if (filter == null)
@@ -115,8 +116,11 @@ namespace SportConnect.Web.Controllers
                 return View(new UserViewModel());
             }
 
-            var currentUser = (await _userManager.GetUserAsync(this.User)).Id;
-            ViewBag.UserId = currentUser;
+            var currentUser = await _userManager.GetUserAsync(this.User);
+            if (currentUser != null)
+            {
+                ViewBag.UserId = currentUser.Id;
+            }
 
             var query = (await _userRepository.AllWithIncludes(t => t.Participations)).Where(t => t.Participations.Any(p => p.TournamentId == id));
 
@@ -124,7 +128,7 @@ namespace SportConnect.Web.Controllers
             if (filter.Approved.HasValue)
             {
                 bool isApproved = filter.Approved.Value;
-                query = query.Where(t => t.Participations.Any(p => p.ParticipantId == currentUser && p.Approved == isApproved));
+                query = query.Where(t => t.Participations.Any(p => p.ParticipantId == currentUser.Id && p.Approved == isApproved));
             }
 
             // Filter by country if selected
@@ -183,7 +187,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        [AllowAnonymous]
         public async Task<IActionResult> UserParticipations(string id, int tournamentId, TournamentViewModel? filter, string returnUrl, string tournamentUrl = null)
         {
             if (filter == null)
@@ -191,17 +195,17 @@ namespace SportConnect.Web.Controllers
                 return View(new TournamentViewModel());
             }
 
-            var currentUser = (await _userRepository.GetUserById(id)).Id;
-            ViewBag.UserId = currentUser;
+            var currentUser = await _userRepository.GetUserById(id);
+            ViewBag.UserId = currentUser.Id;
 
             var query = (await _tournamentRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
-                .Where(t => t.Participations.Any(p => p.ParticipantId == currentUser));
+                .Where(t => t.Participations.Any(p => p.ParticipantId == currentUser.Id));
 
             // Apply approval status filter
             if (filter.Approved.HasValue)
             {
                 bool isApproved = filter.Approved.Value;
-                query = query.Where(t => t.Participations.Any(p => p.ParticipantId == currentUser && p.Approved == isApproved));
+                query = query.Where(t => t.Participations.Any(p => p.ParticipantId == currentUser.Id && p.Approved == isApproved));
             }
 
             // Apply other filters
@@ -242,6 +246,7 @@ namespace SportConnect.Web.Controllers
 
             ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
             ViewBag.Countries = _countryService.GetAllCountries();
+            ViewBag.CheckedUser = currentUser.UserName;
 
             var model = new TournamentViewModel
             {
@@ -255,7 +260,7 @@ namespace SportConnect.Web.Controllers
                 Approved = filter.Approved,
                 FilteredTournaments = filteredTournaments,
                 Tournaments = (await _tournamentRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
-                .Where(t => t.Participations.Any(p => p.ParticipantId == currentUser)).ToList(),
+                .Where(t => t.Participations.Any(p => p.ParticipantId == currentUser.Id)).ToList(),
             };
 
             var storedRootReturnUrl = HttpContext.Session.GetString("RootReturnUrl");

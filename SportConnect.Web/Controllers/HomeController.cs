@@ -20,7 +20,10 @@ namespace SportConnect.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(this.User);
-            ViewBag.UserName = user.UserName;
+            if (user != null)
+            {
+                ViewBag.UserName = user.UserName;
+            }
             return View();
         }
 

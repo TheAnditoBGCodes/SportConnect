@@ -60,11 +60,24 @@ namespace SportConnect.Web.Controllers
         {
             if (string.IsNullOrEmpty(model.Name))
             {
+                ModelState.AddModelError("Name", "Името е задължително.");
+                ModelState.AddModelError("ImageUrl", "Снимката е задължителна.");
+            }
+            else if (model.Name.Length < 5 || model.Name.Length > 100)
+            {
+                ModelState.AddModelError("Name", "Tрябва да е от 5 до 100 символа.");
                 ModelState.AddModelError("ImageUrl", "Снимката е задължителна.");
             }
 
+
             if (string.IsNullOrEmpty(model.Description))
             {
+                ModelState.AddModelError("Description", "Описанието е задължително.");
+                ModelState.AddModelError("ImageUrl", "Снимката е задължителна.");
+            }
+            else if (model.Description.Length < 5 || model.Description.Length > 100)
+            {
+                ModelState.AddModelError("Description", "Tрябва да е от 5 до 100 символа.");
                 ModelState.AddModelError("ImageUrl", "Снимката е задължителна.");
             }
 
@@ -111,10 +124,19 @@ namespace SportConnect.Web.Controllers
             {
                 ModelState.AddModelError("Name", "Името е задължително.");
             }
+            else if (sport.Name.Length < 5 || sport.Name.Length > 100)
+            {
+                ModelState.AddModelError("Name", "Tрябва да е от 5 до 100 символа.");
+            }
+
 
             if (string.IsNullOrEmpty(sport.Description))
             {
                 ModelState.AddModelError("Description", "Описанието е задължително.");
+            }
+            else if (sport.Description.Length < 5 || sport.Description.Length > 100)
+            {
+                ModelState.AddModelError("Description", "Tрябва да е от 5 до 100 символа.");
             }
 
             if ((await _sportRepository.GetAll()).Any(s => s.Description == sport.Description && s.Id != sport.Id))

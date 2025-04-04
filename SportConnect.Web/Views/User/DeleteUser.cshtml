@@ -1,11 +1,51 @@
 ﻿@using SportConnect.Models
 @model UserViewModel
-
 <style>
     /* Modal adjustments */
     .modal-body {
         overflow: hidden;
     }
+    /* Button styling */
+    .btn-danger {
+        background-color: red;
+        border-color: red;
+        padding: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+        }
+
+    .text-danger {
+        justify-content: center;
+        width: 100%;
+        color: red;
+        text-decoration: none; /* Removes underline */
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        display: flex;
+    }
+
+    /* Button styling */
+    .btn-secondary {
+        background-color: grey;
+        border-color: grey;
+        padding: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+        }
 
     /* Profile image styling */
     .profile-image {
@@ -14,11 +54,13 @@
         aspect-ratio: 1 / 1;
         object-fit: cover;
     }
-
     /* Confirm input */
     .confirm-delete-input {
-        max-width: 110px;
+        background-color: #dcf7de !important;
+        max-width: 130px;
         height: 30.6px;
+        color: black !important; /* Ensures text color is black */
+        border: none !important; /* Sets border to black */
     }
 
     p {
@@ -30,24 +72,26 @@
         min-height: 83vh;
         align-content: center;
     }
-
     /* Form Centering */
     .delete-profile-form {
         width: 100%;
-        max-width: 350px; /* Matches profile image width */
+        background-color: #8ee697 !important;
+        min-width: 510px; /* Matches profile image width */
         justify-self: center;
     }
 
+    .container {
+        height: 78vh;
+        align-content: center;
+    }
     /* Header */
     .delete-header {
         font-size: 24px; /* Increased header font size */
     }
-
     /* Margin adjustments */
     .mb-2 {
         margin-bottom: 20px;
     }
-
     /* Button alignment */
     .delete-btn-group {
         display: flex;
@@ -55,33 +99,199 @@
         align-items: center;
         width: 100%;
     }
+    /* Box container styling */
+    .form-box-container {
+        background-color: #8ee697 !important;
+        border-radius: 8px;
+        padding: 0.5rem;
+    }
+    /* Improved contrast for username */
+    .username-text {
+        font-weight: normal;
+        color: #1f1f1f !important; /* Darker text color for better contrast */
+    }
+
+    /* Responsive adjustments from register view */
+    @@media (max-width: 768px) {
+        .delete-profile-form {
+            min-width: unset;
+            padding: 0 10px;
+        }
+
+        .form-box-container {
+            width: 90%;
+        }
+    }
+
+    /* Additional responsive adjustments */
+    @@media (max-width: 480px) {
+        .form-box-container {
+            padding: 0.5rem;
+            border-radius: 6px;
+            width: 95%;
+        }
+
+        .delete-header {
+            font-size: 1.5rem !important;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-image {
+            max-width: 250px;
+        }
+
+        .delete-btn-group {
+            flex-direction: column;
+            gap: 0.5rem !important;
+        }
+
+        .confirm-delete-input {
+            max-width: 120px;
+            height: 28px;
+            font-size: 0.9rem !important;
+        }
+
+        .btn-danger,
+        .btn-secondary {
+            font-size: 0.9rem !important;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .username-text {
+            font-size: 0.9rem !important;
+        }
+    }
+
+    @@media (max-width: 320px) {
+        .form-box-container {
+            padding: 0.25rem;
+            width: 100%;
+        }
+
+        .delete-header {
+            font-size: 1.25rem !important;
+        }
+
+        .profile-image {
+            max-width: 200px;
+        }
+
+        .btn-danger,
+        .btn-secondary {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem !important;
+        }
+
+        .username-text {
+            font-size: 0.8rem !important;
+        }
+
+        .confirm-delete-input {
+            max-width: 100px;
+            height: 26px;
+            font-size: 0.8rem !important;
+        }
+
+        .text-danger.fw-bold.me-2 {
+            font-size: 0.8rem !important;
+            margin-right: 0.25rem !important;
+        }
+    }
+
+    /* Height-based media queries */
+    @@media (max-height: 600px) {
+        .container {
+            height: auto !important;
+            min-height: auto !important;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        main.pb-3 {
+            min-height: auto;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.25rem !important;
+        }
+    }
+
+    /* Tablet landscape adjustments */
+    @@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+        .container {
+            height: 85vh !important;
+        }
+
+        .form-box-container {
+            width: 90% !important;
+        }
+    }
+
+    /* High resolution screens */
+    @@media (min-width: 1400px) {
+        .form-box-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    }
+
+    /* Print styles */
+    @@media print {
+        .container {
+            height: auto !important;
+        }
+
+        .btn-danger,
+        .btn-secondary {
+            background-color: #333 !important;
+            border-color: #333 !important;
+            color: white !important;
+        }
+
+        .profile-image {
+            border: 1px solid #000 !important;
+        }
+    }
+
+    /* Handle column stacking on mobile */
+    @@media (max-width: 767px) {
+        .delete-profile-form {
+            min-width: unset;
+        }
+
+        .d-flex.align-items-center {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .text-danger.fw-bold.me-2 {
+            margin-right: 0 !important;
+        }
+    }
 </style>
-
-<div class="container d-flex text-center justify-content-center">
-    <form method="post" class="delete-profile-form text-center">
-        <h2 class="delete-header">Изтрий профил</h2>
-
-        <!-- Profile Image -->
-        <div class="mb-2">
-            <img src="@Model.ProfileImage" class="profile-image" alt="@Model.UserName">
-        </div>
-
-        <!-- User Info -->
-        <div class="mb-2">
-            <h3 class="fw-bold">@Model.FirstName @Model.LastName</h3>
-            <p>@Model.UserName</p>
-        </div>
-
-        <div class="delete-btn-group mb-2 justify-content-center">
-            <div class="d-flex align-items-center">
-                <span class="text-danger fw-bold me-2">ПОТВЪРДИ ИЗТРИВАНЕ:</span>
-                <input type="text" class="form-control text-center confirm-delete-input" id="confirmDelete" name="ConfirmText" placeholder="ПОТВЪРДИ" required />
+<div class="d-flex text-center justify-content-center">
+    <div class="form-box-container">
+        <form method="post" class="delete-profile-form text-center">
+            <h2 class="delete-header">Изтрий профил</h2>
+            <!-- Profile Image -->
+            <div class="mb-2">
+                <img src="@Model.ProfileImage" class="profile-image" alt="@Model.UserName">
             </div>
-        </div> 
-        
-        <div class="delete-btn-group justify-content-between">
-            <a href="@ViewBag.ReturnUrl" class="btn btn-secondary btn-sm">Назад</a>
-            <button type="submit" class="btn btn-danger btn-sm">Изтрий</button>
-        </div>
-    </form>
+            <!-- User Info -->
+            <div class="mb-2">
+                <h3 class="fw-bolder text-black">
+                    @Model.FirstName @Model.LastName
+                </h3>
+                <p class="username-text">@Model.UserName</p>
+            </div>
+            <div class="delete-btn-group gap-2 justify-content-center">
+                <a href="@ViewBag.ReturnUrl" class="btn btn-secondary btn-sm">Назад</a>
+                <div class="d-flex align-items-center">
+                    <span class="text-danger fw-bold me-2">ПОТВЪРДИ ИЗТРИВАНЕ:</span>
+                    <input type="text" class="form-control text-center confirm-delete-input" id="confirmDelete" name="ConfirmText" placeholder="ПОТВЪРДИ" required />
+                </div>
+                <button type="submit" class="btn btn-danger btn-sm">Изтрий</button>
+            </div>
+        </form>
+    </div>
 </div>

@@ -1,3 +1,1 @@
-Testing Of Models Controllers Services 60% Functionality
-
-Graphical Improvement Of Visual Identity Of SportConnect
+testing necessary stuff for 60% functionality coverage

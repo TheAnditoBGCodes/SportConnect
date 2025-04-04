@@ -105,6 +105,10 @@ namespace SportConnect.Web.Controllers
                 {
                     ModelState.AddModelError("Email", "Невалиден имейл.");
                 }
+                else if ((await _userRepository.GetAll()).Any(s => s.Email == user.Email && s.Id != user.Id))
+                {
+                    ModelState.AddModelError("Email", "Заето.");
+                }
 
                 if (string.IsNullOrWhiteSpace(user.UserName))
                 {
@@ -241,8 +245,17 @@ namespace SportConnect.Web.Controllers
         {
             var user = await _userManager.GetUserAsync(this.User);
             var names = user.FullName.Split(' ').ToList();
+
+            int age = DateTime.Now.Year - user.DateOfBirth.Year;
+            if (DateTime.Now.Month < user.DateOfBirth.Month ||
+            (DateTime.Now.Month == user.DateOfBirth.Month && DateTime.Now.Day < user.DateOfBirth.Day))
+            {
+                age--;
+            }
+
             var model = new UserViewModel()
             {
+                Age = age,
                 Id = user.Id,
                 UserName = user.UserName,
                 FirstName = names[0],

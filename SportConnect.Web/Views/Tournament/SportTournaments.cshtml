@@ -12,9 +12,9 @@
 
         // Replace the content of the participationButtons with Yes and No options
         participationButtons.innerHTML = `
-                                <a href="${url}" class="btn btn-danger w-50 btn-sm">Да</a>
-                                <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButton(${tournamentId}, ${isApproved})">Не</a>
-                            `;
+                                            <a href="${url}" class="btn btn-danger w-50 btn-sm">Да</a>
+                                            <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButton(${tournamentId}, ${isApproved})">Не</a>
+                                        `;
     }
 
     // Function to restore the "Отказване" button and revert back to the original state
@@ -24,80 +24,33 @@
         // Restore the appropriate buttons based on the approval status
         if (isApproved) {
             participationButtons.innerHTML = `
-                                    <button class="btn btn-success text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
-                                    <a id="quitParticipation-${tournamentId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(${tournamentId}, ${isApproved})">Отказване</a>
-                                `;
+                                                <button class="btn btn-success text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                                                <a id="quitParticipation-${tournamentId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(${tournamentId}, ${isApproved})">Отказване</a>
+                                            `;
         } else {
             participationButtons.innerHTML = `
-                                    <button class="btn btn-secondary text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
-                                    <a id="quitParticipation-${tournamentId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(${tournamentId}, ${isApproved})">Отказване</a>
-                                `;
+                                                <button class="btn btn-secondary text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
+                                                <a id="quitParticipation-${tournamentId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(${tournamentId}, ${isApproved})">Отказване</a>
+                                            `;
         }
     }
 </script>
 
 <style>
-    /* Ensure modal content does not overflow */
-    .modal-body {
-        overflow: hidden; /* Hide any overflow */
-    }
-
-    .card-footer {
-        background-color: #fff; /* Match the background of the card body */
-        border-top: none; /* Remove the top border */
-        padding: 0px 5px 5px 5px !important;
-    }
-    /* Make sure the image scales to fit the container */
-    #cropImage {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Ensures image will cover the container without leaving black bars */
-    }
-
-    .sport-btn {
-        flex: 1; /* Makes all buttons equal in size */
-        max-width: 95px; /* Adjust width */
-        font-size: 14px; /* Adjust font size */
-    }
-
-    .sport-btn-user {
-        flex: 1; /* Makes all buttons equal in size */
-        max-width: 100%; /* Adjust width */
-        padding: 5px 8px; /* Thinner buttons */
-        font-size: 14px; /* Adjust font size */
-    }
-
-    .btn-group {
-        display: flex;
-        justify-content: space-around; /* Ensures equal spacing */
-        gap: 10px; /* Uniform spacing between buttons */
-    }
-    /* Hide any overflow if the crop container goes out of bounds */
-    #cropContainer {
-        width: 100%;
-        height: 100%;
-        overflow: hidden; /* Prevents overflow of cropped image */
-    }
-
-    /* Modal footer for buttons */
-    .modal-footer {
-        display: flex;
-        justify-content: space-between; /* Align buttons to opposite sides */
-    }
-
-    .cropper-drag-box {
-        opacity: 50%;
-    }
-
-    #previewImage {
-        height: auto; /* Maintains aspect ratio */
-        display: block; /* Makes sure the image is block-level, so it doesn't cause any inline formatting issues */
-        margin: 0 auto; /* Centers the image horizontally */
-    }
-
-    .container main {
-        min-height: 83vh;
+    .container {
+        min-height: 78vh;
         padding-bottom: 0px !important;
+        align-content: center;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+    }
+
+    main {
+        justify-content: center !important;
+    }
+
+    .container {
+        padding: 0;
     }
 
         .container main.pb-3 {
@@ -105,207 +58,523 @@
             padding-bottom: 0px !important;
         }
 
-    .btn-group.d-flex.justify-content-between {
-        width: 100% !important;
-    }
-
     .sticky-search {
         position: sticky;
-        top: 60px; /* Adjust based on your header height */
-        background-color: none;
-        z-index: 999; /* Keep it above content */
-        padding: 10px 0;
-    }
-
-    #sportItem {
+        top: 90px; /* Adjust based on your header height */
+        background-color: #8ee697 !important;
+        z-index: 999;
         width: 100%;
-        max-width: 390px; /* Adjusts the max size of cards */
-        height: auto; /* Ensures content adapts dynamically */
-        min-height: 414.3px;
+        padding: 0.5rem;
+        border-radius: 8px;
     }
 
-    .sport-img {
-        aspect-ratio: 4 / 3;
+    .card-footer {
+        background-color: #8ee697 !important;
+        padding: 0 0.5rem 0.5rem 0.5rem;
+        border: none;
+    }
+
+    .card-body, .card-img-top {
+        background-color: #8ee697 !important;
+    }
+
+    .custom-line-height {
+        line-height: 29.8px;
+    }
+    /* Form controls styling */
+    .search-control {
+        font-size: 1rem;
+        padding: 0.5rem 0.75rem;
+        background-color: #dcf7de !important;
+    }
+
+    /* Button group styling */
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    /* User card styling */
+    .user-card {
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+        background-color: #dadada !important;
+    }
+
+    .user-image {
+        width: 50px;
+        height: 50px;
         object-fit: cover;
-        width: 100%;
     }
 
-    .delete-header {
-        padding-top: 10px; /* Adds space between the title and top */
+    /* Button styling */
+    .btn-danger {
+        background-color: red;
+        border-color: red;
+        padding: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+        }
+
+    /* Button styling */
+    .btn-warning {
+        background-color: #AA7700;
+        border-color: #AA7700;
+        padding: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+        }
+
+    /* Button styling */
+    .btn-primary {
+        background-color: blue;
+        border-color: blue;
+        padding: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+    /* Button styling */
+    .btn-success {
+        background-color: green;
+        border-color: green;
+        padding: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+        }
+
+    /* Button styling */
+    .btn-secondary {
+        background-color: grey;
+        border-color: grey;
+        padding: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+        }
+
+    /* Info sections styling */
+    .info-section {
+        padding: 0 15px;
+        text-align: center;
+    }
+
+        .info-section h3 {
+            color: #000 !important; /* Black color */
+            font-weight: bolder !important; /* Bolder */
+        }
+
+        /* Improved contrast for username */
+        .info-section p {
+            font-weight: normal;
+            color: #1f1f1f !important; /* Darker text color for better contrast */
+        }
+
+    .sport-card {
+        padding: 0.5rem;
+    }
+
+    .sport-card {
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+        background-color: #8ee697 !important;
+    }
+
+    .no-container {
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        padding: 0.5rem;
+        transition: all 0.3s ease;
+        background-color: #8ee697 !important;
+    }
+    /* Original styles preserved, adding responsive media queries at the end */
+
+    /* Standard mobile adjustments */
+    @@media (max-width: 768px) {
+        .container1 {
+            width: 100% !important;
+            padding: 0 10px;
+        }
+
+        .sticky-search {
+            top: 70px;
+            padding: 0.25rem;
+        }
+
+        .search-control {
+            font-size: 0.9rem !important;
+            padding: 0.4rem 0.5rem;
+        }
+
+        .d-flex.justify-content-center.mb-2 {
+            flex-direction: column;
+            width: 100%;
+        }
+
+            .d-flex.justify-content-center.mb-2 input,
+            .d-flex.justify-content-center.mb-2 select,
+            .d-flex.justify-content-center.mb-2 .form-floating {
+                width: 100% !important;
+                margin-right: 0 !important;
+                margin-bottom: 0.5rem;
+            }
+    }
+
+    /* Small mobile devices */
+    @@media (max-width: 480px) {
+        h2.page-header {
+            font-size: 1.5rem !important;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-img-top {
+            height: 150px !important;
+            width: 100% !important;
+        }
+
+        .d-flex {
+            flex-direction: column;
+        }
+
+        .card .d-flex {
+            flex-direction: column;
+        }
+
+        .card-body.custom-line-height {
+            padding: 0.5rem !important;
+        }
+
+        .btn {
+            padding: 0.5rem !important;
+            font-size: 0.9rem !important;
+        }
+
+        .card-footer .d-flex {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .card-footer .btn {
+            width: 100% !important;
+        }
+    }
+
+    /* Very small mobile devices */
+    @@media (max-width: 320px) {
+        h2.page-header {
+            font-size: 1.25rem !important;
+        }
+
+        .card-img-top {
+            height: 120px !important;
+        }
+
+        .custom-line-height {
+            line-height: 24px;
+        }
+
+        .card-body {
+            font-size: 0.8rem;
+        }
+
+        .btn {
+            padding: 0.25rem 0.5rem !important;
+            font-size: 0.8rem !important;
+        }
+
+        .no-container h1 {
+            font-size: 3rem !important;
+        }
+    }
+
+    /* Short height devices */
+    @@media (max-height: 600px) {
+        .container-fluid {
+            height: auto !important;
+            min-height: auto !important;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .sticky-search {
+            position: relative;
+            top: 0;
+        }
+
+        .container1 {
+            min-height: auto !important;
+        }
+
+        .mb-2, .mb-3 {
+            margin-bottom: 0.25rem !important;
+        }
+    }
+
+    /* Tablet landscape mode */
+    @@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+        .container1 {
+            width: 90% !important;
+        }
+
+        .card-img-top {
+            height: 180px !important;
+            width: 240px !important;
+        }
+
+        .col-md-6 {
+            width: 50%;
+        }
+    }
+
+    /* Print styles */
+    @@media print {
+        .sticky-search,
+        .card-footer {
+            display: none !important;
+        }
+
+        .container1 {
+            width: 100% !important;
+        }
+
+        .card {
+            break-inside: avoid;
+            border: 1px solid #000 !important;
+        }
+
+        .btn-primary, .btn-success, .btn-warning, .btn-danger, .btn-secondary {
+            background-color: #333 !important;
+            border-color: #333 !important;
+            color: white !important;
+        }
+
+        h2.page-header {
+            font-size: 24pt !important;
+            margin-bottom: 10pt;
+        }
+    }
+
+    /* Column stacking for mobile */
+    @@media (max-width: 767px) {
+        .col-md-6 {
+            width: 100% !important;
+        }
+
+        .d-flex.justify-content-between.w-100 {
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .d-flex.justify-content-between.align-items-center.gap-2.w-100 {
+            flex-direction: column;
+            width: 100% !important;
+        }
+
+        .btn {
+            width: 100% !important;
+            margin-bottom: 0.5rem;
+        }
     }
 </style>
 
-@if (Model.Tournaments.Count < 1)
+@if (Model.Tournaments.Count == 0)
 {
-    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 78vh;">
-        <div class="container p-2" style="max-width: 50%; padding: 0.5rem;">
-            <h1 class="text-center mb-3" style="font-size: 5rem;">Няма турнири</h1>
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 75vh;">
+        <div class="no-container p-2" style="max-width: 100%; padding: 0.5rem;">
+            <h1 class="text-center mb-3" style="font-size: 5rem;">Няма турнири по @ViewBag.SportName</h1>
             <div class="d-flex justify-content-center mt-3">
                 @if (!User.IsInRole(SD.AdminRole))
                 {
-                    <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-success text-center me-2" style="font-size: 1rem;">Добави</a>
+                    <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-success text-center" style="font-size: 1rem;">Добави</a>
                 }
-                <a asp-controller="Sport" asp-action="AllSports" class="btn btn-secondary text-center" style="font-size: 1rem;">Назад</a>
             </div>
         </div>
     </div>
 }
 else
 {
-    <div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 83vh;">
-        <div class="container">
-            <h2 class="delete-header mb-0 text-center">Турнири</h2>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <div class="container1" style="width: 1320px; min-height: 530px;">
+            <h2 class="page-header text-center">Турнири по @ViewBag.SportName</h2>
 
-            <div class="justify-content-center align-items-center sticky-search mb-3 mt-1">
-                <form method="post" class="d-flex flex-column align-items-center">
+            <div class="justify-content-center align-items-center">
+                <form method="get" class="d-flex flex-column align-items-center sticky-search">
                     <!-- Row 1: Name, Sport, Organizer -->
                     <div class="d-flex justify-content-center mb-2">
-                        <input type="text" asp-for="@Model.Name" class="form-control form-control-sm me-2" placeholder="Турнир" style="font-size: 1rem; width: 180px;">
-                        <input type="text" asp-for="@Model.OrganizerName" class="form-control form-control-sm" placeholder="Организатор" style="font-size: 1rem; width: 180px;">
+                        <input type="text" asp-for="@Model.Name" class="form-control search-control form-control-sm me-2" placeholder="Име" style="font-size: 1rem; width: 649px;">
+                        <input type="text" asp-for="@Model.OrganizerName" class="form-control search-control form-control-sm" placeholder="Организатор" style="font-size: 1rem; width: 649px;">
                     </div>
 
                     <!-- Row 2: Country, Start Date, End Date -->
                     <div class="d-flex justify-content-center mb-2">
-                        <select asp-for="@Model.Country" asp-items="@ViewBag.Countries" class="form-select form-control-sm mb-2 me-2" aria-required="true" style="font-size: 1rem; width: 180px;">
+                        <select asp-for="@Model.Country" asp-items="@ViewBag.Countries" class="form-select search-control form-control-sm me-2" aria-required="true" style="font-size: 1rem; width: 430px;">
                             <option value="" selected>Изберете страна</option>
                         </select>
-                        <div class="d-flex justify-content-center mb-2">
-                            <div class="form-floating me-2" style="width: 150px;">
-                                <input type="date" min="@DateTime.Now.Date" asp-for="@Model.StartDate" class="form-control form-control-sm" id="startDate">
-                                <label for="startDate" style="font-size: 0.875rem;">От дата</label>
-                            </div>
-
-                            <div class="form-floating" style="width: 150px;">
-                                <input type="date" min="@DateTime.Now.Date" asp-for="@Model.EndDate" class="form-control form-control-sm" id="endDate">
-                                <label for="endDate" style="font-size: 0.875rem;">До дата</label>
-                            </div>
+                        <div class="form-floating me-2" style="width: 430px;">
+                            <input type="date" min="@DateTime.Now.Date" asp-for="@Model.StartDate" class="form-control search-control form-control-sm" id="startDate">
+                            <label for="startDate" style="font-size: 0.875rem;">От дата</label>
                         </div>
-
+                        <div class="form-floating" style="width: 430px;">
+                            <input type="date" min="@DateTime.Now.Date" asp-for="@Model.EndDate" class="form-control search-control form-control-sm" id="endDate">
+                            <label for="endDate" style="font-size: 0.875rem;">До дата</label>
+                        </div>
                     </div>
 
                     <!-- Row 3: Buttons -->
-                    <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary me-2" style="font-size: 1rem;">Търси</button>
+                    <div class="d-flex justify-content-around w-100">
                         @if (!User.IsInRole(SD.AdminRole))
                         {
-                            <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-success text-center me-2" style="font-size: 1rem;">Добави</a>
+                            <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-success text-center" style="font-size: 1rem;">Добави</a>
                         }
-                        <a asp-controller="Sport" asp-action="AllSports" class="btn btn-secondary text-center" style="font-size: 1rem;">Назад</a>
+                        <button type="submit" class="btn btn-primary" style="font-size: 1rem;">Търси</button>
                     </div>
                 </form>
-            </div>
 
-            <div class="row justify-content-center">
-                @foreach (var tournament in Model.FilteredTournaments)
-                {
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="d-flex">
-                                <!-- Image Area -->
-                                @if (!string.IsNullOrEmpty(tournament.ImageUrl))
-                                {
-                                    <img src="@tournament.ImageUrl" alt="@tournament.Name" class="card-img-top" style="height: 226px; width: 301px; padding: 5px !important; object-fit: cover;">
+                <div class="row justify-content-center mt-2 mb-3">
+                    @foreach (var tournament in Model.FilteredTournaments)
+                    {
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="d-flex">
+                                    <!-- Image Area -->
+                                    @if (!string.IsNullOrEmpty(tournament.ImageUrl))
+                                    {
+                                        <img src="@tournament.ImageUrl" alt="@tournament.Name" class="card-img-top" style="height: 226px; width: 301px; padding: 0.5rem !important; object-fit: cover;">
+                                    }
+
+                                    <!-- Text Area -->
+                                    <div class="card-body custom-line-height" style="padding: 0.5rem 0.5rem 0.5rem 0px !important;">
+                                        <div class="d-flex flex-column align-items-center justify-content-center">
+                                            <h5 class="fw-bolder text-center mb-0">@tournament.Name</h5>
+                                            <p class="text-center mb-0">@tournament.Description</p>
+                                            <p class="text-center mb-0">@tournament.Country</p>
+                                        </div>
+
+                                        <div class="mb-0 d-flex justify-content-between" style="border-bottom: 3px solid #6fd277;">
+                                            <strong class="fw-bolder">Спорт:</strong>
+                                            <span>@tournament.Sport.Name</span>
+                                        </div>
+
+                                        <div class="mb-0 d-flex justify-content-between" style="border-bottom: 3px solid #6fd277;">
+                                            <strong class="fw-bolder">Организатор:</strong>
+                                            <span>@tournament.Organizer.FullName</span>
+                                        </div>
+
+                                        <div class="mb-0 d-flex justify-content-between" style="border-bottom: 3px solid #6fd277;">
+                                            <strong class="fw-bolder">Дата:</strong>
+                                            <span>@tournament.Date.ToString("dd.MM.yyyy HH:mm")</span>
+                                        </div>
+
+                                        <div class="mb-0 d-flex justify-content-between">
+                                            <strong class="fw-bolder">Краен срок:</strong>
+                                            <span>@tournament.Deadline.ToString("dd.MM.yyyy HH:mm")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @{
+                                    string userId = ViewBag.UserId;
+                                    int tournamentid = tournament.Id;
                                 }
-
-                                <!-- Text Area -->
-                                <div class="card-body" style="padding: 5px 5px 5px 0px !important;">
-                                    <div class="d-flex flex-column align-items-center justify-content-center">
-                                        <h5 class="card-title fw-bold text-center">@tournament.Name</h5>
-                                        <p class="card-text text-center">@tournament.Description</p>
+                                @if (tournament.Organizer.Id != userId && !User.IsInRole(SD.AdminRole) && tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) < DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
+                                {
+                                    <div class="card-footer text-center">
+                                        <div class="d-flex justify-content-between w-100">
+                                            <div class="d-flex justify-content-center align-items-center gap-2 w-100">
+                                                <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-primary btn-sm" style="width: 110px;">
+                                                    Участници
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                    <div class="mt-2 d-flex justify-content-between">
-                                        <strong>Държава:</strong>
-                                        <span>@tournament.Country</span>
+                                }
+                                else
+                                {
+                                    <div class="card-footer text-center">
+                                        <div class="d-flex justify-content-between w-100">
+                                            <div class="d-flex justify-content-between align-items-center gap-2 w-100">
+                                                @if (!User.IsInRole(SD.AdminRole) && tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
+                                                {
+                                                    <div id="participationButtons-@tournamentid" class="d-flex justify-content-between align-items-center " style="width: 220px;">
+                                                        @{
+                                                            var participation = tournament.Participations.FirstOrDefault(p => p.ParticipantId == userId);
+                                                        }
+                                                        @if (participation == null)
+                                                        {
+                                                            <!-- User has not participated -->
+                                                            <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-success btn-sm w-100">
+                                                                Участвай
+                                                            </a>
+                                                        }
+                                                        else if (participation.Approved == false)
+                                                        {
+                                                            <!-- User participation is pending -->
+                                                            <button class="btn btn-secondary text-white btn-sm w-50" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
+                                                            <a id="quitParticipation-@tournamentid" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(@tournamentid, false)">Отказване</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button class="btn btn-success text-white btn-sm w-50" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                                                            <a id="quitParticipation-@tournamentid" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(@tournamentid, true)">Отказване</a>
+                                                        }
+                                                    </div>
+                                                }
+                                                <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-primary btn-sm" style="width: 110px;">
+                                                    Участници
+                                                </a>
+                                                @if (User.IsInRole(SD.AdminRole) || tournament.Organizer.Id == userId)
+                                                {
+                                                    <a asp-controller="Tournament" asp-action="EditTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-warning btn-sm text-white">
+                                                        Промени
+                                                    </a>
+                                                    <a asp-controller="Tournament" asp-action="DeleteTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-danger btn-sm text-white">
+                                                        Изтрий
+                                                    </a>
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
-
-                                    <div class="mt-2 d-flex justify-content-between">
-                                        <strong>Спорт:</strong>
-                                        <span>@tournament.Sport.Name</span>
-                                    </div>
-
-                                    <div class="mt-2 d-flex justify-content-between">
-                                        <strong>Организатор:</strong>
-                                        <span>@tournament.Organizer.FullName</span>
-                                    </div>
-
-                                    <div class="mt-2 d-flex justify-content-between">
-                                        <strong>Дата:</strong>
-                                        <span>@tournament.Date.ToString("dd.MM.yyyy HH:mm")</span>
-                                    </div>
-
-                                    <div class="mt-2 d-flex justify-content-between">
-                                        <strong>Крайният срок:</strong>
-                                        <span>@tournament.Deadline.ToString("dd.MM.yyyy HH:mm")</span>
-                                    </div>
-                                </div>
+                                }
                             </div>
-                            @{
-                                string userId = ViewBag.UserId;
-                                int tournamentid = tournament.Id;
-                            }
-                            @if (tournament.Organizer.Id != userId && !User.IsInRole(SD.AdminRole) && tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) < DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
-                            {
-                                <div class="card-footer text-center">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div class="d-flex justify-content-center align-items-center gap-2 w-100">
-                                            <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-primary btn-sm" style="width: 110px;">
-                                                Участници
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="card-footer text-center">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div class="d-flex justify-content-between align-items-center gap-2 w-100">
-                                            @if (!User.IsInRole(SD.AdminRole) && tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
-                                            {
-                                                <div id="participationButtons-@tournamentid" class="d-flex justify-content-between align-items-center " style="width: 200px;">
-                                                    @{
-                                                        var participation = tournament.Participations.FirstOrDefault(p => p.ParticipantId == userId);
-                                                    }
-                                                    @if (participation == null)
-                                                    {
-                                                        <!-- User has not participated -->
-                                                        <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-success btn-sm w-100">
-                                                            Участвай
-                                                        </a>
-                                                    }
-                                                    else if (participation.Approved == false)
-                                                    {
-                                                        <!-- User participation is pending -->
-                                                        <button class="btn btn-secondary text-white btn-sm w-50" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
-                                                        <a id="quitParticipation-@tournamentid" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(@tournamentid, false)">Отказване</a>
-                                                    }
-                                                    else
-                                                    {
-                                                        <button class="btn btn-success text-white btn-sm w-50" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
-                                                        <a id="quitParticipation-@tournamentid" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(@tournamentid, true)">Отказване</a>
-                                                    }
-                                                </div>
-                                            }
-                                            <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-primary btn-sm" style="width: 110px;">
-                                                Участници
-                                            </a>
-                                            @if (User.IsInRole(SD.AdminRole) || tournament.Organizer.Id == userId)
-                                            {
-                                                <a asp-controller="Tournament" asp-action="EditTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-warning btn-sm text-white">
-                                                    Промени
-                                                </a>
-                                                <a asp-controller="Tournament" asp-action="DeleteTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-danger btn-sm text-white">
-                                                    Изтрий
-                                                </a>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            }
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
     </div>
