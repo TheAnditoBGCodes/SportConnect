@@ -503,7 +503,7 @@
             <h1 class="mb-3" style="font-size: 5rem;">Няма участници</h1>
             <div class="d-flex justify-content-center mt-3">
                 <a href="@ViewBag.ReturnUrl" class="btn btn-secondary">Назад</a>
-                @if (!User.IsInRole(SD.AdminRole) && tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
+                @if (tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
                 {
                     <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@tournament.Id" asp-route-returnUrl="@Url.Action("TournamentParticipations", "Participation")" class="btn btn-success ms-2">
                         Участвай
@@ -551,7 +551,7 @@ else
                     <!-- Second row for buttons -->
                     <div class="d-flex justify-content-around w-100">
                         <a href="@ViewBag.ReturnUrl" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
-                        @if (!User.IsInRole(SD.AdminRole) && tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
+                        @if (tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
                         {
                             <div id="participationButtons-@tournament.Id" class="d-flex justify-content-between align-items-center text-center" style="width: 232.167px;">
                                 @{

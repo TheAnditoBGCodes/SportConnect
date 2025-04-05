@@ -30,7 +30,7 @@ namespace SportConnect.Web.Controllers
             _countryService = countryService;
         }
 
-        [Authorize(Roles = $"{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
         public async Task<IActionResult> MyParticipations(TournamentViewModel? filter)
         {
             HttpContext.Session.Remove("ReturnUrl");
@@ -287,7 +287,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
         public async Task<IActionResult> AddParticipation(int id, string returnUrl)
         {
             var participation = new Participation

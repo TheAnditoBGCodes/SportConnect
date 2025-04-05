@@ -304,6 +304,12 @@
                             <li class="nav-item">
                                 <a class="fw-bolder nav-link" asp-area="" asp-controller="User" style="color: black;" asp-action="AllUsers">Потребители</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="fw-bolder nav-link" asp-area="" asp-controller="Tournament" style="color: black;" asp-action="MyTournaments">Мои турнири</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="fw-bolder nav-link" asp-area="" asp-controller="Participation" style="color: black;" asp-action="MyParticipations">Мои участия</a>
+                            </li>
                         }
                         else if (User.IsInRole(SD.UserRole))
                         {
@@ -317,7 +323,7 @@
                                 <a class="fw-bolder nav-link" asp-area="" asp-controller="Tournament" style="color: black;" asp-action="MyTournaments">Мои турнири</a>
                             </li>
                             <li class="nav-item">
-                                <a class="fw-bolder nav-link" asp-area="" asp-controller="Participation" style="color: black;" asp-action="MyParticipations">Участия</a>
+                                <a class="fw-bolder nav-link" asp-area="" asp-controller="Participation" style="color: black;" asp-action="MyParticipations">Мои участия</a>
                             </li>
                         }
                         else

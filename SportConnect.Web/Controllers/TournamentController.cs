@@ -101,7 +101,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
         public async Task<IActionResult> AddTournament(string returnUrl)
         {
             var currentUser = await _userManager.GetUserAsync(this.User);
@@ -115,7 +115,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
         [HttpPost]
         public async Task<IActionResult> AddTournament(TournamentViewModel tournament, string returnUrl)
         {
@@ -225,7 +225,7 @@ namespace SportConnect.Web.Controllers
             return View(tournament);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
         public async Task<IActionResult> EditTournament(int id, string returnUrl)
         {
             var tournament = await _tournamentRepository.GetById(id);
@@ -254,7 +254,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
         [HttpPost]
         public async Task<IActionResult> EditTournament(TournamentViewModel tournament, string returnUrl)
         {
@@ -423,7 +423,7 @@ namespace SportConnect.Web.Controllers
             }
         }
 
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
         public async Task<IActionResult> DeleteTournament(int id, string returnUrl)
         {
             var tournament = (await _tournamentRepository.AllWithIncludes(x => x.Sport)).FirstOrDefault(x => x.Id == id);
@@ -441,7 +441,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
         [HttpPost]
         public async Task<IActionResult> DeleteTournament(string ConfirmText, TournamentViewModel model, string returnUrl)
         {
@@ -618,7 +618,7 @@ namespace SportConnect.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = $"{SD.UserRole}")]
+        [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
         public async Task<IActionResult> MyTournaments(TournamentViewModel? filter)
         {
             HttpContext.Session.Remove("ReturnUrl");
