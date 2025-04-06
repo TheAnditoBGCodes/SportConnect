@@ -1,4 +1,5 @@
 ﻿@using SportConnect.Models
+@using SportConnect.Utility
 @model UserViewModel
 
 <style>
@@ -98,7 +99,7 @@ p{
 /* Action buttons container */
 .profile-delete-view .action-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     gap: 1rem;
 }
 
@@ -335,9 +336,12 @@ p{
             <a asp-controller="User" asp-action="EditUser" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("PersonalData", "User")" class="btn btn-warning dashboard-btn text-white">
                 Промени
             </a>
-            <a asp-controller="User" asp-action="DeleteUser" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("PersonalData", "User")" class="btn btn-danger">
-                Изтрий
-            </a>
+            @if (!User.IsInRole(SD.AdminRole))
+            {
+                <a asp-controller="User" asp-action="DeleteUser" asp-route-id="@Model.Id" asp-route-returnUrl="@Url.Action("PersonalData", "User")" class="btn btn-danger">
+                    Изтрий
+                </a>
+            }
         </div>
     </form>
 </div>

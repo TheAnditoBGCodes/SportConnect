@@ -6,7 +6,7 @@
     function replaceWithConfirmation(tournamentId, isApproved) {
         var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
 
-        const sportId = '@Model.Id';
+        const sportId = '@Model.SportId';
         const userId = '@ViewBag.UserId';
         var url = `/Participation/DeleteParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FTournament%2FSportTournaments%2F${sportId}`;
 
@@ -420,7 +420,7 @@
         <div class="no-container p-2" style="max-width: 100%; padding: 0.5rem;">
             <h1 class="text-center mb-3" style="font-size: 5rem;">Няма турнири по @ViewBag.SportName</h1>
             <div class="d-flex justify-content-center mt-3">
-                <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-success text-center" style="font-size: 1rem;">Добави</a>
+                <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="/Tournament/SportTournaments/@Model.SportId" class="btn btn-success text-center" style="font-size: 1rem;">Добави</a>
             </div>
         </div>
     </div>
@@ -456,7 +456,7 @@ else
 
                     <!-- Row 3: Buttons -->
                     <div class="d-flex justify-content-around w-100">
-                        <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-success text-center" style="font-size: 1rem;">Добави</a>
+                        <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="/Tournament/SportTournaments/@Model.SportId" class="btn btn-success text-center" style="font-size: 1rem;">Добави</a>
                         <button type="submit" class="btn btn-primary" style="font-size: 1rem;">Търси</button>
                     </div>
                 </form>
@@ -504,14 +504,14 @@ else
                                 </div>
                                 @{
                                     string userId = ViewBag.UserId;
-                                    int tournamentid = tournament.Id;
+                                    string tournamentid = tournament.Id;
                                 }
                                 @if (tournament.Organizer.Id != userId && !User.IsInRole(SD.AdminRole) && tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) < DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
                                 {
                                     <div class="card-footer text-center">
                                         <div class="d-flex justify-content-between w-100">
                                             <div class="d-flex justify-content-center align-items-center gap-2 w-100">
-                                                <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-primary btn-sm" style="width: 110px;">
+                                                <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.SportId" class="btn btn-primary btn-sm" style="width: 110px;">
                                                     Участници
                                                 </a>
                                             </div>
@@ -532,7 +532,7 @@ else
                                                         @if (participation == null)
                                                         {
                                                             <!-- User has not participated -->
-                                                            <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-success btn-sm w-100">
+                                                            <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.SportId" class="btn btn-success btn-sm w-100">
                                                                 Участвай
                                                             </a>
                                                         }
@@ -549,15 +549,15 @@ else
                                                         }
                                                     </div>
                                                 }
-                                                <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-primary btn-sm" style="width: 110px;">
+                                                <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.SportId" class="btn btn-primary btn-sm" style="width: 110px;">
                                                     Участници
                                                 </a>
                                                 @if (User.IsInRole(SD.AdminRole) || tournament.Organizer.Id == userId)
                                                 {
-                                                    <a asp-controller="Tournament" asp-action="EditTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-warning btn-sm text-white">
+                                                    <a asp-controller="Tournament" asp-action="EditTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.SportId" class="btn btn-warning btn-sm text-white">
                                                         Промени
                                                     </a>
-                                                    <a asp-controller="Tournament" asp-action="DeleteTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.Id" class="btn btn-danger btn-sm text-white">
+                                                    <a asp-controller="Tournament" asp-action="DeleteTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/SportTournaments/@Model.SportId" class="btn btn-danger btn-sm text-white">
                                                         Изтрий
                                                     </a>
                                                 }

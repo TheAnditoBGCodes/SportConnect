@@ -7,10 +7,8 @@ namespace SportConnect.DataAccess.Repository.IRepository
         Task<bool> IsPropertyUnique(Expression<Func<T, bool>> predicate);
         Task DeleteRange(IEnumerable<T> range);
 
-        Task<T> GetUserById(string id);
+        Task<T?> GetById(string id);
         
-        Task<T> GetById(int id);
-
         Task Add(T entity);
 
         Task Save();

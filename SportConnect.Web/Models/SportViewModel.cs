@@ -7,7 +7,7 @@ namespace SportConnect.Web.Models
         public List<Sport>? Sports { get; set; }
         public List<Sport>? FilteredSports { get; set; }
 
-        public int? Id { get; set; }
+        public string? Id { get; set; }
         public string? Name { get; set; }
 
         public string? Description { get; set; }

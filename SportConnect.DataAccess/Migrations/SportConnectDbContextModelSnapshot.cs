@@ -47,6 +47,20 @@ namespace SportConnect.DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            Name = "Администратор",
+                            NormalizedName = "АДМИНИСТРАТОР"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            Name = "Потребител",
+                            NormalizedName = "ПОТРЕБИТЕЛ"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -123,17 +137,24 @@ namespace SportConnect.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("UserId", "RoleId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("RoleId");
+                    b.HasKey("RoleId", "UserId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = "1",
+                            UserId = "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -157,25 +178,16 @@ namespace SportConnect.DataAccess.Migrations
 
             modelBuilder.Entity("SportConnect.Models.Participation", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("ParticipantId")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("TournamentId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("Approved")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ParticipantId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("TournamentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParticipantId");
+                    b.HasKey("ParticipantId", "TournamentId");
 
                     b.HasIndex("TournamentId");
 
@@ -184,11 +196,8 @@ namespace SportConnect.DataAccess.Migrations
 
             modelBuilder.Entity("SportConnect.Models.Sport", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -211,6 +220,43 @@ namespace SportConnect.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("Sports");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "d0d1c1a1-e6a6-4a2e-a56b-3d516c897101",
+                            Description = "Игра на прецизност и стратегия със щека и топки",
+                            ImageUrl = "\\uploads\\sports\\snooker.jpg",
+                            Name = "Снукър"
+                        },
+                        new
+                        {
+                            Id = "bcb52d80-d07a-4b2d-b5b0-bc83987fbf8e",
+                            Description = "Дуел със саби и бърза реакция",
+                            ImageUrl = "\\uploads\\sports\\fencing.jpg",
+                            Name = "Фехтовка"
+                        },
+                        new
+                        {
+                            Id = "ed559b0b-45f3-419d-9fe1-1beceac85b44",
+                            Description = "Най-основната форма на спорт – бягане, скокове и хвърляния",
+                            ImageUrl = "\\uploads\\sports\\athletics.jpg",
+                            Name = "Лека атлетика"
+                        },
+                        new
+                        {
+                            Id = "2b0ff87f-1212-4c5b-8c3f-bcfb7fe3e5bc",
+                            Description = "Изкачване на вертикални повърхности с техника и сила",
+                            ImageUrl = "\\uploads\\sports\\climbing.jpg",
+                            Name = "Скално катерене"
+                        },
+                        new
+                        {
+                            Id = "3e20a87e-d7d5-45f6-b775-7f394a4b31f1",
+                            Description = "Интелектуален спорт на стратегия и логика",
+                            ImageUrl = "\\uploads\\sports\\chess.jpg",
+                            Name = "Шах"
+                        });
                 });
 
             modelBuilder.Entity("SportConnect.Models.SportConnectUser", b =>
@@ -229,8 +275,9 @@ namespace SportConnect.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DateOfBirth")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -291,15 +338,34 @@ namespace SportConnect.DataAccess.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "53b3c2bc-546e-4207-94b0-1f464c123aaa",
+                            Country = "България",
+                            DateOfBirth = "2006-03-27",
+                            Email = "andrianiliev28@gmail.com",
+                            EmailConfirmed = true,
+                            FullName = "Андриян Илиев",
+                            ImageUrl = "\\uploads\\admin.jpg",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ANDRIANILIEV28@GMAIL.COM",
+                            NormalizedUserName = "ANDYFROZEN2006",
+                            PasswordHash = "AQAAAAIAAYagAAAAEC2djeaOGVbK4PxfKvpPCnAQBruCM0Jqdy0yX9VFwNrCEp0kQp1l4Zed8A2QXlW0gQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d92e94ae-9696-409a-8f12-6d12f95be5a4",
+                            TwoFactorEnabled = false,
+                            UserName = "andyfrozen2006"
+                        });
                 });
 
             modelBuilder.Entity("SportConnect.Models.Tournament", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Country")
                         .IsRequired()
@@ -327,8 +393,9 @@ namespace SportConnect.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("SportId")
-                        .HasColumnType("int");
+                    b.Property<string>("SportId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 

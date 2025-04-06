@@ -433,9 +433,10 @@
                                 </div>
 
                                 @{
-                                    int age = DateTime.Now.Year - user.DateOfBirth.Year;
-                                    if (DateTime.Now.Month < user.DateOfBirth.Month ||
-                                    (DateTime.Now.Month == user.DateOfBirth.Month && DateTime.Now.Day < user.DateOfBirth.Day))
+                                    DateTime date = DateTime.Parse(user.DateOfBirth);
+                                    int age = DateTime.Now.Year - date.Year;
+                                    if (DateTime.Now.Month < date.Month ||
+                                    (DateTime.Now.Month == date.Month && DateTime.Now.Day < date.Day))
                                     {
                                         age--;
                                     }
@@ -445,7 +446,7 @@
                                 <div class="info-section">
                                     <strong class="d-block">Дата на раждане</strong>
                                     <small>
-                                        @user.DateOfBirth.ToString("dd.MM.yyyy") (@age години)
+                                        @date.Date.ToString("dd.MM.yyyy") (@age години)
                                     </small>
                                 </div>
                             </div>
@@ -463,13 +464,13 @@
                                 <i class="bi bi-trophy me-1"></i> Турнири
                             </a>
 
-                            @if (User.IsInRole(SD.AdminRole) || user.Id == ViewBag.UserId)
-                            {
-                                <a asp-controller="User" asp-action="EditUser" asp-route-id="@user.Id"
-                                   asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-warning btn-sm px-3 text-white">
-                                    <i class="bi bi-pencil me-1"></i> Промени
-                                </a>
+                            <a asp-controller="User" asp-action="EditUser" asp-route-id="@user.Id"
+                               asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-warning btn-sm px-3 text-white">
+                                <i class="bi bi-pencil me-1"></i> Промени
+                            </a>
 
+                            @if (user.Id != ViewBag.UserId)
+                            {
                                 <a asp-controller="User" asp-action="DeleteUser" asp-route-id="@user.Id"
                                    asp-route-returnUrl="@Url.Action("AllUsers", "User")" class="btn btn-danger btn-sm px-3">
                                     <i class="bi bi-trash me-1"></i> Изтрий

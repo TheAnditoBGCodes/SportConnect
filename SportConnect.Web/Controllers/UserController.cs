@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SportConnect.DataAccess.Repository.IRepository;
@@ -52,7 +53,7 @@ namespace SportConnect.Web.Controllers
             var currentUser = await _userManager.GetUserAsync(this.User);
             ViewBag.UserId = currentUser.Id;
 
-            var editedUser = await _userRepository.GetUserById(id);
+            var editedUser = await _userRepository.GetById(id);
             var names = editedUser.FullName.Split(' ').ToList();
 
             var model = new UserViewModel();
@@ -67,7 +68,7 @@ namespace SportConnect.Web.Controllers
                     LastName = names[1],
                     Country = editedUser.Country,
                     CountryList = _countryService.GetAllCountries(),
-                    DateOfBirth = editedUser.DateOfBirth,
+                    DateOfBirth = DateTime.Parse(editedUser.DateOfBirth),
                     ProfileImage = editedUser.ImageUrl
                 };
             }
@@ -162,14 +163,14 @@ namespace SportConnect.Web.Controllers
                     return View(user);
                 }
 
-                var editedUser = (await _userRepository.GetUserById(user.Id));
+                var editedUser = (await _userRepository.GetById(user.Id));
 
                 editedUser.UserName = user.UserName;
                 editedUser.ImageUrl = user.ProfileImage;
                 editedUser.FullName = $"{user.FirstName} {user.LastName}";
                 editedUser.Email = user.Email;
                 editedUser.Country = user.Country;
-                editedUser.DateOfBirth = user.DateOfBirth.Value.Date;
+                editedUser.DateOfBirth = user.DateOfBirth.Value.Date.ToString("yyyy-MM-dd");
 
                 var result = await _userManager.UpdateAsync(editedUser);
 
@@ -223,7 +224,7 @@ namespace SportConnect.Web.Controllers
                     return View(user);
                 }
 
-                var editedUser = (await _userRepository.GetUserById(user.Id));
+                var editedUser = (await _userRepository.GetById(user.Id));
 
                 editedUser.UserName = user.UserName;
                 editedUser.ImageUrl = user.ProfileImage;
@@ -246,9 +247,11 @@ namespace SportConnect.Web.Controllers
             var user = await _userManager.GetUserAsync(this.User);
             var names = user.FullName.Split(' ').ToList();
 
-            int age = DateTime.Now.Year - user.DateOfBirth.Year;
-            if (DateTime.Now.Month < user.DateOfBirth.Month ||
-            (DateTime.Now.Month == user.DateOfBirth.Month && DateTime.Now.Day < user.DateOfBirth.Day))
+            DateTime date = DateTime.Parse(user.DateOfBirth);
+
+            int age = DateTime.Now.Year - date.Year;
+            if (DateTime.Now.Month < date.Month ||
+            (DateTime.Now.Month == date.Month && DateTime.Now.Day < date.Day))
             {
                 age--;
             }
@@ -260,7 +263,7 @@ namespace SportConnect.Web.Controllers
                 UserName = user.UserName,
                 FirstName = names[0],
                 LastName = names[1],
-                DateOfBirth = user.DateOfBirth,
+                DateOfBirth = date.Date,
                 Country = user.Country,
                 Email = user.Email,
                 ProfileImage = user.ImageUrl
@@ -305,11 +308,14 @@ namespace SportConnect.Web.Controllers
             if (filter.BirthYear.HasValue)
             {
                 // Filter users born in the selected year
-                query = query.Where(p => p.DateOfBirth.Year == filter.BirthYear);
+                query = query.Where(p => DateTime.Parse(p.DateOfBirth).Year == filter.BirthYear);
             }
+
+            var user = await _userManager.GetUserAsync(this.User);
 
             // Get the list of countries for the dropdown
             ViewBag.Countries = _countryService.GetAllCountries();
+            ViewBag.UserId = user.Id;
 
             // Prepare the model with filtered data
             var model = new UserViewModel
@@ -329,7 +335,7 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public async Task<IActionResult> DeleteUser(string id, string returnUrl = null)
         {
-            var editedUser = (await _userRepository.GetUserById(id));
+            var editedUser = (await _userRepository.GetById(id));
             var names = editedUser.FullName.Split(' ').ToList();
 
             var model = new UserViewModel()
@@ -350,7 +356,7 @@ namespace SportConnect.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string ConfirmText, UserViewModel user, string returnUrl)
         {
-            var deletedUser = (await _userRepository.GetUserById(user.Id));
+            var deletedUser = (await _userRepository.GetById(user.Id));
 
             if (ConfirmText == "ПОТВЪРДИ")
             {

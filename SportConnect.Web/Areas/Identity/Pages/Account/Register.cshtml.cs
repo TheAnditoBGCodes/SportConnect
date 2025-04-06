@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Services;
-using SportConnect.Utility;
 
 namespace SportConnect.Web.Areas.Identity.Pages.Account
 {
@@ -88,10 +87,6 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             [Display(Name = "Потвърди паролата")]
             public string? ConfirmPassword { get; set; }
 
-            public string? Role { get; set; }
-            [ValidateNever]
-            public IEnumerable<SelectListItem> RoleList { get; set; } = new List<SelectListItem>();
-
             [Required(ErrorMessage = "Моля, въведете потребителско име.")]
             [StringLength(100, ErrorMessage = "Tрябва да е от {2} до {1} символа", MinimumLength = 5)]
             [Display(Name = "Потребителско име")]
@@ -125,22 +120,8 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (!await _roleManager.RoleExistsAsync(SD.AdminRole))
-            {
-                await _roleManager.CreateAsync(new IdentityRole(SD.AdminRole));
-            }
-            if (!await _roleManager.RoleExistsAsync(SD.UserRole))
-            {
-                await _roleManager.CreateAsync(new IdentityRole(SD.UserRole));
-            }
-            var roles = _roleManager.Roles.Select(x => x.Name).ToList();
             Input = new()
             {
-                RoleList = roles.Select(y => new SelectListItem
-                {
-                    Value = y,
-                    Text = y,
-                }).ToList(),
                 CountryList = _countryService.GetAllCountries()
             };
             ReturnUrl = returnUrl;
@@ -170,7 +151,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 
             if (Input.Username != null)
             {
-                if ((await _repository.GetAll()).Any(s => s.UserName == Input.Username && s.Id != Input.Username))
+                if ((await _repository.GetAll()).Any(s => s.UserName == Input.Username))
                 {
                     ModelState.AddModelError("Input.Username", "Заето.");
                 }
@@ -234,7 +215,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 var user = new SportConnectUser
                 {
                     FullName = $"{Input.FirstName} {Input.LastName}",
-                    DateOfBirth = (DateTime)Input.DateOfBirth,
+                    DateOfBirth = Input.DateOfBirth.Value.Date.ToString("yyyy-MM-dd"),
                     Country = Input.Country,
                     ImageUrl = Input.ProfileImage
                 };
@@ -247,14 +228,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    if (!string.IsNullOrEmpty(Input.Role))
-                    {
-                        await _userManager.AddToRoleAsync(user, Input.Role);
-                    }
-                    else
-                    {
-                        await _userManager.AddToRoleAsync(user, SD.UserRole);
-                    }
+                    await _userManager.AddToRoleAsync(user, "Потребител");
 
                     var userId = await _userManager.GetUserIdAsync(user);
 
@@ -267,19 +241,14 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 }
             }
 
-            var roles = _roleManager.Roles.Select(x => x.Name).ToList();
             Input = new()
             {
-                RoleList = roles.Select(y => new SelectListItem
-                {
-                    Value = y,
-                    Text = y,
-                }).ToList(),
                 CountryList = _countryService.GetAllCountries()
             };
             ModelState.AddModelError("Input.ProfileImage", "Моля, качете снимка.");
             return Page();
         }
+
         private async Task<IdentityUser> CreateUser()
         {
             try

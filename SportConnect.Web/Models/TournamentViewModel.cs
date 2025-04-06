@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 public class TournamentViewModel
 {
-    public int? PreviousId { get; set; }
+    public string? PreviousId { get; set; }
     public bool? Approved { get; set; }
 
-    public int? Id { get; set; }
+    public string? Id { get; set; }
     public string? Name { get; set; }
 
     public string? Description { get; set; }
@@ -31,7 +31,7 @@ public class TournamentViewModel
     public string? Country { get; set; }
     public IEnumerable<SelectListItem>? CountryList { get; set; } = new List<SelectListItem>();
 
-    public int? SportId { get; set; }
+    public string? SportId { get; set; }
     public SelectList? Sports { get; set; }
 
     public string? ImageUrl { get; set; }
@@ -50,7 +50,7 @@ public class TournamentViewModel
             Deadline = (DateTime)Deadline,
             Country = Country,
             ImageUrl = ImageUrl,
-            SportId = (int)SportId,
+            SportId = SportId,
         };
     }
 }

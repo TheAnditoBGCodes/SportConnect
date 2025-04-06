@@ -8,6 +8,7 @@ using SportConnect.DataAccess.Repository;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Services;
+using SportConnect.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -506,7 +506,7 @@ else
                                 </div>
                                 @{
                                     string userId = ViewBag.UserId;
-                                    int tournamentid = tournament.Id;
+                                    string tournamentid = tournament.Id;
                                 }
                                 @if (tournament.Organizer.Id != userId && !User.IsInRole(SD.AdminRole) && tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) < DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
                                 {

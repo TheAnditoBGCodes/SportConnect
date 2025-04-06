@@ -63,12 +63,7 @@ namespace SportConnect.DataAccess.Repository
             return await _dbSet.Where(filter).ToListAsync();
         }
 
-        public async Task<T?> GetById(int id)
-        {
-            return await _dbSet.FindAsync(id);
-        }
-
-        public async Task<T?> GetUserById(string id)
+        public async Task<T?> GetById(string id)
         {
             return await _dbSet.FindAsync(id);
         }

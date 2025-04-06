@@ -615,9 +615,10 @@ else
                                 </div>
 
                                 @{
-                                    int age = DateTime.Now.Year - user.DateOfBirth.Year;
-                                    if (DateTime.Now.Month < user.DateOfBirth.Month ||
-                                    (DateTime.Now.Month == user.DateOfBirth.Month && DateTime.Now.Day < user.DateOfBirth.Day))
+                                    DateTime date = DateTime.Parse(user.DateOfBirth);
+                                    int age = DateTime.Now.Year - date.Year;
+                                    if (DateTime.Now.Month < date.Month ||
+                                    (DateTime.Now.Month == date.Month && DateTime.Now.Day < date.Day))
                                     {
                                         age--;
                                     }
@@ -627,7 +628,7 @@ else
                                 <div class="info-section">
                                     <strong class="d-block">Дата на раждане</strong>
                                     <small>
-                                        @user.DateOfBirth.ToString("dd.MM.yyyy") (@age години)
+                                        @date.Date.ToString("dd.MM.yyyy") (@age години)
                                     </small>
                                 </div>
                             </div>

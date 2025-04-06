@@ -103,7 +103,7 @@ namespace SportConnect.Web.Controllers
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
-        public async Task<IActionResult> EditSport(int id)
+        public async Task<IActionResult> EditSport(string id)
         {
             var entity = await _sportRepository.GetById(id);
             var model = new SportViewModel
@@ -152,10 +152,10 @@ namespace SportConnect.Web.Controllers
             if (ModelState.IsValid)
             {
                 // Reload the entity from the database to avoid tracking multiple instances
-                var dbSport = (await _sportRepository.GetById((int)sport.Id));
+                var dbSport = (await _sportRepository.GetById(sport.Id));
 
                 // Copy the values from the form submission (this avoids tracking conflicts)
-                dbSport.Id = (int)sport.Id;
+                dbSport.Id = sport.Id;
                 dbSport.Name = sport.Name;
                 dbSport.Description = sport.Description;
                 dbSport.ImageUrl = sport.ImageUrl;
@@ -167,7 +167,7 @@ namespace SportConnect.Web.Controllers
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
-        public async Task<IActionResult> DeleteSport(int id)
+        public async Task<IActionResult> DeleteSport(string id)
         {
             var sport = await _sportRepository.GetById(id);
             var model = new SportViewModel()
@@ -181,7 +181,7 @@ namespace SportConnect.Web.Controllers
 
         [HttpPost]
         [Authorize(Roles = $"{SD.AdminRole}")]
-        public async Task<IActionResult> DeleteSport(int id, string ConfirmText, SportViewModel model)
+        public async Task<IActionResult> DeleteSport(string id, string ConfirmText, SportViewModel model)
         {
             if (ConfirmText == "ПОТВЪРДИ")
             {

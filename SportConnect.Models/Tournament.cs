@@ -6,7 +6,7 @@ namespace SportConnect.Models
     public class Tournament
     {
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         public string Name { get; set; }
 
@@ -24,7 +24,7 @@ namespace SportConnect.Models
         public string ImageUrl { get; set; }
 
         [ForeignKey(nameof(Sport))]
-        public int SportId { get; set; }
+        public string SportId { get; set; }
         public Sport Sport { get; set; }
 
         public IEnumerable<Participation> Participations { get; set; } = new List<Participation>();
