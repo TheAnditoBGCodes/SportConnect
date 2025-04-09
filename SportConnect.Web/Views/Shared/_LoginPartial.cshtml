@@ -6,126 +6,120 @@
 
 @{
     var user = await UserManager.GetUserAsync(User);
-    var userName = user?.UserName ?? "Потребител"; // Default if null
-    var profileImage = user?.ImageUrl ?? "/images/default-profile.png"; // Default image if no profile image is set
+    var userName = user?.UserName ?? "Потребител";
+    var profileImage = user?.ImageUrl ?? "/images/default-profile.png";
 }
 
 <style>
-    /* Base styles for navbar */
     .navbar-nav {
         font-size: 1rem;
     }
-    
+
     .nav-link.text-dark.d-flex.align-items-center img {
         width: 30px;
         height: 30px;
     }
-    
-    /* Responsive adjustments for navbar */
+
     @@media (max-width: 768px) {
         .navbar-nav {
             width: 100%;
         }
-        
+
         .nav-item.d-flex.align-items-center {
             margin-bottom: 0.5rem;
         }
-        
+
         .nav-link {
             font-size: 0.95rem;
         }
-        
-        /* Ensure profile image and username stay on same line */
-        .nav-link.text-dark.d-flex.align-items-center {
-            display: flex !important;
-        }
-        
-        /* Adjust logout button spacing */
+
+            .nav-link.text-dark.d-flex.align-items-center {
+                display: flex !important;
+            }
+
         #logoutForm {
             margin-top: 0.25rem;
         }
     }
-    
-    /* Mobile adjustments */
+
     @@media (max-width: 480px) {
         .navbar-nav {
             font-size: 0.9rem !important;
         }
-        
+
         .nav-item.d-flex.align-items-center {
             flex-direction: column;
             align-items: flex-start !important;
             margin-bottom: 0.25rem;
         }
-        
-        /* Adjust profile section */
+
         .nav-link.text-dark.d-flex.align-items-center {
             padding: 0.25rem 0;
         }
-        
+
         .nav-link img {
             width: 25px;
             height: 25px;
         }
-        
+
         .fw-bolder.d-inline-block {
             font-size: 0.85rem;
         }
-        
-        /* Adjust logout button */
+
+
         #logout {
             padding: 0.25rem 0.5rem;
             font-size: 0.85rem;
         }
-        
-        /* Login/Register buttons */
+
+
         #login, #register {
             padding: 0.25rem;
             font-size: 0.85rem;
         }
     }
-    
-    /* Very small devices */
+
+
     @@media (max-width: 320px) {
         .navbar-nav {
             font-size: 0.8rem !important;
         }
-        
+
         .nav-link img {
             width: 20px;
             height: 20px;
         }
-        
+
         .fw-bolder.d-inline-block {
             font-size: 0.8rem;
         }
-        
+
         #logout, #login, #register {
             font-size: 0.8rem;
         }
     }
-    
-    /* Landscape mode for mobile */
+
+
     @@media (max-height: 480px) and (orientation: landscape) {
         .navbar-nav {
             flex-direction: row !important;
             flex-wrap: wrap;
             justify-content: center;
         }
-        
+
         .nav-item {
             margin: 0 0.5rem;
         }
     }
-    
-    /* Tablet landscape adjustments */
+
+
     @@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
         .navbar-nav {
             justify-content: flex-end;
         }
     }
-    
-    /* Print styles */
+
+
     @@media print {
         .navbar-nav {
             display: none !important;

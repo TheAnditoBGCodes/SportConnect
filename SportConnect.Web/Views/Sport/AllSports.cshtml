@@ -26,7 +26,7 @@
 
     .sticky-search {
         position: sticky;
-        top: 90px; /* Adjust based on your header height */
+        top: 90px;
         background-color: #8ee697 !important;
         z-index: 999;
         width: 1320px;
@@ -34,21 +34,21 @@
         border-radius: 8px;
     }
 
-    /* Form controls styling */
+
     .search-control {
         font-size: 1rem;
         padding: 0.5rem 0.75rem;
         background-color: #dcf7de !important;
     }
 
-    /* Button group styling */
+
     .btn-group {
         display: flex;
         justify-content: center;
         gap: 20px;
     }
 
-    /* User card styling */
+
     .user-card {
         border-radius: 8px;
         border: 1px solid #e9ecef;
@@ -64,7 +64,7 @@
         object-fit: cover;
     }
 
-    /* Button styling */
+
     .btn-danger {
         background-color: red;
         border-color: red;
@@ -79,7 +79,7 @@
             transform: translateY(-2px);
         }
 
-    /* Button styling */
+
     .btn-warning {
         background-color: #AA7700;
         border-color: #AA7700;
@@ -94,7 +94,7 @@
             transform: translateY(-2px);
         }
 
-    /* Button styling */
+
     .btn-primary {
         background-color: blue;
         border-color: blue;
@@ -109,7 +109,7 @@
             transform: translateY(-2px);
         }
 
-    /* Button styling */
+
     .btn-success {
         background-color: green;
         border-color: green;
@@ -124,7 +124,7 @@
             transform: translateY(-2px);
         }
 
-    /* Button styling */
+
     .btn-secondary {
         background-color: grey;
         border-color: grey;
@@ -139,21 +139,21 @@
             transform: translateY(-2px);
         }
 
-    /* Info sections styling */
+
     .info-section {
         padding: 0 15px;
         text-align: center;
     }
 
         .info-section h3 {
-            color: #000 !important; /* Black color */
-            font-weight: bolder !important; /* Bolder */
+            color: #000 !important;
+            font-weight: bolder !important;
         }
 
-        /* Improved contrast for username */
+
         .info-section p {
             font-weight: normal;
-            color: #1f1f1f !important; /* Darker text color for better contrast */
+            color: #1f1f1f !important;
         }
 
     .sport-card {
@@ -177,11 +177,12 @@
         background-color: #8ee697 !important;
     }
 
-    /* Responsive adjustments for AllSports view */
+
     @@media (max-width: 1200px) {
         .sticky-search {
             width: 100%;
         }
+
         .container1 {
             width: 95%;
         }
@@ -191,12 +192,15 @@
         .sport-card {
             margin-bottom: 0.75rem;
         }
+
         .info-section h3 {
             font-size: 1.25rem;
         }
+
         .info-section p {
             font-size: 0.9rem;
         }
+
         .btn-group {
             gap: 10px;
         }
@@ -207,20 +211,25 @@
             top: 70px;
             padding: 0.4rem;
         }
+
         .search-control {
             font-size: 0.9rem;
         }
+
         .btn-primary, .btn-success, .btn-warning, .btn-danger {
             padding: 0.5rem;
             font-size: 0.9rem;
         }
+
         .page-header {
             font-size: 1.75rem;
         }
+
         .sport-btn {
             font-size: 0.75rem !important;
             padding: 0.4rem !important;
         }
+
         .btn-group {
             gap: 5px;
         }
@@ -231,34 +240,42 @@
             top: 60px;
             padding: 0.3rem;
         }
+
         .search-control {
             font-size: 0.85rem;
             padding: 0.4rem 0.5rem;
         }
+
         .sport-card {
             margin-bottom: 0.5rem;
         }
+
         .page-header {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
         }
+
         .info-section h3 {
             font-size: 1.1rem;
             margin-bottom: 0.25rem;
         }
+
         .info-section p {
             font-size: 0.8rem;
             margin-bottom: 0.5rem !important;
         }
+
         .btn-group {
             flex-direction: column;
             gap: 0.25rem;
         }
+
         .sport-btn {
             font-size: 0.7rem !important;
             padding: 0.3rem !important;
             width: 100%;
         }
+
         .card-body {
             padding: 0.25rem !important;
         }
@@ -269,20 +286,25 @@
             flex-direction: column;
             gap: 0.25rem;
         }
+
         .d-flex.justify-content-center {
             flex-direction: column;
             width: 100%;
         }
+
         .search-control, .btn-primary, .btn-success {
             width: 100%;
             margin: 0.25rem 0 !important;
         }
+
         .no-container {
             max-width: 90% !important;
         }
-        .no-container h1 {
-            font-size: 2.5rem !important;
-        }
+
+            .no-container h1 {
+                font-size: 2.5rem !important;
+            }
+
         .card-img-top {
             height: 150px;
             object-fit: cover;
@@ -293,49 +315,56 @@
         .page-header {
             font-size: 1.25rem;
         }
+
         .no-container h1 {
             font-size: 2rem !important;
         }
+
         .info-section h3 {
             font-size: 1rem;
         }
+
         .info-section p {
             font-size: 0.75rem;
         }
+
         .sport-btn {
             font-size: 0.65rem !important;
             padding: 0.25rem !important;
         }
+
         .card-img-top {
             height: 120px;
         }
     }
 
-    /* Height-based media queries */
+
     @@media (max-height: 600px) {
         .container {
             min-height: auto !important;
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
         }
+
         .sticky-search {
             position: relative;
             top: 0;
         }
     }
 
-    /* Tablet landscape adjustments */
+
     @@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
         .sport-card {
             height: 100%;
         }
+
         .card-img-top {
             height: 120px;
             object-fit: cover;
         }
     }
 
-    /* High resolution screens */
+
     @@media (min-width: 1400px) {
         .container1 {
             max-width: 1320px;
@@ -364,36 +393,44 @@
                 <h2 class="page-header text-center">Спортове</h2>
                 <div class="justify-content-center align-items-center sticky-search">
                     <form method="get" class="d-flex justify-content-center">
-                        <!-- Search Input -->
                         <input id="sportSearch" name="filter.Name" class="form-control search-control" placeholder="Име" value="@Model.Name" />
 
-                        <!-- Submit Button -->
                         <button type="submit" class="btn btn-primary ms-2" style="font-size: 1rem;">Търси</button>
 
                         <a asp-controller="Sport" asp-action="AddSport" class="btn btn-success text-center ms-2" style="font-size: 1rem;">Добави</a>
                     </form>
                 </div>
 
-                <!-- Row with centered cards -->
                 <div class="row justify-content-center align-content-center mt-2 mb-4" id="sportsList">
-                    @foreach (var item in Model.FilteredSports)
+                    @if (Model.FilteredSports.Count == 0)
                     {
-                        <div id="sportItem" class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3 sport-item text-center" style="transition: transform 0.3s ease;">
-                            <div class="card sport-card">
-                                <img src="@item.ImageUrl" class="card-img-top sport-img" alt="@item.Name">
-                                <div class="card-body" style="padding: 0rem;">
-                                    <div class="info-section">
-                                        <h3 class="fw-bold">@item.Name</h3>
-                                        <p style="margin-bottom: 8px;">@item.Description</p>
-                                    </div>
-                                    <div class="btn-group d-flex justify-content-between gap-0">
-                                        <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" asp-route-returnUrl="@Url.Action("AllSports", "Sport")" class="btn btn-primary btn-sm sport-btn">Турнири</a>
-                                        <a asp-controller="Sport" asp-action="EditSport" asp-route-id="@item.Id" class="btn btn-warning btn-sm text-white sport-btn">Редактирай</a>
-                                        <a asp-controller="Sport" asp-action="DeleteSport" asp-route-id="@item.Id" class="btn btn-danger btn-sm sport-btn">Изтрий</a>
+                        <div class="d-flex justify-content-center">
+                            <div class="no-container text-center">
+                                <h1 style="font-size: 2rem;">Няма намерени резултати</h1>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model.FilteredSports)
+                        {
+                            <div id="sportItem" class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3 sport-item text-center" style="transition: transform 0.3s ease;">
+                                <div class="card sport-card">
+                                    <img src="@item.ImageUrl" class="card-img-top sport-img" alt="@item.Name">
+                                    <div class="card-body" style="padding: 0rem;">
+                                        <div class="info-section">
+                                            <h3 class="fw-bold">@item.Name</h3>
+                                            <p style="margin-bottom: 8px;">@item.Description</p>
+                                        </div>
+                                        <div class="btn-group d-flex justify-content-between gap-0">
+                                            <a asp-controller="Tournament" asp-action="SportTournaments" asp-route-id="@item.Id" asp-route-returnUrl="@Url.Action("AllSports", "Sport")" class="btn btn-primary btn-sm sport-btn">Турнири</a>
+                                            <a asp-controller="Sport" asp-action="EditSport" asp-route-id="@item.Id" class="btn btn-warning btn-sm text-white sport-btn">Редактирай</a>
+                                            <a asp-controller="Sport" asp-action="DeleteSport" asp-route-id="@item.Id" class="btn btn-danger btn-sm sport-btn">Изтрий</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
                 </div>
             </div>
@@ -417,15 +454,12 @@ else
                 <h2 class="page-header text-center">Спортове</h2>
                 <div class="justify-content-center align-items-center sticky-search">
                     <form method="get" class="d-flex justify-content-center">
-                        <!-- Search Input -->
                         <input id="sportSearch" name="filter.Name" class="form-control search-control" placeholder="Име" value="@Model.Name" />
 
-                        <!-- Submit Button -->
                         <button type="submit" class="btn btn-primary ms-2" style="font-size: 1rem;">Търси</button>
                     </form>
                 </div>
 
-                <!-- Row with centered cards -->
                 <div class="row justify-content-center align-content-center mt-2 mb-4" id="sportsList">
                     @foreach (var item in Model.FilteredSports)
                     {

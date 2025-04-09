@@ -225,37 +225,30 @@ namespace SportConnect.DataAccess.Migrations
                         new
                         {
                             Id = "d0d1c1a1-e6a6-4a2e-a56b-3d516c897101",
-                            Description = "Игра на прецизност и стратегия със щека и топки",
+                            Description = "Игра с щека и топки",
                             ImageUrl = "\\uploads\\sports\\snooker.jpg",
                             Name = "Снукър"
                         },
                         new
                         {
-                            Id = "bcb52d80-d07a-4b2d-b5b0-bc83987fbf8e",
-                            Description = "Дуел със саби и бърза реакция",
-                            ImageUrl = "\\uploads\\sports\\fencing.jpg",
-                            Name = "Фехтовка"
-                        },
-                        new
-                        {
-                            Id = "ed559b0b-45f3-419d-9fe1-1beceac85b44",
-                            Description = "Най-основната форма на спорт – бягане, скокове и хвърляния",
-                            ImageUrl = "\\uploads\\sports\\athletics.jpg",
-                            Name = "Лека атлетика"
-                        },
-                        new
-                        {
-                            Id = "2b0ff87f-1212-4c5b-8c3f-bcfb7fe3e5bc",
-                            Description = "Изкачване на вертикални повърхности с техника и сила",
-                            ImageUrl = "\\uploads\\sports\\climbing.jpg",
-                            Name = "Скално катерене"
-                        },
-                        new
-                        {
                             Id = "3e20a87e-d7d5-45f6-b775-7f394a4b31f1",
-                            Description = "Интелектуален спорт на стратегия и логика",
+                            Description = "Интелектуален спорт с фигури",
                             ImageUrl = "\\uploads\\sports\\chess.jpg",
-                            Name = "Шах"
+                            Name = "Шахмат"
+                        },
+                        new
+                        {
+                            Id = "89d1cc17-0a41-47a2-a9c6-4c9f54b3b1a1",
+                            Description = "Игра на хвърляне на стрелички",
+                            ImageUrl = "\\uploads\\sports\\darts.jpg",
+                            Name = "Дартс"
+                        },
+                        new
+                        {
+                            Id = "bf76e9a3-7f2d-4d11-82d2-6b547531ec71",
+                            Description = "Спорт с ракети и мрежа",
+                            ImageUrl = "\\uploads\\sports\\tennis.jpg",
+                            Name = "Тенис"
                         });
                 });
 
@@ -347,18 +340,18 @@ namespace SportConnect.DataAccess.Migrations
                             ConcurrencyStamp = "53b3c2bc-546e-4207-94b0-1f464c123aaa",
                             Country = "България",
                             DateOfBirth = "2006-03-27",
-                            Email = "andrianiliev28@gmail.com",
+                            Email = "admin@sportconnect.com",
                             EmailConfirmed = true,
-                            FullName = "Андриян Илиев",
+                            FullName = "SportConnect Админ",
                             ImageUrl = "\\uploads\\admin.jpg",
                             LockoutEnabled = false,
-                            NormalizedEmail = "ANDRIANILIEV28@GMAIL.COM",
-                            NormalizedUserName = "ANDYFROZEN2006",
+                            NormalizedEmail = "ADMIN@SPORTCONNECT.COM",
+                            NormalizedUserName = "SPORTCONNECTADMIN",
                             PasswordHash = "AQAAAAIAAYagAAAAEC2djeaOGVbK4PxfKvpPCnAQBruCM0Jqdy0yX9VFwNrCEp0kQp1l4Zed8A2QXlW0gQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "d92e94ae-9696-409a-8f12-6d12f95be5a4",
                             TwoFactorEnabled = false,
-                            UserName = "andyfrozen2006"
+                            UserName = "sportconnectadmin"
                         });
                 });
 

@@ -1,9 +1,11 @@
-﻿
-@using SportConnect.Models
+﻿@using SportConnect.Models
 @model TournamentViewModel
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
 <style>
-    /* Ensure modal content does not overflow */
+
     .modal-body {
         overflow: hidden;
     }
@@ -16,7 +18,7 @@
         justify-content: center;
         width: 100%;
         color: red;
-        text-decoration: none; /* Removes underline */
+        text-decoration: none;
         font-weight: 600;
         letter-spacing: 0.5px;
         border-radius: 6px;
@@ -24,7 +26,7 @@
         display: flex;
     }
 
-    /* Button styling */
+
     .btn-warning {
         background-color: #AA7700;
         border-color: #AA7700;
@@ -39,7 +41,7 @@
             transform: translateY(-2px);
         }
 
-    /* Button styling */
+
     .btn-success {
         background-color: green;
         border-color: green;
@@ -54,7 +56,7 @@
             transform: translateY(-2px);
         }
 
-    /* Button styling */
+
     .btn-secondary {
         background-color: grey;
         border-color: grey;
@@ -69,14 +71,14 @@
             transform: translateY(-2px);
         }
 
-    /* Make sure the image scales to fit the container */
+
     #cropImage {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
 
-    /* Hide any overflow if the crop container goes out of bounds */
+
     #cropContainer {
         width: 100%;
         height: 100%;
@@ -89,7 +91,7 @@
         align-content: center;
     }
 
-    /* Modal footer for buttons */
+
     .modal-footer {
         display: flex;
         justify-content: space-between;
@@ -99,7 +101,7 @@
         opacity: 50%;
     }
 
-    /* Image preview container with 1:1 aspect ratio */
+
     #imagePreview {
         width: 100%;
         aspect-ratio: 1/1;
@@ -112,17 +114,17 @@
         align-items: center;
         overflow: hidden;
         object-fit: cover;
-        max-height: 200px; /* Smaller image preview */
+        max-height: 200px;
     }
 
-    /* Ensuring image fits within the preview */
+
     #previewImage {
         width: inherit;
         height: inherit;
         object-fit: cover;
     }
 
-    /* Smaller form container */
+
     .form-container {
         width: 1320px;
         max-height: 80vh;
@@ -132,7 +134,7 @@
         background-color: #dcf7de !important;
     }
 
-    /* Compact registration box */
+
     .registration-box {
         background-color: #8ee697;
         border-radius: 8px;
@@ -140,12 +142,12 @@
         max-width: 100%;
     }
 
-    /* Smaller spacing between elements */
+
     .mb-2 {
         margin-bottom: 0.5rem !important;
     }
 
-    /* Adjust form input heights */
+
     .form-floating .form-control,
     .form-floating .form-select {
         height: calc(2.5rem + 10px);
@@ -153,7 +155,7 @@
         padding-bottom: 0.25rem;
     }
 
-    /* Button styling */
+
     .btn-primary {
         background-color: #3498db;
         border-color: #3498db;
@@ -168,7 +170,7 @@
             transform: translateY(-2px);
         }
 
-    /* Register link styling */
+
     .register-link {
         display: inline-block;
         color: #3498db;
@@ -186,20 +188,20 @@
         padding-top: 0.5rem;
     }
 
-    /* Adjust button size */
+
     #registerSubmit {
         padding: 0.375rem 0.75rem;
         font-size: 1rem;
     }
 
-    /* Responsive adjustments */
+
     @@media (max-width: 768px) {
         .form-container {
             padding: 0 10px;
         }
     }
 
-    /* Additional responsive adjustments */
+
     @@media (max-width: 480px) {
         .registration-box {
             padding: 0.5rem;
@@ -273,7 +275,7 @@
         }
     }
 
-    /* Height-based media queries */
+
     @@media (max-height: 600px) {
         .container-fluid {
             min-height: auto !important;
@@ -290,7 +292,7 @@
         }
     }
 
-    /* Tablet landscape adjustments */
+
     @@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
         .container-fluid {
             min-height: 85vh !important;
@@ -301,7 +303,7 @@
         }
     }
 
-    /* High resolution screens */
+
     @@media (min-width: 1400px) {
         .registration-box {
             max-width: 1200px;
@@ -309,7 +311,7 @@
         }
     }
 
-    /* Print styles */
+
     @@media print {
         .container-fluid {
             min-height: auto !important;
@@ -326,7 +328,7 @@
         }
     }
 
-    /* Handle column stacking on mobile */
+
     @@media (max-width: 767px) {
         .col-md-8,
         .col-md-4 {
@@ -355,9 +357,6 @@
     }
 </style>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-
 <div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 76vh;">
     <div class="row justify-content-center" style="width: 1260px !important;">
         <div class="col-12 col-md-8 col-lg-6 form-container" style="width: 1260px !important;">
@@ -365,7 +364,6 @@
                 <h2 class="text-center" style="font-size: 2rem;">Промени турнир</h2>
 
                 <div class="row mb-2 justify-content-between align-content-center" style="min-height: 300px;">
-                    <!-- Left Column: User Inputs -->
                     <div class="col-md-8 align-content-center" style="min-height: 300px; width: 932px;">
 
                         <div class="row mb-2" style="display: none;">
@@ -388,7 +386,6 @@
                             </div>
                         </div>
 
-                        <!-- Row 1: Username and Email -->
                         <div class="row mb-2">
                             <div class="col-12 col-md-6">
                                 <div class="form-floating">
@@ -468,7 +465,6 @@
                         </div>
                     </div>
 
-                    <!-- Right Column: Image Upload & Preview -->
                     <div class="col-md-4 justify-content-end" style="height: inherit; align-content: center; padding-left: 0px;  padding-right: 12px; max-width: 321px; max-height: 1000px;">
                         <div style="font-size: 1rem; width:309px !important;">
                             <div class="col-12" style="font-size: 1rem; width:309px !important;">
@@ -478,19 +474,16 @@
                                 <span asp-validation-for="@Model.ImageUrl" class="text-danger" style="font-size: 1rem;"></span>
                                 <div id="imagePreview" class="mt-2 d-flex justify-content-center align-items-center position-relative"
                                      style="height: 232px !important; width: 309px !important; background-color: #dcf7de !important;">
-                                    <!-- Centered Text -->
                                     <p id="profileText" class="position-absolute text-center"
                                        style="font-size: 1rem; color: #000000; display: @(string.IsNullOrEmpty(Model.ImageUrl) ? "block" : "none");">
                                         Снимка
                                     </p>
 
-                                    <!-- Image -->
                                     <img id="previewImage" src="@Model.ImageUrl" alt="Preview" class="img-fluid" style="height: 232px !important; width: 309px !important; display: @(string.IsNullOrEmpty(Model.ImageUrl) ? "none" : "block");" />
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Hidden input to store the image URL -->
                         <input type="hidden" id="croppedImageData" asp-for="@Model.ImageUrl" />
                     </div>
                 </div>
@@ -504,7 +497,6 @@
     </div>
 </div>
 
-<!-- Modal for Image Cropping -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -523,33 +515,25 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        let today = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
-
+        let today = new Date().toISOString().split("T")[0];
         let eventDateInput = document.getElementById("Model_Date");
         let deadlineDateInput = document.getElementById("Model_Deadline");
 
-        // Set initial min dates for event and deadline
-        eventDateInput.setAttribute("min", today);
+                eventDateInput.setAttribute("min", today);
         deadlineDateInput.setAttribute("min", today);
 
-        // When event date is selected, update deadline max date
-        eventDateInput.addEventListener("change", function () {
+                eventDateInput.addEventListener("change", function () {
             let selectedDate = eventDateInput.value;
             if (selectedDate) {
-                deadlineDateInput.setAttribute("max", selectedDate);  // Limit deadline to the event date
-            } else {
-                deadlineDateInput.removeAttribute("max"); // Reset if no event date is selected
-            }
+                deadlineDateInput.setAttribute("max", selectedDate);              } else {
+                deadlineDateInput.removeAttribute("max");             }
         });
 
-        // When deadline is selected, update event date min date
-        deadlineDateInput.addEventListener("change", function () {
+                deadlineDateInput.addEventListener("change", function () {
             let selectedDeadline = deadlineDateInput.value;
             if (selectedDeadline) {
-                eventDateInput.setAttribute("min", selectedDeadline);  // Prevent event date before deadline
-            } else {
-                eventDateInput.setAttribute("min", today); // Reset to today's date if no deadline is set
-            }
+                eventDateInput.setAttribute("min", selectedDeadline);              } else {
+                eventDateInput.setAttribute("min", today);             }
         });
     });
 
@@ -566,13 +550,10 @@
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
-                // Show image in preview before cropping
-                previewImage.src = e.target.result;
+                                previewImage.src = e.target.result;
                 previewImage.style.display = 'block';
-                profileText.style.display = 'none'; // Hide placeholder text
-
-                // Show image in crop modal
-                cropImage.src = e.target.result;
+                profileText.style.display = 'none';
+                                cropImage.src = e.target.result;
                 modal.show();
 
                 modal._element.addEventListener('shown.bs.modal', function () {
@@ -586,8 +567,7 @@
                         responsive: true,
                         zoomable: false,
                         background: true,
-                        minContainerHeight: 450, // Ensure the container height fits the defined height of modal-body
-                    });
+                        minContainerHeight: 450,                     });
                 });
             };
             reader.readAsDataURL(file);
@@ -598,40 +578,31 @@
         const previewImage = document.getElementById('previewImage');
         const previewImager = document.getElementById('imagePreview');
 
-        // Get cropped image as base64
-        const croppedCanvas = cropper.getCroppedCanvas();
+                const croppedCanvas = cropper.getCroppedCanvas();
         const croppedDataUrl = croppedCanvas.toDataURL();
 
-        // Set the cropped image preview
-        previewImage.src = croppedDataUrl;
+                previewImage.src = croppedDataUrl;
         previewImage.style.display = 'block';
         previewImager.classList.add('mb-2', 'w-100', 'justify-content-center');
 
-        // Set the hidden input value
-        document.getElementById('croppedImageData').value = croppedDataUrl;
+                document.getElementById('croppedImageData').value = croppedDataUrl;
 
-        // Close the modal
-        let modalElement = document.getElementById('imageModal');
+                let modalElement = document.getElementById('imageModal');
         let modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
     });
 
-    // Reset Cropper Button (left button)
-    document.getElementById('resetCropper').addEventListener('click', function () {
+        document.getElementById('resetCropper').addEventListener('click', function () {
         if (cropper) {
-            cropper.reset();  // Reset cropper to original size
-        }
+            cropper.reset();          }
     });
 
-    // On form submit, set the ProfileImage input value to the cropped image URL
-    document.getElementById('registerForm').addEventListener('submit', function (event) {
+        document.getElementById('registerForm').addEventListener('submit', function (event) {
         const profileImageInput = document.querySelector('input[name="file"]');
         const previewImage = document.getElementById('previewImage');
 
-        // If the preview image exists, set its src value to the ProfileImage input
-        if (previewImage.style.display === 'block') {
-            // Ensure the profile image input gets the cropped image URL as its value
-            profileImageInput.value = previewImage.src;
+                if (previewImage.style.display === 'block') {
+                        profileImageInput.value = previewImage.src;
         }
     });
 </script>

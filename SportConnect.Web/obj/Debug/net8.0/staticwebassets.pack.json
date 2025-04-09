@@ -2,7 +2,7 @@
   "Files": [
     {
       "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\SportConnect.Web.bundle.scp.css",
-      "PackagePath": "staticwebassets\\SportConnect.Web.bundle.scp.css"
+      "PackagePath": "staticwebassets\\SportConnect.Web.qzovy46ihm.bundle.scp.css"
     },
     {
       "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\css\\site.css",
@@ -249,24 +249,24 @@
       "PackagePath": "staticwebassets\\uploads\\admin.jpg"
     },
     {
-      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\sports\\athletics.jpg",
-      "PackagePath": "staticwebassets\\uploads\\sports\\athletics.jpg"
-    },
-    {
       "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\sports\\chess.jpg",
       "PackagePath": "staticwebassets\\uploads\\sports\\chess.jpg"
     },
     {
-      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\sports\\climbing.jpg",
-      "PackagePath": "staticwebassets\\uploads\\sports\\climbing.jpg"
-    },
-    {
-      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\sports\\fencing.jpg",
-      "PackagePath": "staticwebassets\\uploads\\sports\\fencing.jpg"
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\sports\\darts.jpg",
+      "PackagePath": "staticwebassets\\uploads\\sports\\darts.jpg"
     },
     {
       "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\sports\\snooker.jpg",
       "PackagePath": "staticwebassets\\uploads\\sports\\snooker.jpg"
+    },
+    {
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\sports\\tennis.jpg",
+      "PackagePath": "staticwebassets\\uploads\\sports\\tennis.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.SportConnect.Web.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.SportConnect.Web.Microsoft.AspNetCore.StaticWebAssets.props",

@@ -57,7 +57,6 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             public bool RememberMe { get; set; }
         }
 
-        // Asynchronous method for GET request
         public async Task OnGetAsync(string returnUrl = null)
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
@@ -67,14 +66,12 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 
             returnUrl ??= Url.Content("~/");
 
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme); // Ensure async logout
-
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             ReturnUrl = returnUrl;
         }
 
-        // Asynchronous method for POST request
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             if (string.IsNullOrEmpty(Input.UserNameOrEmail))
@@ -87,7 +84,6 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 ModelState.AddModelError("Input.Password", "Моля въведете парола.");
             }
 
-            // If the model state is not valid, return the page with validation errors
             if (!ModelState.IsValid)
             {
                 return Page();

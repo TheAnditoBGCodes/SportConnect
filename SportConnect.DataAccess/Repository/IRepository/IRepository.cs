@@ -8,7 +8,7 @@ namespace SportConnect.DataAccess.Repository.IRepository
         Task DeleteRange(IEnumerable<T> range);
 
         Task<T?> GetById(string id);
-        
+
         Task Add(T entity);
 
         Task Save();
@@ -19,7 +19,7 @@ namespace SportConnect.DataAccess.Repository.IRepository
 
         Task<IEnumerable<T>> GetAll();
 
-        Task<IEnumerable<T>> GetAllBy(Expression<Func<T,bool>> filter);
+        Task<IEnumerable<T>> GetAllBy(Expression<Func<T, bool>> filter);
 
         Task<IEnumerable<T>> AllWithIncludes(params Expression<Func<T, object>>[] includes);
     }

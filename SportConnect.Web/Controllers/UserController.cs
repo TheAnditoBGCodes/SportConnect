@@ -14,12 +14,12 @@ namespace SportConnect.Web.Controllers
 {
     public class UserController : Controller
     {
-        private readonly UserManager<SportConnectUser> _userManager;
+        public UserManager<SportConnectUser> _userManager;
         public IRepository<Tournament> _tournamentRepository { get; set; }
         public IRepository<Sport> _sportRepository { get; set; }
         public IRepository<SportConnectUser> _userRepository { get; set; }
         public IRepository<Participation> _participationRepository { get; set; }
-        private readonly SignInManager<SportConnectUser> _signInManager;
+        public SignInManager<SportConnectUser> _signInManager;
         public CountryService _countryService { get; set; }
 
         public UserController(UserManager<SportConnectUser> userManager, IRepository<Tournament> tournamentRepository, IRepository<Sport> sportRepository, IRepository<SportConnectUser> userRepository, IRepository<Participation> participationRepository, SignInManager<SportConnectUser> signInManager, CountryService countryService)
@@ -33,9 +33,8 @@ namespace SportConnect.Web.Controllers
             _countryService = countryService;
         }
 
-        private async Task<bool> IsValidUsername(string username)
+        public async Task<bool> IsValidUsername(string username)
         {
-            // Define the allowed characters (same as in Identity configuration)
             var allowedCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
             foreach (var c in username)
             {
@@ -50,6 +49,11 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public async Task<IActionResult> EditUser(string id, string returnUrl = null)
         {
+            var user = await _userRepository.GetById(id);
+            if (user == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
             var currentUser = await _userManager.GetUserAsync(this.User);
             ViewBag.UserId = currentUser.Id;
 
@@ -84,9 +88,7 @@ namespace SportConnect.Web.Controllers
                 };
             }
 
-            // Save returnUrl in ViewBag
-            ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllSports", "Sport"); // Default fallback
-            return View(model);
+            ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllSports", "Sport"); return View(model);
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
@@ -275,20 +277,22 @@ namespace SportConnect.Web.Controllers
         public async Task<IActionResult> AllUsers(UserViewModel? filter, string returnUrl)
         {
             HttpContext.Session.Remove("ReturnUrl");
-            if (filter == null)
+            var allSports = await _userRepository.GetAll(); if (filter == null)
             {
-                return View(new UserViewModel());
+                return View(new UserViewModel
+                {
+                    Users = allSports.ToList(),
+                    FilteredUsers = allSports.ToList()
+                });
             }
 
             var query = (await _userRepository.GetAll()).AsQueryable();
 
-            // Filter by country if selected
             if (!string.IsNullOrEmpty(filter.Country))
             {
                 query = query.Where(p => p.Country == filter.Country);
             }
 
-            // Filter by UserName or FullName if either contains the filter value, case-insensitive and trimming spaces
             if (!string.IsNullOrEmpty(filter.UserName))
             {
                 string trimmedFilter = filter.UserName.Trim().ToLower();
@@ -296,7 +300,6 @@ namespace SportConnect.Web.Controllers
                 query = query.Where(p => p.UserName.Trim().ToLower().Contains(trimmedFilter) || p.FullName.Trim().ToLower().Contains(trimmedFilter));
             }
 
-            // Filter by UserName or FullName if either contains the filter value, case-insensitive and trimming spaces
             if (!string.IsNullOrEmpty(filter.Email))
             {
                 string trimmedFilter = filter.Email.Trim().ToLower();
@@ -304,20 +307,16 @@ namespace SportConnect.Web.Controllers
                 query = query.Where(p => p.Email.Trim().ToLower().Contains(trimmedFilter));
             }
 
-            // Filter users by the specified birth year
             if (filter.BirthYear.HasValue)
             {
-                // Filter users born in the selected year
                 query = query.Where(p => DateTime.Parse(p.DateOfBirth).Year == filter.BirthYear);
             }
 
             var user = await _userManager.GetUserAsync(this.User);
 
-            // Get the list of countries for the dropdown
             ViewBag.Countries = _countryService.GetAllCountries();
             ViewBag.UserId = user.Id;
 
-            // Prepare the model with filtered data
             var model = new UserViewModel
             {
                 UserName = filter.UserName,
@@ -336,6 +335,10 @@ namespace SportConnect.Web.Controllers
         public async Task<IActionResult> DeleteUser(string id, string returnUrl = null)
         {
             var editedUser = (await _userRepository.GetById(id));
+            if (editedUser == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
             var names = editedUser.FullName.Split(' ').ToList();
 
             var model = new UserViewModel()
@@ -347,9 +350,7 @@ namespace SportConnect.Web.Controllers
                 ProfileImage = editedUser.ImageUrl
             };
 
-            // Save returnUrl in ViewBag
-            ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllSports", "Sport"); // Default fallback
-            return View(model);
+            ViewBag.ReturnUrl = returnUrl ?? Url.Action("AllSports", "Sport"); return View(model);
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]

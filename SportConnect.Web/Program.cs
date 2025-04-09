@@ -12,25 +12,20 @@ using SportConnect.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
 
-// Configure Database Context
 builder.Services.AddDbContext<SportConnectDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
     x => x.MigrationsAssembly("SportConnect.DataAccess")));
 
-// Configure Identity
 builder.Services.AddIdentity<SportConnectUser, IdentityRole>()
     .AddEntityFrameworkStores<SportConnectDbContext>()
     .AddDefaultTokenProviders();
 
-// Set Security Stamp Validator to enable immediate logout on user state change
 builder.Services.Configure<SecurityStampValidatorOptions>(options => options.ValidationInterval = TimeSpan.Zero);
 
-// Register Repositories
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddScoped<CountryService>();
@@ -41,15 +36,14 @@ var account = new Account(cloudinarySettings.CloudName, cloudinarySettings.ApiKe
 var cloudinary = new Cloudinary(account);
 builder.Services.AddSingleton(cloudinary);
 
-builder.Services.AddDistributedMemoryCache(); // Enables session storage
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set timeout for sessions
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
 
-// Configure Authentication
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Identity/Account/Login";
@@ -57,19 +51,15 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Identity/Account/Login";
 });
 
-// Configure Authorization
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireAuthenticatedUser", policy => policy.RequireAuthenticatedUser());
 });
 
-// Build the app
 var app = builder.Build();
 
-// Apply Middleware
 app.UseMiddleware<TournamentCleanupMiddleware>();
 
-// Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -88,7 +78,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// Ensure database migrations run asynchronously
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -105,6 +94,4 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred while applying database migrations.");
     }
 }
-
-// Run the app asynchronously
 await app.RunAsync();

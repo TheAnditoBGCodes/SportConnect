@@ -3,10 +3,9 @@
 @model UserViewModel
 
 @{
-    // Calculate the max and min dates
     var today = DateTime.Today;
-    var maxDate = today.AddYears(-13).ToString("yyyy-MM-dd"); // 13 years ago
-    var minDate = today.AddYears(-120).ToString("yyyy-MM-dd"); // 120 years ago
+    var maxDate = today.AddYears(-13).ToString("yyyy-MM-dd");
+    var minDate = today.AddYears(-120).ToString("yyyy-MM-dd");
 }
 
 @if (Model.Id == ViewBag.UserId)
@@ -15,7 +14,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
 
     <style>
-        /* Ensure modal content does not overflow */
+
         .modal-body {
             overflow: hidden;
         }
@@ -24,7 +23,7 @@
             justify-content: center;
             width: 100%;
             color: red;
-            text-decoration: none; /* Removes underline */
+            text-decoration: none;
             font-weight: 600;
             letter-spacing: 0.5px;
             border-radius: 6px;
@@ -32,7 +31,7 @@
             display: flex;
         }
 
-        /* Button styling */
+
         .btn-warning {
             background-color: #AA7700;
             border-color: #AA7700;
@@ -47,7 +46,7 @@
                 transform: translateY(-2px);
             }
 
-        /* Button styling */
+
         .btn-success {
             background-color: green;
             border-color: green;
@@ -62,7 +61,7 @@
                 transform: translateY(-2px);
             }
 
-        /* Button styling */
+
         .btn-secondary {
             background-color: grey;
             border-color: grey;
@@ -77,14 +76,14 @@
                 transform: translateY(-2px);
             }
 
-        /* Make sure the image scales to fit the container */
+
         #cropImage {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        /* Hide any overflow if the crop container goes out of bounds */
+
         #cropContainer {
             width: 100%;
             height: 100%;
@@ -97,7 +96,7 @@
             align-content: center;
         }
 
-        /* Modal footer for buttons */
+
         .modal-footer {
             display: flex;
             justify-content: space-between;
@@ -107,7 +106,7 @@
             opacity: 50%;
         }
 
-        /* Image preview container with 1:1 aspect ratio */
+
         #imagePreview {
             width: 100%;
             aspect-ratio: 1/1;
@@ -120,17 +119,17 @@
             align-items: center;
             overflow: hidden;
             object-fit: cover;
-            max-height: 200px; /* Smaller image preview */
+            max-height: 200px;
         }
 
-        /* Ensuring image fits within the preview */
+
         #previewImage {
             width: inherit;
             height: inherit;
             object-fit: cover;
         }
 
-        /* Smaller form container */
+
         .form-container {
             max-height: 80vh;
         }
@@ -139,7 +138,7 @@
             background-color: #dcf7de !important;
         }
 
-        /* Compact registration box */
+
         .registration-box {
             background-color: #8ee697;
             border-radius: 8px;
@@ -147,12 +146,12 @@
             max-width: 100%;
         }
 
-        /* Smaller spacing between elements */
+
         .mb-2 {
             margin-bottom: 0.5rem !important;
         }
 
-        /* Adjust form input heights */
+
         .form-floating .form-control,
         .form-floating .form-select {
             height: calc(2.5rem + 10px);
@@ -160,7 +159,7 @@
             padding-bottom: 0.25rem;
         }
 
-        /* Button styling */
+
         .btn-primary {
             background-color: #3498db;
             border-color: #3498db;
@@ -175,7 +174,7 @@
                 transform: translateY(-2px);
             }
 
-        /* Register link styling */
+
         .register-link {
             display: inline-block;
             color: #3498db;
@@ -193,20 +192,20 @@
             padding-top: 0.5rem;
         }
 
-        /* Adjust button size */
+
         #registerSubmit {
             padding: 0.375rem 0.75rem;
             font-size: 1rem;
         }
 
-        /* Responsive adjustments */
+
         @@media (max-width: 768px) {
             .form-container {
                 padding: 0 10px;
             }
         }
 
-        /* Additional responsive adjustments */
+
         @@media (max-width: 480px) {
             .registration-box {
                 padding: 0.5rem;
@@ -280,7 +279,7 @@
             }
         }
 
-        /* Height-based media queries */
+
         @@media (max-height: 600px) {
             .container-fluid {
                 min-height: auto !important;
@@ -297,7 +296,7 @@
             }
         }
 
-        /* Tablet landscape adjustments */
+
         @@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
             .container-fluid {
                 min-height: 85vh !important;
@@ -308,7 +307,7 @@
             }
         }
 
-        /* High resolution screens */
+
         @@media (min-width: 1400px) {
             .registration-box {
                 max-width: 1200px;
@@ -316,7 +315,7 @@
             }
         }
 
-        /* Print styles */
+
         @@media print {
             .container-fluid {
                 min-height: auto !important;
@@ -333,7 +332,7 @@
             }
         }
 
-        /* Handle column stacking on mobile */
+
         @@media (max-width: 767px) {
             .col-md-8,
             .col-md-4 {
@@ -369,10 +368,8 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger mt-2 small" role="alert"></div>
 
                     <div class="row mb-2 justify-content-between align-content-center" style="min-height: 300px;">
-                        <!-- Left Column: User Inputs -->
                         <div class="col-md-8 align-content-center" style="min-height: 300px; width: 932px;">
 
-                            <!-- Row 1: Username and Email -->
                             <div class="row mb-2">
                                 <div class="col-12 col-md-6">
                                     <div class="form-floating">
@@ -390,7 +387,6 @@
                                 </div>
                             </div>
 
-                            <!-- Row 3: First Name and Last Name -->
                             <div class="row mb-2 justify-content-between">
                                 <div class="col-12 col-md-6">
                                     <div class="form-floating">
@@ -408,7 +404,6 @@
                                 </div>
                             </div>
 
-                            <!-- Row 4: Country and Date of Birth -->
                             <div class="row justify-content-between">
                                 <div class="col-12 col-md-6">
                                     <div class="form-floating">
@@ -429,7 +424,6 @@
                             </div>
                         </div>
 
-                        <!-- Right Column: Image Upload & Preview -->
                         <div class="col-md-4 justify-content-end" style="height: inherit; align-content: center; padding-left: 0px; max-width: 244px; max-height: 392px;">
                             <div style="font-size: 1rem; width:232px !important;">
                                 <div class="col-12" style="font-size: 1rem; width:232px !important;">
@@ -439,25 +433,21 @@
                                     <span asp-validation-for="@Model.ProfileImage" class="text-danger" style="font-size: 1rem;"></span>
                                     <div id="imagePreview" class="mt-2 d-flex justify-content-center align-items-center position-relative"
                                          style="height: 232px !important; width: 232px !important; background-color: #dcf7de !important;">
-                                        <!-- Centered Text -->
                                         <p id="profileText" class="position-absolute text-center"
                                            style="font-size: 1rem; color: #000000; display: @(string.IsNullOrEmpty(Model.ProfileImage) ? "block" : "none");">
                                             Профилна снимка
                                         </p>
 
-                                        <!-- Image -->
                                         <img id="previewImage" src="@Model.ProfileImage" alt="Preview" class="img-fluid"
                                              style="height: 232px !important; width: 232px !important; display: @(string.IsNullOrEmpty(Model.ProfileImage) ? "none" : "block");" />
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Hidden input to store the image URL -->
                             <input type="hidden" id="croppedImageData" asp-for="@Model.ProfileImage" />
                         </div>
                     </div>
 
-                    <!-- Buttons -->
                     <div id="buttonContainer" class="d-flex justify-content-between pt-0 mt-2">
                         <a href="@ViewBag.ReturnUrl" class="btn btn-secondary">Назад</a>
                         <button type="submit" id="submitSport" class="btn btn-warning text-white">Промени</button>
@@ -467,7 +457,6 @@
         </div>
     </div>
 
-    <!-- Modal for Image Cropping -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -510,7 +499,7 @@
                             movable: false,
                             zoomable: false,
                             background: true,
-                            minContainerHeight: 400, // Smaller container height
+                            minContainerHeight: 400,
                         });
                     });
                 };
@@ -518,46 +507,37 @@
             }
         });
 
-        // Confirm Upload Button (right button)
         document.getElementById('confirmUpload').addEventListener('click', function () {
             const previewImage = document.getElementById('previewImage');
             const previewImager = document.getElementById('imagePreview');
 
-            // Get cropped image as base64
             const croppedCanvas = cropper.getCroppedCanvas();
             const croppedDataUrl = croppedCanvas.toDataURL();
 
-            // Set the cropped image preview
             previewImage.src = croppedDataUrl;
             previewImage.style.display = 'block';
             previewImager.classList.add('mb-2');
             previewImager.classList.add('w-100');
             previewImager.classList.add('justify-content-center');
 
-            // Set the hidden input value
-            document.getElementById('croppedImageData').value = croppedDataUrl;  // Ensure this matches the hidden input ID
+            document.getElementById('croppedImageData').value = croppedDataUrl;
 
-            // Close the modal using the modal instance
             const modal = document.getElementById('imageModal');
-            const bsModal = bootstrap.Modal.getInstance(modal);  // Use getInstance to get the modal instance
-            bsModal.hide();  // Hide the modal
+            const bsModal = bootstrap.Modal.getInstance(modal);
+            bsModal.hide();
         });
 
-        // Reset Cropper Button (left button)
         document.getElementById('resetCropper').addEventListener('click', function () {
             if (cropper) {
                 cropper.reset();  // Reset cropper to original size
             }
         });
 
-        // On form submit, set the ProfileImage input value to the cropped image URL
         document.getElementById('loginForm').addEventListener('submit', function (event) {
             const profileImageInput = document.querySelector('input[name="file"]');
             const previewImage = document.getElementById('previewImage');
 
-            // If the preview image exists, set its src value to the ProfileImage input
             if (previewImage.style.display === 'block') {
-                // Ensure the profile image input gets the cropped image URL as its value
                 document.getElementById('croppedImageData').value = previewImage.src;
             }
         });
@@ -590,18 +570,18 @@ else
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
 
-    
+
     <style>
-        /* Ensure modal content does not overflow */
-.modal-body {
-    overflow: hidden;
-}
+
+        .modal-body {
+            overflow: hidden;
+        }
 
         .text-danger {
             justify-content: center;
             width: 100%;
             color: red;
-            text-decoration: none; /* Removes underline */
+            text-decoration: none;
             font-weight: 600;
             letter-spacing: 0.5px;
             border-radius: 6px;
@@ -609,7 +589,7 @@ else
             display: flex;
         }
 
-        /* Button styling */
+
         .btn-warning {
             background-color: #AA7700;
             border-color: #AA7700;
@@ -624,7 +604,7 @@ else
                 transform: translateY(-2px);
             }
 
-        /* Button styling */
+
         .btn-success {
             background-color: green;
             border-color: green;
@@ -639,7 +619,7 @@ else
                 transform: translateY(-2px);
             }
 
-        /* Button styling */
+
         .btn-secondary {
             background-color: grey;
             border-color: grey;
@@ -654,289 +634,289 @@ else
                 transform: translateY(-2px);
             }
 
-/* Make sure the image scales to fit the container */
-#cropImage {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
 
-/* Hide any overflow if the crop container goes out of bounds */
-#cropContainer {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
+        #cropImage {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-main.pb-3 {
-    padding-bottom: 0px !important;
-    min-height: 81.5vh;
-    align-content: center;
-}
 
-/* Modal footer for buttons */
-.modal-footer {
-    display: flex;
-    justify-content: space-between;
-}
+        #cropContainer {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
 
-.cropper-drag-box {
-    opacity: 50%;
-}
+        main.pb-3 {
+            padding-bottom: 0px !important;
+            min-height: 81.5vh;
+            align-content: center;
+        }
 
-/* Image preview container with 1:1 aspect ratio */
-#imagePreview {
-    width: 100%;
-    aspect-ratio: 1/1;
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    display: flex;
-    min-height: 232px !important;
-    min-width: 232px !important;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    object-fit: cover;
-    max-height: 200px; /* Smaller image preview */
-}
 
-/* Ensuring image fits within the preview */
-#previewImage {
-    width: inherit;
-    height: inherit;
-    object-fit: cover;
-}
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+        }
 
-/* Smaller form container */
-.form-container {
-    max-height: 80vh;
-}
+        .cropper-drag-box {
+            opacity: 50%;
+        }
 
-.form-control.form-control-sm, .form-control, .form-select {
+
+        #imagePreview {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            display: flex;
+            min-height: 232px !important;
+            min-width: 232px !important;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            object-fit: cover;
+            max-height: 200px;
+        }
+
+
+        #previewImage {
+            width: inherit;
+            height: inherit;
+            object-fit: cover;
+        }
+
+
+        .form-container {
+            max-height: 80vh;
+        }
+
+        .form-control.form-control-sm, .form-control, .form-select {
             background-color: #dcf7de !important;
-}
+        }
 
-/* Compact registration box */
+
         .registration-box {
             background-color: #8ee697;
-    border-radius: 8px;
-    padding: 0.5rem;
-    max-width: 100%;
-}
+            border-radius: 8px;
+            padding: 0.5rem;
+            max-width: 100%;
+        }
 
-/* Smaller spacing between elements */
-.mb-2 {
-    margin-bottom: 0.5rem !important;
-}
 
-/* Adjust form input heights */
-.form-floating .form-control,
-.form-floating .form-select {
-    height: calc(2.5rem + 10px);
-    padding-top: 0.75rem;
-    padding-bottom: 0.25rem;
-}
+        .mb-2 {
+            margin-bottom: 0.5rem !important;
+        }
 
-/* Button styling */
-.btn-primary {
-    background-color: #3498db;
-    border-color: #3498db;
-    padding: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-}
 
-.btn-primary:hover {
-    transform: translateY(-2px);
-}
+        .form-floating .form-control,
+        .form-floating .form-select {
+            height: calc(2.5rem + 10px);
+            padding-top: 0.75rem;
+            padding-bottom: 0.25rem;
+        }
 
-/* Register link styling */
-.register-link {
-    display: inline-block;
-    color: #3498db;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    padding: 0.5rem;
-}
 
-.register-link:hover {
-    transform: translateY(-2px);
-    color: #0d5bcd;
-}
+        .btn-primary {
+            background-color: #3498db;
+            border-color: #3498db;
+            padding: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
 
-.form-floating label {
-    padding-top: 0.5rem;
-}
+            .btn-primary:hover {
+                transform: translateY(-2px);
+            }
 
-/* Adjust button size */
-#registerSubmit {
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-}
 
-/* Responsive adjustments */
-@@media (max-width: 768px) {
-    .form-container {
-        padding: 0 10px;
-    }
-}
+        .register-link {
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            padding: 0.5rem;
+        }
 
-/* Additional responsive adjustments */
-@@media (max-width: 480px) {
-    .registration-box {
-        padding: 0.5rem;
-        border-radius: 6px;
-    }
-    
-    h2 {
-        font-size: 1.5rem !important;
-        margin-bottom: 0.5rem;
-    }
-    
-    .form-floating > .form-control,
-    .form-select {
-        padding: 0.5rem 0.25rem;
-        font-size: 0.9rem !important;
-    }
-    
-    .form-floating label {
-        font-size: 0.9rem !important;
-        padding-top: 0.25rem;
-    }
-    
-    #registerSubmit {
-        width: 40% !important;
-        font-size: 0.9rem !important;
-    }
-    
-    .register-link {
-        font-size: 0.9rem !important;
-    }
-    
-    #imagePreview {
-        min-height: 180px !important;
-        min-width: 180px !important;
-    }
-    
-    #previewImage {
-        height: 180px !important;
-        width: 180px !important;
-    }
-}
+            .register-link:hover {
+                transform: translateY(-2px);
+                color: #0d5bcd;
+            }
 
-@@media (max-width: 320px) {
-    .registration-box {
-        padding: 0.25rem;
-    }
-    
-    h2 {
-        font-size: 1.25rem !important;
-    }
-    
-    #registerSubmit {
-        width: 50% !important;
-        padding: 0.25rem 0.5rem;
-        font-size: 0.8rem !important;
-    }
-    
-    .register-link {
-        font-size: 0.8rem !important;
-        padding: 0.25rem;
-    }
-    
-    #imagePreview {
-        min-height: 150px !important;
-        min-width: 150px !important;
-    }
-    
-    #previewImage {
-        height: 150px !important;
-        width: 150px !important;
-    }
-}
+        .form-floating label {
+            padding-top: 0.5rem;
+        }
 
-/* Height-based media queries */
-@@media (max-height: 600px) {
-    .container-fluid {
-        min-height: auto !important;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-    }
-    
-    .form-container {
-        max-height: none;
-    }
-    
-    .row.mb-2 {
-        margin-bottom: 0.25rem !important;
-    }
-}
 
-/* Tablet landscape adjustments */
-@@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-    .container-fluid {
-        min-height: 85vh !important;
-    }
-    
-    .form-container {
-        width: 90% !important;
-    }
-}
+        #registerSubmit {
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+        }
 
-/* High resolution screens */
-@@media (min-width: 1400px) {
-    .registration-box {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-}
 
-/* Print styles */
-@@media print {
-    .container-fluid {
-        min-height: auto !important;
-    }
-    
-    .btn-primary, .btn-success {
-        background-color: #333 !important;
-        border-color: #333 !important;
-        color: white !important;
-    }
-    
-    #imagePreview {
-        border: 1px solid #000 !important;
-    }
-}
+        @@media (max-width: 768px) {
+            .form-container {
+                padding: 0 10px;
+            }
+        }
 
-/* Handle column stacking on mobile */
-@@media (max-width: 767px) {
-    .col-md-8, 
-    .col-md-4 {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-bottom: 1rem;
-    }
-    
-    .col-md-6 {
-        margin-bottom: 0.5rem;
-    }
-    
-    #imagePreview {
-        margin: 0 auto;
-    }
-    
-    #buttonContainer {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-    }
-    
-    #registerSubmit {
-        width: 100% !important;
-    }
-}
+
+        @@media (max-width: 480px) {
+            .registration-box {
+                padding: 0.5rem;
+                border-radius: 6px;
+            }
+
+            h2 {
+                font-size: 1.5rem !important;
+                margin-bottom: 0.5rem;
+            }
+
+            .form-floating > .form-control,
+            .form-select {
+                padding: 0.5rem 0.25rem;
+                font-size: 0.9rem !important;
+            }
+
+            .form-floating label {
+                font-size: 0.9rem !important;
+                padding-top: 0.25rem;
+            }
+
+            #registerSubmit {
+                width: 40% !important;
+                font-size: 0.9rem !important;
+            }
+
+            .register-link {
+                font-size: 0.9rem !important;
+            }
+
+            #imagePreview {
+                min-height: 180px !important;
+                min-width: 180px !important;
+            }
+
+            #previewImage {
+                height: 180px !important;
+                width: 180px !important;
+            }
+        }
+
+        @@media (max-width: 320px) {
+            .registration-box {
+                padding: 0.25rem;
+            }
+
+            h2 {
+                font-size: 1.25rem !important;
+            }
+
+            #registerSubmit {
+                width: 50% !important;
+                padding: 0.25rem 0.5rem;
+                font-size: 0.8rem !important;
+            }
+
+            .register-link {
+                font-size: 0.8rem !important;
+                padding: 0.25rem;
+            }
+
+            #imagePreview {
+                min-height: 150px !important;
+                min-width: 150px !important;
+            }
+
+            #previewImage {
+                height: 150px !important;
+                width: 150px !important;
+            }
+        }
+
+
+        @@media (max-height: 600px) {
+            .container-fluid {
+                min-height: auto !important;
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
+
+            .form-container {
+                max-height: none;
+            }
+
+            .row.mb-2 {
+                margin-bottom: 0.25rem !important;
+            }
+        }
+
+
+        @@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+            .container-fluid {
+                min-height: 85vh !important;
+            }
+
+            .form-container {
+                width: 90% !important;
+            }
+        }
+
+
+        @@media (min-width: 1400px) {
+            .registration-box {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+        }
+
+
+        @@media print {
+            .container-fluid {
+                min-height: auto !important;
+            }
+
+            .btn-primary, .btn-success {
+                background-color: #333 !important;
+                border-color: #333 !important;
+                color: white !important;
+            }
+
+            #imagePreview {
+                border: 1px solid #000 !important;
+            }
+        }
+
+
+        @@media (max-width: 767px) {
+            .col-md-8,
+            .col-md-4 {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin-bottom: 1rem;
+            }
+
+            .col-md-6 {
+                margin-bottom: 0.5rem;
+            }
+
+            #imagePreview {
+                margin: 0 auto;
+            }
+
+            #buttonContainer {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            #registerSubmit {
+                width: 100% !important;
+            }
+        }
     </style>
 
     <div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 76vh;">
@@ -947,10 +927,8 @@ main.pb-3 {
                     <div asp-validation-summary="ModelOnly" class="text-danger mt-2 small" role="alert"></div>
 
                     <div class="row mb-2 justify-content-between align-content-center" style="min-height: 300px;">
-                        <!-- Left Column: User Inputs -->
                         <div class="align-content-center" style="min-height: 300px; width: 466px;">
 
-                            <!-- Row 1: Username and Email -->
                             <div class="row mb-2">
                                 <div class="col-12">
                                     <div class="form-floating">
@@ -961,7 +939,6 @@ main.pb-3 {
                                 </div>
                             </div>
 
-                            <!-- Row 3: First Name and Last Name -->
                             <div class="row mb-2 justify-content-between">
                                 <div class="col-12">
                                     <div class="form-floating">
@@ -971,7 +948,7 @@ main.pb-3 {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="row justify-content-between">
                                 <div class="col-12">
                                     <div class="form-floating">
@@ -983,7 +960,6 @@ main.pb-3 {
                             </div>
                         </div>
 
-                        <!-- Right Column: Image Upload & Preview -->
                         <div class="justify-content-end" style="height: inherit; align-content: center; padding-left: 0px; max-width: 244px; max-height: 392px;">
                             <div style="font-size: 1rem; width:232px !important;">
                                 <div class="col-12" style="font-size: 1rem; width:232px !important;">
@@ -993,25 +969,21 @@ main.pb-3 {
                                     <span asp-validation-for="@Model.ProfileImage" class="text-danger" style="font-size: 1rem;"></span>
                                     <div id="imagePreview" class="mt-2 d-flex justify-content-center align-items-center position-relative"
                                          style="height: 232px !important; width: 232px !important; background-color: #dcf7de !important;">
-                                        <!-- Centered Text -->
                                         <p id="profileText" class="position-absolute text-center"
                                            style="font-size: 1rem; color: #000000; display: @(string.IsNullOrEmpty(Model.ProfileImage) ? "block" : "none");">
                                             Профилна снимка
                                         </p>
 
-                                        <!-- Image -->
                                         <img id="previewImage" src="@Model.ProfileImage" alt="Preview" class="img-fluid"
                                              style="height: 232px !important; width: 232px !important; display: @(string.IsNullOrEmpty(Model.ProfileImage) ? "none" : "block");" />
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Hidden input to store the image URL -->
                             <input type="hidden" id="croppedImageData" asp-for="@Model.ProfileImage" />
                         </div>
                     </div>
 
-                    <!-- Buttons -->
                     <div id="buttonContainer" class="d-flex justify-content-between pt-0 mt-2">
                         <a href="@ViewBag.ReturnUrl" class="btn btn-secondary">Назад</a>
                         <button type="submit" id="submitSport" class="btn btn-warning text-white">Промени</button>
@@ -1022,7 +994,6 @@ main.pb-3 {
     </div>
 
 
-    <!-- Modal for Image Cropping -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -1065,7 +1036,7 @@ main.pb-3 {
                             movable: false,
                             zoomable: false,
                             background: true,
-                            minContainerHeight: 400, // Smaller container height
+                            minContainerHeight: 400,
                         });
                     });
                 };
@@ -1073,46 +1044,37 @@ main.pb-3 {
             }
         });
 
-        // Confirm Upload Button (right button)
         document.getElementById('confirmUpload').addEventListener('click', function () {
             const previewImage = document.getElementById('previewImage');
             const previewImager = document.getElementById('imagePreview');
 
-            // Get cropped image as base64
             const croppedCanvas = cropper.getCroppedCanvas();
             const croppedDataUrl = croppedCanvas.toDataURL();
 
-            // Set the cropped image preview
             previewImage.src = croppedDataUrl;
             previewImage.style.display = 'block';
             previewImager.classList.add('mb-2');
             previewImager.classList.add('w-100');
             previewImager.classList.add('justify-content-center');
 
-            // Set the hidden input value
-            document.getElementById('croppedImageData').value = croppedDataUrl;  // Ensure this matches the hidden input ID
+            document.getElementById('croppedImageData').value = croppedDataUrl;
 
-            // Close the modal using the modal instance
             const modal = document.getElementById('imageModal');
-            const bsModal = bootstrap.Modal.getInstance(modal);  // Use getInstance to get the modal instance
-            bsModal.hide();  // Hide the modal
+            const bsModal = bootstrap.Modal.getInstance(modal);
+            bsModal.hide();
         });
 
-        // Reset Cropper Button (left button)
         document.getElementById('resetCropper').addEventListener('click', function () {
             if (cropper) {
-                cropper.reset();  // Reset cropper to original size
+                cropper.reset();
             }
         });
 
-        // On form submit, set the ProfileImage input value to the cropped image URL
         document.getElementById('loginForm').addEventListener('submit', function (event) {
             const profileImageInput = document.querySelector('input[name="file"]');
             const previewImage = document.getElementById('previewImage');
 
-            // If the preview image exists, set its src value to the ProfileImage input
             if (previewImage.style.display === 'block') {
-                // Ensure the profile image input gets the cropped image URL as its value
                 document.getElementById('croppedImageData').value = previewImage.src;
             }
         });

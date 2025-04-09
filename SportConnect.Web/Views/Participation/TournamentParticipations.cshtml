@@ -7,7 +7,6 @@
 }
 <script>
     function toggleApprovalButtons(tournamentId, userId, approve) {
-        // Get the participation buttons container for the specific tournament
         const participationButtons = document.getElementById('participationButtonsApprove-' + tournamentId);
 
         if (approve) {
@@ -36,7 +35,6 @@
     }
 
     function confirmApproval(tournamentId, userId, approve) {
-        // Get the participation buttons container for the specific tournament
         const participationButtons = document.getElementById('participationButtonsApprove-' + tournamentId);
         participationButtons.innerHTML =
             `<a class="btn btn-success text-white w-100 btn-sm" id="approveBtn-${tournamentId}" onclick="toggleApprovalButtons(${tournamentId}, \'${userId}\', true)">
@@ -47,38 +45,32 @@
                                                 </a>`
             ;
     }
-    
-    // Function to replace the "Отказване" button with confirmation buttons
+
     function replaceWithConfirmation(tournamentId, userId, isApproved) {
-        var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
+        var participationButtons = document.getElementById("participationButtons-" + tournamentId);
 
         var url = `/Participation/DeleteParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FParticipation%2FTournamentParticipations%2F${tournamentId}`;
 
-        // Replace the content of the participationButtons with Yes and No options
         participationButtons.innerHTML = `
                             <a href="${url}" class="btn btn-danger w-50 btn-sm">Да</a>
                                     <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButton(${tournamentId},\'${userId}\', ${isApproved})">Не</a>
                 `;
     }
 
-    // Function to replace the "Отказване" button with confirmation buttons
     function replaceWithConfirmationUser(tournamentId, userId, isApproved) {
-        var participationButtons = document.getElementById("participationButtonsApprove-" + tournamentId); // Unique ID for each tournament
+        var participationButtons = document.getElementById("participationButtonsApprove-" + tournamentId);
 
         var url = `/Participation/DeleteParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FParticipation%2FTournamentParticipations%2F${tournamentId}`;
 
-        // Replace the content of the participationButtons with Yes and No options
         participationButtons.innerHTML = `
                         <a href="${url}" class="btn btn-danger w-50 btn-sm">Да</a>
                                 <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButtonUser(${tournamentId},\'${userId}\', ${isApproved})">Не</a>
                     `;
     }
-    
-    // Function to restore the "Отказване" button and revert back to the original state
-    function restoreQuitButton(tournamentId, userId, isApproved) {
-        var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
 
-        // Restore the appropriate buttons based on the approval status
+    function restoreQuitButton(tournamentId, userId, isApproved) {
+        var participationButtons = document.getElementById("participationButtons-" + tournamentId);
+
         if (isApproved) {
             participationButtons.innerHTML = `
                                         <a class="btn btn-success w-50" onmousedown="return false;" onkeydown="return false;">Одобрен</a>
@@ -92,9 +84,8 @@
         }
     }
 
-    // Function to restore the "Отказване" button and revert back to the original state
     function restoreQuitButtonUser(tournamentId, userId, isApproved) {
-        var participationButtons = document.getElementById("participationButtonsApprove-" + tournamentId); // Unique ID for each tournament
+        var participationButtons = document.getElementById("participationButtonsApprove-" + tournamentId);
         participationButtons.innerHTML = `
                                 <button class="btn btn-success text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
                                                 <a id="quiterParticipation-${userId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmationUser(${tournamentId}, \'${userId}\', ${isApproved})">Отказване</a>
@@ -103,7 +94,7 @@
 </script>
 
 <style>
-    /* Button styling */
+
     .btn-success {
         background-color: green;
         border-color: green;
@@ -125,7 +116,7 @@
         transition: all 0.3s ease;
         background-color: #8ee697 !important;
     }
-    /* Button styling */
+
     .btn-primary {
         background-color: blue;
         border-color: blue;
@@ -140,7 +131,14 @@
             transform: translateY(-2px);
         }
 
-    /* Button styling */
+    .no-container {
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        padding: 0.5rem;
+        transition: all 0.3s ease;
+        background-color: #8ee697 !important;
+    }
+
     .btn-warning {
         background-color: #AA7700;
         border-color: #AA7700;
@@ -156,7 +154,7 @@
         }
 
 
-    /* Button styling */
+
     .btn-danger {
         background-color: red;
         border-color: red;
@@ -171,7 +169,7 @@
             transform: translateY(-2px);
         }
 
-    /* Button styling */
+
     .btn-secondary {
         background-color: grey;
         border-color: grey;
@@ -209,7 +207,7 @@
 
     .sticky-search {
         position: sticky;
-        top: 90px; /* Adjust based on your header height */
+        top: 90px;
         background-color: #8ee697 !important;
         z-index: 999;
         width: 1320px;
@@ -217,21 +215,21 @@
         border-radius: 8px;
     }
 
-    /* Form controls styling */
+
     .search-control {
         font-size: 1rem;
         padding: 0.5rem 0.75rem;
         background-color: #dcf7de !important;
     }
 
-    /* Button group styling */
+
     .btn-group {
         display: flex;
         justify-content: center;
         gap: 20px;
     }
 
-    /* User card styling */
+
     .user-card {
         border-radius: 8px;
         border: 1px solid #e9ecef;
@@ -248,25 +246,25 @@
     }
 
 
-    /* Info sections styling */
+
     .info-section {
         padding: 0 15px;
         text-align: center;
     }
 
         .info-section strong {
-            color: #000 !important; /* Black color */
-            font-size: 1rem; /* Slightly larger font */
-            font-weight: bolder !important; /* Bolder */
+            color: #000 !important;
+            font-size: 1rem;
+            font-weight: bolder !important;
         }
 
-        /* Improved contrast for username */
+
         .info-section small {
             font-weight: normal;
-            color: #1f1f1f !important; /* Darker text color for better contrast */
+            color: #1f1f1f !important;
         }
 
-    /* Responsive adjustments */
+
     @@media (max-width: 768px) {
         .sticky-search {
             width: 100%;
@@ -312,7 +310,7 @@
         }
     }
 
-    /* Additional responsive adjustments */
+
     @@Wmedia (max-width: 480px) {
         .container1 {
             padding: 0 10px;
@@ -396,7 +394,7 @@
         }
     }
 
-    /* Height-based media queries */
+
     @@media (max-height: 600px) {
         .container {
             height: auto !important;
@@ -419,7 +417,7 @@
         }
     }
 
-    /* Tablet landscape adjustments */
+
     @@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
         .container {
             height: 85vh !important;
@@ -438,7 +436,7 @@
         }
     }
 
-    /* High resolution screens */
+
     @@media (min-width: 1400px) {
         .sticky-search {
             max-width: 1320px;
@@ -451,7 +449,7 @@
         }
     }
 
-    /* Print styles */
+
     @@media print {
         .container {
             height: auto !important;
@@ -478,7 +476,7 @@
         }
     }
 
-    /* Handle column stacking on mobile */
+
     @@media (max-width: 767px) {
         .d-flex.align-items-center {
             flex-direction: column;
@@ -520,7 +518,6 @@ else
             <h2 class="delete-header text-center">Участници</h2>
             <div class="sticky-search">
                 <form method="post" class="d-flex justify-content-center w-100 align-items-center flex-column">
-                    <!-- First row for inputs -->
                     <div class="d-flex flex-wrap justify-content-center w-100 mb-2">
                         <input id="nameSearch" class="search-control form-control me-2" placeholder="Име" asp-for="@Model.UserName" style="width: 250px;" />
                         <input id="contactSearch" class="search-control form-control me-2" placeholder="Имейл/Телефон" asp-for="@Model.Email" style="width: 250px;" />
@@ -548,7 +545,6 @@ else
                         </select>
                     </div>
 
-                    <!-- Second row for buttons -->
                     <div class="d-flex justify-content-around w-100">
                         <a href="@ViewBag.ReturnUrl" class="btn btn-secondary" style="font-size: 1rem;">Назад</a>
                         @if (tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
@@ -584,95 +580,96 @@ else
             </div>
 
             <div class="row justify-content-center mt-2 mb-4" style="margin-left:0; margin-right:0;">
-                @foreach (var user in Model.FilteredUsers)
+                @if (Model.FilteredUsers.Count == 0)
                 {
-                    <div class="user-card">
-                        <!-- User Info Section with separate image div -->
-                        <div class="d-flex align-items-center justify-content-between w-100 flex-wrap">
-                            <!-- Separate div for the image -->
-                            <div class="flex-shrink-0 mb-2 text-center" style="width: 70px;">
-                                <img src="@user.ImageUrl" alt="Профилна снимка" class="user-image">
-                            </div>
-
-                            <!-- Text content container -->
-                            <div class="d-flex flex-grow-1 justify-content-between flex-wrap">
-                                <!-- User name and phone - explicitly left aligned -->
-                                <div class="info-section text-start">
-                                    <strong class="mb-0 d-block">@user.FullName</strong>
-                                    <small>@user.UserName</small>
+                    <div class="no-container p-2" style="max-width: 32%; padding: 0.5rem;">
+                        <h1 class="text-center" style="font-size: 2rem;">Няма намерени резултати</h1>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var user in Model.FilteredUsers)
+                    {
+                        <div class="user-card">
+                            <div class="d-flex align-items-center justify-content-between w-100 flex-wrap">
+                                <div class="flex-shrink-0 mb-2 text-center" style="width: 70px;">
+                                    <img src="@user.ImageUrl" alt="Профилна снимка" class="user-image">
                                 </div>
 
-                                <!-- Country info - unchanged alignment -->
-                                <div class="info-section">
-                                    <strong class="d-block">Държава</strong>
-                                    <small>@user.Country</small>
-                                </div>
+                                <div class="d-flex flex-grow-1 justify-content-between flex-wrap">
+                                    <div class="info-section text-start">
+                                        <strong class="mb-0 d-block">@user.FullName</strong>
+                                        <small>@user.UserName</small>
+                                    </div>
 
-                                <!-- Email info - unchanged alignment -->
-                                <div class="info-section">
-                                    <strong class="d-block">Имейл</strong>
-                                    <small>@user.Email</small>
-                                </div>
+                                    <div class="info-section">
+                                        <strong class="d-block">Държава</strong>
+                                        <small>@user.Country</small>
+                                    </div>
 
-                                @{
-                                    DateTime date = DateTime.Parse(user.DateOfBirth);
-                                    int age = DateTime.Now.Year - date.Year;
-                                    if (DateTime.Now.Month < date.Month ||
-                                    (DateTime.Now.Month == date.Month && DateTime.Now.Day < date.Day))
-                                    {
-                                        age--;
-                                    }
-                                }
+                                    <div class="info-section">
+                                        <strong class="d-block">Имейл</strong>
+                                        <small>@user.Email</small>
+                                    </div>
 
-                                <!-- Birth date info - unchanged alignment -->
-                                <div class="info-section">
-                                    <strong class="d-block">Дата на раждане</strong>
-                                    <small>
-                                        @date.Date.ToString("dd.MM.yyyy") (@age години)
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Action Buttons -->
-                        <div class="btn-group mt-1">
-                            @if (!User.IsInRole(SD.AdminRole))
-                            {
-                                <div class="d-flex justify-content-around w-100">
-                                    <a style="width:20%;" asp-controller="Participation" asp-action="UserParticipations" asp-route-id="@user.Id" asp-route-tournamentId="@tournament.Id" asp-route-tournamentUrl="/Participation/TournamentParticipations/@tournament.Id" class="btn btn-primary btn-sm">Участия</a>
-                                    <a style="width:20%;" asp-controller="Tournament" asp-action="UserTournaments" asp-route-id="@user.Id" asp-route-tournamentId="@tournament.Id" asp-route-tournamentUrl="/Participation/TournamentParticipations/@tournament.Id" class="btn btn-success btn-sm">Турнири</a>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="d-flex justify-content-between w-100">
-                                    <a style="width:20%;" asp-controller="Participation" asp-action="UserParticipations" asp-route-id="@user.Id" asp-route-tournamentId="@tournament.Id" asp-route-tournamentUrl="/Participation/TournamentParticipations/@tournament.Id" class="btn btn-primary btn-sm">Участия</a>
-                                    <a style="width:20%;" asp-controller="Tournament" asp-action="UserTournaments" asp-route-id="@user.Id" asp-route-tournamentId="@tournament.Id" asp-route-tournamentUrl="/Participation/TournamentParticipations/@tournament.Id" class="btn btn-success btn-sm">Турнири</a>
                                     @{
-                                        var userParticipation = tournament.Participations?.FirstOrDefault(p => p.ParticipantId == user.Id);
-
-                                        if (userParticipation != null)
+                                        DateTime date = DateTime.Parse(user.DateOfBirth);
+                                        int age = DateTime.Now.Year - date.Year;
+                                        if (DateTime.Now.Month < date.Month ||
+                                        (DateTime.Now.Month == date.Month && DateTime.Now.Day < date.Day))
                                         {
-                                            if (!userParticipation.Approved)
-                                            {
-                                                <div style="width:20%;" class="d-flex" id="participationButtonsApprove-@tournament.Id">
-                                                    <a class="btn btn-success text-white btn-sm flex-fill" id="approveBtn-@tournament.Id" onclick="toggleApprovalButtons(@tournament.Id, '@user.Id', true)">Одобри</a>
-                                                    <a class="btn btn-danger text-white btn-sm flex-fill" id="disapproveBtn-@tournament.Id" onclick="toggleApprovalButtons(@tournament.Id, '@user.Id', false)">Не одобри</a>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <div style="width:20%;" class="d-flex" id="participationButtonsApprove-@tournament.Id">
-                                                    <button class="btn btn-success text-white btn-sm flex-fill" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
-                                                    <a id="quiterParticipation-@user.Id" class="btn btn-danger btn-sm flex-fill" onclick="replaceWithConfirmationUser(@tournament.Id, '@user.Id', true)">Отказване</a>
-                                                </div>
-                                            }
+                                            age--;
                                         }
                                     }
+
+                                    <div class="info-section">
+                                        <strong class="d-block">Дата на раждане</strong>
+                                        <small>
+                                            @date.Date.ToString("dd.MM.yyyy") (@age години)
+                                        </small>
+                                    </div>
                                 </div>
-                            }
+                            </div>
+
+                            <div class="btn-group mt-1">
+                                @if (!User.IsInRole(SD.AdminRole))
+                                {
+                                    <div class="d-flex justify-content-around w-100">
+                                        <a style="width:20%;" asp-controller="Participation" asp-action="UserParticipations" asp-route-id="@user.Id" asp-route-tournamentId="@tournament.Id" asp-route-tournamentUrl="/Participation/TournamentParticipations/@tournament.Id" class="btn btn-primary btn-sm">Участия</a>
+                                        <a style="width:20%;" asp-controller="Tournament" asp-action="UserTournaments" asp-route-id="@user.Id" asp-route-tournamentId="@tournament.Id" asp-route-tournamentUrl="/Participation/TournamentParticipations/@tournament.Id" class="btn btn-success btn-sm">Турнири</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="d-flex justify-content-between w-100">
+                                        <a style="width:20%;" asp-controller="Participation" asp-action="UserParticipations" asp-route-id="@user.Id" asp-route-tournamentId="@tournament.Id" asp-route-tournamentUrl="/Participation/TournamentParticipations/@tournament.Id" class="btn btn-primary btn-sm">Участия</a>
+                                        <a style="width:20%;" asp-controller="Tournament" asp-action="UserTournaments" asp-route-id="@user.Id" asp-route-tournamentId="@tournament.Id" asp-route-tournamentUrl="/Participation/TournamentParticipations/@tournament.Id" class="btn btn-success btn-sm">Турнири</a>
+                                        @{
+                                            var userParticipation = tournament.Participations?.FirstOrDefault(p => p.ParticipantId == user.Id);
+
+                                            if (userParticipation != null)
+                                            {
+                                                if (!userParticipation.Approved)
+                                                {
+                                                    <div style="width:20%;" class="d-flex" id="participationButtonsApprove-@tournament.Id">
+                                                        <a class="btn btn-success text-white btn-sm flex-fill" id="approveBtn-@tournament.Id" onclick="toggleApprovalButtons(@tournament.Id, '@user.Id', true)">Одобри</a>
+                                                        <a class="btn btn-danger text-white btn-sm flex-fill" id="disapproveBtn-@tournament.Id" onclick="toggleApprovalButtons(@tournament.Id, '@user.Id', false)">Не одобри</a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="width:20%;" class="d-flex" id="participationButtonsApprove-@tournament.Id">
+                                                        <button class="btn btn-success text-white btn-sm flex-fill" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                                                        <a id="quiterParticipation-@user.Id" class="btn btn-danger btn-sm flex-fill" onclick="replaceWithConfirmationUser(@tournament.Id, '@user.Id', true)">Отказване</a>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                }
+                            </div>
                         </div>
-                    </div>
+                    }
                 }
             </div>
         </div>

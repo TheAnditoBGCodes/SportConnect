@@ -25,6 +25,8 @@ build_property.SupportLocalizedComponentNames =
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = C:\Users\iliev_7x3wtf6\source\repos\SportConnect\SportConnect.Web
 build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
 
 [C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Areas/Identity/Pages/Account/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
@@ -204,6 +206,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Shared/NotFound.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXE5vdEZvdW5kLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/iliev_7x3wtf6/source/repos/SportConnect/SportConnect.Web/Views/Shared/_LoginPartial.cshtml]

@@ -2,7 +2,7 @@
 @model TournamentViewModel
 
 <style>
-    /* Modal adjustments */
+
     .modal-body {
         overflow: hidden;
     }
@@ -11,7 +11,7 @@
         justify-content: center;
         width: 100%;
         color: red;
-        text-decoration: none; /* Removes underline */
+        text-decoration: none;
         font-weight: 600;
         letter-spacing: 0.5px;
         border-radius: 6px;
@@ -19,7 +19,7 @@
         display: flex;
     }
 
-    /* Button styling */
+
     .btn-danger {
         background-color: red;
         border-color: red;
@@ -34,7 +34,7 @@
             transform: translateY(-2px);
         }
 
-    /* Button styling */
+
     .btn-secondary {
         background-color: grey;
         border-color: grey;
@@ -49,20 +49,20 @@
             transform: translateY(-2px);
         }
 
-    /* Profile image styling */
+
     .profile-image {
         width: 100%;
-        max-width: 350px; /* Matches form width */
+        max-width: 350px;
         aspect-ratio: 4 / 3;
         object-fit: cover;
     }
-    /* Confirm input */
+
     .confirm-delete-input {
         background-color: #eaeaea !important;
         max-width: 130px;
         height: 30.6px;
-        color: black !important; /* Ensures text color is black */
-        border: none !important; /* Sets border to black */
+        color: black !important;
+        border: none !important;
     }
 
     p {
@@ -74,11 +74,11 @@
         min-height: 83vh;
         align-content: center;
     }
-    /* Form Centering */
+
     .delete-profile-form {
         width: 100%;
         background-color: #8ee697 !important;
-        min-width: 510px; /* Matches profile image width */
+        min-width: 510px;
         justify-self: center;
     }
 
@@ -86,34 +86,34 @@
         height: 78vh;
         align-content: center;
     }
-    /* Header */
+
     .delete-header {
-        font-size: 24px; /* Increased header font size */
+        font-size: 24px;
     }
-    /* Margin adjustments */
+
     .mb-2 {
         margin-bottom: 20px;
     }
-    /* Button alignment */
+
     .delete-btn-group {
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 100%;
     }
-    /* Box container styling */
+
     .form-box-container {
         background-color: #8ee697 !important;
         border-radius: 8px;
         padding: 0.5rem;
     }
-    /* Improved contrast for username */
+
     .username-text {
         font-weight: normal;
-        color: #1f1f1f !important; /* Darker text color for better contrast */
+        color: #1f1f1f !important;
     }
 
-    /* Responsive adjustments from register view */
+
     @@media (max-width: 768px) {
         .delete-profile-form {
             min-width: unset;
@@ -125,7 +125,7 @@
         }
     }
 
-    /* Additional responsive adjustments */
+
     @@media (max-width: 480px) {
         .form-box-container {
             padding: 0.5rem;
@@ -200,7 +200,7 @@
         }
     }
 
-    /* Height-based media queries */
+
     @@media (max-height: 600px) {
         .container {
             height: auto !important;
@@ -218,7 +218,7 @@
         }
     }
 
-    /* Tablet landscape adjustments */
+
     @@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
         .container {
             height: 85vh !important;
@@ -229,7 +229,7 @@
         }
     }
 
-    /* High resolution screens */
+
     @@media (min-width: 1400px) {
         .form-box-container {
             max-width: 800px;
@@ -237,7 +237,7 @@
         }
     }
 
-    /* Print styles */
+
     @@media print {
         .container {
             height: auto !important;
@@ -255,7 +255,7 @@
         }
     }
 
-    /* Handle column stacking on mobile */
+
     @@media (max-width: 767px) {
         .delete-profile-form {
             min-width: unset;
@@ -275,42 +275,41 @@
 <div class="d-flex text-center justify-content-center">
     <div class="form-box-container">
         <form method="post" class="delete-profile-form text-center">
-        <div class="row mt-2" style="display: none;">
-            <div class="col-12">
-                <div class="form-floating">
-                    <input asp-for="@Model.Id" class="form-control form-control-sm" placeholder="Име" />
-                    <label asp-for="@Model.Id">Име</label>
-                    <span asp-validation-for="@Model.Id" class="text-danger small"></span>
+            <div class="row mt-2" style="display: none;">
+                <div class="col-12">
+                    <div class="form-floating">
+                        <input asp-for="@Model.Id" class="form-control form-control-sm" placeholder="Име" />
+                        <label asp-for="@Model.Id">Име</label>
+                        <span asp-validation-for="@Model.Id" class="text-danger small"></span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <h2 class="delete-header">Изтрий турнир</h2>
+            <h2 class="delete-header">Изтрий турнир</h2>
 
-        <div class="mb-2">
-            <img src="@Model.ImageUrl" class="profile-image" alt="@Model.Name" style="aspect-ratio: 4/3;">
-        </div>
+            <div class="mb-2">
+                <img src="@Model.ImageUrl" class="profile-image" alt="@Model.Name" style="aspect-ratio: 4/3;">
+            </div>
 
-        <!-- User Info -->
-        <div class="mb-2">
-            <h3 class="fw-bolder text-black">
-                @Model.Name
-            </h3>
-            <p class="username-text">@Model.Description</p>
-        </div>
+            <div class="mb-2">
+                <h3 class="fw-bolder text-black">
+                    @Model.Name
+                </h3>
+                <p class="username-text">@Model.Description</p>
+            </div>
 
-        <div class="d-flex justify-content-between align-items-center gap-2 w-100">
-            <a href="@ViewBag.ReturnUrl" class="btn btn-secondary btn-sm">
-                Назад
-            </a>
-            <div class="d-flex align-items-center gap-1">
+            <div class="d-flex justify-content-between align-items-center gap-2 w-100">
+                <a href="@ViewBag.ReturnUrl" class="btn btn-secondary btn-sm">
+                    Назад
+                </a>
+                <div class="d-flex align-items-center gap-1">
                     <span class="text-danger fw-bold">ПОТВЪРДИ ИЗТРИВАНЕ:</span>
                     <input type="text" class="form-control text-center confirm-delete-input" style=" background-color: #dcf7de !important;" id="confirmDelete" name="ConfirmText" placeholder="ПОТВЪРДИ" required />
+                </div>
+                <button type="submit" asp-route-returnUrl="@ViewBag.ReturnUrl" class="btn btn-danger btn-sm">
+                    Изтрий
+                </button>
             </div>
-            <button type="submit" asp-route-returnUrl="@ViewBag.ReturnUrl" class="btn btn-danger btn-sm">
-                Изтрий
-            </button>
-        </div>
-    </form>
+        </form>
     </div>
 </div>

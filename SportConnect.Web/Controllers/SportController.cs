@@ -24,25 +24,27 @@ namespace SportConnect.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AllSports(SportViewModel? filter)
         {
-            if (filter == null)
+            var allSports = await _sportRepository.GetAll(); if (filter == null)
             {
-                return View(new SportViewModel());
+                return View(new SportViewModel
+                {
+                    Sports = allSports.ToList(),
+                    FilteredSports = allSports.ToList()
+                });
             }
 
-            var allSports = await _sportRepository.GetAll(); // Fetch all sports asynchronously
-            var query = allSports.AsQueryable(); // Work with an IQueryable for filtering
-
+            var query = allSports.AsQueryable();
             if (!string.IsNullOrEmpty(filter.Name))
             {
                 string trimmedFilter = filter.Name.Trim().ToLower();
-                query = query.Where(p => p.Name.Trim().ToLower().Contains(trimmedFilter)); // Apply filtering
+                query = query.Where(p => p.Name.Trim().ToLower().Contains(trimmedFilter));
             }
 
             var model = new SportViewModel
             {
                 Name = filter.Name,
-                Sports = allSports.ToList(), // All sports, unfiltered
-                FilteredSports = query.ToList(), // Apply filters and return results asynchronously
+                Sports = allSports.ToList(),
+                FilteredSports = query.ToList(),
             };
 
             return View(model);
@@ -105,6 +107,12 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.AdminRole}")]
         public async Task<IActionResult> EditSport(string id)
         {
+            var sport = await _sportRepository.GetById(id);
+            if (sport == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
             var entity = await _sportRepository.GetById(id);
             var model = new SportViewModel
             {
@@ -141,20 +149,18 @@ namespace SportConnect.Web.Controllers
 
             if ((await _sportRepository.GetAll()).Any(s => s.Description == sport.Description && s.Id != sport.Id))
             {
-                ModelState.AddModelError("Name", "Името е използвано от друг спорт.");
+                ModelState.AddModelError("Description", "Описанието е използвано от друг спорт.");
             }
 
             if (((await _sportRepository.GetAll()).Any(s => s.Name == sport.Name && s.Id != sport.Id)))
             {
-                ModelState.AddModelError("Description", "Описанието е използвано от друг спорт.");
+                ModelState.AddModelError("Name", "Името е използвано от друг спорт.");
             }
 
             if (ModelState.IsValid)
             {
-                // Reload the entity from the database to avoid tracking multiple instances
                 var dbSport = (await _sportRepository.GetById(sport.Id));
 
-                // Copy the values from the form submission (this avoids tracking conflicts)
                 dbSport.Id = sport.Id;
                 dbSport.Name = sport.Name;
                 dbSport.Description = sport.Description;
@@ -170,11 +176,16 @@ namespace SportConnect.Web.Controllers
         public async Task<IActionResult> DeleteSport(string id)
         {
             var sport = await _sportRepository.GetById(id);
+            if (sport == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
             var model = new SportViewModel()
             {
                 Name = sport.Name,
                 Description = sport.Description,
-                ImageUrl= sport.ImageUrl,
+                ImageUrl = sport.ImageUrl,
             };
             return View(model);
         }
@@ -183,6 +194,12 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.AdminRole}")]
         public async Task<IActionResult> DeleteSport(string id, string ConfirmText, SportViewModel model)
         {
+            var sport = await _sportRepository.GetById(id);
+            if (sport == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
             if (ConfirmText == "ПОТВЪРДИ")
             {
                 var tournaments = (await _tournamentRepository.GetAllBy(t => t.SportId == id)).ToList();
@@ -194,8 +211,6 @@ namespace SportConnect.Web.Controllers
                 }
 
                 await _tournamentRepository.DeleteRange(tournaments);
-
-                var sport = await _sportRepository.GetById(id);
                 await _sportRepository.Delete(sport);
                 return RedirectToAction("AllSports");
             }

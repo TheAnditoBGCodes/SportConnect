@@ -9,7 +9,7 @@ namespace SportConnect.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly UserManager<SportConnectUser> _userManager;
+        public UserManager<SportConnectUser> _userManager;
 
         public HomeController(UserManager<SportConnectUser> userManager)
         {

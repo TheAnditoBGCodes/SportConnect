@@ -4,7 +4,7 @@ namespace SportConnect.Services
 {
     public class CountryService
     {
-        private readonly List<string> countries = new List<string>
+        private static readonly List<string> countries = new List<string>
         {
             "Южна Джорджия", "Гренада", "Швейцария", "Сиера Леоне", "Унгария", "Тайван", "Уолис и Футуна",
             "Барбадос", "Острови Питкерн", "Бряг на слоновата кост", "Тунис", "Италия", "Бенин", "Индонезия", "Кабо Верде",
@@ -40,7 +40,7 @@ namespace SportConnect.Services
             "Американска Самоа", "Република Конго", "Белгия", "Израел", "Нова Зеландия", "Никарагуа", "Ангила"
         };
 
-        public List<SelectListItem> GetAllCountries()
+        public virtual List<SelectListItem> GetAllCountries()
         {
             return countries.OrderBy(x => x).Select(x => new SelectListItem { Value = x, Text = x }).ToList();
         }

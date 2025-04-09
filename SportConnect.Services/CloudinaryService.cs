@@ -36,4 +36,4 @@ namespace SportConnect.Services
             return uploadResult.SecureUrl.ToString();
         }
     }
-} 
+}

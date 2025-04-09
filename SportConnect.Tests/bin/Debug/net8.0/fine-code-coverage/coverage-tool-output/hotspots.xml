@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Hotspots>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>AspNetCoreGeneratedDocument.Views_Tournament_UserTournaments</Class>
+    <MethodName>ExecuteAsync()</MethodName>
+    <ShortName />
+    <Line>414</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>108</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>SportConnect.Web.Controllers.TournamentController</Class>
+    <MethodName>EditTournament()</MethodName>
+    <ShortName />
+    <Line>262</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>90</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>AspNetCoreGeneratedDocument.Areas_Identity_Pages_Account_Register</Class>
+    <MethodName>&lt;ExecuteAsync()</MethodName>
+    <ShortName />
+    <Line>395</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>86</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>SportConnect.Web.Controllers.UserController</Class>
+    <MethodName>EditUser()</MethodName>
+    <ShortName />
+    <Line>97</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>70</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>AspNetCoreGeneratedDocument.Views_Tournament_AllTournaments</Class>
+    <MethodName>ExecuteAsync()</MethodName>
+    <ShortName />
+    <Line>412</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>68</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>AspNetCoreGeneratedDocument.Views_Participation_UserParticipations</Class>
+    <MethodName>ExecuteAsync()</MethodName>
+    <ShortName />
+    <Line>457</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>66</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>AspNetCoreGeneratedDocument.Views_Tournament_SportTournaments</Class>
+    <MethodName>ExecuteAsync()</MethodName>
+    <ShortName />
+    <Line>414</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>66</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>AspNetCoreGeneratedDocument.Views_Participation_TournamentParticipations</Class>
+    <MethodName>ExecuteAsync()</MethodName>
+    <ShortName />
+    <Line>5</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>64</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>SportConnect.Web.Controllers.TournamentController</Class>
+    <MethodName>AddTournament()</MethodName>
+    <ShortName />
+    <Line>122</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>58</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>AspNetCoreGeneratedDocument.Views_Tournament_MyTournaments</Class>
+    <MethodName>ExecuteAsync()</MethodName>
+    <ShortName />
+    <Line>413</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>52</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>SportConnect.Web.Controllers.ParticipationController</Class>
+    <MethodName>UserParticipations()</MethodName>
+    <ShortName />
+    <Line>198</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>46</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>SportConnect.Web.Controllers.TournamentController</Class>
+    <MethodName>UserTournaments()</MethodName>
+    <ShortName />
+    <Line>546</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>46</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>AspNetCoreGeneratedDocument.Views_Participation_TournamentParticipations</Class>
+    <MethodName>&lt;ExecuteAsync()</MethodName>
+    <ShortName />
+    <Line>550</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>44</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>SportConnect.Web.Areas.Identity.Pages.Account.RegisterModel</Class>
+    <MethodName>OnPostAsync()</MethodName>
+    <ShortName />
+    <Line>117</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>42</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>AspNetCoreGeneratedDocument.Views_User_AllUsers</Class>
+    <MethodName>ExecuteAsync()</MethodName>
+    <ShortName />
+    <Line>413</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>38</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>AspNetCoreGeneratedDocument.Areas_Identity_Pages_Account_Manage_TwoFactorAuthentication</Class>
+    <MethodName>ExecuteAsync()</MethodName>
+    <ShortName />
+    <Line>5</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>36</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>AspNetCoreGeneratedDocument.Views_Shared__Layout</Class>
+    <MethodName>&lt;ExecuteAsync()</MethodName>
+    <ShortName />
+    <Line>293</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>36</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>AspNetCoreGeneratedDocument.Views_Sport_AllSports</Class>
+    <MethodName>ExecuteAsync()</MethodName>
+    <ShortName />
+    <Line>376</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>34</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>SportConnect.Web</Assembly>
+    <Class>SportConnect.Web.Controllers.ParticipationController</Class>
+    <MethodName>TournamentParticipations()</MethodName>
+    <ShortName />
+    <Line>115</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>32</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+</Hotspots>

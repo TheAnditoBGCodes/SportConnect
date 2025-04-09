@@ -2,26 +2,22 @@
 @model TournamentViewModel
 
 <script>
-    // Function to replace the "Отказване" button with confirmation buttons
     function replaceWithConfirmation(tournamentId, isApproved) {
-        var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
+        var participationButtons = document.getElementById("participationButtons-" + tournamentId);
 
         const sportId = '@Model.Id';
         const userId = '@ViewBag.UserId';
         var url = `/Participation/DeleteParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FTournament%2FAllTournaments`;
 
-        // Replace the content of the participationButtons with Yes and No options
         participationButtons.innerHTML = `
                                     <a href="${url}" class="btn btn-danger w-50 btn-sm">Да</a>
                                     <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButton(${tournamentId}, ${isApproved})">Не</a>
                                 `;
     }
 
-    // Function to restore the "Отказване" button and revert back to the original state
     function restoreQuitButton(tournamentId, isApproved) {
-        var participationButtons = document.getElementById("participationButtons-" + tournamentId); // Unique ID for each tournament
+        var participationButtons = document.getElementById("participationButtons-" + tournamentId);
 
-        // Restore the appropriate buttons based on the approval status
         if (isApproved) {
             participationButtons.innerHTML = `
                                         <button class="btn btn-success text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
@@ -59,7 +55,7 @@
 
     .sticky-search {
         position: sticky;
-        top: 90px; /* Adjust based on your header height */
+        top: 90px;
         background-color: #8ee697 !important;
         z-index: 999;
         width: 100%;
@@ -80,21 +76,21 @@
     .custom-line-height {
         line-height: 29.8px;
     }
-    /* Form controls styling */
+
     .search-control {
         font-size: 1rem;
         padding: 0.5rem 0.75rem;
         background-color: #dcf7de !important;
     }
 
-    /* Button group styling */
+
     .btn-group {
         display: flex;
         justify-content: center;
         gap: 20px;
     }
 
-    /* User card styling */
+
     .user-card {
         border-radius: 8px;
         border: 1px solid #e9ecef;
@@ -110,7 +106,7 @@
         object-fit: cover;
     }
 
-    /* Button styling */
+
     .btn-danger {
         background-color: red;
         border-color: red;
@@ -125,7 +121,7 @@
             transform: translateY(-2px);
         }
 
-    /* Button styling */
+
     .btn-warning {
         background-color: #AA7700;
         border-color: #AA7700;
@@ -140,7 +136,7 @@
             transform: translateY(-2px);
         }
 
-    /* Button styling */
+
     .btn-primary {
         background-color: blue;
         border-color: blue;
@@ -155,7 +151,7 @@
             transform: translateY(-2px);
         }
 
-    /* Button styling */
+
     .btn-success {
         background-color: green;
         border-color: green;
@@ -170,7 +166,7 @@
             transform: translateY(-2px);
         }
 
-    /* Button styling */
+
     .btn-secondary {
         background-color: grey;
         border-color: grey;
@@ -185,21 +181,21 @@
             transform: translateY(-2px);
         }
 
-    /* Info sections styling */
+
     .info-section {
         padding: 0 15px;
         text-align: center;
     }
 
         .info-section h3 {
-            color: #000 !important; /* Black color */
-            font-weight: bolder !important; /* Bolder */
+            color: #000 !important;
+            font-weight: bolder !important;
         }
 
-        /* Improved contrast for username */
+
         .info-section p {
             font-weight: normal;
-            color: #1f1f1f !important; /* Darker text color for better contrast */
+            color: #1f1f1f !important;
         }
 
     .sport-card {
@@ -222,9 +218,9 @@
         transition: all 0.3s ease;
         background-color: #8ee697 !important;
     }
-    /* Original styles preserved, adding responsive media queries at the end */
 
-    /* Standard mobile adjustments */
+
+
     @@media (max-width: 768px) {
         .container1 {
             width: 100% !important;
@@ -255,7 +251,7 @@
             }
     }
 
-    /* Small mobile devices */
+
     @@media (max-width: 480px) {
         h2.page-header {
             font-size: 1.5rem !important;
@@ -294,7 +290,7 @@
         }
     }
 
-    /* Very small mobile devices */
+
     @@media (max-width: 320px) {
         h2.page-header {
             font-size: 1.25rem !important;
@@ -322,7 +318,7 @@
         }
     }
 
-    /* Short height devices */
+
     @@media (max-height: 600px) {
         .container-fluid {
             height: auto !important;
@@ -345,7 +341,7 @@
         }
     }
 
-    /* Tablet landscape mode */
+
     @@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
         .container1 {
             width: 90% !important;
@@ -361,7 +357,7 @@
         }
     }
 
-    /* Print styles */
+
     @@media print {
         .sticky-search,
         .card-footer {
@@ -389,7 +385,7 @@
         }
     }
 
-    /* Column stacking for mobile */
+
     @@media (max-width: 767px) {
         .col-md-6 {
             width: 100% !important;
@@ -427,12 +423,11 @@
 else
 {
     <div class="d-flex flex-column justify-content-center align-items-center">
-        <div class="container1" style="width: 1320px; min-height: 530px;">
+        <div class="container1" style="width: 1320px;">
             <h2 class="page-header text-center">Турнири</h2>
 
             <div class="justify-content-center align-items-center">
                 <form method="get" class="d-flex flex-column align-items-center sticky-search">
-                    <!-- Row 1: Name, Sport, Organizer -->
                     <div class="d-flex justify-content-center mb-2">
                         <input type="text" asp-for="@Model.Name" class="form-control search-control form-control-sm me-2" placeholder="Име" style="font-size: 1rem; width: 430px;">
                         <select asp-for="@Model.SportId" asp-items="@ViewBag.Sports" class="form-select search-control form-control-sm me-2" aria-required="true" style="font-size: 1rem; width: 430px;">
@@ -441,7 +436,6 @@ else
                         <input type="text" asp-for="@Model.OrganizerName" class="form-control search-control form-control-sm" placeholder="Организатор" style="font-size: 1rem; width: 430px;">
                     </div>
 
-                    <!-- Row 2: Country, Start Date, End Date -->
                     <div class="d-flex justify-content-center mb-2">
                         <select asp-for="@Model.Country" asp-items="@ViewBag.Countries" class="form-select search-control form-control-sm me-2" aria-required="true" style="font-size: 1rem; width: 430px;">
                             <option value="" selected>Изберете страна</option>
@@ -456,7 +450,6 @@ else
                         </div>
                     </div>
 
-                    <!-- Row 3: Buttons -->
                     <div class="d-flex justify-content-around w-100">
                         <a asp-controller="Tournament" asp-action="AddTournament" asp-route-returnUrl="/Tournament/AllTournaments" class="btn btn-success text-center" style="font-size: 1rem;">Добави</a>
                         <button type="submit" class="btn btn-primary" style="font-size: 1rem;">Търси</button>
@@ -464,111 +457,117 @@ else
                 </form>
 
                 <div class="row justify-content-center mt-2 mb-3">
-                    @foreach (var tournament in Model.FilteredTournaments)
+                    @if (Model.FilteredTournaments.Count == 0)
                     {
-                        <div class="col-md-6 mb-3">
-                            <div class="card">
-                                <div class="d-flex">
-                                    <!-- Image Area -->
-                                    @if (!string.IsNullOrEmpty(tournament.ImageUrl))
-                                    {
-                                        <img src="@tournament.ImageUrl" alt="@tournament.Name" class="card-img-top" style="height: 226px; width: 301px; padding: 0.5rem !important; object-fit: cover;">
-                                    }
-
-                                    <!-- Text Area -->
-                                    <div class="card-body custom-line-height" style="padding: 0.5rem 0.5rem 0.5rem 0px !important;">
-                                        <div class="d-flex flex-column align-items-center justify-content-center">
-                                            <h5 class="fw-bolder text-center mb-0">@tournament.Name</h5>
-                                            <p class="text-center mb-0">@tournament.Description</p>
-                                            <p class="text-center mb-0">@tournament.Country</p>
-                                        </div>
-
-                                        <div class="mb-0 d-flex justify-content-between" style="border-bottom: 3px solid #6fd277;">
-                                            <strong class="fw-bolder">Спорт:</strong>
-                                            <span>@tournament.Sport.Name</span>
-                                        </div>
-
-                                        <div class="mb-0 d-flex justify-content-between" style="border-bottom: 3px solid #6fd277;">
-                                            <strong class="fw-bolder">Организатор:</strong>
-                                            <span>@tournament.Organizer.FullName</span>
-                                        </div>
-
-                                        <div class="mb-0 d-flex justify-content-between" style="border-bottom: 3px solid #6fd277;">
-                                            <strong class="fw-bolder">Дата:</strong>
-                                            <span>@tournament.Date.ToString("dd.MM.yyyy HH:mm")</span>
-                                        </div>
-
-                                        <div class="mb-0 d-flex justify-content-between">
-                                            <strong class="fw-bolder">Краен срок:</strong>
-                                            <span>@tournament.Deadline.ToString("dd.MM.yyyy HH:mm")</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                @{
-                                    string userId = ViewBag.UserId;
-                                    string tournamentid = tournament.Id;
-                                }
-                                @if (tournament.Organizer.Id != userId && !User.IsInRole(SD.AdminRole) && tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) < DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
-                                {
-                                    <div class="card-footer text-center">
-                                        <div class="d-flex justify-content-between w-100">
-                                            <div class="d-flex justify-content-center align-items-center gap-2 w-100">
-                                                <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/AllTournaments" class="btn btn-primary btn-sm" style="width: 110px;">
-                                                    Участници
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="card-footer text-center">
-                                        <div class="d-flex justify-content-between w-100">
-                                            <div class="d-flex justify-content-between align-items-center gap-2 w-100">
-                                                @if (tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
-                                                {
-                                                    <div id="participationButtons-@tournamentid" class="d-flex justify-content-between align-items-center " style="width: 220px;">
-                                                        @{
-                                                            var participation = tournament.Participations.FirstOrDefault(p => p.ParticipantId == userId);
-                                                        }
-                                                        @if (participation == null)
-                                                        {
-                                                            <!-- User has not participated -->
-                                                            <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/AllTournaments" class="btn btn-success btn-sm w-100">
-                                                                Участвай
-                                                            </a>
-                                                        }
-                                                        else if (participation.Approved == false)
-                                                        {
-                                                            <!-- User participation is pending -->
-                                                            <button class="btn btn-secondary text-white btn-sm w-50" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
-                                                            <a id="quitParticipation-@tournamentid" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(@tournamentid, false)">Отказване</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <button class="btn btn-success text-white btn-sm w-50" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
-                                                            <a id="quitParticipation-@tournamentid" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(@tournamentid, true)">Отказване</a>
-                                                        }
-                                                    </div>
-                                                }
-                                                <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/AllTournaments" class="btn btn-primary btn-sm" style="width: 110px;">
-                                                    Участници
-                                                </a>
-                                                @if (User.IsInRole(SD.AdminRole) || tournament.Organizer.Id == userId)
-                                                {
-                                                    <a asp-controller="Tournament" asp-action="EditTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/AllTournaments" class="btn btn-warning btn-sm text-white">
-                                                        Промени
-                                                    </a>
-                                                    <a asp-controller="Tournament" asp-action="DeleteTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/AllTournaments" class="btn btn-danger btn-sm text-white">
-                                                        Изтрий
-                                                    </a>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
+                        <div class="d-flex justify-content-center">
+                            <div class="no-container text-center">
+                                <h1 style="font-size: 2rem;">Няма намерени резултати</h1>
                             </div>
                         </div>
+                    }
+                    else
+                    {@foreach (var tournament in Model.FilteredTournaments)
+                        {
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="d-flex">
+                                        @if (!string.IsNullOrEmpty(tournament.ImageUrl))
+                                        {
+                                            <img src="@tournament.ImageUrl" alt="@tournament.Name" class="card-img-top" style="height: 226px; width: 301px; padding: 0.5rem !important; object-fit: cover;">
+                                        }
+
+                                        <div class="card-body custom-line-height" style="padding: 0.5rem 0.5rem 0.5rem 0px !important;">
+                                            <div class="d-flex flex-column align-items-center justify-content-center">
+                                                <h5 class="fw-bolder text-center mb-0">@tournament.Name</h5>
+                                                <p class="text-center mb-0">@tournament.Description</p>
+                                                <p class="text-center mb-0">@tournament.Country</p>
+                                            </div>
+
+                                            <div class="mb-0 d-flex justify-content-between" style="border-bottom: 3px solid #6fd277;">
+                                                <strong class="fw-bolder">Спорт:</strong>
+                                                <span>@tournament.Sport.Name</span>
+                                            </div>
+
+                                            <div class="mb-0 d-flex justify-content-between" style="border-bottom: 3px solid #6fd277;">
+                                                <strong class="fw-bolder">Организатор:</strong>
+                                                <span>@tournament.Organizer.FullName</span>
+                                            </div>
+
+                                            <div class="mb-0 d-flex justify-content-between" style="border-bottom: 3px solid #6fd277;">
+                                                <strong class="fw-bolder">Дата:</strong>
+                                                <span>@tournament.Date.ToString("dd.MM.yyyy HH:mm")</span>
+                                            </div>
+
+                                            <div class="mb-0 d-flex justify-content-between">
+                                                <strong class="fw-bolder">Краен срок:</strong>
+                                                <span>@tournament.Deadline.ToString("dd.MM.yyyy HH:mm")</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @{
+                                        string userId = ViewBag.UserId;
+                                        string tournamentid = tournament.Id;
+                                    }
+                                    @if (tournament.Organizer.Id != userId && !User.IsInRole(SD.AdminRole) && tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) < DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
+                                    {
+                                        <div class="card-footer text-center">
+                                            <div class="d-flex justify-content-between w-100">
+                                                <div class="d-flex justify-content-center align-items-center gap-2 w-100">
+                                                    <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/AllTournaments" class="btn btn-primary btn-sm" style="width: 110px;">
+                                                        Участници
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="card-footer text-center">
+                                            <div class="d-flex justify-content-between w-100">
+                                                <div class="d-flex justify-content-between align-items-center gap-2 w-100">
+                                                    @if (tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
+                                                    {
+                                                        <div id="participationButtons-@tournamentid" class="d-flex justify-content-between align-items-center " style="width: 220px;">
+                                                            @{
+                                                                var participation = tournament.Participations.FirstOrDefault(p => p.ParticipantId == userId);
+                                                            }
+                                                            @if (participation == null)
+                                                            {
+                                                                <a asp-controller="Participation" asp-action="AddParticipation" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/AllTournaments" class="btn btn-success btn-sm w-100">
+                                                                    Участвай
+                                                                </a>
+                                                            }
+                                                            else if (participation.Approved == false)
+                                                            {
+                                                                <button class="btn btn-secondary text-white btn-sm w-50" onmousedown="return false;" onkeydown="return false;">Неодобрен</button>
+                                                                <a id="quitParticipation-@tournamentid" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(@tournamentid, false)">Отказване</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <button class="btn btn-success text-white btn-sm w-50" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
+                                                                <a id="quitParticipation-@tournamentid" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmation(@tournamentid, true)">Отказване</a>
+                                                            }
+                                                        </div>
+                                                    }
+                                                    <a asp-controller="Participation" asp-action="TournamentParticipations" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/AllTournaments" class="btn btn-primary btn-sm" style="width: 110px;">
+                                                        Участници
+                                                    </a>
+                                                    @if (User.IsInRole(SD.AdminRole) || tournament.Organizer.Id == userId)
+                                                    {
+                                                        <a asp-controller="Tournament" asp-action="EditTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/AllTournaments" class="btn btn-warning btn-sm text-white">
+                                                            Промени
+                                                        </a>
+                                                        <a asp-controller="Tournament" asp-action="DeleteTournament" asp-route-id="@tournament.Id" asp-route-returnUrl="/Tournament/AllTournaments" class="btn btn-danger btn-sm text-white">
+                                                            Изтрий
+                                                        </a>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
                     }
                 </div>
             </div>

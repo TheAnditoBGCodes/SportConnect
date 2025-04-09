@@ -11,13 +11,14 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>:root {
+    <style>
+        :root {
             --primary-color: #1a73e8;
             --secondary-color: #34a853;
             --text-color: #202124;
             --light-gray: #f8f9fa;
         }
-        
+
         body {
             font-family: 'Roboto', sans-serif;
             color: var(--text-color);
@@ -38,7 +39,7 @@
             font-weight: 700;
             font-size: 1.5rem;
         }
-        
+
         .nav-link {
             font-weight: 500;
             padding: 0.8rem 1rem !important;
@@ -50,13 +51,13 @@
             .nav-link:hover {
                 background-color: #dcf7de;
                 color: var(--primary-color) !important;
-        }
+            }
 
             .nav-link.active {
                 background-color: #dcf7de;
                 color: var(--primary-color) !important;
-        }
-        
+            }
+
         .container {
             padding: 0.5rem 15px;
         }
@@ -69,8 +70,7 @@
             padding: 0 0;
             margin-top: 1rem;
         }
-        
-        /* Mobile optimizations */
+
         @@media (max-width: 576px) {
             .navbar-collapse {
                 background-color: white;
@@ -79,30 +79,30 @@
                 box-shadow: 0 4px 6px rgba(0,0,0,0.1);
                 margin-top: 0.5rem;
             }
-            
+
             .nav-link {
                 padding: 0.5rem !important;
             }
-            
+
             .navbar-brand {
                 font-size: 1.2rem;
                 padding: 0.6rem 0.8rem !important;
             }
-            
+
             .container {
                 padding: 0.25rem 10px;
             }
-            
+
             .shit {
                 padding: 0.25rem 10px;
             }
-            
+
             footer {
                 margin-top: 0.5rem;
             }
         }
-        
-        /* Tablet optimizations */
+
+
         @@media (min-width: 577px) and (max-width: 992px) {
             .container {
                 padding: 1rem 15px;
@@ -112,163 +112,163 @@
                 padding: 0.5rem 15px;
             }
         }
-        
-        /* Responsive adjustments for smaller screens */
+
+
         @@media (max-width: 768px) {
             .navbar-nav {
                 margin-bottom: 0.5rem !important;
             }
-            
+
             .d-flex {
                 flex-direction: column;
                 width: 100%;
             }
-            
+
             .navbar-collapse {
                 padding-bottom: 0.5rem;
             }
         }
-        
-        /* Additional responsive adjustments */
+
+
         @@media (max-width: 480px) {
             .navbar-brand {
                 font-size: 1.1rem;
                 padding: 0.5rem 0.7rem !important;
             }
-            
+
             .nav-link {
                 padding: 0.4rem 0.7rem !important;
                 margin: 0.1rem 0;
                 font-size: 0.9rem;
             }
-            
+
             .navbar-toggler {
                 padding: 0.3rem 0.5rem;
                 font-size: 0.9rem;
             }
-            
+
             footer .shit {
                 padding: 0.25rem 5px;
                 font-size: 0.9rem;
             }
-            
+
             .container-fluid {
                 padding-left: 5px;
                 padding-right: 5px;
             }
         }
-        
+
         @@media (max-width: 320px) {
             .navbar-brand {
                 font-size: 1rem;
                 padding: 0.4rem 0.5rem !important;
             }
-            
+
             .nav-link {
                 padding: 0.3rem 0.5rem !important;
                 font-size: 0.8rem;
             }
-            
+
             .navbar-toggler {
                 padding: 0.25rem 0.4rem;
                 font-size: 0.8rem;
             }
-            
+
             footer .shit {
                 padding: 0.25rem 2px;
                 font-size: 0.8rem;
             }
         }
-        
-        /* Height-based media queries */
+
+
         @@media (max-height: 600px) {
             .navbar {
                 padding: 0.3rem 0.5rem;
             }
-            
+
             .navbar-brand {
                 padding: 0.4rem 0.5rem !important;
             }
-            
+
             .nav-link {
                 padding: 0.4rem 0.5rem !important;
             }
-            
+
             .container {
                 padding-top: 0.25rem;
                 padding-bottom: 0.25rem;
             }
-            
+
             footer {
                 margin-top: 0.5rem;
             }
         }
-        
-        /* Tablet landscape adjustments */
+
+
         @@@@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
             .container {
                 padding: 0.75rem 15px;
             }
-            
+
             .navbar {
                 padding: 0.3rem 0.75rem;
             }
         }
 
-        /* Print styles */
+
         @@media print {
             header, footer {
                 display: none !important;
             }
-            
+
             .container {
                 width: 100%;
                 max-width: 100%;
                 padding: 0;
                 margin: 0;
             }
-            
+
             body {
                 background-color: white !important;
                 color: black !important;
             }
-            
+
             a {
                 text-decoration: none !important;
                 color: black !important;
             }
         }
-        
-        /* Handle column stacking on mobile */
+
+
         @@media (max-width: 767px) {
             .navbar-nav .nav-item {
                 width: 100%;
                 margin-bottom: 0.2rem;
             }
-            
+
             .d-flex {
                 width: 100%;
                 justify-content: center;
             }
         }
-        
-        /* Button styles */
+
+
         .btn {
             border-radius: 4px;
             padding: 0.5rem 1rem;
             font-weight: 500;
             transition: all 0.2s;
         }
-        
+
         .btn-primary {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
         }
-        
-        .btn-primary:hover {
-            background-color: #0d5bcd;
-            border-color: #0d5bcd;
-        }
+
+            .btn-primary:hover {
+                background-color: #0d5bcd;
+                border-color: #0d5bcd;
+            }
 
         .sticky-top, header, header .navbar {
             box-shadow: none !important;
@@ -279,18 +279,15 @@
     <header style="background-color: #8ee697 !important;" id="main-header" class="sticky-top">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid d-flex align-items-center">
-                <!-- SportConnect Brand -->
                 <a class="navbar-brand nav-link" style="font-weight: 700; color: blue !important;" asp-area="" asp-controller="Home" asp-action="Index">
                     SportConnect
                 </a>
 
-                <!-- Navbar Toggle Button -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" 
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <!-- Navigation Links -->
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav me-auto mb-lg-0">
                         @if (User.IsInRole(SD.AdminRole))
@@ -336,7 +333,6 @@
                             </li>
                         }
                     </ul>
-                    <!-- Profile and Logout Section -->
                     <div class="d-flex">
                         <partial name="_LoginPartial" />
                     </div>
@@ -365,11 +361,10 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
-        // Add active class to current navigation item
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;
             const navLinks = document.querySelectorAll('.nav-link');
-            
+
             navLinks.forEach(link => {
                 const href = link.getAttribute('href');
                 if (href && currentPath.includes(href) && href !== '/') {

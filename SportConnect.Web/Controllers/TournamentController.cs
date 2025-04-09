@@ -9,17 +9,18 @@ using SportConnect.Services;
 using SportConnect.Utility;
 using SportConnect.Web.Models;
 using System.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SportConnect.Web.Controllers
 {
     public class TournamentController : Controller
     {
-        private readonly UserManager<SportConnectUser> _userManager;
+        public UserManager<SportConnectUser> _userManager;
         public IRepository<Tournament> _tournamentRepository { get; set; }
         public IRepository<Sport> _sportRepository { get; set; }
         public IRepository<SportConnectUser> _userRepository { get; set; }
         public IRepository<Participation> _participationRepository { get; set; }
-        private readonly CountryService _countryService;
+        public CountryService _countryService;
 
         public TournamentController(UserManager<SportConnectUser> userManager, IRepository<Tournament> tournamentRepository, IRepository<Sport> sportRepository, IRepository<SportConnectUser> userRepository, IRepository<Participation> participationRepository, CountryService countryService)
         {
@@ -178,7 +179,6 @@ namespace SportConnect.Web.Controllers
                 DateTime eventDateTime = tournament.Deadline.Value.Date.Add(tournament.DeadlineTime.Value);
                 DateTime deadlineDateTime = tournament.Date.Value.Date.Add(tournament.DateTimer.Value);
 
-                // Combine the Date and Time for Deadline and Event Date
                 if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
                 {
                     deadlineDateTime = tournament.Deadline.Value.Date.Add(tournament.DeadlineTime.Value);
@@ -195,12 +195,10 @@ namespace SportConnect.Web.Controllers
                 {
                     eventDateTime = tournament.Date.Value.Date.Add(tournament.DateTimer.Value);
 
-                    // Check if the event start date-time is before the deadline
                     if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
                     {
                         deadlineDateTime = tournament.Deadline.Value.Date.Add(tournament.DeadlineTime.Value);
 
-                        // Truncate both the eventDateTime and deadlineDateTime to the minute level
                         var eventTruncated = eventDateTime.AddSeconds(-eventDateTime.Second).AddMilliseconds(-eventDateTime.Millisecond).AddMicroseconds(-eventDateTime.Microsecond);
                         if (eventTruncated < deadlineDateTime)
                         {
@@ -229,6 +227,10 @@ namespace SportConnect.Web.Controllers
         public async Task<IActionResult> EditTournament(string id, string returnUrl)
         {
             var tournament = await _tournamentRepository.GetById(id);
+            if (tournament == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
 
             var model = new TournamentViewModel()
             {
@@ -323,7 +325,6 @@ namespace SportConnect.Web.Controllers
                     DateTime eventDateTime = tournament.Deadline.Value.Date.Add(tournament.DeadlineTime.Value);
                     DateTime deadlineDateTime = tournament.Date.Value.Date.Add(tournament.DateTimer.Value);
 
-                    // Combine the Date and Time for Deadline and Event Date
                     if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
                     {
                         deadlineDateTime = tournament.Deadline.Value.Date.Add(tournament.DeadlineTime.Value);
@@ -340,12 +341,10 @@ namespace SportConnect.Web.Controllers
                     {
                         eventDateTime = tournament.Date.Value.Date.Add(tournament.DateTimer.Value);
 
-                        // Check if the event start date-time is before the deadline
                         if (tournament.Deadline.HasValue && tournament.DeadlineTime.HasValue)
                         {
                             deadlineDateTime = tournament.Deadline.Value.Date.Add(tournament.DeadlineTime.Value);
 
-                            // Truncate both the eventDateTime and deadlineDateTime to the minute level
                             var eventTruncated = eventDateTime.AddSeconds(-eventDateTime.Second).AddMilliseconds(-eventDateTime.Millisecond).AddMicroseconds(-eventDateTime.Microsecond);
                             if (eventTruncated < deadlineDateTime)
                             {
@@ -427,6 +426,10 @@ namespace SportConnect.Web.Controllers
         public async Task<IActionResult> DeleteTournament(string id, string returnUrl)
         {
             var tournament = (await _tournamentRepository.AllWithIncludes(x => x.Sport)).FirstOrDefault(x => x.Id == id);
+            if (tournament == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
 
             var model = new TournamentViewModel()
             {
@@ -472,6 +475,11 @@ namespace SportConnect.Web.Controllers
         public async Task<IActionResult> SportTournaments(string id, TournamentViewModel? filter)
         {
             HttpContext.Session.Remove("ReturnUrl");
+            var sport = await _sportRepository.GetById(id);
+            if (sport == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
             var tournaments = (await _tournamentRepository.AllWithIncludes(x => x.Organizer, x => x.Sport, x => x.Participations)).Where(x => x.SportId == id);
 
             if (filter == null)
@@ -534,8 +542,23 @@ namespace SportConnect.Web.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> UserTournaments(string id, string tournamentId, TournamentViewModel? filter, string returnUrl, string tournamentUrl = null)
+        public async Task<IActionResult> UserTournaments(string id, string? tournamentId, TournamentViewModel? filter, string returnUrl, string tournamentUrl = null)
         {
+            if (tournamentId != null)
+            {
+                var tournament = await _tournamentRepository.GetById(tournamentId);
+                if (tournament == null)
+                {
+                    return View("~/Views/Shared/NotFound.cshtml");
+                }
+            }
+
+            var user = await _userRepository.GetById(id);
+            if (user == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
             var tournaments = (await _tournamentRepository.AllWithIncludes(x => x.Organizer, x => x.Sport, x => x.Participations)).Where(x => x.OrganizerId == id);
             ViewBag.OtherUserId = id;
             ViewBag.CheckedUser = (await _userRepository.GetById(id)).UserName;
@@ -599,13 +622,11 @@ namespace SportConnect.Web.Controllers
 
             if (!string.IsNullOrEmpty(returnUrl))
             {
-                // If this is the first time navigating, set the root return URL.
                 if (string.IsNullOrEmpty(storedRootReturnUrl))
                 {
                     HttpContext.Session.SetString("RootReturnUrl", returnUrl);
                 }
 
-                // Always update the current return URL (used for immediate back navigation)
                 HttpContext.Session.SetString("CurrentReturnUrl", returnUrl);
             }
 
@@ -622,7 +643,7 @@ namespace SportConnect.Web.Controllers
         public async Task<IActionResult> MyTournaments(TournamentViewModel? filter)
         {
             HttpContext.Session.Remove("ReturnUrl");
-            
+
             var currentUser = await _userManager.GetUserAsync(this.User);
             var currentUserId = currentUser.Id;
             ViewBag.UserId = currentUserId;
