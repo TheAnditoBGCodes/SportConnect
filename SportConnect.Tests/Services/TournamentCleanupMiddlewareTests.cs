@@ -59,14 +59,14 @@ namespace SportConnect.Tests.Services
 
             Assert.IsNotNull(middleware);
         }
-
-        private Tournament CreateTournament(string id, string name, DateTime date)
+        private Tournament CreateTournament(string id, string name, DateTime date, DateTime? deadline = null)
         {
             return new Tournament
             {
                 Id = id,
                 Name = name,
-                Date = date,
+                Date = date.ToString(),
+                Deadline = deadline?.ToString() ?? date.AddDays(-1).ToString(), // default: 1 day before tournament date
                 Country = "Bulgaria",
                 Description = "Test tournament",
                 ImageUrl = "https://example.com/image.jpg",
@@ -74,11 +74,11 @@ namespace SportConnect.Tests.Services
                 SportId = "1"
             };
         }
-
         [Test]
         public async Task InvokeAsync_NoExpiredTournaments_DoesNotRemoveAnything()
         {
-            _dbContext.Tournaments.Add(CreateTournament("1", "Future", DateTime.Now.AddDays(5)));
+            _dbContext.Tournaments.Add(CreateTournament(
+                "1", "Future", DateTime.Now.AddDays(5), DateTime.Now.AddDays(3)));
             await _dbContext.SaveChangesAsync();
 
             var context = new DefaultHttpContext();
@@ -91,9 +91,9 @@ namespace SportConnect.Tests.Services
         [Test]
         public async Task InvokeAsync_WithExpiredTournaments_RemovesTournamentsAndParticipations()
         {
-            var expired1 = CreateTournament("1", "Old 1", DateTime.Now.AddDays(-5));
-            var expired2 = CreateTournament("2", "Old 2", DateTime.Now.AddDays(-1));
-            var future = CreateTournament("3", "Future", DateTime.Now.AddDays(5));
+            var expired1 = CreateTournament("1", "Old 1", DateTime.Now.AddDays(-5), DateTime.Now.AddDays(-10));
+            var expired2 = CreateTournament("2", "Old 2", DateTime.Now.AddDays(-1), DateTime.Now.AddDays(-3));
+            var future = CreateTournament("3", "Future", DateTime.Now.AddDays(5), DateTime.Now.AddDays(3));
 
             _dbContext.Tournaments.AddRange(expired1, expired2, future);
             _dbContext.Participations.AddRange(
@@ -113,7 +113,7 @@ namespace SportConnect.Tests.Services
         [Test]
         public async Task InvokeAsync_WithExpiredTournamentsButNoParticipations_OnlyRemovesTournaments()
         {
-            var expired = CreateTournament("1", "Old", DateTime.Now.AddDays(-5));
+            var expired = CreateTournament("1", "Old", DateTime.Now.AddDays(-5), DateTime.Now.AddDays(-7));
             _dbContext.Tournaments.Add(expired);
             await _dbContext.SaveChangesAsync();
 
@@ -145,11 +145,15 @@ namespace SportConnect.Tests.Services
 
             Assert.ThrowsAsync<NullReferenceException>(async () => await middleware.InvokeAsync(context));
         }
-
         [Test]
         public async Task InvokeAsync_AlwaysCallsNextMiddleware_EvenAfterCleanup()
         {
-            var expired = CreateTournament("1", "Old", DateTime.Now.AddDays(-5));
+            var expired = CreateTournament(
+                "1",
+                "Old",
+                DateTime.Now.AddDays(-5),
+                DateTime.Now.AddDays(-7) // Deadline before the tournament date
+            );
             _dbContext.Tournaments.Add(expired);
             await _dbContext.SaveChangesAsync();
 

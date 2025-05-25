@@ -83,8 +83,8 @@ namespace SportConnect.Tests.Controllers
         {
             var tournaments = new List<Tournament>
             {
-                new Tournament { Id = "1", Name = "Summer Tournament", Date = DateTime.Now.AddMonths(1) },
-                new Tournament { Id = "2", Name = "Winter Tournament", Date = DateTime.Now.AddMonths(3) }
+                new Tournament { Id = "1", Name = "Summer Tournament", Date = DateTime.Now.AddMonths(1).ToString() },
+                new Tournament { Id = "2", Name = "Winter Tournament", Date = DateTime.Now.AddMonths(3).ToString() }
             };
 
             _mockTournamentRepository.Setup(r => r.GetAll())
@@ -132,7 +132,7 @@ namespace SportConnect.Tests.Controllers
                 {
                     Id = Guid.NewGuid().ToString(),
                     Name = "Tennis Open",
-                    Date = DateTime.Now.AddDays(10),
+                    Date = DateTime.Now.AddDays(10).ToString(),
                     Country = "USA",
                     SportId = Guid.NewGuid().ToString(),
                     Sport = new Sport { Name = "Tennis" },
@@ -146,7 +146,7 @@ namespace SportConnect.Tests.Controllers
                 {
                     Id = Guid.NewGuid().ToString(),
                     Name = "Football Championship",
-                    Date = DateTime.Now.AddDays(20),
+                    Date = DateTime.Now.AddDays(20).ToString(),
                     Country = "Germany",
                     SportId = Guid.NewGuid().ToString(),
                     Sport = new Sport { Name = "Football" },
@@ -343,8 +343,8 @@ namespace SportConnect.Tests.Controllers
 
             var tournaments = new List<Tournament>
     {
-        new Tournament { Id = "1", Name = "Summer Tournament", Date = DateTime.Now.AddMonths(1) },
-        new Tournament { Id = "2", Name = "Winter Tournament", Date = DateTime.Now.AddMonths(3) }
+        new Tournament { Id = "1", Name = "Summer Tournament", Date = DateTime.Now.AddMonths(1).ToString() },
+        new Tournament { Id = "2", Name = "Winter Tournament", Date = DateTime.Now.AddMonths(3).ToString() }
     };
 
             _mockTournamentRepository.Setup(r => r.GetAll())
@@ -393,7 +393,7 @@ namespace SportConnect.Tests.Controllers
         {
             Id = "1",
             Name = "Tennis Open",
-            Date = DateTime.Now.AddDays(10),
+            Date = DateTime.Now.AddDays(10).ToString(),
             Country = "USA",
             SportId = "sport1",
             Sport = new Sport { Name = "Tennis" },
@@ -407,7 +407,7 @@ namespace SportConnect.Tests.Controllers
         {
             Id = "2",
             Name = "Football Championship",
-            Date = DateTime.Now.AddDays(20),
+            Date = DateTime.Now.AddDays(20).ToString(),
             Country = "Germany",
             SportId = "sport2",
             Sport = new Sport { Name = "Football" },

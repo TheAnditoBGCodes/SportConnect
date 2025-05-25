@@ -25,22 +25,22 @@ namespace SportConnect.Services
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<SportConnectDbContext>();
 
-                var expiredTournaments = await dbContext.Tournaments
-                    .Where(t => t.Date <= DateTime.Now)
-                    .ToListAsync();
+                var expiredTournaments = await dbContext.Tournaments.ToListAsync();
 
-                if (expiredTournaments.Any())
+                var expired = expiredTournaments.Where(t => DateTime.TryParse(t.Date, out var date) && date <= DateTime.Now).ToList();
+
+                if (expired.Any())
                 {
-                    var tournamentIds = expiredTournaments.Select(t => t.Id).ToList();
+                    var tournamentIds = expired.Select(t => t.Id).ToList();
                     var relatedParticipations = dbContext.Participations
                         .Where(p => tournamentIds.Contains(p.TournamentId));
 
                     dbContext.Participations.RemoveRange(relatedParticipations);
 
-                    dbContext.Tournaments.RemoveRange(expiredTournaments);
+                    dbContext.Tournaments.RemoveRange(expired);
 
                     await dbContext.SaveChangesAsync();
-                    _logger.LogInformation($"{expiredTournaments.Count} expired tournaments and their participations cleaned up.");
+                    _logger.LogInformation($"{expired.Count} expired tournaments and their participations cleaned up.");
                 }
             }
 

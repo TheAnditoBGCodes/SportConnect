@@ -224,13 +224,6 @@ namespace SportConnect.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d0d1c1a1-e6a6-4a2e-a56b-3d516c897101",
-                            Description = "Игра с щека и топки",
-                            ImageUrl = "\\uploads\\sports\\snooker.jpg",
-                            Name = "Снукър"
-                        },
-                        new
-                        {
                             Id = "3e20a87e-d7d5-45f6-b775-7f394a4b31f1",
                             Description = "Интелектуален спорт с фигури",
                             ImageUrl = "\\uploads\\sports\\chess.jpg",
@@ -364,11 +357,13 @@ namespace SportConnect.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Deadline")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Deadline")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -397,6 +392,80 @@ namespace SportConnect.DataAccess.Migrations
                     b.HasIndex("SportId");
 
                     b.ToTable("Tournaments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3a3cf81f-5f85-4ce3-bc99-45c14555a774",
+                            Country = "САЩ",
+                            Date = "2025-06-10T10:00:00",
+                            Deadline = "2025-05-10T23:59:59",
+                            Description = "Световното първенство по шахмат",
+                            ImageUrl = "\\uploads\\tournaments\\chess\\worldchampionship.jpg",
+                            Name = "World Chess Championship",
+                            OrganizerId = "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b",
+                            SportId = "3e20a87e-d7d5-45f6-b775-7f394a4b31f1"
+                        },
+                        new
+                        {
+                            Id = "a264b51b-f2a4-48fd-b97b-26ff9fdb2d03",
+                            Country = "Германия",
+                            Date = "2025-09-05T10:00:00",
+                            Deadline = "2025-08-01T23:59:59",
+                            Description = "Престижен турнир по шахмат",
+                            ImageUrl = "\\uploads\\tournaments\\chess\\candidates.jpg",
+                            Name = "Candidates Tournament",
+                            OrganizerId = "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b",
+                            SportId = "3e20a87e-d7d5-45f6-b775-7f394a4b31f1"
+                        },
+                        new
+                        {
+                            Id = "cf5d37f2-c2b2-4b34-9a20-246aaf114fa1",
+                            Country = "Нидерландия",
+                            Date = "2025-07-01T14:00:00",
+                            Deadline = "2025-06-01T23:59:59",
+                            Description = "Световната купа по дартс",
+                            ImageUrl = "\\uploads\\tournaments\\darts\\worldcup.jpg",
+                            Name = "World Cup",
+                            OrganizerId = "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b",
+                            SportId = "89d1cc17-0a41-47a2-a9c6-4c9f54b3b1a1"
+                        },
+                        new
+                        {
+                            Id = "51f7e725-2827-4a5d-8b5f-83ad11979f4e",
+                            Country = "Обединено кралство",
+                            Date = "2025-12-15T14:00:00",
+                            Deadline = "2025-11-15T23:59:59",
+                            Description = "Най-престижният турнир по дартс",
+                            ImageUrl = "\\uploads\\tournaments\\darts\\pdcchampionship.jpg",
+                            Name = "World Darts Championship",
+                            OrganizerId = "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b",
+                            SportId = "89d1cc17-0a41-47a2-a9c6-4c9f54b3b1a1"
+                        },
+                        new
+                        {
+                            Id = "98aa004e-0937-4f1f-85a3-17bd4f77a250",
+                            Country = "Франция",
+                            Date = "2025-05-26T11:00:00",
+                            Deadline = "2025-05-05T23:59:59",
+                            Description = "Вторият турнир от Големия шлем",
+                            ImageUrl = "\\uploads\\tournaments\\tennis\\rolandgarros.jpg",
+                            Name = "Roland Garros",
+                            OrganizerId = "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b",
+                            SportId = "bf76e9a3-7f2d-4d11-82d2-6b547531ec71"
+                        },
+                        new
+                        {
+                            Id = "c3b5f2a3-56d4-4dbb-91a6-ff6f5b6b8659",
+                            Country = "Обединено кралство",
+                            Date = "2025-07-01T11:00:00",
+                            Deadline = "2025-06-10T23:59:59",
+                            Description = "Най-старият турнир по тенис в света",
+                            ImageUrl = "\\uploads\\tournaments\\tennis\\wimbledon.jpg",
+                            Name = "Wimbledon",
+                            OrganizerId = "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b",
+                            SportId = "bf76e9a3-7f2d-4d11-82d2-6b547531ec71"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

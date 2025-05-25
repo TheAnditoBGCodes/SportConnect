@@ -16,9 +16,9 @@ namespace SportConnect.Models
         public string OrganizerId { get; set; }
         public SportConnectUser Organizer { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
-        public DateTime Deadline { get; set; }
+        public string Deadline { get; set; }
 
         public string Country { get; set; }
         public string ImageUrl { get; set; }

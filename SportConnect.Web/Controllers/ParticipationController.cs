@@ -80,12 +80,12 @@ namespace SportConnect.Web.Controllers
 
             if (filter.StartDate != null)
             {
-                query = query.Where(p => p.Date >= filter.StartDate);
+                query = query.Where(p => DateTime.Parse(p.Date) >= filter.StartDate);
             }
 
             if (filter.EndDate != null)
             {
-                query = query.Where(p => p.Date <= filter.EndDate);
+                query = query.Where(p => DateTime.Parse(p.Date) <= filter.EndDate);
             }
 
             var filteredTournaments = query.ToList();
@@ -256,12 +256,12 @@ namespace SportConnect.Web.Controllers
 
             if (filter.StartDate != null)
             {
-                query = query.Where(p => p.Date >= filter.StartDate);
+                query = query.Where(p => DateTime.Parse(p.Date) >= filter.StartDate);
             }
 
             if (filter.EndDate != null)
             {
-                query = query.Where(p => p.Date <= filter.EndDate);
+                query = query.Where(p => DateTime.Parse(p.Date) <= filter.EndDate);
             }
 
             var filteredTournaments = query.ToList();

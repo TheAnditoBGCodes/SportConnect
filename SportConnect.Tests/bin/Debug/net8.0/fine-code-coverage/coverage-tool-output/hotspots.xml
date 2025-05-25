@@ -20,7 +20,7 @@
     <Class>SportConnect.Web.Controllers.TournamentController</Class>
     <MethodName>EditTournament()</MethodName>
     <ShortName />
-    <Line>262</Line>
+    <Line>263</Line>
     <FileIndex>0</FileIndex>
     <Metrics>
       <Metric>
@@ -125,7 +125,7 @@
     <Class>SportConnect.Web.Controllers.TournamentController</Class>
     <MethodName>AddTournament()</MethodName>
     <ShortName />
-    <Line>122</Line>
+    <Line>123</Line>
     <FileIndex>0</FileIndex>
     <Metrics>
       <Metric>
@@ -170,7 +170,7 @@
     <Class>SportConnect.Web.Controllers.TournamentController</Class>
     <MethodName>UserTournaments()</MethodName>
     <ShortName />
-    <Line>546</Line>
+    <Line>547</Line>
     <FileIndex>0</FileIndex>
     <Metrics>
       <Metric>

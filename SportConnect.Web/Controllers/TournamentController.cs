@@ -9,6 +9,7 @@ using SportConnect.Services;
 using SportConnect.Utility;
 using SportConnect.Web.Models;
 using System.Diagnostics;
+using System.Globalization;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace SportConnect.Web.Controllers
@@ -76,12 +77,12 @@ namespace SportConnect.Web.Controllers
 
             if (filter.StartDate != null)
             {
-                query = query.Where(p => p.Date >= filter.StartDate);
+                query = query.Where(p => DateTime.Parse(p.Date) >= filter.StartDate);
             }
 
             if (filter.EndDate != null)
             {
-                query = query.Where(p => p.Date <= filter.EndDate);
+                query = query.Where(p => DateTime.Parse(p.Date) <= filter.EndDate);
             }
 
             ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
@@ -236,11 +237,11 @@ namespace SportConnect.Web.Controllers
             {
                 Id = tournament.Id,
                 OrganizerId = tournament.OrganizerId,
-                Date = tournament.Date.Date,
-                DateTimer = tournament.Date.TimeOfDay,
-                Deadline = tournament.Deadline.Date,
+                Date = DateTime.Parse(tournament.Date).Date,
+                DateTimer = DateTime.Parse(tournament.Date).TimeOfDay,
+                Deadline = DateTime.Parse(tournament.Deadline).Date,
                 ImageUrl = tournament.ImageUrl,
-                DeadlineTime = tournament.Deadline.TimeOfDay,
+                DeadlineTime = DateTime.Parse(tournament.Deadline).TimeOfDay,
                 Description = tournament.Description,
                 Country = tournament.Country,
                 CountryList = _countryService.GetAllCountries(),
@@ -361,9 +362,9 @@ namespace SportConnect.Web.Controllers
 
                 edited.Name = tournament.Name;
                 edited.Description = tournament.Description;
-                edited.ImageUrl = tournament.ImageUrl;
-                edited.Deadline = (DateTime)tournament.Deadline;
-                edited.Date = (DateTime)tournament.Date;
+                edited.ImageUrl = tournament.ImageUrl; 
+                edited.Deadline = ((DateTime)tournament.Deadline).ToString("yyyy-MM-ddTHH:mm:ss");
+                edited.Date = ((DateTime)tournament.Date).ToString("yyyy-MM-ddTHH:mm:ss");
                 edited.Country = tournament.Country;
                 edited.SportId = tournament.SportId;
 
@@ -515,12 +516,12 @@ namespace SportConnect.Web.Controllers
 
             if (filter.StartDate != null)
             {
-                query = query.Where(p => p.Date >= filter.StartDate);
+                query = query.Where(p => DateTime.Parse(p.Date) >= filter.StartDate);
             }
 
             if (filter.EndDate != null)
             {
-                query = query.Where(p => p.Date <= filter.EndDate);
+                query = query.Where(p => DateTime.Parse(p.Date) <= filter.EndDate);
             }
 
             ViewBag.Countries = _countryService.GetAllCountries();
@@ -588,12 +589,12 @@ namespace SportConnect.Web.Controllers
 
             if (filter.StartDate != null)
             {
-                query = query.Where(p => p.Date >= filter.StartDate);
+                query = query.Where(p => DateTime.Parse(p.Date) >= filter.StartDate);
             }
 
             if (filter.EndDate != null)
             {
-                query = query.Where(p => p.Date <= filter.EndDate);
+                query = query.Where(p => DateTime.Parse(p.Date) <= filter.EndDate);
             }
 
             ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
@@ -675,12 +676,12 @@ namespace SportConnect.Web.Controllers
 
             if (filter.StartDate != null)
             {
-                query = query.Where(p => p.Date >= filter.StartDate);
+                query = query.Where(p => DateTime.Parse(p.Date) >= filter.StartDate);
             }
 
             if (filter.EndDate != null)
             {
-                query = query.Where(p => p.Date <= filter.EndDate);
+                query = query.Where(p => DateTime.Parse(p.Date) <= filter.EndDate);
             }
 
             ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");

@@ -500,12 +500,12 @@ else
 
                                             <div class="mb-0 d-flex justify-content-between" style="border-bottom: 3px solid #6fd277;">
                                                 <strong class="fw-bolder">Дата:</strong>
-                                                <span>@tournament.Date.ToString("dd.MM.yyyy HH:mm")</span>
+                                                <span>@DateTime.Parse(tournament.Date).ToString("dd.MM.yyyy HH:mm")</span>
                                             </div>
 
                                             <div class="mb-0 d-flex justify-content-between">
                                                 <strong class="fw-bolder">Краен срок:</strong>
-                                                <span>@tournament.Deadline.ToString("dd.MM.yyyy HH:mm")</span>
+                                                <span>@DateTime.Parse(tournament.Deadline).ToString("dd.MM.yyyy HH:mm")</span>
                                             </div>
                                         </div>
                                     </div>

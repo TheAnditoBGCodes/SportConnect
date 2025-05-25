@@ -499,12 +499,12 @@
 
                                                 <div class="mb-0 d-flex justify-content-between" style="border-bottom: 3px solid #6fd277;">
                                                     <strong class="fw-bolder">Дата:</strong>
-                                                    <span>@tournament.Date.ToString("dd.MM.yyyy HH:mm")</span>
+                                                    <span>@DateTime.Parse(tournament.Date).ToString("dd.MM.yyyy HH:mm")</span>
                                                 </div>
 
                                                 <div class="mb-0 d-flex justify-content-between">
                                                     <strong class="fw-bolder">Краен срок:</strong>
-                                                    <span>@tournament.Deadline.ToString("dd.MM.yyyy HH:mm")</span>
+                                                    <span>@DateTime.Parse(tournament.Deadline).ToString("dd.MM.yyyy HH:mm")</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -608,12 +608,12 @@ else
 
                                                 <div class="mb-0 d-flex justify-content-between" style="border-bottom: 3px solid #6fd277;">
                                                     <strong class="fw-bolder">Дата:</strong>
-                                                    <span>@tournament.Date.ToString("dd.MM.yyyy HH:mm")</span>
+                                                    <span>@DateTime.Parse(tournament.Date).ToString("dd.MM.yyyy HH:mm")</span>
                                                 </div>
 
                                                 <div class="mb-0 d-flex justify-content-between">
                                                     <strong class="fw-bolder">Краен срок:</strong>
-                                                    <span>@tournament.Deadline.ToString("dd.MM.yyyy HH:mm")</span>
+                                                    <span>@DateTime.Parse(tournament.Deadline).ToString("dd.MM.yyyy HH:mm")</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -622,7 +622,7 @@ else
                                             string tournamentid = tournament.Id;
                                             string otherUserId = ViewBag.OtherUserId;
                                         }
-                                        @if (tournament.Organizer.Id != userId && !User.IsInRole(SD.AdminRole) && tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) < DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
+                                        @if (tournament.Organizer.Id != userId && !User.IsInRole(SD.AdminRole) && DateTime.Parse(tournament.Deadline).AddSeconds(-DateTime.Parse(tournament.Deadline).Second).AddMilliseconds(-DateTime.Parse(tournament.Deadline).Millisecond).AddMicroseconds(-DateTime.Parse(tournament.Deadline).Microsecond) < DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
                                         {
                                             <div class="card-footer text-center">
                                                 <div class="d-flex justify-content-between w-100">
@@ -639,7 +639,7 @@ else
                                             <div class="card-footer text-center">
                                                 <div class="d-flex justify-content-between w-100">
                                                     <div class="d-flex justify-content-between align-items-center gap-2 w-100">
-                                                        @if (tournament.Deadline.AddSeconds(-tournament.Deadline.Second).AddMilliseconds(-tournament.Deadline.Millisecond).AddMicroseconds(-tournament.Deadline.Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
+                                                        @if (DateTime.Parse(tournament.Deadline).AddSeconds(-DateTime.Parse(tournament.Deadline).Second).AddMilliseconds(-DateTime.Parse(tournament.Deadline).Millisecond).AddMicroseconds(-DateTime.Parse(tournament.Deadline).Microsecond) >= DateTime.Now.AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond).AddMicroseconds(-DateTime.Now.Microsecond))
                                                         {
                                                             <div id="participationButtons-@tournamentid" class="d-flex justify-content-between align-items-center " style="width: 220px;">
                                                                 @{

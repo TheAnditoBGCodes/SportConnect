@@ -63,3 +63,11 @@ wwwroot\uploads\sports\chess.jpg
 wwwroot\uploads\sports\darts.jpg
 wwwroot\uploads\sports\snooker.jpg
 wwwroot\uploads\sports\tennis.jpg
+wwwroot\uploads\tournaments\chess\candidates.jpg
+wwwroot\uploads\tournaments\chess\worldchampionship.jpg
+wwwroot\uploads\tournaments\darts\pdcchampionship.jpg
+wwwroot\uploads\tournaments\darts\worldcup.jpg
+wwwroot\uploads\tournaments\snooker\masters.jpg
+wwwroot\uploads\tournaments\snooker\worldchampionship.jpg
+wwwroot\uploads\tournaments\tennis\rolandgarros.jpg
+wwwroot\uploads\tournaments\tennis\wimbledon.jpg

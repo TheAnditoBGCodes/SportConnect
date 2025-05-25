@@ -265,6 +265,38 @@
       "PackagePath": "staticwebassets\\uploads\\sports\\tennis.jpg"
     },
     {
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\tournaments\\chess\\candidates.jpg",
+      "PackagePath": "staticwebassets\\uploads\\tournaments\\chess\\candidates.jpg"
+    },
+    {
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\tournaments\\chess\\worldchampionship.jpg",
+      "PackagePath": "staticwebassets\\uploads\\tournaments\\chess\\worldchampionship.jpg"
+    },
+    {
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\tournaments\\darts\\pdcchampionship.jpg",
+      "PackagePath": "staticwebassets\\uploads\\tournaments\\darts\\pdcchampionship.jpg"
+    },
+    {
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\tournaments\\darts\\worldcup.jpg",
+      "PackagePath": "staticwebassets\\uploads\\tournaments\\darts\\worldcup.jpg"
+    },
+    {
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\tournaments\\snooker\\masters.jpg",
+      "PackagePath": "staticwebassets\\uploads\\tournaments\\snooker\\masters.jpg"
+    },
+    {
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\tournaments\\snooker\\worldchampionship.jpg",
+      "PackagePath": "staticwebassets\\uploads\\tournaments\\snooker\\worldchampionship.jpg"
+    },
+    {
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\tournaments\\tennis\\rolandgarros.jpg",
+      "PackagePath": "staticwebassets\\uploads\\tournaments\\tennis\\rolandgarros.jpg"
+    },
+    {
+      "Id": "C:\\Users\\iliev_7x3wtf6\\source\\repos\\SportConnect\\SportConnect.Web\\wwwroot\\uploads\\tournaments\\tennis\\wimbledon.jpg",
+      "PackagePath": "staticwebassets\\uploads\\tournaments\\tennis\\wimbledon.jpg"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.SportConnect.Web.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },

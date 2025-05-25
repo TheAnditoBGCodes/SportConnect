@@ -170,7 +170,7 @@ namespace SportConnect.Tests.Controllers
                     SportId = "sport1",
                     Organizer = new SportConnectUser { FullName = "Test Organizer" },
                     Country = "Country1",
-                    Date = DateTime.Now.AddDays(10)
+                    Date = DateTime.Now.AddDays(10).ToString()
                 },
                 new Tournament
                 {
@@ -179,7 +179,7 @@ namespace SportConnect.Tests.Controllers
                     SportId = "sport2",
                     Organizer = new SportConnectUser { FullName = "Another Organizer" },
                     Country = "Country2",
-                    Date = DateTime.Now.AddDays(20)
+                    Date = DateTime.Now.AddDays(20).ToString()
                 }
             };
 
@@ -465,8 +465,8 @@ namespace SportConnect.Tests.Controllers
                 Name = "Test Tournament",
                 Description = "Test Description",
                 OrganizerId = _currentUser.Id,
-                Date = DateTime.Now.AddDays(10),
-                Deadline = DateTime.Now.AddDays(5),
+                Date = DateTime.Now.AddDays(10).ToString(),
+                Deadline = DateTime.Now.AddDays(5).ToString(),
                 ImageUrl = "image.jpg",
                 Country = "Country1",
                 SportId = "sport1"
@@ -493,10 +493,10 @@ namespace SportConnect.Tests.Controllers
             Assert.That(viewModel.Name, Is.EqualTo(tournament.Name));
             Assert.That(viewModel.Description, Is.EqualTo(tournament.Description));
             Assert.That(viewModel.OrganizerId, Is.EqualTo(tournament.OrganizerId));
-            Assert.That(viewModel.Date?.Date, Is.EqualTo(tournament.Date.Date));
-            Assert.That(viewModel.DateTimer, Is.EqualTo(tournament.Date.TimeOfDay));
-            Assert.That(viewModel.Deadline?.Date, Is.EqualTo(tournament.Deadline.Date));
-            Assert.That(viewModel.DeadlineTime, Is.EqualTo(tournament.Deadline.TimeOfDay));
+            Assert.That(viewModel.Date?.Date, Is.EqualTo(DateTime.Parse(tournament.Date).Date));
+            Assert.That(viewModel.DateTimer, Is.EqualTo(DateTime.Parse(tournament.Date).TimeOfDay));
+            Assert.That(viewModel.Deadline?.Date, Is.EqualTo(DateTime.Parse(tournament.Deadline).Date));
+            Assert.That(viewModel.DeadlineTime, Is.EqualTo(DateTime.Parse(tournament.Deadline).TimeOfDay));
             Assert.That(viewModel.ImageUrl, Is.EqualTo(tournament.ImageUrl));
             Assert.That(viewModel.Country, Is.EqualTo(tournament.Country));
             Assert.That(viewModel.SportId, Is.EqualTo(tournament.SportId));
@@ -528,8 +528,8 @@ namespace SportConnect.Tests.Controllers
                 Name = "Old Name",
                 Description = "Old Description",
                 OrganizerId = _currentUser.Id,
-                Date = DateTime.Now.AddDays(5),
-                Deadline = DateTime.Now.AddDays(3),
+                Date = DateTime.Now.AddDays(5).ToString(),
+                Deadline = DateTime.Now.AddDays(3).ToString(),
                 ImageUrl = "old-image.jpg",
                 Country = "OldCountry",
                 SportId = "sport1"
@@ -582,8 +582,8 @@ namespace SportConnect.Tests.Controllers
                 Name = "Old Name",
                 Description = "Old Description",
                 OrganizerId = _currentUser.Id,
-                Date = DateTime.Now.AddDays(5),
-                Deadline = DateTime.Now.AddDays(3),
+                Date = DateTime.Now.AddDays(5).ToString(),
+                Deadline = DateTime.Now.AddDays(3).ToString(),
                 ImageUrl = "old-image.jpg",
                 Country = "OldCountry",
                 SportId = "sport1"
@@ -637,8 +637,8 @@ namespace SportConnect.Tests.Controllers
                 Name = "Old Name",
                 Description = "Old Description",
                 OrganizerId = otherUserId,
-                Date = DateTime.Now.AddDays(5),
-                Deadline = DateTime.Now.AddDays(3),
+                Date = DateTime.Now.AddDays(5).ToString(),
+                Deadline = DateTime.Now.AddDays(3).ToString(),
                 ImageUrl = "old-image.jpg",
                 Country = "OldCountry",
                 SportId = "sport1"
@@ -691,8 +691,8 @@ namespace SportConnect.Tests.Controllers
                 Name = "Old Name",
                 Description = "Old Description",
                 OrganizerId = otherUserId,
-                Date = DateTime.Now.AddDays(5),
-                Deadline = DateTime.Now.AddDays(3),
+                Date = DateTime.Now.AddDays(5).ToString(),
+                Deadline = DateTime.Now.AddDays(3).ToString(),
                 ImageUrl = "old-image.jpg",
                 Country = "OldCountry",
                 SportId = "sport1"
@@ -733,8 +733,8 @@ namespace SportConnect.Tests.Controllers
                 Name = "Old Name",
                 Description = "Old Description",
                 OrganizerId = _currentUser.Id,
-                Date = DateTime.Now.AddDays(5),
-                Deadline = DateTime.Now.AddDays(3),
+                Date = DateTime.Now.AddDays(5).ToString(),
+                Deadline = DateTime.Now.AddDays(3).ToString(),
                 ImageUrl = "old-image.jpg",
                 Country = "OldCountry",
                 SportId = "sport1"
@@ -746,8 +746,8 @@ namespace SportConnect.Tests.Controllers
                 Name = "Existing Name",
                 Description = "Existing Description",
                 OrganizerId = "anotherUser",
-                Date = DateTime.Now.AddDays(10),
-                Deadline = DateTime.Now.AddDays(8),
+                Date = DateTime.Now.AddDays(10).ToString(),
+                Deadline = DateTime.Now.AddDays(8).ToString(),
                 ImageUrl = "another-image.jpg",
                 Country = "AnotherCountry",
                 SportId = "sport2"
@@ -802,8 +802,8 @@ namespace SportConnect.Tests.Controllers
                 Name = "Old Name",
                 Description = "Old Description",
                 OrganizerId = _currentUser.Id,
-                Date = DateTime.Now.AddDays(5),
-                Deadline = DateTime.Now.AddDays(3),
+                Date = DateTime.Now.AddDays(5).ToString(),
+                Deadline = DateTime.Now.AddDays(3).ToString(),
                 ImageUrl = "old-image.jpg",
                 Country = "OldCountry",
                 SportId = "sport1"
@@ -857,8 +857,8 @@ namespace SportConnect.Tests.Controllers
                 Name = "Old Name",
                 Description = "Old Description",
                 OrganizerId = _currentUser.Id,
-                Date = now.AddDays(5),
-                Deadline = now.AddDays(3),
+                Date = now.AddDays(5).ToString(),
+                Deadline = now.AddDays(3).ToString(),
                 ImageUrl = "old-image.jpg",
                 Country = "OldCountry",
                 SportId = "sport1"
@@ -1035,7 +1035,7 @@ namespace SportConnect.Tests.Controllers
             Id = "t1",
             Name = "Test Tournament",
             Country = "Bulgaria",
-            Date = DateTime.Now,
+            Date = DateTime.Now.ToString(),
             SportId = sportId,
             Organizer = new SportConnectUser { FullName = "Organizer Name" }
         },
@@ -1129,7 +1129,7 @@ namespace SportConnect.Tests.Controllers
             Id = "t1",
             Name = "Test Tournament",
             Country = "Bulgaria",
-            Date = DateTime.Now,
+            Date = DateTime.Now.ToString(),
             SportId = "sport-id",
             OrganizerId = userId
         },
@@ -1211,7 +1211,7 @@ namespace SportConnect.Tests.Controllers
             Id = "t1",
             Name = "Test Tournament",
             Country = "Bulgaria",
-            Date = DateTime.Now,
+            Date = DateTime.Now.ToString(),
             SportId = "sport-id",
             OrganizerId = currentUserId
         },
@@ -1359,8 +1359,8 @@ namespace SportConnect.Tests.Controllers
                 Name = model.Name,
                 Description = model.Description,
                 OrganizerId = model.OrganizerId,
-                Date = model.Date.Value,
-                Deadline = model.Deadline.Value,
+                Date = model.Date.ToString(),
+                Deadline = model.Deadline.ToString(),
                 ImageUrl = model.ImageUrl,
                 Country = model.Country,
                 SportId = model.SportId
