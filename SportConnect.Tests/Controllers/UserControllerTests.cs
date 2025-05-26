@@ -13,6 +13,10 @@ using NUnit.Framework;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Services;
+using SportConnect.Services.Participation;
+using SportConnect.Services.Sport;
+using SportConnect.Services.Tournament;
+using SportConnect.Services.User;
 using SportConnect.Utility;
 using SportConnect.Web.Controllers;
 using SportConnect.Web.Models;
@@ -30,10 +34,10 @@ namespace SportConnect.Tests.Controllers
     public class UserControllerTests
     {
         private Mock<UserManager<SportConnectUser>> _mockUserManager;
-        private Mock<IRepository<Tournament>> _mockTournamentRepository;
-        private Mock<IRepository<Sport>> _mockSportRepository;
-        private Mock<IRepository<SportConnectUser>> _mockUserRepository;
-        private Mock<IRepository<Participation>> _mockParticipationRepository;
+        public Mock<ITournamentService> _tournamentService;
+        public Mock<IUserService> _userService;
+        public Mock<ISportService> _sportService;
+        public Mock<IParticipationService> _participationService;
         private Mock<SignInManager<SportConnectUser>> _mockSignInManager;
         private Mock<CountryService> _mockCountryService;
         private UserController _controller;
@@ -65,18 +69,17 @@ namespace SportConnect.Tests.Controllers
                 null, null, null, null
             );
 
-            _mockTournamentRepository = new Mock<IRepository<Tournament>>();
-            _mockSportRepository = new Mock<IRepository<Sport>>();
-            _mockUserRepository = new Mock<IRepository<SportConnectUser>>();
-            _mockParticipationRepository = new Mock<IRepository<Participation>>();
+            _tournamentService = new Mock<ITournamentService>();
+            _userService = new Mock<IUserService>();
+            _sportService = new Mock<ISportService>();
+            _participationService = new Mock<IParticipationService>();
             _mockCountryService = new Mock<CountryService>();
 
             _controller = new UserController(
-    _mockUserManager.Object,
-    _mockTournamentRepository.Object,
-    _mockSportRepository.Object,
-    _mockUserRepository.Object,
-    _mockParticipationRepository.Object,
+    _mockUserManager.Object, _tournamentService.Object,
+                _userService.Object,
+                _sportService.Object,
+                _participationService.Object,
     _mockSignInManager.Object,
     _mockCountryService.Object
 );
@@ -106,10 +109,10 @@ namespace SportConnect.Tests.Controllers
         {
             Assert.IsNotNull(_controller);
             Assert.IsInstanceOf<UserController>(_controller);
-            Assert.AreEqual(_mockTournamentRepository.Object, _controller._tournamentRepository);
-            Assert.AreEqual(_mockSportRepository.Object, _controller._sportRepository);
-            Assert.AreEqual(_mockUserRepository.Object, _controller._userRepository);
-            Assert.AreEqual(_mockParticipationRepository.Object, _controller._participationRepository);
+            Assert.AreEqual(_tournamentService.Object, _controller._tournamentService);
+            Assert.AreEqual(_sportService.Object, _controller._sportService);
+            Assert.AreEqual(_userService.Object, _controller._userService);
+            Assert.AreEqual(_participationService.Object, _controller._participationService);
             Assert.AreEqual(_mockUserManager.Object, _controller._userManager);
             Assert.AreEqual(_mockSignInManager.Object, _controller._signInManager);
             Assert.AreEqual(_mockCountryService.Object, _controller._countryService);
@@ -131,7 +134,7 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            _mockUserRepository.Setup(r => r.GetById(USER_ID))
+            _userService.Setup(r => r.GetById(USER_ID))
                 .ReturnsAsync(currentUser);
 
             _mockCountryService.Setup(cs => cs.GetAllCountries())
@@ -178,7 +181,7 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            _mockUserRepository.Setup(r => r.GetById("user2"))
+            _userService.Setup(r => r.GetById("user2"))
                 .ReturnsAsync(otherUser);
 
             var mockUrlHelper = new Mock<IUrlHelper>();
@@ -217,10 +220,10 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            _mockUserRepository.Setup(r => r.GetById(USER_ID))
+            _userService.Setup(r => r.GetById(USER_ID))
                 .ReturnsAsync(currentUser);
 
-            _mockUserRepository.Setup(r => r.GetAll())
+            _userService.Setup(r => r.GetAll())
                 .ReturnsAsync(new List<SportConnectUser> { currentUser });
 
             _mockUserManager.Setup(um => um.UpdateAsync(It.IsAny<SportConnectUser>()))
@@ -255,7 +258,7 @@ namespace SportConnect.Tests.Controllers
                 u.ImageUrl == "new.jpg"
             )), Times.Once);
 
-            _mockUserRepository.Verify(r => r.Save(), Times.Once);
+            _userService.Verify(r => r.Save(), Times.Once);
         }
 
         [Test]
@@ -271,7 +274,7 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            _mockUserRepository.Setup(r => r.GetAll())
+            _userService.Setup(r => r.GetAll())
                 .ReturnsAsync(new List<SportConnectUser> {
                     currentUser,
                     new SportConnectUser { Id = "user2", UserName = "takenusername", Email = "taken@example.com" }
@@ -325,7 +328,7 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            _mockUserRepository.Setup(r => r.GetAll())
+            _userService.Setup(r => r.GetAll())
                 .ReturnsAsync(new List<SportConnectUser> {
                     currentUser,
                     new SportConnectUser { Id = "user2", UserName = "takenusername" }
@@ -368,7 +371,7 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            _mockUserRepository.Setup(r => r.GetAll())
+            _userService.Setup(r => r.GetAll())
                 .ReturnsAsync(new List<SportConnectUser> {
                     currentUser,
                     new SportConnectUser { Id = "user2", Email = "taken@example.com" }
@@ -411,7 +414,7 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            _mockUserRepository.Setup(r => r.GetAll())
+            _userService.Setup(r => r.GetAll())
                 .ReturnsAsync(new List<SportConnectUser> { currentUser });
 
             _mockCountryService.Setup(cs => cs.GetAllCountries())
@@ -454,10 +457,10 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            _mockUserRepository.Setup(r => r.GetById("other1"))
+            _userService.Setup(r => r.GetById("other1"))
                 .ReturnsAsync(otherUser);
 
-            _mockUserRepository.Setup(r => r.GetAll())
+            _userService.Setup(r => r.GetAll())
                 .ReturnsAsync(new List<SportConnectUser> { currentUser, otherUser });
 
             _mockUserManager.Setup(um => um.UpdateAsync(It.IsAny<SportConnectUser>()))
@@ -486,7 +489,7 @@ namespace SportConnect.Tests.Controllers
                 u.ImageUrl == "new.jpg"
             )), Times.Once);
 
-            _mockUserRepository.Verify(r => r.Save(), Times.Once);
+            _userService.Verify(r => r.Save(), Times.Once);
         }
 
         [Test]
@@ -605,7 +608,7 @@ namespace SportConnect.Tests.Controllers
                 ImageUrl = "profile.jpg"
             };
 
-            _mockUserRepository.Setup(r => r.GetById(USER_ID))
+            _userService.Setup(r => r.GetById(USER_ID))
                 .ReturnsAsync(currentUser);
 
             var mockUrlHelper = new Mock<IUrlHelper>();
@@ -635,7 +638,7 @@ namespace SportConnect.Tests.Controllers
                 ImageUrl = "other.jpg"
             };
 
-            _mockUserRepository.Setup(r => r.GetById("other1"))
+            _userService.Setup(r => r.GetById("other1"))
                 .ReturnsAsync(otherUser);
 
             var mockUrlHelper = new Mock<IUrlHelper>();
@@ -667,7 +670,7 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            _mockUserRepository.Setup(r => r.GetById(USER_ID))
+            _userService.Setup(r => r.GetById(USER_ID))
                 .ReturnsAsync(currentUser);
 
             _mockUserManager.Setup(um => um.DeleteAsync(It.IsAny<SportConnectUser>()))
@@ -686,7 +689,7 @@ namespace SportConnect.Tests.Controllers
 
             _mockUserManager.Verify(um => um.DeleteAsync(It.IsAny<SportConnectUser>()), Times.Once);
             _mockSignInManager.Verify(sm => sm.SignOutAsync(), Times.Once);
-            _mockUserRepository.Verify(r => r.Save(), Times.Once);
+            _userService.Verify(r => r.Save(), Times.Once);
         }
 
         [Test]
@@ -703,7 +706,7 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            _mockUserRepository.Setup(r => r.GetById("other1"))
+            _userService.Setup(r => r.GetById("other1"))
                 .ReturnsAsync(otherUser);
 
             _mockUserManager.Setup(um => um.DeleteAsync(It.IsAny<SportConnectUser>()))
@@ -722,7 +725,7 @@ namespace SportConnect.Tests.Controllers
 
             _mockUserManager.Verify(um => um.UpdateSecurityStampAsync(It.IsAny<SportConnectUser>()), Times.Once);
             _mockUserManager.Verify(um => um.DeleteAsync(It.IsAny<SportConnectUser>()), Times.Once);
-            _mockUserRepository.Verify(r => r.Save(), Times.Once);
+            _userService.Verify(r => r.Save(), Times.Once);
             _mockSignInManager.Verify(sm => sm.SignOutAsync(), Times.Never);
         }
 
@@ -741,7 +744,7 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            _mockUserRepository.Setup(r => r.GetById("other1"))
+            _userService.Setup(r => r.GetById("other1"))
                 .ReturnsAsync(otherUser);
 
             var userViewModel = new UserViewModel
@@ -764,7 +767,7 @@ namespace SportConnect.Tests.Controllers
             Assert.AreEqual(returnUrl, result.ViewData["ReturnUrl"]);
 
             _mockUserManager.Verify(um => um.DeleteAsync(It.IsAny<SportConnectUser>()), Times.Never);
-            _mockUserRepository.Verify(r => r.Save(), Times.Never);
+            _userService.Verify(r => r.Save(), Times.Never);
         }
 
         [Test]
@@ -782,7 +785,7 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            _mockUserRepository.Setup(r => r.GetById("single1"))
+            _userService.Setup(r => r.GetById("single1"))
                 .ReturnsAsync(singleNameUser);
 
             var userViewModel = new UserViewModel
@@ -813,7 +816,7 @@ namespace SportConnect.Tests.Controllers
                 UserName = "testUser"
             };
 
-            _mockUserRepository.Setup(r => r.GetAll())
+            _userService.Setup(r => r.GetAll())
                 .ReturnsAsync(new List<SportConnectUser>
                 {
             new SportConnectUser { Id = "user1", UserName = "user1" },
@@ -857,7 +860,7 @@ namespace SportConnect.Tests.Controllers
                 UserName = "testUser"
             };
 
-            _mockUserRepository.Setup(r => r.GetAll())
+            _userService.Setup(r => r.GetAll())
                 .ReturnsAsync(new List<SportConnectUser>
                 {
             new SportConnectUser { Id = "user1", UserName = "user1", Country = "USA" },
@@ -900,7 +903,7 @@ namespace SportConnect.Tests.Controllers
                 UserName = "testUser"
             };
 
-            _mockUserRepository.Setup(r => r.GetAll())
+            _userService.Setup(r => r.GetAll())
                 .ReturnsAsync(new List<SportConnectUser>
                 {
             new SportConnectUser { Id = "user1", UserName = "user1", Email = "user1@example.com", Country = "USA", DateOfBirth = "1990-01-01" },

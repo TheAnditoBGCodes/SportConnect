@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Services;
+using SportConnect.Services.Participation;
+using SportConnect.Services.Sport;
+using SportConnect.Services.Tournament;
+using SportConnect.Services.User;
 using SportConnect.Utility;
 using SportConnect.Web.Models;
 using System.ComponentModel.DataAnnotations;
@@ -15,20 +19,20 @@ namespace SportConnect.Web.Controllers
     public class UserController : Controller
     {
         public UserManager<SportConnectUser> _userManager;
-        public IRepository<Tournament> _tournamentRepository { get; set; }
-        public IRepository<Sport> _sportRepository { get; set; }
-        public IRepository<SportConnectUser> _userRepository { get; set; }
-        public IRepository<Participation> _participationRepository { get; set; }
+        public ITournamentService _tournamentService;
+        public IUserService _userService;
+        public ISportService _sportService;
+        public IParticipationService _participationService;
         public SignInManager<SportConnectUser> _signInManager;
         public CountryService _countryService { get; set; }
 
-        public UserController(UserManager<SportConnectUser> userManager, IRepository<Tournament> tournamentRepository, IRepository<Sport> sportRepository, IRepository<SportConnectUser> userRepository, IRepository<Participation> participationRepository, SignInManager<SportConnectUser> signInManager, CountryService countryService)
+        public UserController(UserManager<SportConnectUser> userManager, ITournamentService tournamentService, IUserService userService, ISportService sportService, IParticipationService participationService, SignInManager<SportConnectUser> signInManager, CountryService countryService)
         {
             _userManager = userManager;
-            _tournamentRepository = tournamentRepository;
-            _sportRepository = sportRepository;
-            _userRepository = userRepository;
-            _participationRepository = participationRepository;
+            _tournamentService = tournamentService;
+            _userService = userService;
+            _sportService = sportService;
+            _participationService = participationService;
             _signInManager = signInManager;
             _countryService = countryService;
         }
@@ -49,7 +53,7 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public async Task<IActionResult> EditUser(string id, string returnUrl = null)
         {
-            var user = await _userRepository.GetById(id);
+            var user = await _userService.GetById(id);
             if (user == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
@@ -57,7 +61,7 @@ namespace SportConnect.Web.Controllers
             var currentUser = await _userManager.GetUserAsync(this.User);
             ViewBag.UserId = currentUser.Id;
 
-            var editedUser = await _userRepository.GetById(id);
+            var editedUser = await _userService.GetById(id);
             var names = editedUser.FullName.Split(' ').ToList();
 
             var model = new UserViewModel();
@@ -108,7 +112,7 @@ namespace SportConnect.Web.Controllers
                 {
                     ModelState.AddModelError("Email", "Невалиден имейл.");
                 }
-                else if ((await _userRepository.GetAll()).Any(s => s.Email == user.Email && s.Id != user.Id))
+                else if ((await _userService.GetAll()).Any(s => s.Email == user.Email && s.Id != user.Id))
                 {
                     ModelState.AddModelError("Email", "Заето.");
                 }
@@ -121,7 +125,7 @@ namespace SportConnect.Web.Controllers
                 {
                     ModelState.AddModelError("UserName", "Tрябва да е от 5 до 100 символа.");
                 }
-                else if ((await _userRepository.GetAll()).Any(s => s.UserName == user.UserName && s.Id != user.Id))
+                else if ((await _userService.GetAll()).Any(s => s.UserName == user.UserName && s.Id != user.Id))
                 {
                     ModelState.AddModelError("UserName", "Потребителското име е заето.");
                 }
@@ -165,7 +169,7 @@ namespace SportConnect.Web.Controllers
                     return View(user);
                 }
 
-                var editedUser = (await _userRepository.GetById(user.Id));
+                var editedUser = (await _userService.GetById(user.Id));
 
                 editedUser.UserName = user.UserName;
                 editedUser.ImageUrl = user.ProfileImage;
@@ -178,7 +182,7 @@ namespace SportConnect.Web.Controllers
 
                 if (result.Succeeded)
                 {
-                    await _userRepository.Save();
+                    await _userService.Save();
                     return Redirect(returnUrl);
                 }
                 return View(user);
@@ -193,7 +197,7 @@ namespace SportConnect.Web.Controllers
                 {
                     ModelState.AddModelError("UserName", "Tрябва да е от 5 до 100 символа.");
                 }
-                else if ((await _userRepository.GetAll()).Any(s => s.UserName == user.UserName && s.Id != user.Id))
+                else if ((await _userService.GetAll()).Any(s => s.UserName == user.UserName && s.Id != user.Id))
                 {
                     ModelState.AddModelError("UserName", "Потребителското име е заето.");
                 }
@@ -226,7 +230,7 @@ namespace SportConnect.Web.Controllers
                     return View(user);
                 }
 
-                var editedUser = (await _userRepository.GetById(user.Id));
+                var editedUser = (await _userService.GetById(user.Id));
 
                 editedUser.UserName = user.UserName;
                 editedUser.ImageUrl = user.ProfileImage;
@@ -236,7 +240,7 @@ namespace SportConnect.Web.Controllers
 
                 if (result.Succeeded)
                 {
-                    await _userRepository.Save();
+                    await _userService.Save();
                     return Redirect(returnUrl);
                 }
                 return View(user);
@@ -277,7 +281,9 @@ namespace SportConnect.Web.Controllers
         public async Task<IActionResult> AllUsers(UserViewModel? filter, string returnUrl)
         {
             HttpContext.Session.Remove("ReturnUrl");
-            var allSports = await _userRepository.GetAll(); if (filter == null)
+            var allSports = await _userService.GetAll(); 
+            
+            if (filter == null)
             {
                 return View(new UserViewModel
                 {
@@ -286,7 +292,7 @@ namespace SportConnect.Web.Controllers
                 });
             }
 
-            var query = (await _userRepository.GetAll()).AsQueryable();
+            var query = (await _userService.GetAll()).AsQueryable();
 
             if (!string.IsNullOrEmpty(filter.Country))
             {
@@ -322,7 +328,7 @@ namespace SportConnect.Web.Controllers
                 UserName = filter.UserName,
                 BirthYear = filter.BirthYear,
                 Country = filter.Country,
-                Users = (await _userRepository.GetAll()).ToList(),
+                Users = (await _userService.GetAll()).ToList(),
                 Email = filter.Email,
                 FilteredUsers = query.ToList(),
             };
@@ -334,7 +340,7 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public async Task<IActionResult> DeleteUser(string id, string returnUrl = null)
         {
-            var editedUser = (await _userRepository.GetById(id));
+            var editedUser = (await _userService.GetById(id));
             if (editedUser == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
@@ -357,7 +363,7 @@ namespace SportConnect.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string ConfirmText, UserViewModel user, string returnUrl)
         {
-            var deletedUser = (await _userRepository.GetById(user.Id));
+            var deletedUser = (await _userService.GetById(user.Id));
 
             if (ConfirmText == "ПОТВЪРДИ")
             {
@@ -370,7 +376,7 @@ namespace SportConnect.Web.Controllers
                     if (result.Succeeded)
                     {
                         await _signInManager.SignOutAsync();
-                        await _userRepository.Save();
+                        await _userService.Save();
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -381,7 +387,7 @@ namespace SportConnect.Web.Controllers
 
                     if (result.Succeeded)
                     {
-                        await _userRepository.Save();
+                        await _userService.Save();
                         return RedirectToAction("AllUsers");
                     }
                 }

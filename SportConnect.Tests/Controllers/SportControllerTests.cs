@@ -15,15 +15,19 @@ using SportConnect.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Linq.Expressions;
+using SportConnect.Services.Participation;
+using SportConnect.Services.Sport;
+using SportConnect.Services.Tournament;
+using SportConnect.Services.User;
 
 namespace SportConnect.Tests.Controllers
 {
     [TestFixture]
     public class SportControllerTests
     {
-        private Mock<IRepository<Sport>> _mockSportRepository;
-        private Mock<IRepository<Tournament>> _mockTournamentRepository;
-        private Mock<IRepository<Participation>> _mockParticipationRepository;
+        public Mock<ITournamentService> _tournamentService;
+        public Mock<ISportService> _sportService;
+        public Mock<IParticipationService> _participationService;
         private SportController _controller;
 
         [TearDown]
@@ -35,14 +39,14 @@ namespace SportConnect.Tests.Controllers
         [SetUp]
         public void Setup()
         {
-            _mockSportRepository = new Mock<IRepository<Sport>>();
-            _mockTournamentRepository = new Mock<IRepository<Tournament>>();
-            _mockParticipationRepository = new Mock<IRepository<Participation>>();
+            _tournamentService = new Mock<ITournamentService>();
+            _sportService = new Mock<ISportService>();
+            _participationService = new Mock<IParticipationService>();
 
             _controller = new SportController(
-                _mockSportRepository.Object,
-                _mockTournamentRepository.Object,
-                _mockParticipationRepository.Object
+                _tournamentService.Object,
+                _sportService.Object,
+                _participationService.Object
             );
 
             var httpContext = new DefaultHttpContext();
@@ -62,9 +66,9 @@ namespace SportConnect.Tests.Controllers
         {
             Assert.IsNotNull(_controller);
             Assert.IsInstanceOf<SportController>(_controller);
-            Assert.AreEqual(_mockSportRepository.Object, _controller._sportRepository);
-            Assert.AreEqual(_mockTournamentRepository.Object, _controller._tournamentRepository);
-            Assert.AreEqual(_mockParticipationRepository.Object, _controller._participationRepository);
+            Assert.AreEqual(_sportService.Object, _controller._sportService);
+            Assert.AreEqual(_tournamentService.Object, _controller._tournamentService);
+            Assert.AreEqual(_participationService.Object, _controller._participationService);
         }
 
         [Test]
@@ -76,7 +80,7 @@ namespace SportConnect.Tests.Controllers
                 new Sport { Id = "2", Name = "Football", Description = "Football description", ImageUrl = "football.jpg" }
             };
 
-            _mockSportRepository.Setup(r => r.GetAll())
+            _sportService.Setup(r => r.GetAll())
                 .ReturnsAsync(sports);
 
             var result = await _controller.AllSports(null) as ViewResult;
@@ -99,7 +103,7 @@ namespace SportConnect.Tests.Controllers
                 new Sport { Id = "2", Name = "Football", Description = "Football description", ImageUrl = "football.jpg" }
             };
 
-            _mockSportRepository.Setup(r => r.GetAll())
+            _sportService.Setup(r => r.GetAll())
                 .ReturnsAsync(sports);
 
             var filter = new SportViewModel
@@ -138,17 +142,17 @@ namespace SportConnect.Tests.Controllers
             };
 
             var sports = new List<Sport>();
-            _mockSportRepository.Setup(r => r.GetAll())
+            _sportService.Setup(r => r.GetAll())
                 .ReturnsAsync(sports);
 
-            _mockSportRepository.Setup(r => r.Add(It.IsAny<Sport>()))
+            _sportService.Setup(r => r.Add(It.IsAny<Sport>()))
                 .Returns(Task.CompletedTask);
 
             var result = await _controller.AddSport(sportViewModel) as RedirectToActionResult;
 
             Assert.IsNotNull(result);
             Assert.AreEqual("AllSports", result.ActionName);
-            _mockSportRepository.Verify(r => r.Add(It.Is<Sport>(s =>
+            _sportService.Verify(r => r.Add(It.Is<Sport>(s =>
                 s.Name == sportViewModel.Name &&
                 s.Description == sportViewModel.Description &&
                 s.ImageUrl == sportViewModel.ImageUrl)), Times.Once);
@@ -231,7 +235,7 @@ namespace SportConnect.Tests.Controllers
                 new Sport { Id = "1", Name = "Tennis", Description = "Different description" }
             };
 
-            _mockSportRepository.Setup(r => r.GetAll())
+            _sportService.Setup(r => r.GetAll())
                 .ReturnsAsync(existingSports);
 
             var sportViewModel = new SportViewModel
@@ -256,7 +260,7 @@ namespace SportConnect.Tests.Controllers
                 new Sport { Id = "1", Name = "Different name", Description = "Tennis description" }
             };
 
-            _mockSportRepository.Setup(r => r.GetAll())
+            _sportService.Setup(r => r.GetAll())
                 .ReturnsAsync(existingSports);
 
             var sportViewModel = new SportViewModel
@@ -284,7 +288,7 @@ namespace SportConnect.Tests.Controllers
                 ImageUrl = "tennis.jpg"
             };
 
-            _mockSportRepository.Setup(r => r.GetById("1"))
+            _sportService.Setup(r => r.GetById("1"))
                 .ReturnsAsync(sport);
 
             var result = await _controller.EditSport("1") as ViewResult;
@@ -311,13 +315,13 @@ namespace SportConnect.Tests.Controllers
 
             var existingSports = new List<Sport> { existingSport };
 
-            _mockSportRepository.Setup(r => r.GetAll())
+            _sportService.Setup(r => r.GetAll())
                 .ReturnsAsync(existingSports);
 
-            _mockSportRepository.Setup(r => r.GetById("1"))
+            _sportService.Setup(r => r.GetById("1"))
                 .ReturnsAsync(existingSport);
 
-            _mockSportRepository.Setup(r => r.Update(It.IsAny<Sport>()))
+            _sportService.Setup(r => r.Update(It.IsAny<Sport>()))
                 .Returns(Task.CompletedTask);
 
             var updatedSport = new SportViewModel
@@ -332,7 +336,7 @@ namespace SportConnect.Tests.Controllers
 
             Assert.IsNotNull(result);
             Assert.AreEqual("AllSports", result.ActionName);
-            _mockSportRepository.Verify(r => r.Update(It.Is<Sport>(s =>
+            _sportService.Verify(r => r.Update(It.Is<Sport>(s =>
                 s.Id == "1" &&
                 s.Name == "Updated Tennis" &&
                 s.Description == "Updated description" &&
@@ -420,7 +424,7 @@ namespace SportConnect.Tests.Controllers
                 new Sport { Id = "2", Name = "Football", Description = "Football description" }
             };
 
-            _mockSportRepository.Setup(r => r.GetAll())
+            _sportService.Setup(r => r.GetAll())
                 .ReturnsAsync(existingSports);
 
             var sportViewModel = new SportViewModel
@@ -447,7 +451,7 @@ namespace SportConnect.Tests.Controllers
                 new Sport { Id = "2", Name = "Football", Description = "Football description" }
             };
 
-            _mockSportRepository.Setup(r => r.GetAll())
+            _sportService.Setup(r => r.GetAll())
                 .ReturnsAsync(existingSports);
 
             var sportViewModel = new SportViewModel
@@ -476,7 +480,7 @@ namespace SportConnect.Tests.Controllers
                 ImageUrl = "tennis.jpg"
             };
 
-            _mockSportRepository.Setup(r => r.GetById("1"))
+            _sportService.Setup(r => r.GetById("1"))
                 .ReturnsAsync(sport);
 
             var result = await _controller.DeleteSport("1") as ViewResult;
@@ -513,22 +517,22 @@ namespace SportConnect.Tests.Controllers
                 new Participation { TournamentId = "t2", ParticipantId = "user3" }
             };
 
-            _mockSportRepository.Setup(r => r.GetById(sportId))
+            _sportService.Setup(r => r.GetById(sportId))
                 .ReturnsAsync(sport);
 
-            _mockTournamentRepository.Setup(r => r.GetAllBy(It.IsAny<Expression<Func<Tournament, bool>>>()))
+            _tournamentService.Setup(r => r.GetAllBy(It.IsAny<Expression<Func<Tournament, bool>>>()))
                 .ReturnsAsync(tournaments);
 
-            _mockParticipationRepository.Setup(r => r.GetAllBy(It.IsAny<Expression<Func<Participation, bool>>>()))
+            _participationService.Setup(r => r.GetAllBy(It.IsAny<Expression<Func<Participation, bool>>>()))
                 .ReturnsAsync(participations.Where(p => p.TournamentId == "t1").ToList());
 
-            _mockParticipationRepository.Setup(r => r.DeleteRange(It.IsAny<IEnumerable<Participation>>()))
+            _participationService.Setup(r => r.DeleteRange(It.IsAny<IEnumerable<Participation>>()))
                 .Returns(Task.CompletedTask);
 
-            _mockTournamentRepository.Setup(r => r.DeleteRange(It.IsAny<IEnumerable<Tournament>>()))
+            _tournamentService.Setup(r => r.DeleteRange(It.IsAny<IEnumerable<Tournament>>()))
                 .Returns(Task.CompletedTask);
 
-            _mockSportRepository.Setup(r => r.Delete(It.IsAny<Sport>()))
+            _sportService.Setup(r => r.Delete(It.IsAny<Sport>()))
                 .Returns(Task.CompletedTask);
 
             var result = await _controller.DeleteSport(sportId, "ПОТВЪРДИ", new SportViewModel()) as RedirectToActionResult;
@@ -536,9 +540,9 @@ namespace SportConnect.Tests.Controllers
             Assert.IsNotNull(result);
             Assert.AreEqual("AllSports", result.ActionName);
 
-            _mockParticipationRepository.Verify(r => r.DeleteRange(It.IsAny<IEnumerable<Participation>>()), Times.Exactly(2));
-            _mockTournamentRepository.Verify(r => r.DeleteRange(It.IsAny<IEnumerable<Tournament>>()), Times.Once);
-            _mockSportRepository.Verify(r => r.Delete(It.Is<Sport>(s => s.Id == sportId)), Times.Once);
+            _participationService.Verify(r => r.DeleteRange(It.IsAny<IEnumerable<Participation>>()), Times.Exactly(2));
+            _tournamentService.Verify(r => r.DeleteRange(It.IsAny<IEnumerable<Tournament>>()), Times.Once);
+            _sportService.Verify(r => r.Delete(It.Is<Sport>(s => s.Id == sportId)), Times.Once);
         }
 
         [Test]
@@ -553,7 +557,7 @@ namespace SportConnect.Tests.Controllers
                 ImageUrl = "tennis.jpg"
             };
 
-            _mockSportRepository.Setup(r => r.GetById(sportId))
+            _sportService.Setup(r => r.GetById(sportId))
                 .ReturnsAsync(sport);
 
             var result = await _controller.DeleteSport(sportId, "wrong", new SportViewModel()) as ViewResult;
@@ -565,7 +569,7 @@ namespace SportConnect.Tests.Controllers
             Assert.AreEqual("Tennis description", model.Description);
             Assert.AreEqual("tennis.jpg", model.ImageUrl);
 
-            _mockSportRepository.Verify(r => r.Delete(It.IsAny<Sport>()), Times.Never);
+            _sportService.Verify(r => r.Delete(It.IsAny<Sport>()), Times.Never);
         }
     }
 }

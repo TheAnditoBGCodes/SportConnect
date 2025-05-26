@@ -8,6 +8,10 @@ using NUnit.Framework;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Services;
+using SportConnect.Services.Participation;
+using SportConnect.Services.Sport;
+using SportConnect.Services.Tournament;
+using SportConnect.Services.User;
 using SportConnect.Utility;
 using SportConnect.Web.Controllers;
 using SportConnect.Web.Models;
@@ -19,10 +23,10 @@ namespace SportConnect.Tests.Controllers
     public class ParticipationControllerTests
     {
         private Mock<UserManager<SportConnectUser>> _mockUserManager;
-        private Mock<IRepository<Tournament>> _mockTournamentRepository;
-        private Mock<IRepository<Sport>> _mockSportRepository;
-        private Mock<IRepository<Participation>> _mockParticipationRepository;
-        private Mock<IRepository<SportConnectUser>> _mockUserRepository;
+        public Mock<ITournamentService> _tournamentService;
+        public Mock<IUserService> _userService;
+        public Mock<ISportService> _sportService;
+        public Mock<IParticipationService> _participationService;
         private Mock<CountryService> _mockCountryService;
         private ParticipationController _controller;
 
@@ -39,18 +43,18 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager = new Mock<UserManager<SportConnectUser>>(
                 userStoreMock.Object, null, null, null, null, null, null, null, null);
 
-            _mockTournamentRepository = new Mock<IRepository<Tournament>>();
-            _mockSportRepository = new Mock<IRepository<Sport>>();
-            _mockParticipationRepository = new Mock<IRepository<Participation>>();
-            _mockUserRepository = new Mock<IRepository<SportConnectUser>>();
+            _tournamentService = new Mock<ITournamentService>();
+            _userService = new Mock<IUserService>();
+            _sportService = new Mock<ISportService>();
+            _participationService = new Mock<IParticipationService>();
             _mockCountryService = new Mock<CountryService>();
 
             _controller = new ParticipationController(
                 _mockUserManager.Object,
-                _mockTournamentRepository.Object,
-                _mockSportRepository.Object,
-                _mockParticipationRepository.Object,
-                _mockUserRepository.Object,
+                _tournamentService.Object,
+                _userService.Object,
+                _sportService.Object,
+                _participationService.Object,
                 _mockCountryService.Object
             );
 
@@ -71,10 +75,10 @@ namespace SportConnect.Tests.Controllers
         public void Constructor_ShouldInjectDependencies()
         {
             Assert.IsNotNull(_controller); Assert.IsInstanceOf<ParticipationController>(_controller); Assert.AreEqual(_mockUserManager.Object, _controller._userManager);
-            Assert.AreEqual(_mockTournamentRepository.Object, _controller._tournamentRepository);
-            Assert.AreEqual(_mockSportRepository.Object, _controller._sportRepository);
-            Assert.AreEqual(_mockParticipationRepository.Object, _controller._participationRepository);
-            Assert.AreEqual(_mockUserRepository.Object, _controller._userRepository);
+            Assert.AreEqual(_sportService.Object, _controller._sportService);
+            Assert.AreEqual(_tournamentService.Object, _controller._tournamentService);
+            Assert.AreEqual(_participationService.Object, _controller._participationService);
+            Assert.AreEqual(_userService.Object, _controller._userService);
             Assert.AreEqual(_mockCountryService.Object, _controller._countryService);
         }
 
@@ -87,7 +91,7 @@ namespace SportConnect.Tests.Controllers
                 new Tournament { Id = "2", Name = "Winter Tournament", Date = DateTime.Now.AddMonths(3).ToString() }
             };
 
-            _mockTournamentRepository.Setup(r => r.GetAll())
+            _tournamentService.Setup(r => r.GetAll())
                 .ReturnsAsync(tournaments);
 
             var result = await _controller.MyParticipations(null) as ViewResult;
@@ -158,7 +162,7 @@ namespace SportConnect.Tests.Controllers
                 }
             };
 
-            _mockTournamentRepository.Setup(r => r.AllWithIncludes(
+            _tournamentService.Setup(r => r.AllWithIncludes(
                 It.IsAny<System.Linq.Expressions.Expression<Func<Tournament, object>>>(),
                 It.IsAny<System.Linq.Expressions.Expression<Func<Tournament, object>>>(),
                 It.IsAny<System.Linq.Expressions.Expression<Func<Tournament, object>>>()))
@@ -206,10 +210,10 @@ namespace SportConnect.Tests.Controllers
 
             var users = new List<SportConnectUser> { user1, user2 };
 
-            _mockTournamentRepository.Setup(r => r.GetById(tournamentId))
+            _tournamentService.Setup(r => r.GetById(tournamentId))
     .ReturnsAsync(tournament);
 
-            _mockUserRepository.Setup(r => r.GetAll())
+            _userService.Setup(r => r.GetAll())
                 .ReturnsAsync(users);
 
             var result = await _controller.TournamentParticipations(tournamentId, "/return", null) as ViewResult;
@@ -278,7 +282,7 @@ namespace SportConnect.Tests.Controllers
                 }
             };
 
-            _mockUserRepository.Setup(r => r.AllWithIncludes(
+            _userService.Setup(r => r.AllWithIncludes(
                 It.IsAny<System.Linq.Expressions.Expression<Func<SportConnectUser, object>>>()))
                 .ReturnsAsync(users);
 
@@ -288,7 +292,7 @@ namespace SportConnect.Tests.Controllers
                 Name = "Tennis Open"
             };
 
-            _mockTournamentRepository.Setup(r => r.GetById(tournamentId))
+            _tournamentService.Setup(r => r.GetById(tournamentId))
                 .ReturnsAsync(tournament);
 
             var sports = new List<Sport>
@@ -297,7 +301,7 @@ namespace SportConnect.Tests.Controllers
                 new Sport { Id = Guid.NewGuid().ToString(), Name = "Football" }
             };
 
-            _mockSportRepository.Setup(r => r.GetAll())
+            _sportService.Setup(r => r.GetAll())
                 .ReturnsAsync(sports);
             _mockCountryService.Setup(c => c.GetAllCountries())
     .Returns(new List<SelectListItem>
@@ -334,11 +338,11 @@ namespace SportConnect.Tests.Controllers
                 UserName = "testUser"
             };
 
-            _mockUserRepository.Setup(r => r.GetById(userId))
+            _userService.Setup(r => r.GetById(userId))
                 .ReturnsAsync(user);
 
             var tournament = new Tournament { Id = tournamentId, Name = "Test Tournament" };
-            _mockTournamentRepository.Setup(r => r.GetById(tournamentId))
+            _tournamentService.Setup(r => r.GetById(tournamentId))
                 .ReturnsAsync(tournament);
 
             var tournaments = new List<Tournament>
@@ -347,7 +351,7 @@ namespace SportConnect.Tests.Controllers
         new Tournament { Id = "2", Name = "Winter Tournament", Date = DateTime.Now.AddMonths(3).ToString() }
     };
 
-            _mockTournamentRepository.Setup(r => r.GetAll())
+            _tournamentService.Setup(r => r.GetAll())
                 .ReturnsAsync(tournaments);
 
             var result = await _controller.UserParticipations(userId, tournamentId, null, "/return") as ViewResult;
@@ -380,11 +384,11 @@ namespace SportConnect.Tests.Controllers
                 UserName = "userA"
             };
 
-            _mockUserRepository.Setup(r => r.GetById(userId))
+            _userService.Setup(r => r.GetById(userId))
                 .ReturnsAsync(user);
 
             var tournament = new Tournament { Id = tournamentId, Name = "Test Tournament" };
-            _mockTournamentRepository.Setup(r => r.GetById(tournamentId))
+            _tournamentService.Setup(r => r.GetById(tournamentId))
                 .ReturnsAsync(tournament);
 
             var tournaments = new List<Tournament>
@@ -419,16 +423,16 @@ namespace SportConnect.Tests.Controllers
         }
     };
 
-            _mockTournamentRepository.Setup(r => r.GetAll())
+            _tournamentService.Setup(r => r.GetAll())
     .ReturnsAsync(tournaments);
 
-            _mockTournamentRepository.Setup(r => r.AllWithIncludes(
+            _tournamentService.Setup(r => r.AllWithIncludes(
     It.IsAny<System.Linq.Expressions.Expression<Func<Tournament, object>>>(),
     It.IsAny<System.Linq.Expressions.Expression<Func<Tournament, object>>>(),
     It.IsAny<System.Linq.Expressions.Expression<Func<Tournament, object>>>()))
     .ReturnsAsync(tournaments);
 
-            _mockSportRepository.Setup(r => r.GetAll())
+            _sportService.Setup(r => r.GetAll())
     .ReturnsAsync(new List<Sport> { new Sport { Id = "sport1", Name = "Tennis" } });
 
             var filter = new TournamentViewModel
@@ -464,17 +468,17 @@ namespace SportConnect.Tests.Controllers
             _mockUserManager.Setup(u => u.GetUserAsync(user))
                 .ReturnsAsync(mockUser);
 
-            _mockTournamentRepository.Setup(r => r.GetById(tournamentId))
+            _tournamentService.Setup(r => r.GetById(tournamentId))
     .ReturnsAsync(new Tournament { Id = tournamentId });
 
-            _mockParticipationRepository.Setup(r => r.Add(It.IsAny<Participation>()))
+            _participationService.Setup(r => r.Add(It.IsAny<Participation>()))
                 .Returns(Task.CompletedTask);
 
             var result = await _controller.AddParticipation(tournamentId, returnUrl) as RedirectResult;
 
             Assert.IsNotNull(result);
             Assert.AreEqual(returnUrl, result.Url);
-            _mockParticipationRepository.Verify(r => r.Add(It.Is<Participation>(p =>
+            _participationService.Verify(r => r.Add(It.Is<Participation>(p =>
                 p.ParticipantId == userId &&
                 p.TournamentId == tournamentId && p.Approved == false)), Times.Once);
         }
@@ -498,23 +502,23 @@ namespace SportConnect.Tests.Controllers
 
             var user = new SportConnectUser { Id = userId };
 
-            _mockUserRepository.Setup(r => r.GetById(userId))
+            _userService.Setup(r => r.GetById(userId))
                 .ReturnsAsync(user);
 
-            _mockParticipationRepository.Setup(r => r.GetAll())
+            _participationService.Setup(r => r.GetAll())
                 .ReturnsAsync(new List<Participation> { participation });
 
-            _mockTournamentRepository.Setup(r => r.GetById(tournamentId))
+            _tournamentService.Setup(r => r.GetById(tournamentId))
                 .ReturnsAsync(tournament);
 
-            _mockParticipationRepository.Setup(r => r.Delete(It.IsAny<Participation>()))
+            _participationService.Setup(r => r.Delete(It.IsAny<Participation>()))
                 .Returns(Task.CompletedTask);
 
             var result = await _controller.DeleteParticipation(tournamentId, userId, returnUrl) as RedirectResult;
 
             Assert.IsNotNull(result);
             Assert.AreEqual(returnUrl, result.Url);
-            _mockParticipationRepository.Verify(r => r.Delete(It.Is<Participation>(p =>
+            _participationService.Verify(r => r.Delete(It.Is<Participation>(p =>
                 p.ParticipantId == userId &&
                 p.TournamentId == tournamentId)), Times.Once);
         }
@@ -539,23 +543,23 @@ namespace SportConnect.Tests.Controllers
 
             var user = new SportConnectUser { Id = userId };
 
-            _mockUserRepository.Setup(r => r.GetById(userId))
+            _userService.Setup(r => r.GetById(userId))
                 .ReturnsAsync(user);
 
-            _mockTournamentRepository.Setup(r => r.GetById(tournamentId))
+            _tournamentService.Setup(r => r.GetById(tournamentId))
                 .ReturnsAsync(tournament);
 
-            _mockParticipationRepository.Setup(r => r.GetAll())
+            _participationService.Setup(r => r.GetAll())
                 .ReturnsAsync(new List<Participation> { participation });
 
-            _mockParticipationRepository.Setup(r => r.Update(It.IsAny<Participation>()))
+            _participationService.Setup(r => r.Update(It.IsAny<Participation>()))
                 .Returns(Task.CompletedTask);
 
             var result = await _controller.ApproveParticipation(tournamentId, userId, returnUrl) as RedirectResult;
 
             Assert.IsNotNull(result);
             Assert.AreEqual(returnUrl, result.Url);
-            _mockParticipationRepository.Verify(r => r.Update(It.Is<Participation>(p =>
+            _participationService.Verify(r => r.Update(It.Is<Participation>(p =>
                 p.ParticipantId == userId &&
                 p.TournamentId == tournamentId &&
                 p.Approved == true)), Times.Once);

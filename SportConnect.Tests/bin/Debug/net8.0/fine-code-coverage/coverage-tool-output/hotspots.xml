@@ -20,7 +20,7 @@
     <Class>SportConnect.Web.Controllers.TournamentController</Class>
     <MethodName>EditTournament()</MethodName>
     <ShortName />
-    <Line>263</Line>
+    <Line>267</Line>
     <FileIndex>0</FileIndex>
     <Metrics>
       <Metric>
@@ -50,7 +50,7 @@
     <Class>SportConnect.Web.Controllers.UserController</Class>
     <MethodName>EditUser()</MethodName>
     <ShortName />
-    <Line>97</Line>
+    <Line>101</Line>
     <FileIndex>0</FileIndex>
     <Metrics>
       <Metric>
@@ -125,7 +125,7 @@
     <Class>SportConnect.Web.Controllers.TournamentController</Class>
     <MethodName>AddTournament()</MethodName>
     <ShortName />
-    <Line>123</Line>
+    <Line>127</Line>
     <FileIndex>0</FileIndex>
     <Metrics>
       <Metric>
@@ -155,7 +155,7 @@
     <Class>SportConnect.Web.Controllers.ParticipationController</Class>
     <MethodName>UserParticipations()</MethodName>
     <ShortName />
-    <Line>198</Line>
+    <Line>205</Line>
     <FileIndex>0</FileIndex>
     <Metrics>
       <Metric>
@@ -170,7 +170,7 @@
     <Class>SportConnect.Web.Controllers.TournamentController</Class>
     <MethodName>UserTournaments()</MethodName>
     <ShortName />
-    <Line>547</Line>
+    <Line>551</Line>
     <FileIndex>0</FileIndex>
     <Metrics>
       <Metric>
@@ -185,7 +185,7 @@
     <Class>AspNetCoreGeneratedDocument.Views_Participation_TournamentParticipations</Class>
     <MethodName>&lt;ExecuteAsync()</MethodName>
     <ShortName />
-    <Line>550</Line>
+    <Line>551</Line>
     <FileIndex>0</FileIndex>
     <Metrics>
       <Metric>
@@ -275,7 +275,7 @@
     <Class>SportConnect.Web.Controllers.ParticipationController</Class>
     <MethodName>TournamentParticipations()</MethodName>
     <ShortName />
-    <Line>115</Line>
+    <Line>120</Line>
     <FileIndex>0</FileIndex>
     <Metrics>
       <Metric>

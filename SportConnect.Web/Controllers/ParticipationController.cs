@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Services;
+using SportConnect.Services.Participation;
+using SportConnect.Services.Sport;
+using SportConnect.Services.Tournament;
+using SportConnect.Services.User;
 using SportConnect.Utility;
 using SportConnect.Web.Models;
 using System.Diagnostics;
@@ -14,19 +18,20 @@ namespace SportConnect.Web.Controllers
     public class ParticipationController : Controller
     {
         public UserManager<SportConnectUser> _userManager;
-        public IRepository<Tournament> _tournamentRepository { get; set; }
-        public IRepository<Sport> _sportRepository { get; set; }
-        public IRepository<Participation> _participationRepository { get; set; }
-        public IRepository<SportConnectUser> _userRepository { get; set; }
+
+        public ITournamentService _tournamentService;
+        public IUserService _userService;
+        public ISportService _sportService;
+        public IParticipationService _participationService;
         public CountryService _countryService { get; set; }
 
-        public ParticipationController(UserManager<SportConnectUser> userManager, IRepository<Tournament> tournamentRepository, IRepository<Sport> sportRepository, IRepository<Participation> participationRepository, IRepository<SportConnectUser> userRepository, CountryService countryService)
+        public ParticipationController(UserManager<SportConnectUser> userManager, ITournamentService tournamentService, IUserService userService, ISportService sportService, IParticipationService participationService, CountryService countryService)
         {
             _userManager = userManager;
-            _tournamentRepository = tournamentRepository;
-            _sportRepository = sportRepository;
-            _participationRepository = participationRepository;
-            _userRepository = userRepository;
+            _tournamentService = tournamentService;
+            _userService = userService;
+            _sportService = sportService;
+            _participationService = participationService;
             _countryService = countryService;
         }
 
@@ -35,7 +40,9 @@ namespace SportConnect.Web.Controllers
         {
             HttpContext.Session.Remove("ReturnUrl");
 
-            var allSports = await _tournamentRepository.GetAll(); if (filter == null)
+            var allSports = await _tournamentService.GetAll(); 
+            
+            if (filter == null)
             {
                 return View(new TournamentViewModel
                 {
@@ -47,8 +54,7 @@ namespace SportConnect.Web.Controllers
             var currentUser = (await _userManager.GetUserAsync(this.User)).Id;
             ViewBag.UserId = currentUser;
 
-            var query = (await _tournamentRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
-                .Where(t => t.Participations.Any(p => p.ParticipantId == currentUser));
+            var query = _tournamentService.AllParticipatedTournaments(currentUser).Result.AsQueryable();
 
             if (filter.Approved.HasValue)
             {
@@ -90,7 +96,7 @@ namespace SportConnect.Web.Controllers
 
             var filteredTournaments = query.ToList();
 
-            ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
+            ViewBag.Sports = new SelectList(await _sportService.GetAll(), "Id", "Name");
             ViewBag.Countries = _countryService.GetAllCountries();
 
             var model = new TournamentViewModel
@@ -103,8 +109,7 @@ namespace SportConnect.Web.Controllers
                 EndDate = filter.EndDate,
                 Approved = filter.Approved,
                 FilteredTournaments = filteredTournaments,
-                Tournaments = (await _tournamentRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
-                .Where(t => t.Participations.Any(p => p.ParticipantId == currentUser)).ToList(),
+                Tournaments = (await _tournamentService.AllParticipatedTournaments(currentUser)).ToList(),
             };
 
             return View(model);
@@ -113,13 +118,15 @@ namespace SportConnect.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> TournamentParticipations(string id, string returnUrl, UserViewModel? filter)
         {
-            var tournament = await _tournamentRepository.GetById(id);
+            var tournament = await _tournamentService.GetById(id);
             if (tournament == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
             }
 
-            var allSports = await _userRepository.GetAll(); if (filter == null)
+            var allSports = await _userService.GetAll(); 
+            
+            if (filter == null)
             {
                 return View(new UserViewModel
                 {
@@ -134,7 +141,7 @@ namespace SportConnect.Web.Controllers
                 ViewBag.UserId = currentUser.Id;
             }
 
-            var query = (await _userRepository.AllWithIncludes(t => t.Participations)).Where(t => t.Participations.Any(p => p.TournamentId.ToString() == id.ToString()));
+            var query = await _userService.AllParticipants(id);
 
             if (filter.Approved.HasValue)
             {
@@ -168,9 +175,9 @@ namespace SportConnect.Web.Controllers
 
             var filteredTournaments = query.ToList();
 
-            ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
+            ViewBag.Sports = new SelectList(await _sportService.GetAll(), "Id", "Name");
             ViewBag.Countries = _countryService.GetAllCountries();
-            ViewBag.Tournament = (await _tournamentRepository.GetById(id));
+            ViewBag.Tournament = (await _tournamentService.GetById(id));
 
             var model = new UserViewModel
             {
@@ -180,7 +187,7 @@ namespace SportConnect.Web.Controllers
                 Email = filter.Email,
                 FilteredUsers = filteredTournaments,
                 Approved = filter.Approved,
-                Users = (await _userRepository.AllWithIncludes(t => t.Participations)).Where(t => t.Participations.Any(p => p.TournamentId.ToString() == id.ToString())).ToList(),
+                Users = (await _userService.AllParticipants(id)).ToList(),
             };
 
             var storedReturnUrl = HttpContext.Session.GetString("ReturnUrl");
@@ -198,20 +205,20 @@ namespace SportConnect.Web.Controllers
         {
             if (tournamentId != null)
             {
-                var tournament = await _tournamentRepository.GetById(tournamentId);
+                var tournament = await _tournamentService.GetById(tournamentId);
                 if (tournament == null)
                 {
                     return View("~/Views/Shared/NotFound.cshtml");
                 }
             }
 
-            var user = await _userRepository.GetById(id);
+            var user = await _userService.GetById(id);
             if (user == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
             }
 
-            var allSports = await _tournamentRepository.GetAll(); if (filter == null)
+            var allSports = await _tournamentService.GetAll(); if (filter == null)
             {
                 return View(new TournamentViewModel
                 {
@@ -220,11 +227,10 @@ namespace SportConnect.Web.Controllers
                 });
             }
 
-            var currentUser = await _userRepository.GetById(id);
+            var currentUser = await _userService.GetById(id);
             ViewBag.UserId = currentUser.Id;
 
-            var query = (await _tournamentRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
-                .Where(t => t.Participations.Any(p => p.ParticipantId == currentUser.Id));
+            var query = _tournamentService.AllOtherParticipatedTournaments(currentUser.Id).Result.AsQueryable();
 
             if (filter.Approved.HasValue)
             {
@@ -266,7 +272,7 @@ namespace SportConnect.Web.Controllers
 
             var filteredTournaments = query.ToList();
 
-            ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
+            ViewBag.Sports = new SelectList(await _sportService.GetAll(), "Id", "Name");
             ViewBag.Countries = _countryService.GetAllCountries();
             ViewBag.CheckedUser = currentUser.UserName;
 
@@ -281,8 +287,7 @@ namespace SportConnect.Web.Controllers
                 EndDate = filter.EndDate,
                 Approved = filter.Approved,
                 FilteredTournaments = filteredTournaments,
-                Tournaments = (await _tournamentRepository.AllWithIncludes(t => t.Participations, t => t.Organizer, t => t.Sport))
-                .Where(t => t.Participations.Any(p => p.ParticipantId == currentUser.Id)).ToList(),
+                Tournaments = (await _tournamentService.AllOtherParticipatedTournaments(currentUser.Id)).ToList(),
             };
 
             var storedRootReturnUrl = HttpContext.Session.GetString("RootReturnUrl");
@@ -310,7 +315,7 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
         public async Task<IActionResult> AddParticipation(string id, string returnUrl)
         {
-            var tournament = await _tournamentRepository.GetById(id);
+            var tournament = await _tournamentService.GetById(id);
             if (tournament == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
@@ -322,38 +327,39 @@ namespace SportConnect.Web.Controllers
                 TournamentId = id,
                 Approved = false,
             };
-            await _participationRepository.Add(participation);
+            await _participationService.Add(participation);
             return Redirect(returnUrl);
         }
 
         [Authorize(Roles = $"{SD.AdminRole},{SD.UserRole}")]
         public async Task<IActionResult> DeleteParticipation(string tournamentId, string userId, string returnUrl = null)
         {
-            var tournament = await _tournamentRepository.GetById(tournamentId);
-            var user = await _userRepository.GetById(userId);
+            var tournament = await _tournamentService.GetById(tournamentId);
+            var user = await _userService.GetById(userId);
             if (tournament == null || user == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
             }
 
-            var participation = (await _participationRepository.GetAll()).FirstOrDefault(x => x.ParticipantId == userId && x.TournamentId.ToString() == tournamentId.ToString());
+            var participation = await _participationService.GetParticipation(userId, tournamentId);
             tournament.Participations.ToList().Remove(participation);
-            await _participationRepository.Delete(participation);
+            await _participationService.Delete(participation);
             return Redirect(returnUrl);
         }
 
         [Authorize(Roles = $"{SD.AdminRole}")]
         public async Task<IActionResult> ApproveParticipation(string tournamentId, string userId, string returnUrl = null)
         {
-            var tournament = await _tournamentRepository.GetById(tournamentId);
-            var user = await _userRepository.GetById(userId);
+            var tournament = await _tournamentService.GetById(tournamentId);
+            var user = await _userService.GetById(userId);
             if (tournament == null || user == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
             }
-            var participation = (await _participationRepository.GetAll()).FirstOrDefault(x => x.ParticipantId == userId && x.TournamentId.ToString() == tournamentId.ToString());
+
+            var participation = await _participationService.GetParticipation(userId, tournamentId);
             participation.Approved = true;
-            await _participationRepository.Update(participation);
+            await _participationService.Update(participation);
             return Redirect(returnUrl);
         }
 

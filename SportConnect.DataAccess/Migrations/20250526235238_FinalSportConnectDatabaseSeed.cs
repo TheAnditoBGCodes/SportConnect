@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SportConnect.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class SportConnectDatabaseFinalSeed : Migration
+    public partial class FinalSportConnectDatabaseSeed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

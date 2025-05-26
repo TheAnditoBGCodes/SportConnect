@@ -10,12 +10,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Services;
+using SportConnect.Services.User;
 
 namespace SportConnect.Web.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly IRepository<SportConnectUser> _repository;
+        private readonly IUserService _userService;
         private readonly SignInManager<SportConnectUser> _signInManager;
         private readonly UserManager<SportConnectUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -23,10 +24,9 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<SportConnectUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IUserStore<SportConnectUser> _userStore;
-
-        public RegisterModel(IRepository<SportConnectUser> repository, SignInManager<SportConnectUser> signInManager, UserManager<SportConnectUser> userManager, RoleManager<IdentityRole> roleManager, CountryService countryService, ILogger<RegisterModel> logger, IUserStore<SportConnectUser> userStore)
+        public RegisterModel(IUserService userService, SignInManager<SportConnectUser> signInManager, UserManager<SportConnectUser> userManager, RoleManager<IdentityRole> roleManager, CountryService countryService, ILogger<RegisterModel> logger, IUserStore<SportConnectUser> userStore)
         {
-            _repository = repository;
+            _userService = userService;
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
@@ -36,7 +36,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
             _emailStore = (IUserEmailStore<SportConnectUser>)_userStore;
         }
 
-                                        [BindProperty]
+        [BindProperty]
         public InputModel Input { get; set; }
 
                                         public string ReturnUrl { get; set; }
@@ -123,7 +123,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
 
             if (Input.Username != null)
             {
-                if ((await _repository.GetAll()).Any(s => s.UserName == Input.Username))
+                if ((await _userService.GetAll()).Any(s => s.UserName == Input.Username))
                 {
                     ModelState.AddModelError("Input.Username", "Заето.");
                 }
@@ -134,7 +134,7 @@ namespace SportConnect.Web.Areas.Identity.Pages.Account
                 }
             }
 
-            if ((await _repository.GetAll()).Any(s => s.Email == Input.Email))
+            if ((await _userService.GetAll()).Any(s => s.Email == Input.Email))
             {
                 ModelState.AddModelError("Input.Email", "Заето.");
             }

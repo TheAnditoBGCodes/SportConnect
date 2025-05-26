@@ -12,8 +12,8 @@ using SportConnect.DataAccess;
 namespace SportConnect.DataAccess.Migrations
 {
     [DbContext(typeof(SportConnectDbContext))]
-    [Migration("20250525164511_SportConnectDatabaseFinalSeed")]
-    partial class SportConnectDatabaseFinalSeed
+    [Migration("20250526235238_FinalSportConnectDatabaseSeed")]
+    partial class FinalSportConnectDatabaseSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

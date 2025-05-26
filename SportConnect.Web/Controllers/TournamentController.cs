@@ -6,6 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Services;
+using SportConnect.Services.Participation;
+using SportConnect.Services.Sport;
+using SportConnect.Services.Tournament;
+using SportConnect.Services.User;
 using SportConnect.Utility;
 using SportConnect.Web.Models;
 using System.Diagnostics;
@@ -17,19 +21,19 @@ namespace SportConnect.Web.Controllers
     public class TournamentController : Controller
     {
         public UserManager<SportConnectUser> _userManager;
-        public IRepository<Tournament> _tournamentRepository { get; set; }
-        public IRepository<Sport> _sportRepository { get; set; }
-        public IRepository<SportConnectUser> _userRepository { get; set; }
-        public IRepository<Participation> _participationRepository { get; set; }
+        public ITournamentService _tournamentService;
+        public IUserService _userService;
+        public ISportService _sportService;
+        public IParticipationService _participationService;
         public CountryService _countryService;
 
-        public TournamentController(UserManager<SportConnectUser> userManager, IRepository<Tournament> tournamentRepository, IRepository<Sport> sportRepository, IRepository<SportConnectUser> userRepository, IRepository<Participation> participationRepository, CountryService countryService)
+        public TournamentController(UserManager<SportConnectUser> userManager, ITournamentService tournamentService, IUserService userService, ISportService sportService, IParticipationService participationService, CountryService countryService)
         {
             _userManager = userManager;
-            _tournamentRepository = tournamentRepository;
-            _sportRepository = sportRepository;
-            _userRepository = userRepository;
-            _participationRepository = participationRepository;
+            _tournamentService = tournamentService;
+            _userService = userService;
+            _sportService = sportService;
+            _participationService = participationService;
             _countryService = countryService;
         }
 
@@ -49,7 +53,7 @@ namespace SportConnect.Web.Controllers
                 ViewBag.UserId = currentUserId;
             }
 
-            var tournaments = await _tournamentRepository.AllWithIncludes(x => x.Organizer, x => x.Sport, x => x.Participations);
+            var tournaments = await _tournamentService.AllWithIncludes(x => x.Organizer, x => x.Sport, x => x.Participations);
 
             var query = tournaments.AsQueryable();
 
@@ -85,7 +89,7 @@ namespace SportConnect.Web.Controllers
                 query = query.Where(p => DateTime.Parse(p.Date) <= filter.EndDate);
             }
 
-            ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
+            ViewBag.Sports = new SelectList(await _sportService.GetAll(), "Id", "Name");
             ViewBag.Countries = _countryService.GetAllCountries();
 
             var model = new TournamentViewModel
@@ -111,7 +115,7 @@ namespace SportConnect.Web.Controllers
             {
                 OrganizerId = currentUser.Id,
                 CountryList = _countryService.GetAllCountries(),
-                Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name")
+                Sports = new SelectList(await _sportService.GetAll(), "Id", "Name")
             };
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
@@ -131,12 +135,12 @@ namespace SportConnect.Web.Controllers
                 ModelState.AddModelError("Description", "Описанието трябва да е между 5 и 100 символа");
             }
 
-            if ((await _tournamentRepository.GetAll()).Any(s => s.Name == tournament.Name))
+            if ((await _tournamentService.GetAll()).Any(s => s.Name == tournament.Name))
             {
                 ModelState.AddModelError("Name", "Името е вече заето.");
             }
 
-            if ((await _tournamentRepository.GetAll()).Any(s => s.Description == tournament.Description))
+            if ((await _tournamentService.GetAll()).Any(s => s.Description == tournament.Description))
             {
                 ModelState.AddModelError("Description", "Описанието е вече заето.");
             }
@@ -214,12 +218,12 @@ namespace SportConnect.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                await _tournamentRepository.Add(await tournament.ToTournament());
+                await _tournamentService.Add(await tournament.ToTournament());
                 return Redirect(returnUrl);
             }
 
             ViewBag.ReturnUrl = returnUrl;
-            tournament.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
+            tournament.Sports = new SelectList(await _sportService.GetAll(), "Id", "Name");
             tournament.CountryList = _countryService.GetAllCountries();
             return View(tournament);
         }
@@ -227,7 +231,7 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
         public async Task<IActionResult> EditTournament(string id, string returnUrl)
         {
-            var tournament = await _tournamentRepository.GetById(id);
+            var tournament = await _tournamentService.GetById(id);
             if (tournament == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
@@ -247,7 +251,7 @@ namespace SportConnect.Web.Controllers
                 CountryList = _countryService.GetAllCountries(),
                 Name = tournament.Name,
                 SportId = tournament.SportId,
-                Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name", tournament.SportId),
+                Sports = new SelectList(await _sportService.GetAll(), "Id", "Name", tournament.SportId),
             };
 
             var currentUser = await _userManager.GetUserAsync(this.User);
@@ -276,12 +280,12 @@ namespace SportConnect.Web.Controllers
                     ModelState.AddModelError("Description", "Описанието трябва да е между 5 и 100 символа");
                 }
 
-                if ((await _tournamentRepository.GetAll()).Any(s => s.Name == tournament.Name && s.Id != tournament.Id))
+                if ((await _tournamentService.GetAll()).Any(s => s.Name == tournament.Name && s.Id != tournament.Id))
                 {
                     ModelState.AddModelError("Name", "Името е вече заето.");
                 }
 
-                if ((await _tournamentRepository.GetAll()).Any(s => s.Description == tournament.Description && s.Id != tournament.Id))
+                if ((await _tournamentService.GetAll()).Any(s => s.Description == tournament.Description && s.Id != tournament.Id))
                 {
                     ModelState.AddModelError("Description", "Описанието е вече заето.");
                 }
@@ -358,7 +362,7 @@ namespace SportConnect.Web.Controllers
                     tournament.Date = eventDateTime;
                 }
 
-                var edited = (await _tournamentRepository.GetById(tournament.Id));
+                var edited = (await _tournamentService.GetById(tournament.Id));
 
                 edited.Name = tournament.Name;
                 edited.Description = tournament.Description;
@@ -370,12 +374,12 @@ namespace SportConnect.Web.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    await _tournamentRepository.Update(edited);
+                    await _tournamentService.Update(edited);
                     return Redirect(returnUrl);
                 }
 
                 ViewBag.ReturnUrl = returnUrl;
-                tournament.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
+                tournament.Sports = new SelectList(await _sportService.GetAll(), "Id", "Name");
                 tournament.CountryList = _countryService.GetAllCountries();
                 return View(tournament);
             }
@@ -391,12 +395,12 @@ namespace SportConnect.Web.Controllers
                     ModelState.AddModelError("Description", "Описанието трябва да е между 5 и 100 символа");
                 }
 
-                if ((await _tournamentRepository.GetAll()).Any(s => s.Name == tournament.Name && s.Id != tournament.Id))
+                if ((await _tournamentService.GetAll()).Any(s => s.Name == tournament.Name && s.Id != tournament.Id))
                 {
                     ModelState.AddModelError("Name", "Името е вече заето.");
                 }
 
-                if ((await _tournamentRepository.GetAll()).Any(s => s.Description == tournament.Description && s.Id != tournament.Id))
+                if ((await _tournamentService.GetAll()).Any(s => s.Description == tournament.Description && s.Id != tournament.Id))
                 {
                     ModelState.AddModelError("Description", "Описанието е вече заето.");
                 }
@@ -406,7 +410,7 @@ namespace SportConnect.Web.Controllers
                     ModelState.AddModelError("ImageUrl", "Задължителна");
                 }
 
-                var edited = (await _tournamentRepository.GetById(tournament.Id));
+                var edited = (await _tournamentService.GetById(tournament.Id));
 
                 edited.Name = tournament.Name;
                 edited.Description = tournament.Description;
@@ -414,7 +418,7 @@ namespace SportConnect.Web.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    await _tournamentRepository.Update(edited);
+                    await _tournamentService.Update(edited);
                     return Redirect(returnUrl);
                 }
 
@@ -426,7 +430,7 @@ namespace SportConnect.Web.Controllers
         [Authorize(Roles = $"{SD.UserRole},{SD.AdminRole}")]
         public async Task<IActionResult> DeleteTournament(string id, string returnUrl)
         {
-            var tournament = (await _tournamentRepository.AllWithIncludes(x => x.Sport)).FirstOrDefault(x => x.Id == id);
+            var tournament = (await _tournamentService.AllWithIncludes(x => x.Sport)).FirstOrDefault(x => x.Id == id);
             if (tournament == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
@@ -449,14 +453,14 @@ namespace SportConnect.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteTournament(string ConfirmText, TournamentViewModel model, string returnUrl)
         {
-            var tournament = await _tournamentRepository.GetById(model.Id);
+            var tournament = await _tournamentService.GetById(model.Id);
             ViewBag.ReturnUrl = returnUrl;
 
             if (ConfirmText == "ПОТВЪРДИ")
             {
-                var range = await _participationRepository.GetAllBy(x => x.TournamentId == tournament.Id);
-                await _participationRepository.DeleteRange(range);
-                await _tournamentRepository.Delete(tournament);
+                var range = await _participationService.GetAllBy(x => x.TournamentId == tournament.Id);
+                await _participationService.DeleteRange(range);
+                await _tournamentService.Delete(tournament);
                 return Redirect(returnUrl);
             }
 
@@ -476,12 +480,12 @@ namespace SportConnect.Web.Controllers
         public async Task<IActionResult> SportTournaments(string id, TournamentViewModel? filter)
         {
             HttpContext.Session.Remove("ReturnUrl");
-            var sport = await _sportRepository.GetById(id);
+            var sport = await _sportService.GetById(id);
             if (sport == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
             }
-            var tournaments = (await _tournamentRepository.AllWithIncludes(x => x.Organizer, x => x.Sport, x => x.Participations)).Where(x => x.SportId == id);
+            var tournaments = await _tournamentService.TournamentsOfSport(id);
 
             if (filter == null)
             {
@@ -525,7 +529,7 @@ namespace SportConnect.Web.Controllers
             }
 
             ViewBag.Countries = _countryService.GetAllCountries();
-            ViewBag.SportName = (await _sportRepository.GetById(id)).Name;
+            ViewBag.SportName = (await _sportService.GetById(id)).Name;
 
             var model = new TournamentViewModel
             {
@@ -535,7 +539,7 @@ namespace SportConnect.Web.Controllers
                 Name = filter.Name,
                 StartDate = filter.StartDate,
                 EndDate = filter.EndDate,
-                FilteredTournaments = query.Include(x => x.Organizer).Include(x => x.Sport).Include(x => x.Participations).ToList(),
+                FilteredTournaments = (await _tournamentService.TournamentsOfSport(id)).ToList(),
                 Tournaments = tournaments.ToList(),
             };
 
@@ -547,22 +551,22 @@ namespace SportConnect.Web.Controllers
         {
             if (tournamentId != null)
             {
-                var tournament = await _tournamentRepository.GetById(tournamentId);
+                var tournament = await _tournamentService.GetById(tournamentId);
                 if (tournament == null)
                 {
                     return View("~/Views/Shared/NotFound.cshtml");
                 }
             }
 
-            var user = await _userRepository.GetById(id);
+            var user = await _userService.GetById(id);
             if (user == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
             }
 
-            var tournaments = (await _tournamentRepository.AllWithIncludes(x => x.Organizer, x => x.Sport, x => x.Participations)).Where(x => x.OrganizerId == id);
+            var tournaments = await _tournamentService.TournamentsOfUser(id);
             ViewBag.OtherUserId = id;
-            ViewBag.CheckedUser = (await _userRepository.GetById(id)).UserName;
+            ViewBag.CheckedUser = (await _userService.GetById(id)).UserName;
 
             if (filter == null)
             {
@@ -597,7 +601,7 @@ namespace SportConnect.Web.Controllers
                 query = query.Where(p => DateTime.Parse(p.Date) <= filter.EndDate);
             }
 
-            ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
+            ViewBag.Sports = new SelectList(await _sportService.GetAll(), "Id", "Name");
             ViewBag.Countries = _countryService.GetAllCountries();
 
             var currentUser = await _userManager.GetUserAsync(this.User);
@@ -649,7 +653,7 @@ namespace SportConnect.Web.Controllers
             var currentUserId = currentUser.Id;
             ViewBag.UserId = currentUserId;
 
-            var tournaments = (await _tournamentRepository.AllWithIncludes(x => x.Organizer, x => x.Sport, x => x.Participations)).Where(x => x.OrganizerId == currentUserId);
+            var tournaments = await _tournamentService.TournamentsOfUser(currentUserId);
 
             if (filter == null)
             {
@@ -684,7 +688,7 @@ namespace SportConnect.Web.Controllers
                 query = query.Where(p => DateTime.Parse(p.Date) <= filter.EndDate);
             }
 
-            ViewBag.Sports = new SelectList(await _sportRepository.GetAll(), "Id", "Name");
+            ViewBag.Sports = new SelectList(await _sportService.GetAll(), "Id", "Name");
             ViewBag.Countries = _countryService.GetAllCountries();
 
             var model = new TournamentViewModel

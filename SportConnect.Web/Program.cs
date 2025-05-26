@@ -8,6 +8,10 @@ using SportConnect.DataAccess.Repository;
 using SportConnect.DataAccess.Repository.IRepository;
 using SportConnect.Models;
 using SportConnect.Services;
+using SportConnect.Services.User;
+using SportConnect.Services.Sport;
+using SportConnect.Services.Tournament;
+using SportConnect.Services.Participation;
 using SportConnect.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +31,10 @@ builder.Services.AddIdentity<SportConnectUser, IdentityRole>()
 builder.Services.Configure<SecurityStampValidatorOptions>(options => options.ValidationInterval = TimeSpan.Zero);
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(ITournamentService), typeof(TournamentService));
+builder.Services.AddScoped(typeof(ISportService), typeof(SportService));
+builder.Services.AddScoped(typeof(IUserService), typeof(UserService));
+builder.Services.AddScoped(typeof(IParticipationService), typeof(ParticipationService));
 
 builder.Services.AddScoped<CountryService>();
 
