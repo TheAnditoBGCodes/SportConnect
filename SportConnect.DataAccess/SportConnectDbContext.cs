@@ -115,7 +115,7 @@ namespace SportConnect.DataAccess
                     Description = "Световното първенство по шахмат",
                     OrganizerId = adminId,
                     Date = "2025-06-10T10:00:00",
-                    Deadline = "2025-05-10T23:59:59",
+                    Deadline = "2025-05-29T23:59:59",
                     Country = "САЩ",
                     ImageUrl = @"\uploads\tournaments\chess\worldchampionship.jpg",
                     SportId = chessId
@@ -162,8 +162,8 @@ namespace SportConnect.DataAccess
                     Name = "Roland Garros",
                     Description = "Вторият турнир от Големия шлем",
                     OrganizerId = adminId,
-                    Date = "2025-05-26T11:00:00",
-                    Deadline = "2025-05-05T23:59:59",
+                    Date = "2025-06-26T11:00:00",
+                    Deadline = "2025-05-27T23:59:59",
                     Country = "Франция",
                     ImageUrl = @"\uploads\tournaments\tennis\rolandgarros.jpg",
                     SportId = tennisId

@@ -14,7 +14,7 @@
     var url = `/Participation/ApproveParticipation?tournamentId=${tournamentId}&userId=${userId}&returnUrl=%2FParticipation%2FTournamentParticipations%2F${tournamentId}`;
 
     participationButtons.innerHTML =
-    `<button class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-${tournamentId}" onclick="confirmApproval('${tournamentId}', \'${userId}\', false)">
+    `<button class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-${tournamentId}" onclick="confirmApproval('${tournamentId}', '${userId}', false)">
     Не
     </button>
     <a href="${url}" class="btn btn-success text-white w-100 btn-sm" id="approveBtn-${tournamentId}">
@@ -28,7 +28,7 @@
     `<a href="${url}" class="btn btn-success text-white w-100 btn-sm" id="approveBtn-${tournamentId}">
     Да
     </a>
-    <button class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-${tournamentId}" onclick="confirmApproval('${tournamentId}', \'${userId}\', false)">
+    <button class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-${tournamentId}" onclick="confirmApproval('${tournamentId}', '${userId}', false)">
     Не
     </button>`
     ;
@@ -38,10 +38,10 @@
     function confirmApproval(tournamentId, userId, approve) {
     const participationButtons = document.getElementById('participationButtonsApprove-' + tournamentId);
     participationButtons.innerHTML =
-    `<a class="btn btn-success text-white w-100 btn-sm" id="approveBtn-${tournamentId}" onclick="toggleApprovalButtons('${tournamentId}', \'${userId}\', true)">
+    `<a class="btn btn-success text-white w-100 btn-sm" id="approveBtn-${tournamentId}" onclick="toggleApprovalButtons('${tournamentId}', '${userId}', true)">
     Одобри
     </a>
-    <a class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-${tournamentId}" onclick="toggleApprovalButtons('${tournamentId}', \'${userId}\', false)">
+    <a class="btn btn-danger text-white w-100 btn-sm" id="disapproveBtn-${tournamentId}" onclick="toggleApprovalButtons('${tournamentId}', '${userId}', false)">
     Не одобри
     </a>`
     ;
@@ -54,7 +54,7 @@
 
     participationButtons.innerHTML = `
     <a href="${url}" class="btn btn-danger w-50 btn-sm">Да</a>
-    <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButton('${tournamentId}', \'${userId}\', ${isApproved})">Не</a>
+    <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButton('${tournamentId}', '${userId}', ${isApproved})">Не</a>
     `;
     }
 
@@ -65,7 +65,7 @@
 
     participationButtons.innerHTML = `
     <a href="${url}" class="btn btn-danger w-50 btn-sm">Да</a>
-    <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButtonUser('${tournamentId}', \'${userId}\', ${isApproved})">Не</a>
+    <a href="javascript:void(0);" class="btn btn-success w-50 btn-sm" onclick="restoreQuitButtonUser('${tournamentId}', '${userId}', ${isApproved})">Не</a>
     `;
     }
 
@@ -75,7 +75,7 @@
     if (isApproved) {
     participationButtons.innerHTML = `
     <a class="btn btn-success w-50" onmousedown="return false;" onkeydown="return false;">Одобрен</a>
-    <a id="quitParticipation-${userId}" class="btn btn-danger text-ccenter w-50" onclick="replaceWithConfirmation('${tournamentId}', \'${userId}\',  ${isApproved})">Отказване</a>
+    <a id="quitParticipation-${userId}" class="btn btn-danger text-ccenter w-50" onclick="replaceWithConfirmation('${tournamentId}', '${userId}',  ${isApproved})">Отказване</a>
     `;
     } else {
     participationButtons.innerHTML = `
@@ -89,7 +89,7 @@
     var participationButtons = document.getElementById("participationButtonsApprove-" + tournamentId);
     participationButtons.innerHTML = `
     <button class="btn btn-success text-white w-50 btn-sm" onmousedown="return false;" onkeydown="return false;">Одобрен</button>
-    <a id="quiterParticipation-${userId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmationUser('${tournamentId}', \'${userId}\', ${isApproved})">Отказване</a>
+    <a id="quiterParticipation-${userId}" class="btn btn-danger w-50 btn-sm" onclick="replaceWithConfirmationUser('${tournamentId}', '${userId}', ${isApproved})">Отказване</a>
     `;
     }
 </script>

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SportConnect.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class FinalSportConnectDatabaseSeed : Migration
+    public partial class DatabaseFinalSeed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -266,9 +266,9 @@ namespace SportConnect.DataAccess.Migrations
                 columns: new[] { "Id", "Country", "Date", "Deadline", "Description", "ImageUrl", "Name", "OrganizerId", "SportId" },
                 values: new object[,]
                 {
-                    { "3a3cf81f-5f85-4ce3-bc99-45c14555a774", "САЩ", "2025-06-10T10:00:00", "2025-05-10T23:59:59", "Световното първенство по шахмат", "\\uploads\\tournaments\\chess\\worldchampionship.jpg", "World Chess Championship", "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b", "3e20a87e-d7d5-45f6-b775-7f394a4b31f1" },
+                    { "3a3cf81f-5f85-4ce3-bc99-45c14555a774", "САЩ", "2025-06-10T10:00:00", "2025-05-29T23:59:59", "Световното първенство по шахмат", "\\uploads\\tournaments\\chess\\worldchampionship.jpg", "World Chess Championship", "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b", "3e20a87e-d7d5-45f6-b775-7f394a4b31f1" },
                     { "51f7e725-2827-4a5d-8b5f-83ad11979f4e", "Обединено кралство", "2025-12-15T14:00:00", "2025-11-15T23:59:59", "Най-престижният турнир по дартс", "\\uploads\\tournaments\\darts\\pdcchampionship.jpg", "World Darts Championship", "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b", "89d1cc17-0a41-47a2-a9c6-4c9f54b3b1a1" },
-                    { "98aa004e-0937-4f1f-85a3-17bd4f77a250", "Франция", "2025-05-26T11:00:00", "2025-05-05T23:59:59", "Вторият турнир от Големия шлем", "\\uploads\\tournaments\\tennis\\rolandgarros.jpg", "Roland Garros", "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b", "bf76e9a3-7f2d-4d11-82d2-6b547531ec71" },
+                    { "98aa004e-0937-4f1f-85a3-17bd4f77a250", "Франция", "2025-06-26T11:00:00", "2025-05-27T23:59:59", "Вторият турнир от Големия шлем", "\\uploads\\tournaments\\tennis\\rolandgarros.jpg", "Roland Garros", "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b", "bf76e9a3-7f2d-4d11-82d2-6b547531ec71" },
                     { "a264b51b-f2a4-48fd-b97b-26ff9fdb2d03", "Германия", "2025-09-05T10:00:00", "2025-08-01T23:59:59", "Престижен турнир по шахмат", "\\uploads\\tournaments\\chess\\candidates.jpg", "Candidates Tournament", "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b", "3e20a87e-d7d5-45f6-b775-7f394a4b31f1" },
                     { "c3b5f2a3-56d4-4dbb-91a6-ff6f5b6b8659", "Обединено кралство", "2025-07-01T11:00:00", "2025-06-10T23:59:59", "Най-старият турнир по тенис в света", "\\uploads\\tournaments\\tennis\\wimbledon.jpg", "Wimbledon", "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b", "bf76e9a3-7f2d-4d11-82d2-6b547531ec71" },
                     { "cf5d37f2-c2b2-4b34-9a20-246aaf114fa1", "Нидерландия", "2025-07-01T14:00:00", "2025-06-01T23:59:59", "Световната купа по дартс", "\\uploads\\tournaments\\darts\\worldcup.jpg", "World Cup", "8ba73947-ec7f-47b7-bb5e-5eae5c217b5b", "89d1cc17-0a41-47a2-a9c6-4c9f54b3b1a1" }

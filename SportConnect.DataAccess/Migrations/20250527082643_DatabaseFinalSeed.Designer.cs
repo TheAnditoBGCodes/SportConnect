@@ -12,8 +12,8 @@ using SportConnect.DataAccess;
 namespace SportConnect.DataAccess.Migrations
 {
     [DbContext(typeof(SportConnectDbContext))]
-    [Migration("20250526235238_FinalSportConnectDatabaseSeed")]
-    partial class FinalSportConnectDatabaseSeed
+    [Migration("20250527082643_DatabaseFinalSeed")]
+    partial class DatabaseFinalSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -402,7 +402,7 @@ namespace SportConnect.DataAccess.Migrations
                             Id = "3a3cf81f-5f85-4ce3-bc99-45c14555a774",
                             Country = "САЩ",
                             Date = "2025-06-10T10:00:00",
-                            Deadline = "2025-05-10T23:59:59",
+                            Deadline = "2025-05-29T23:59:59",
                             Description = "Световното първенство по шахмат",
                             ImageUrl = "\\uploads\\tournaments\\chess\\worldchampionship.jpg",
                             Name = "World Chess Championship",
@@ -449,8 +449,8 @@ namespace SportConnect.DataAccess.Migrations
                         {
                             Id = "98aa004e-0937-4f1f-85a3-17bd4f77a250",
                             Country = "Франция",
-                            Date = "2025-05-26T11:00:00",
-                            Deadline = "2025-05-05T23:59:59",
+                            Date = "2025-06-26T11:00:00",
+                            Deadline = "2025-05-27T23:59:59",
                             Description = "Вторият турнир от Големия шлем",
                             ImageUrl = "\\uploads\\tournaments\\tennis\\rolandgarros.jpg",
                             Name = "Roland Garros",
